@@ -14,12 +14,12 @@
     "programs": "Programs"
   },
   "hero": {
-    "badge": "100% Free • Open Source • In Your Language",
-    "title": "Learn AI from Zero.",
-    "titleHighlight": "No Experience Needed.",
-    "subtitle": "Understand Artificial Intelligence through simple lessons, fun examples, and hands-on experiments — right in your browser. Available in 5 languages.",
-    "cta": "Start Your First Lesson",
-    "ctaSecondary": "Try the Playground",
+    "badge": "Free • Open Source • Multilingual",
+    "title": "AI Education",
+    "titleHighlight": "for Everyone.",
+    "subtitle": "Interactive lessons, hands-on experiments, and real-world projects — all in your browser. No background in coding or maths required.",
+    "cta": "Start Learning",
+    "ctaSecondary": "Explore Playground",
     "students": "Students learning",
     "languages": "Languages",
     "lessons": "Interactive lessons",

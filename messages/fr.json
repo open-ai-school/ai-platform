@@ -14,12 +14,12 @@
     "programs": "Programmes"
   },
   "hero": {
-    "badge": "100% Gratuit • Open Source • Dans Votre Langue",
-    "title": "Apprenez l'IA à partir de zéro.",
-    "titleHighlight": "Aucune expérience nécessaire.",
-    "subtitle": "Comprenez l'Intelligence Artificielle grâce à des leçons simples, des exemples amusants et des expériences pratiques — directement dans votre navigateur. Disponible en 5 langues.",
-    "cta": "Commencez Votre Première Leçon",
-    "ctaSecondary": "Essayer le Terrain de Jeu",
+    "badge": "Gratuit • Open Source • Multilingue",
+    "title": "L'éducation en IA",
+    "titleHighlight": "pour Tous.",
+    "subtitle": "Leçons interactives, expériences pratiques et projets concrets — directement dans votre navigateur. Aucune connaissance en programmation ou en maths requise.",
+    "cta": "Commencer",
+    "ctaSecondary": "Explorer le Playground",
     "students": "Étudiants apprenant",
     "languages": "Langues",
     "lessons": "Leçons interactives",

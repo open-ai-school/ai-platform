@@ -43,7 +43,7 @@ export default async function HomePage({
   return (
     <>
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
+      <section className="relative overflow-hidden min-h-[85vh] flex items-center">
         <FloatingParticles />
         <div className="absolute inset-0 bg-grid" />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-32 relative">
@@ -67,7 +67,7 @@ export default async function HomePage({
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-up" style={{ animationDelay: "400ms" }}>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" style={{ animationDelay: "400ms" }}>
               <Link
                 href={`${basePath}/programs/ai-seeds/lessons/what-is-ai`}
                 className="btn-primary px-10 py-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-2xl text-lg font-bold shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-[1.02] transition-all"
@@ -78,42 +78,8 @@ export default async function HomePage({
                 href={`${basePath}/playground`}
                 className="px-10 py-4 border-2 border-[var(--color-border)] rounded-2xl text-lg font-bold hover:border-indigo-500 hover:text-indigo-500 transition-all hover:shadow-lg backdrop-blur-sm"
               >
-                🎮 {t("hero.ctaSecondary")}
+                {t("hero.ctaSecondary")} →
               </Link>
-            </div>
-
-            {/* Hero Illustration */}
-            <div className="my-12 max-w-2xl mx-auto animate-scale-in" style={{ animationDelay: "500ms" }}>
-              <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 rounded-[2rem] blur-2xl" />
-                <div className="relative rounded-3xl overflow-hidden bg-[var(--color-bg-card)] shadow-2xl shadow-indigo-500/10 ring-1 ring-white/10">
-                  <Image
-                    src="/images/hero/hero-brain.svg"
-                    alt="AI learning illustration with neural network and brain"
-                    width={800}
-                    height={400}
-                    className="w-full h-auto animate-float-slow"
-                    unoptimized
-                    priority
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto stagger-children">
-              {[
-                { value: "5", label: t("hero.languages"), icon: "🌍" },
-                { value: "10+", label: t("hero.lessons"), icon: "📚" },
-                { value: t("hero.freeValue"), label: t("hero.cost"), icon: "💝" },
-                { value: "100%", label: t("hero.openSource"), icon: "🔓" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center gradient-border rounded-2xl p-4 bg-[var(--color-bg-card)] animate-fade-up">
-                  <div className="text-2xl mb-1">{stat.icon}</div>
-                  <div className="text-3xl font-black tracking-tight">{stat.value}</div>
-                  <div className="text-xs font-medium text-[var(--color-text-muted)]">{stat.label}</div>
-                </div>
-              ))}
             </div>
 
             {/* Progress tracker (shows only when user has started) */}
