@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="avbg" x1="0" y1="0" x2="200" y2="200">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="avshine" x1="80" y1="40" x2="120" y2="160">
+      <stop offset="0%" stop-color="white" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#avbg)"/>
+  <circle cx="100" cy="100" r="100" fill="url(#avshine)"/>
+  <!-- Head -->
+  <circle cx="100" cy="78" r="32" fill="#fbbf24"/>
+  <!-- Body -->
+  <path d="M50,180 C50,140 70,120 100,120 C130,120 150,140 150,180" fill="#4f46e5"/>
+  <!-- Laptop -->
+  <rect x="72" y="138" width="56" height="35" rx="4" fill="#1e1b4b"/>
+  <rect x="76" y="142" width="48" height="24" rx="2" fill="#818cf8"/>
+  <!-- Code on screen -->
+  <line x1="80" y1="148" x2="96" y2="148" stroke="#c7d2fe" stroke-width="1.5"/>
+  <line x1="80" y1="153" x2="112" y2="153" stroke="#a5b4fc" stroke-width="1.5"/>
+  <line x1="84" y1="158" x2="104" y2="158" stroke="#c7d2fe" stroke-width="1.5"/>
+  <!-- Face -->
+  <circle cx="90" cy="74" r="3" fill="#1e1b4b"/>
+  <circle cx="110" cy="74" r="3" fill="#1e1b4b"/>
+  <path d="M92,86 Q100,94 108,86" stroke="#1e1b4b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Glasses -->
+  <circle cx="90" cy="74" r="8" fill="none" stroke="#1e1b4b" stroke-width="1.5"/>
+  <circle cx="110" cy="74" r="8" fill="none" stroke="#1e1b4b" stroke-width="1.5"/>
+  <line x1="98" y1="74" x2="102" y2="74" stroke="#1e1b4b" stroke-width="1.5"/>
+  <!-- Teaching sparkle -->
+  <g transform="translate(155,45)">
+    <text font-size="20">💡</text>
+  </g>
+  <g transform="translate(30,50)">
+    <text font-size="16">🌍</text>
+  </g>
+</svg>

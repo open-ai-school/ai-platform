@@ -1,0 +1,44 @@
+{
+  "programs": [
+    {
+      "slug": "ai-seeds",
+      "level": 1,
+      "status": "active",
+      "color": "#34D399",
+      "icon": "🌱",
+      "emoji": "🌱"
+    },
+    {
+      "slug": "ai-sprouts",
+      "level": 2,
+      "status": "coming-soon",
+      "color": "#60A5FA",
+      "icon": "🌿",
+      "emoji": "🌿"
+    },
+    {
+      "slug": "ai-branches",
+      "level": 3,
+      "status": "coming-soon",
+      "color": "#F59E0B",
+      "icon": "🌳",
+      "emoji": "🌳"
+    },
+    {
+      "slug": "ai-canopy",
+      "level": 4,
+      "status": "coming-soon",
+      "color": "#8B5CF6",
+      "icon": "🏕️",
+      "emoji": "🏕️"
+    },
+    {
+      "slug": "ai-forest",
+      "level": 5,
+      "status": "coming-soon",
+      "color": "#EF4444",
+      "icon": "🌲",
+      "emoji": "🌲"
+    }
+  ]
+}

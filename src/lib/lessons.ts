@@ -1,0 +1,93 @@
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+
+export interface LessonMeta {
+  slug: string;
+  title: string;
+  description: string;
+  order: number;
+  difficulty: "beginner" | "intermediate" | "advanced";
+  duration: number;
+  icon: string;
+  published: boolean;
+}
+
+export interface Lesson extends LessonMeta {
+  content: string;
+}
+
+function contentDir(programSlug: string): string {
+  return path.join(process.cwd(), "content", "programs", programSlug, "lessons");
+}
+
+export function getLessons(programSlug: string, locale: string): LessonMeta[] {
+  const baseDir = contentDir(programSlug);
+  const dir = path.join(baseDir, locale);
+  const enDir = path.join(baseDir, "en");
+
+  const enFiles = fs.existsSync(enDir)
+    ? fs.readdirSync(enDir).filter((f) => f.endsWith(".mdx"))
+    : [];
+
+  const localeFiles =
+    locale !== "en" && fs.existsSync(dir)
+      ? fs.readdirSync(dir).filter((f) => f.endsWith(".mdx"))
+      : [];
+
+  const allFiles = new Set([...enFiles, ...localeFiles]);
+
+  return Array.from(allFiles)
+    .map((file) => {
+      const localePath = path.join(dir, file);
+      const enPath = path.join(enDir, file);
+      const filePath =
+        locale !== "en" && localeFiles.includes(file) ? localePath : enPath;
+
+      if (!fs.existsSync(filePath)) return null;
+
+      const raw = fs.readFileSync(filePath, "utf-8");
+      const { data } = matter(raw);
+      return {
+        slug: file.replace(/\.mdx$/, ""),
+        title: data.title || "",
+        description: data.description || "",
+        order: data.order || 0,
+        difficulty: data.difficulty || "beginner",
+        duration: data.duration || 10,
+        icon: data.icon || "📚",
+        published: data.published !== false,
+      } as LessonMeta;
+    })
+    .filter((l): l is LessonMeta => l !== null && l.published)
+    .sort((a, b) => a.order - b.order);
+}
+
+export function getLesson(programSlug: string, locale: string, slug: string): Lesson | null {
+  const baseDir = contentDir(programSlug);
+  const localeDir = path.join(baseDir, locale);
+  let filePath = path.join(localeDir, `${slug}.mdx`);
+
+  if (!fs.existsSync(filePath)) {
+    filePath = path.join(baseDir, "en", `${slug}.mdx`);
+  }
+
+  if (!fs.existsSync(filePath)) {
+    return null;
+  }
+
+  const raw = fs.readFileSync(filePath, "utf-8");
+  const { data, content } = matter(raw);
+
+  return {
+    slug,
+    title: data.title || "",
+    description: data.description || "",
+    order: data.order || 0,
+    difficulty: data.difficulty || "beginner",
+    duration: data.duration || 10,
+    icon: data.icon || "📚",
+    published: data.published !== false,
+    content,
+  };
+}

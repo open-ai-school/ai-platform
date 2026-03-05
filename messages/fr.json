@@ -1,0 +1,207 @@
+{
+  "meta": {
+    "title": "Open AI School — Éducation IA Gratuite pour Tous",
+    "description": "Apprenez l'Intelligence Artificielle à partir de zéro, dans votre langue. Aucune expérience en programmation nécessaire."
+  },
+  "nav": {
+    "home": "Accueil",
+    "lessons": "Leçons",
+    "playground": "Terrain de jeu",
+    "about": "À propos",
+    "getStarted": "Commencer à Apprendre — C'est Gratuit",
+    "language": "Langue",
+    "dashboard": "Dashboard",
+    "programs": "Programs"
+  },
+  "hero": {
+    "badge": "100% Gratuit • Open Source • Dans Votre Langue",
+    "title": "Apprenez l'IA à partir de zéro.",
+    "titleHighlight": "Aucune expérience nécessaire.",
+    "subtitle": "Comprenez l'Intelligence Artificielle grâce à des leçons simples, des exemples amusants et des expériences pratiques — directement dans votre navigateur. Disponible en 5 langues.",
+    "cta": "Commencez Votre Première Leçon",
+    "ctaSecondary": "Essayer le Terrain de Jeu",
+    "students": "Étudiants apprenant",
+    "languages": "Langues",
+    "lessons": "Leçons interactives",
+    "cost": "Coût",
+    "openSource": "Open Source",
+    "freeValue": "Gratuit"
+  },
+  "features": {
+    "title": "Conçu pour les Débutants Absolus",
+    "subtitle": "Vous n'avez pas besoin de connaître la programmation, les maths ou quoi que ce soit de technique. Nous commençons par les bases.",
+    "beginner": {
+      "title": "Partez de Zéro",
+      "description": "Vous n'avez jamais touché au code ? Parfait. Nos leçons utilisent un langage quotidien et des exemples concrets que vous connaissez déjà — comme les recommandations Netflix ou la reconnaissance faciale de votre téléphone."
+    },
+    "interactive": {
+      "title": "Apprenez en Pratiquant",
+      "description": "Chaque leçon comporte des expériences pratiques que vous pouvez essayer directement dans votre navigateur. Entraînez une IA à reconnaître des dessins, enseignez à un chatbot à répondre et voyez les résultats instantanément."
+    },
+    "multilingual": {
+      "title": "Dans Votre Langue",
+      "description": "L'éducation à l'IA ne devrait pas être disponible uniquement en anglais. Apprenez en hindi, télougou, français, néerlandais ou anglais — dans la langue qui vous parle."
+    },
+    "free": {
+      "title": "Gratuit pour Toujours",
+      "description": "Pas d'abonnements, pas de murs payants, pas de 'niveau premium'. C'est de l'éducation open source — construite par la communauté, pour la communauté."
+    },
+    "community": {
+      "title": "Apprenez Ensemble",
+      "description": "Rejoignez une communauté d'apprenants curieux d'Inde, d'Europe, d'Afrique et d'ailleurs. Posez des questions, partagez vos expériences et aidez à traduire des leçons."
+    },
+    "practical": {
+      "title": "L'IA dans la Vie Réelle",
+      "description": "Comprenez comment l'IA fonctionne dans les choses que vous utilisez tous les jours — moteurs de recherche, assistants vocaux, réseaux sociaux, voitures autonomes et diagnostic médical."
+    }
+  },
+  "journey": {
+    "title": "Votre Parcours d'Apprentissage",
+    "subtitle": "Un chemin clair de débutant curieux à citoyen éclairé en IA",
+    "step1": {
+      "title": "Qu'est-ce que l'IA ?",
+      "description": "Commencez par les bases — ce qu'est réellement l'IA, en quoi elle diffère des logiciels ordinaires, et pourquoi tout le monde en parle."
+    },
+    "step2": {
+      "title": "Comment les Machines Apprennent",
+      "description": "Découvrez comment les ordinateurs apprennent à partir d'exemples, tout comme vous avez appris à reconnaître les chats et les chiens enfant."
+    },
+    "step3": {
+      "title": "Construisez Votre Première IA",
+      "description": "Entraînez un modèle d'IA simple dans votre navigateur — aucune installation nécessaire. Voyez-le apprendre et s'améliorer sous vos yeux."
+    },
+    "step4": {
+      "title": "L'IA dans le Monde Réel",
+      "description": "Explorez comment l'IA alimente les applications et services que vous utilisez quotidiennement — et réfléchissez de manière critique à son impact sur la société."
+    }
+  },
+  "founder": {
+    "title": "Rencontrez le Fondateur",
+    "description": "Créé par Ramesh Reddy Adutla — un ingénieur logiciel avec 14 ans d'expérience en Inde, en Belgique et à Londres. Passionné par rendre l'éducation à l'IA accessible à tous, quelle que soit la langue ou l'origine.",
+    "cta": "Lire l'Histoire Complète"
+  },
+  "cta": {
+    "title": "Prêt à Commencer ?",
+    "subtitle": "Votre première leçon ne prend que 10 minutes. Pas d'inscription nécessaire.",
+    "button": "Commencer la Leçon 1 : Qu'est-ce que l'IA ?",
+    "github": "Mettez une étoile sur GitHub"
+  },
+  "footer": {
+    "tagline": "Éducation IA gratuite pour tous, dans toutes les langues.",
+    "lessons": "Leçons",
+    "playground": "Terrain de jeu",
+    "about": "À propos",
+    "github": "GitHub",
+    "contributing": "Contribuer",
+    "coc": "Code de Conduite",
+    "sponsor": "Sponsor",
+    "madeWith": "Fait avec ❤️ depuis Londres, pour le monde",
+    "license": "Licence MIT — Open Source",
+    "learnHeader": "Apprendre",
+    "communityHeader": "Communauté",
+    "supportHeader": "Soutenir"
+  },
+  "about": {
+    "title": "À Propos d'Open AI School",
+    "mission": "Notre Mission",
+    "missionText": "Rendre l'éducation à l'IA accessible à chaque étudiant dans le monde — quelle que soit sa langue, son parcours ou qu'il ait jamais écrit une ligne de code.",
+    "story": "L'Histoire",
+    "storyText1": "Je suis Ramesh Reddy Adutla — un ingénieur logiciel avec 14 ans d'expérience. J'ai construit des systèmes chez JP Morgan, Sky et Marks & Spencer. J'ai vécu et travaillé en Inde, en Belgique (6 ans) et maintenant à Londres.",
+    "storyText2": "Au cours de ma carrière, j'ai vu à quel point l'IA devient transformatrice. Mais j'ai aussi vu que l'éducation à l'IA est concentrée dans les universités coûteuses des pays riches. Les étudiants en Inde, en Afrique et dans de nombreuses régions d'Europe n'ont pas le même accès.",
+    "storyText3": "Quand j'ai dit à un collègue senior que de nombreux étudiants en Inde sont laissés pour compte dans la révolution de l'IA, cela a touché un nerf. Cette conversation a planté une graine — et Open AI School est née pour changer cela.",
+    "storyText4": "Je parle anglais, français et télougou. J'ai vécu l'expérience multiculturelle. Je crois que la meilleure personne pour combler ce fossé est quelqu'un qui a été des deux côtés.",
+    "values": "Nos Valeurs",
+    "value1": {
+      "title": "Accessible",
+      "description": "Si vous pouvez ouvrir un navigateur web, vous pouvez apprendre l'IA. Pas de logiciel spécial, pas d'ordinateur puissant nécessaire."
+    },
+    "value2": {
+      "title": "Inclusif",
+      "description": "Éducation dans votre langue, avec des exemples de votre culture. L'IA n'est pas qu'une affaire de Silicon Valley."
+    },
+    "value3": {
+      "title": "Honnête",
+      "description": "Nous enseignons ce que l'IA peut faire ET ce qu'elle ne peut pas. Pas de battage médiatique, pas de peur — juste la compréhension."
+    },
+    "value4": {
+      "title": "Ouvert",
+      "description": "Chaque leçon, chaque ligne de code est open source. Forkez, traduisez, améliorez."
+    },
+    "timeline": "Parcours",
+    "connect": "Connecter",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "devto": "Dev.to",
+    "twitter": "X (Twitter)",
+    "sponsor": "☕ Offrir un Café",
+    "subtitle": "Ingénieur logiciel • Éducateur • Contributeur Open Source",
+    "locations": "🇮🇳 Inde → 🇧🇪 Belgique (6 ans) → 🇬🇧 Londres • 14 ans d'expérience",
+    "timeline2011": "Début de carrière en ingénierie logicielle en Inde 🇮🇳",
+    "timeline2014": "Déménagement en Belgique — systèmes fintech, apprentissage du français 🇧🇪",
+    "timeline2017": "JP Morgan — plateformes de trading et systèmes haute performance 💰",
+    "timeline2019": "Sky — plateforme de streaming pour des millions d'utilisateurs 📺",
+    "timeline2020": "Déménagement à Londres 🇬🇧",
+    "timeline2021": "Microservices cloud-native et pipelines de données à grande échelle 🛒",
+    "timeline2024": "Contributions open-source — Apache Gravitino, GOV.UK, Spring Boot MCP 🌐",
+    "timeline2025": "Fondation d'Open AI School — éducation IA gratuite pour tous 🎓"
+  },
+  "lessons": {
+    "title": "Leçons",
+    "subtitle": "Commencez par le tout début. Chaque leçon s'appuie sur la précédente — pas de précipitation, pas d'hypothèses.",
+    "difficulty": {
+      "beginner": "Débutant",
+      "intermediate": "Intermédiaire",
+      "advanced": "Avancé"
+    },
+    "duration": "min de lecture",
+    "startLesson": "Commencer la Leçon",
+    "comingSoon": "Bientôt Disponible",
+    "previousLesson": "Leçon Précédente",
+    "nextLesson": "Leçon Suivante",
+    "backToLessons": "← Retour aux Leçons",
+    "comingSoon1": {
+      "title": "L'IA dans le monde réel"
+    },
+    "comingSoon2": {
+      "title": "Éthique et biais de l'IA"
+    },
+    "comingSoon3": {
+      "title": "Comment fonctionnent les chatbots"
+    }
+  },
+  "playground": {
+    "title": "Terrain de Jeu IA",
+    "subtitle": "Expérimentez avec de vrais modèles d'IA directement dans votre navigateur. Pas d'installation, pas de code — jouez !",
+    "imageClassifier": {
+      "title": "🎨 Reconnaisseur de Dessins",
+      "description": "Dessinez quelque chose et regardez l'IA deviner ce que c'est ! Cela montre comment l'IA apprend à reconnaître des motifs — la même technologie qui permet à votre téléphone d'identifier des objets sur les photos.",
+      "draw": "Dessinez quelque chose ici",
+      "clear": "Effacer",
+      "guess": "L'IA pense que c'est :",
+      "confidence": "Confiance",
+      "howItWorks": "Comment ça marche ?",
+      "explanation": "Cette IA a été entraînée sur des milliers de dessins de personnes comme vous. Elle a appris des motifs — comme des cercles pour les visages, quatre pattes pour les chiens. Quand vous dessinez, elle compare votre dessin aux motifs qu'elle a déjà vus et fait sa meilleure estimation.",
+      "shapes": {
+        "circle": "Cercle",
+        "square": "Carré",
+        "triangle": "Triangle",
+        "line": "Ligne",
+        "star": "Étoile"
+      }
+    },
+    "sentiment": {
+      "title": "💭 Détecteur d'Humeur",
+      "description": "Tapez une phrase et l'IA détectera l'humeur — joyeuse, triste, en colère ou neutre.",
+      "input": "Tapez une phrase...",
+      "analyse": "Détecter l'Humeur",
+      "result": "Humeur détectée :",
+      "comingSoon": "Bientôt disponible — aidez-nous à le construire !",
+      "contribute": "Contribuer"
+    }
+  },
+  "programs": {
+    "badge": "5 Learning Levels",
+    "title": "Choose Your Learning Path",
+    "subtitle": "From absolute beginner to AI expert — pick the level that matches where you are right now."
+  }
+}

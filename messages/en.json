@@ -1,0 +1,207 @@
+{
+  "meta": {
+    "title": "Open AI School — Free AI Education for Everyone",
+    "description": "Learn Artificial Intelligence from scratch, in your language. No coding experience needed."
+  },
+  "nav": {
+    "home": "Home",
+    "lessons": "Lessons",
+    "playground": "Playground",
+    "dashboard": "Dashboard",
+    "about": "About",
+    "getStarted": "Start Learning — It's Free",
+    "language": "Language",
+    "programs": "Programs"
+  },
+  "hero": {
+    "badge": "100% Free • Open Source • In Your Language",
+    "title": "Learn AI from Zero.",
+    "titleHighlight": "No Experience Needed.",
+    "subtitle": "Understand Artificial Intelligence through simple lessons, fun examples, and hands-on experiments — right in your browser. Available in 5 languages.",
+    "cta": "Start Your First Lesson",
+    "ctaSecondary": "Try the Playground",
+    "students": "Students learning",
+    "languages": "Languages",
+    "lessons": "Interactive lessons",
+    "cost": "Cost",
+    "openSource": "Open Source",
+    "freeValue": "Free"
+  },
+  "features": {
+    "title": "Designed for Absolute Beginners",
+    "subtitle": "You don't need to know programming, maths, or anything technical. We start from the very basics.",
+    "beginner": {
+      "title": "Start from Zero",
+      "description": "Never touched code? Perfect. Our lessons use everyday language and real-world examples you already understand — like how Netflix recommends movies or how your phone recognises your face."
+    },
+    "interactive": {
+      "title": "Learn by Doing",
+      "description": "Every lesson has hands-on experiments you can try right in your browser. Train an AI to recognise drawings, teach a chatbot to respond, and see results instantly."
+    },
+    "multilingual": {
+      "title": "In Your Language",
+      "description": "AI education shouldn't only be available in English. Learn in Hindi, Telugu, French, Dutch, or English — whichever feels like home."
+    },
+    "free": {
+      "title": "Free Forever",
+      "description": "No subscriptions, no paywalls, no 'premium tier'. This is open-source education — built by the community, for the community."
+    },
+    "community": {
+      "title": "Learn Together",
+      "description": "Join a community of curious learners from India, Europe, Africa, and beyond. Ask questions, share your experiments, and help translate lessons."
+    },
+    "practical": {
+      "title": "Real-World AI",
+      "description": "Understand how AI works in things you use every day — search engines, voice assistants, social media feeds, self-driving cars, and medical diagnosis."
+    }
+  },
+  "journey": {
+    "title": "Your Learning Journey",
+    "subtitle": "A clear path from curious beginner to AI-literate citizen",
+    "step1": {
+      "title": "What is AI?",
+      "description": "Start with the basics — what AI actually is, how it's different from regular software, and why everyone's talking about it."
+    },
+    "step2": {
+      "title": "How Machines Learn",
+      "description": "Discover how computers learn from examples, just like you learned to recognise cats and dogs as a child."
+    },
+    "step3": {
+      "title": "Build Your First AI",
+      "description": "Train a simple AI model in your browser — no installation needed. See it learn and improve right before your eyes."
+    },
+    "step4": {
+      "title": "AI in the Real World",
+      "description": "Explore how AI powers the apps and services you use daily — and think critically about its impact on society."
+    }
+  },
+  "founder": {
+    "title": "Meet the Founder",
+    "description": "Built by Ramesh Reddy Adutla — a software engineer with 14 years of experience across India, Belgium, and London. Passionate about making AI education accessible to everyone, regardless of language or background.",
+    "cta": "Read Full Story"
+  },
+  "cta": {
+    "title": "Ready to Start?",
+    "subtitle": "Your first lesson takes just 10 minutes. No signup required.",
+    "button": "Begin Lesson 1: What is AI?",
+    "github": "Star us on GitHub"
+  },
+  "footer": {
+    "tagline": "Free AI education for everyone, in every language.",
+    "lessons": "Lessons",
+    "playground": "Playground",
+    "about": "About",
+    "github": "GitHub",
+    "contributing": "Contribute",
+    "coc": "Code of Conduct",
+    "sponsor": "Sponsor",
+    "madeWith": "Made with ❤️ from London, for the world",
+    "license": "MIT License — Open Source",
+    "learnHeader": "Learn",
+    "communityHeader": "Community",
+    "supportHeader": "Support"
+  },
+  "about": {
+    "title": "About Open AI School",
+    "mission": "Our Mission",
+    "missionText": "To make AI education accessible to every student in the world — regardless of their language, background, or whether they've ever written a line of code.",
+    "story": "The Story",
+    "storyText1": "I'm Ramesh Reddy Adutla — a software engineer with 14 years of experience. I've built systems at JP Morgan, Sky, and Marks & Spencer. I've lived and worked in India, Belgium (6 years), and now London.",
+    "storyText2": "In my career, I've seen how transformative AI is becoming. But I've also seen that AI education is concentrated in expensive universities in wealthy countries. Students in India, Africa, and many parts of Europe don't have the same access.",
+    "storyText3": "When I told a senior colleague that many students in India are being left behind in the AI revolution, it struck a nerve. That conversation planted a seed — and Open AI School was born to change that.",
+    "storyText4": "I speak English, French, and Telugu. I've lived the multicultural experience. I believe the best person to bridge this gap is someone who's been on both sides of it.",
+    "values": "Our Values",
+    "value1": {
+      "title": "Accessible",
+      "description": "If you can open a web browser, you can learn AI. No special software, no powerful computer needed."
+    },
+    "value2": {
+      "title": "Inclusive",
+      "description": "Education in your language, with examples from your culture. AI isn't just a Silicon Valley thing."
+    },
+    "value3": {
+      "title": "Honest",
+      "description": "We teach what AI can do AND what it can't. No hype, no fear — just understanding."
+    },
+    "value4": {
+      "title": "Open",
+      "description": "Every lesson, every line of code is open source. Fork it, translate it, improve it."
+    },
+    "timeline": "Journey",
+    "connect": "Connect",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "devto": "Dev.to",
+    "twitter": "X (Twitter)",
+    "sponsor": "☕ Buy Me a Coffee",
+    "subtitle": "Software Engineer • Educator • Open Source Contributor",
+    "locations": "🇮🇳 India → 🇧🇪 Belgium (6 years) → 🇬🇧 London • 14 years experience",
+    "timeline2011": "Started career in software engineering in India 🇮🇳",
+    "timeline2014": "Moved to Belgium — built fintech systems, learned French 🇧🇪",
+    "timeline2017": "JP Morgan — trading platforms and high-performance systems ��",
+    "timeline2019": "Sky — streaming platform serving millions of users 📺",
+    "timeline2020": "Moved to London 🇬🇧",
+    "timeline2021": "Cloud-native microservices and data pipelines at scale 🛒",
+    "timeline2024": "Open-source contributions — Apache Gravitino, GOV.UK, Spring Boot MCP 🌐",
+    "timeline2025": "Founded Open AI School — free AI education for everyone 🎓"
+  },
+  "lessons": {
+    "title": "Lessons",
+    "subtitle": "Start from the very beginning. Each lesson builds on the last — no rushing, no assumptions.",
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "duration": "min read",
+    "startLesson": "Start Lesson",
+    "comingSoon": "Coming Soon",
+    "previousLesson": "Previous Lesson",
+    "nextLesson": "Next Lesson",
+    "backToLessons": "← Back to All Lessons",
+    "comingSoon1": {
+      "title": "AI in the Real World"
+    },
+    "comingSoon2": {
+      "title": "AI Ethics & Bias"
+    },
+    "comingSoon3": {
+      "title": "How Chatbots Work"
+    }
+  },
+  "playground": {
+    "title": "AI Playground",
+    "subtitle": "Experiment with real AI models right in your browser. No installation, no coding — just play!",
+    "imageClassifier": {
+      "title": "🎨 Drawing Recogniser",
+      "description": "Draw something and watch AI guess what it is! This shows how AI learns to recognise patterns — the same technology that lets your phone identify objects in photos.",
+      "draw": "Draw something here",
+      "clear": "Clear",
+      "guess": "AI thinks this is:",
+      "confidence": "Confidence",
+      "howItWorks": "How does this work?",
+      "explanation": "This AI was trained on thousands of drawings by people like you. It learned patterns — like circles for faces, four legs for dogs. When you draw, it compares your drawing to patterns it's seen before and makes its best guess.",
+      "shapes": {
+        "circle": "Circle",
+        "square": "Square",
+        "triangle": "Triangle",
+        "line": "Line",
+        "star": "Star"
+      }
+    },
+    "sentiment": {
+      "title": "💭 Mood Detector",
+      "description": "Type a sentence and AI will detect the mood — happy, sad, angry, or neutral. This is the same technology behind social media monitoring and customer feedback analysis.",
+      "input": "Type a sentence...",
+      "analyse": "Detect Mood",
+      "result": "Detected mood:",
+      "comingSoon": "Coming soon — help us build it!",
+      "contribute": "Contribute"
+    }
+  },
+  "programs": {
+    "badge": "5 Learning Levels",
+    "title": "Choose Your Learning Path",
+    "subtitle": "From absolute beginner to AI expert — pick the level that matches where you are right now."
+  }
+}
