@@ -4,6 +4,7 @@ import Image from "next/image";
 import { CourseProgress } from "@open-ai-school/ai-ui-library";
 import { WelcomeBanner } from "@open-ai-school/ai-ui-library";
 import { ScrollReveal } from "@open-ai-school/ai-ui-library";
+import { ComingSoonCard } from "@/components/ui/ComingSoon";
 import { FloatingParticles } from "@open-ai-school/ai-ui-library";
 
 export default async function HomePage({
@@ -126,11 +127,7 @@ export default async function HomePage({
                           </div>
                         </Link>
                       ) : (
-                        <button key={program.slug} onClick={() => alert(`${program.title} — Coming Soon!`)} className="text-center p-3 rounded-xl border border-dashed border-[var(--color-border)] opacity-60 hover:opacity-80 hover:border-indigo-400 transition-all cursor-pointer">
-                          <div className="text-2xl mb-1">{program.icon}</div>
-                          <div className="text-[10px] font-bold truncate">{program.title.replace("AI ", "")}</div>
-                          <div className="text-[8px] text-[var(--color-text-muted)]">Soon</div>
-                        </button>
+                        <ComingSoonCard key={program.slug} icon={program.icon} label={program.title.replace("AI ", "")} />
                       )
                     ))}
                   </div>
@@ -157,11 +154,7 @@ export default async function HomePage({
                           </div>
                         </Link>
                       ) : (
-                        <button key={program.slug} onClick={() => alert(`${program.title} — Coming Soon!`)} className="text-center p-3 rounded-xl border border-dashed border-[var(--color-border)] opacity-60 hover:opacity-80 hover:border-indigo-400 transition-all cursor-pointer">
-                          <div className="text-2xl mb-1">{program.icon}</div>
-                          <div className="text-[10px] font-bold truncate">{program.title.replace("AI ", "")}</div>
-                          <div className="text-[8px] text-[var(--color-text-muted)]">Soon</div>
-                        </button>
+                        <ComingSoonCard key={program.slug} icon={program.icon} label={program.title.replace("AI ", "")} />
                       )
                     ))}
                   </div>

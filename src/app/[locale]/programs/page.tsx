@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getProgramsByTrack } from "@/lib/programs";
 import { ScrollReveal } from "@open-ai-school/ai-ui-library";
+import { ComingSoonProgramCard } from "@/components/ui/ComingSoon";
 import type { ProgramMeta } from "@/lib/programs";
 
 const BASE_URL = "https://openaischool.vercel.app";
@@ -228,8 +229,8 @@ function ProgramCard({
   return isActive ? (
     <Link href={`${basePath}/programs/${program.slug}`} className="block h-full">{card}</Link>
   ) : (
-    <button onClick={() => alert(`${program.title} is coming soon! We're building this module right now.`)} className="block h-full text-left w-full hover:opacity-80 transition-opacity cursor-pointer">
+    <ComingSoonProgramCard title={program.title}>
       {card}
-    </button>
+    </ComingSoonProgramCard>
   );
 }
