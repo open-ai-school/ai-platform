@@ -1,14 +1,19 @@
 <div align="center">
 
-# 🌐 AI Platform
+# 🌐 Open AI School — Platform
 
-**The main Next.js app shell for [Open AI School](https://openaischool.vercel.app)**
+**A free, multilingual AI education platform for everyone**
 
-[![Live](https://img.shields.io/badge/Live-openaischool.vercel.app-6366f1)](https://openaischool.vercel.app)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Live](https://img.shields.io/badge/🚀_Live-openaischool.vercel.app-6366f1)](https://openaischool.vercel.app)
+[![CI](https://github.com/open-ai-school/ai-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/open-ai-school/ai-platform/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![i18n](https://img.shields.io/badge/i18n-5_languages-orange)](https://openaischool.vercel.app)
 
-The central application shell that powers Open AI School — handling routing, authentication, internationalization, and program discovery. Consumes the shared [`@open-ai-school/ai-ui-library`](https://www.npmjs.com/package/@open-ai-school/ai-ui-library) for all UI components.
+The main application shell that powers **Open AI School** — routing, authentication, internationalization, and program discovery. Built with Next.js 16, TypeScript strict mode, and the shared [`@open-ai-school/ai-ui-library`](https://www.npmjs.com/package/@open-ai-school/ai-ui-library) design system.
+
+[**🚀 Start Learning**](https://openaischool.vercel.app) · [**🎨 Storybook**](https://open-ai-school.github.io/ai-ui-library/) · [**📦 npm**](https://www.npmjs.com/package/@open-ai-school/ai-ui-library)
 
 </div>
 
@@ -16,73 +21,138 @@ The central application shell that powers Open AI School — handling routing, a
 
 ## ✨ Features
 
-- 🗂️ **Multi-program routing** — `/programs/ai-seeds/lessons/what-is-ai`
+- 🗂️ **Multi-program architecture** — extensible program system (`/programs/ai-seeds/lessons/...`)
 - 🔐 **Authentication** — GitHub OAuth via NextAuth.js + guest mode
-- 🌍 **Internationalization** — 5 languages (EN, FR, NL, HI, TE) via next-intl
-- 📝 **MDX lessons** — Rich content with frontmatter metadata
-- 🎨 **Shared UI** — All components from `@open-ai-school/ai-ui-library`
-- 🌙 **Dark/light mode** — System preference + manual toggle
-- 📊 **Progress tracking** — Per-program, localStorage-based
+- 🌍 **5 languages** — English, French, Dutch, Hindi, Telugu via next-intl
+- 📝 **MDX lessons** — Rich content with frontmatter, syntax highlighting, illustrations
+- 🎨 **Shared design system** — All UI from [`@open-ai-school/ai-ui-library`](https://www.npmjs.com/package/@open-ai-school/ai-ui-library)
+- 🌙 **Dark / light mode** — System preference detection + manual toggle
+- 📊 **Progress tracking** — Per-program, localStorage-based with dashboard
 - 🎮 **AI Playground** — Interactive drawing recogniser
+- ⚡ **Auto-deploy** — Content changes in any course repo trigger platform rebuild
 
-## 🏗️ Architecture
+## 🏛️ Platform Architecture
+
+```mermaid
+graph TB
+    subgraph "GitHub Org: open-ai-school"
+        UI["🎨 ai-ui-library<br/><small>Design System → npm</small>"]
+        PLAT["🌐 ai-platform<br/><small>Next.js App Shell → Vercel</small>"]
+        SEEDS["🌱 ai-seeds<br/><small>Level 1: Beginners</small>"]
+        SPROUTS["🌿 ai-sprouts<br/><small>Level 2: Foundations</small>"]
+        FUTURE["🌳 ai-branches / ai-canopy / ai-forest<br/><small>Levels 3–5 (coming soon)</small>"]
+    end
+
+    UI -->|npm install| PLAT
+    SEEDS -->|git submodule| PLAT
+    SPROUTS -->|git submodule| PLAT
+    FUTURE -.->|git submodule| PLAT
+    SEEDS -->|repository_dispatch| PLAT
+    SPROUTS -->|repository_dispatch| PLAT
+
+    PLAT -->|deploy| VERCEL["▲ Vercel<br/><small>openaischool.vercel.app</small>"]
+    UI -->|publish| NPM["📦 npm<br/><small>@open-ai-school/ai-ui-library</small>"]
+    UI -->|deploy| GHP["📖 GitHub Pages<br/><small>Storybook</small>"]
+```
+
+## 🌱 Learning Path
+
+Open AI School follows a **nature growth metaphor** — a seed grows into a forest:
+
+| Level | Program | Description | Status |
+|-------|---------|-------------|--------|
+| 1 | [🌱 AI Seeds](https://github.com/open-ai-school/ai-seeds) | Absolute beginners — no code, no maths | ✅ Live |
+| 2 | [🌿 AI Sprouts](https://github.com/open-ai-school/ai-sprouts) | Foundations — data, algorithms, neural nets | 🚧 Coming soon |
+| 3 | 🌳 AI Branches | Applied AI — real-world projects | 📋 Planned |
+| 4 | 🏕️ AI Canopy | Advanced topics — deep learning, NLP | 📋 Planned |
+| 5 | 🌲 AI Forest | Expert / research — cutting edge AI | 📋 Planned |
+
+## 📁 Project Structure
 
 ```
 ai-platform/
 ├── src/
-│   ├── app/
-│   │   ├── [locale]/          # i18n-aware routes
-│   │   │   ├── page.tsx       # Homepage
-│   │   │   ├── about/         # About page
-│   │   │   ├── dashboard/     # User dashboard
-│   │   │   ├── playground/    # AI playground
-│   │   │   ├── lessons/       # Legacy lesson routes
-│   │   │   └── programs/      # Multi-program routes
-│   │   │       └── [programSlug]/
-│   │   │           └── lessons/[slug]/
-│   │   ├── api/auth/          # NextAuth.js endpoints
-│   │   └── globals.css        # Global styles + tokens
+│   ├── app/[locale]/              # i18n-aware routes
+│   │   ├── page.tsx               # Homepage with program picker
+│   │   ├── programs/[programSlug]/lessons/[slug]/
+│   │   ├── dashboard/             # Progress dashboard
+│   │   ├── playground/            # AI playground
+│   │   └── about/                 # About page
 │   ├── components/
-│   │   ├── auth/              # SignIn, UserMenu
-│   │   ├── lessons/           # LessonRenderer, LessonComplete
-│   │   ├── playground/        # DrawingRecogniser
-│   │   └── ui/                # App-specific UI (Navbar, Footer)
-│   ├── hooks/                 # useProgress, useGuestProfile
-│   ├── i18n/                  # Locale config
-│   ├── lib/                   # Data layer (programs, lessons)
-│   └── middleware.ts          # i18n routing middleware
-├── content/                   # MDX lessons + program registry
-├── messages/                  # Translation files
-└── public/                    # Static assets
+│   │   ├── auth/                  # SignIn, UserMenu
+│   │   ├── lessons/               # LessonRenderer, LessonComplete
+│   │   ├── playground/            # DrawingRecogniser
+│   │   └── ui/                    # Navbar, Footer, LanguageSwitcher
+│   ├── hooks/                     # useProgress, useGuestProfile
+│   ├── i18n/                      # Locale config + routing
+│   ├── lib/                       # Data layer (programs, lessons)
+│   └── middleware.ts              # i18n routing middleware
+├── content/
+│   ├── programs.json              # Program registry
+│   └── programs/
+│       ├── ai-seeds/              # ← git submodule
+│       └── ai-sprouts/            # ← git submodule
+├── messages/                      # Translation files (en, fr, nl, hi, te)
+└── public/                        # Static assets
 ```
 
 ## 🚀 Quick Start
 
 ```bash
-git clone https://github.com/open-ai-school/ai-platform.git
+# Clone with submodules (important!)
+git clone --recurse-submodules https://github.com/open-ai-school/ai-platform.git
 cd ai-platform
+
+# Install dependencies
 npm install
+
+# Start dev server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
+> **Note:** Content repos are git submodules. If you cloned without `--recurse-submodules`, run:
+> ```bash
+> git submodule update --init --recursive
+> ```
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|-----------|---------|
+| [Next.js 16](https://nextjs.org/) | App framework (App Router) |
+| [TypeScript](https://www.typescriptlang.org/) | Type safety (strict mode) |
+| [Tailwind CSS 4](https://tailwindcss.com/) | Utility-first styling |
+| [next-intl](https://next-intl.dev/) | Internationalization |
+| [NextAuth.js](https://next-auth.js.org/) | Authentication (GitHub OAuth) |
+| [MDX](https://mdxjs.com/) | Rich lesson content |
+| [Framer Motion](https://www.framer.com/motion/) | Animations |
+| [Vercel](https://vercel.com/) | Deployment |
+
 ## 🌐 Deployment
 
-Deployed automatically to [Vercel](https://vercel.com) on push to `main`.
+Deployed automatically to [Vercel](https://vercel.com) on every push to `main`. Content updates in course repos (ai-seeds, ai-sprouts, etc.) trigger a platform rebuild via `repository_dispatch`.
 
-**Live:** https://openaischool.vercel.app
+**Live:** [openaischool.vercel.app](https://openaischool.vercel.app)
+
+## 🤝 Contributing
+
+We welcome contributions! Whether it's:
+- 🌍 **Translating** lessons to new languages
+- 📝 **Writing** new course content
+- 🎨 **Improving** UI components ([ai-ui-library](https://github.com/open-ai-school/ai-ui-library))
+- 🐛 **Fixing** bugs or improving accessibility
+
+See the repo-specific contributing guides for details.
 
 ## 📦 Related Repos
 
-| Repo | Description |
-|------|-------------|
-| [`ai-ui-library`](https://github.com/open-ai-school/ai-ui-library) | 🎨 Shared design system ([npm](https://www.npmjs.com/package/@open-ai-school/ai-ui-library)) |
-| [`ai-seeds`](https://github.com/open-ai-school/ai-seeds) | 🌱 Level 1: Absolute beginners |
-| `ai-sprouts` | 🌿 Level 2: Foundations (coming soon) |
-| `ai-branches` | 🌳 Level 3: Applied AI (coming soon) |
-| `ai-canopy` | 🏕️ Level 4: Advanced (coming soon) |
-| `ai-forest` | 🌲 Level 5: Expert (coming soon) |
+| Repo | Description | Links |
+|------|-------------|-------|
+| [`ai-ui-library`](https://github.com/open-ai-school/ai-ui-library) | 🎨 Shared design system | [npm](https://www.npmjs.com/package/@open-ai-school/ai-ui-library) · [Storybook](https://open-ai-school.github.io/ai-ui-library/) |
+| [`ai-seeds`](https://github.com/open-ai-school/ai-seeds) | 🌱 Level 1: Absolute beginners | [Live](https://openaischool.vercel.app/programs/ai-seeds) |
+| [`ai-sprouts`](https://github.com/open-ai-school/ai-sprouts) | 🌿 Level 2: Foundations | Coming soon |
 
 ## 📄 License
 
