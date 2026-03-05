@@ -2,9 +2,9 @@
 
 # 🌐 AI Platform
 
-**The main Next.js app shell for [Open AI School](https://open-ai-school.vercel.app)**
+**The main Next.js app shell for [Open AI School](https://openaischool.vercel.app)**
 
-[![Live](https://img.shields.io/badge/Live-open--ai--school.vercel.app-6366f1)](https://open-ai-school.vercel.app)
+[![Live](https://img.shields.io/badge/Live-openaischool.vercel.app-6366f1)](https://openaischool.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
@@ -71,7 +71,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Deployed automatically to [Vercel](https://vercel.com) on push to `main`.
 
-**Live:** https://open-ai-school.vercel.app
+**Live:** https://openaischool.vercel.app
 
 ## 📦 Related Repos
 
