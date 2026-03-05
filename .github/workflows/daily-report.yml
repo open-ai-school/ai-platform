@@ -1,0 +1,93 @@
+name: Daily Analytics Report
+
+on:
+  schedule:
+    # Run daily at 8:00 AM UTC (8:00 AM GMT / 1:30 PM IST)
+    - cron: "0 8 * * *"
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: read
+
+jobs:
+  analytics-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gather analytics and send report
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          SITE_URL: https://openaischool.vercel.app
+        run: |
+          echo "📊 Open AI School — Daily Report"
+          echo "================================="
+          echo "Date: $(date -u '+%Y-%m-%d %H:%M UTC')"
+          echo ""
+
+          # --- Site Health Check ---
+          echo "🏥 Site Health"
+          echo "─────────────"
+          FAILED=0
+          PAGES=("/" "/en" "/en/programs" "/en/playground" "/en/about")
+          for path in "${PAGES[@]}"; do
+            STATUS=$(curl -sL -o /dev/null -w "%{http_code}" "${SITE_URL}${path}" --max-time 10)
+            if [ "$STATUS" = "200" ]; then
+              echo "  ✅ ${path} → ${STATUS}"
+            else
+              echo "  ❌ ${path} → ${STATUS}"
+              FAILED=1
+            fi
+          done
+
+          # --- SEO Health ---
+          echo ""
+          echo "🔍 SEO Health"
+          echo "─────────────"
+          ROBOTS=$(curl -sL -o /dev/null -w "%{http_code}" "${SITE_URL}/robots.txt" --max-time 5)
+          SITEMAP=$(curl -sL -o /dev/null -w "%{http_code}" "${SITE_URL}/sitemap.xml" --max-time 5)
+          MANIFEST=$(curl -sL -o /dev/null -w "%{http_code}" "${SITE_URL}/manifest.webmanifest" --max-time 5)
+          echo "  robots.txt:  ${ROBOTS}"
+          echo "  sitemap.xml: ${SITEMAP}"
+          echo "  manifest:    ${MANIFEST}"
+
+          SITEMAP_URLS=$(curl -sL "${SITE_URL}/sitemap.xml" --max-time 10 | grep -c "<url>")
+          echo "  Sitemap URLs: ${SITEMAP_URLS}"
+
+          # --- Performance (response times) ---
+          echo ""
+          echo "⚡ Response Times"
+          echo "─────────────────"
+          for path in "/" "/en/programs" "/en/playground"; do
+            TIME=$(curl -sL -o /dev/null -w "%{time_total}" "${SITE_URL}${path}" --max-time 15)
+            echo "  ${path}: ${TIME}s"
+          done
+
+          # --- SSL Certificate ---
+          echo ""
+          echo "🔒 SSL Certificate"
+          echo "───────────────────"
+          EXPIRY=$(echo | openssl s_client -connect openaischool.vercel.app:443 -servername openaischool.vercel.app 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
+          echo "  Expires: ${EXPIRY:-Unable to check}"
+
+          # --- GitHub Repo Stats ---
+          echo ""
+          echo "📦 Repository"
+          echo "─────────────"
+          REPO_DATA=$(curl -s -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/open-ai-school/ai-platform")
+          STARS=$(echo "$REPO_DATA" | python3 -c "import sys,json;print(json.load(sys.stdin).get('stargazers_count','?'))" 2>/dev/null)
+          FORKS=$(echo "$REPO_DATA" | python3 -c "import sys,json;print(json.load(sys.stdin).get('forks_count','?'))" 2>/dev/null)
+          ISSUES=$(echo "$REPO_DATA" | python3 -c "import sys,json;print(json.load(sys.stdin).get('open_issues_count','?'))" 2>/dev/null)
+          echo "  ⭐ Stars: ${STARS}"
+          echo "  🍴 Forks: ${FORKS}"
+          echo "  📋 Open Issues: ${ISSUES}"
+
+          # --- Summary ---
+          echo ""
+          echo "════════════════════════════════"
+          if [ "$FAILED" = "1" ]; then
+            echo "⚠️  ALERT: Some pages are returning errors!"
+          else
+            echo "✅ All systems operational"
+          fi
+          echo "📊 Full analytics: https://vercel.com/open-ai-school/ai-platform/analytics"
+          echo "🔍 Search Console: https://search.google.com/search-console"
+          echo "════════════════════════════════"

@@ -78,7 +78,7 @@ export async function generateMetadata({
     },
     verification: {
       // Add Google Search Console verification when available
-      // google: "your-verification-code",
+      google: "googlec0ba8018e06a46df",
     },
     category: "education",
   };
