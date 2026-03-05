@@ -71,7 +71,7 @@ export default async function ProgramLessonsPage({
             >
               <div className="flex items-start gap-5 p-6 rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)]">
                 {lessonImages[lesson.slug] && (
-                  <div className="hidden sm:block w-24 h-24 rounded-xl overflow-hidden shrink-0 border border-[var(--color-border)] bg-white">
+                  <div className="hidden sm:block w-24 h-24 rounded-xl overflow-hidden shrink-0 border border-[var(--color-border)] bg-[var(--color-bg-card)]">
                     <Image
                       src={lessonImages[lesson.slug]}
                       alt={lesson.title}

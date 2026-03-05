@@ -68,7 +68,7 @@ export default async function HomePage({
 
             {/* Hero Illustration */}
             <div className="my-12 max-w-2xl mx-auto animate-scale-in" style={{ animationDelay: "500ms" }}>
-              <div className="rounded-3xl overflow-hidden bg-white shadow-lg">
+              <div className="rounded-3xl overflow-hidden bg-[var(--color-bg-card)] shadow-lg">
                 <Image
                   src="/images/hero/hero-brain.svg"
                   alt="AI learning illustration with neural network and brain"
@@ -123,7 +123,7 @@ export default async function HomePage({
           {/* Features illustration */}
           <ScrollReveal animation="scale-in">
             <div className="mb-12 max-w-4xl mx-auto">
-              <div className="rounded-2xl overflow-hidden bg-white border border-[var(--color-border)]">
+              <div className="rounded-2xl overflow-hidden bg-[var(--color-bg-card)] border border-[var(--color-border)]">
                 <Image
                   src="/images/hero/features.svg"
                   alt="Platform features: 5 languages, 100% free, hands-on projects, beginner friendly"
@@ -242,7 +242,7 @@ export default async function HomePage({
 
           <ScrollReveal animation="scale-in">
             <div className="max-w-3xl mx-auto mb-12">
-              <div className="rounded-2xl overflow-hidden bg-white border border-[var(--color-border)]">
+              <div className="rounded-2xl overflow-hidden bg-[var(--color-bg-card)] border border-[var(--color-border)]">
                 <Image
                   src="/images/hero/learning-path.svg"
                   alt="Your learning journey from What is AI to building your own AI"
