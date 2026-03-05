@@ -342,19 +342,10 @@ export default async function HomePage({
 
       <hr className="section-divider" />
 
-      {/* Meet the Creator — AlgoMaster-inspired */}
+      {/* Founder */}
       <section className="py-20 md:py-28 relative overflow-hidden">
         <div className="absolute inset-0 bg-mesh" />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 relative">
-          <ScrollReveal animation="fade-up">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-sm font-medium mb-4">
-                👋 {t("founder.badge")}
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold">{t("founder.title")}</h2>
-            </div>
-          </ScrollReveal>
-
           <ScrollReveal animation="scale-in">
             <div className="gradient-border rounded-3xl overflow-hidden">
               <div className="bg-[var(--color-bg-card)] p-8 md:p-12">
@@ -365,11 +356,12 @@ export default async function HomePage({
                       <div className="absolute -inset-3 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-50 blur-xl animate-pulse-glow" />
                       <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden ring-4 ring-[var(--color-primary)]/30 shadow-2xl">
                         <Image
-                          src="/images/creator.png"
+                          src="/images/founder.jpg"
                           alt="Ramesh Reddy Adutla — Founder of Open AI School"
-                          width={192}
-                          height={192}
+                          width={400}
+                          height={400}
                           className="w-full h-full object-cover"
+                          priority
                         />
                       </div>
                     </div>
@@ -408,8 +400,8 @@ export default async function HomePage({
                 {/* Stats bar */}
                 <div className="mt-8 pt-8 border-t border-[var(--color-border)] grid grid-cols-2 md:grid-cols-4 gap-6">
                   {[
-                    { value: "10+", label: t("founder.statYears") },
-                    { value: "Open Source", label: t("founder.statPassion") },
+                    { value: "14+", label: t("founder.statYears") },
+                    { value: "3", label: t("founder.statCountries") },
                     { value: "5", label: t("founder.statLanguages") },
                     { value: "100%", label: t("founder.statFree") },
                   ].map((stat) => (

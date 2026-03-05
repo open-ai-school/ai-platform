@@ -76,15 +76,13 @@
     }
   },
   "founder": {
-    "title": "Meet the Founder",
-    "description": "Built by Ramesh Reddy Adutla — a software engineer with 14 years of experience across India, Belgium, and London. Passionate about making AI education accessible to everyone, regardless of language or background.",
+    "description": "Software engineer and technical lead with 14+ years of experience building large-scale systems across India, the United Kingdom, Belgium, and Europe. Having led digital transformations across retail, loyalty, and financial services, I founded Open AI School to make world-class AI and engineering education freely accessible — in every language, for every background.",
     "cta": "Read Full Story",
-    "badge": "Meet the Creator",
-    "role": "Founder & Creator, Open AI School",
+    "role": "Founder · Technical Lead · Open Source Advocate",
     "statYears": "Years in Engineering",
-    "statPassion": "Advocate",
     "statLanguages": "Languages Supported",
-    "statFree": "Free Forever"
+    "statFree": "Free Forever",
+    "statCountries": "Countries Worked In"
   },
   "cta": {
     "title": "Ready to Start?",

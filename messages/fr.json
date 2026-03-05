@@ -76,15 +76,13 @@
     }
   },
   "founder": {
-    "title": "Rencontrez le Fondateur",
-    "description": "Créé par Ramesh Reddy Adutla — un ingénieur logiciel avec 14 ans d'expérience en Inde, en Belgique et à Londres. Passionné par rendre l'éducation à l'IA accessible à tous, quelle que soit la langue ou l'origine.",
-    "cta": "Lire l'Histoire Complète",
-    "badge": "Rencontrez le Créateur",
-    "role": "Fondateur & Créateur, Open AI School",
-    "statYears": "Ans d'ingénierie",
-    "statPassion": "Défenseur",
-    "statLanguages": "Langues supportées",
-    "statFree": "Gratuit pour toujours"
+    "description": "Ingénieur logiciel et responsable technique avec plus de 14 ans d'expérience dans la construction de systèmes à grande échelle en Inde, au Royaume-Uni, en Belgique et à travers l'Europe. Ayant dirigé des transformations numériques dans le commerce de détail, la fidélisation et les services financiers, j'ai fondé Open AI School pour rendre l'éducation en IA et en ingénierie accessible gratuitement — dans chaque langue, pour chaque parcours.",
+    "cta": "Lire l'histoire complète",
+    "role": "Fondateur · Responsable Technique · Défenseur de l'Open Source",
+    "statYears": "Années d'Ingénierie",
+    "statLanguages": "Langues Supportées",
+    "statFree": "Gratuit Pour Toujours",
+    "statCountries": "Pays d'Expérience"
   },
   "cta": {
     "title": "Prêt à Commencer ?",
