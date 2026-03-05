@@ -11,8 +11,7 @@ permissions:
 
 concurrency:
   group: ci-${{ github.ref }}
-  # Only cancel in-progress runs for PRs, not for main branch pushes
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  cancel-in-progress: true
 
 jobs:
   build:
