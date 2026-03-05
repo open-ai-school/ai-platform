@@ -86,7 +86,7 @@ export default function DashboardPage() {
   const percentage = totalLessons > 0 ? Math.round((totalCompleted / totalLessons) * 100) : 0;
 
   // Empty state — when user hasn't started any lessons
-  if (totalCompleted === 0 && !isSignedIn) {
+  if (totalCompleted === 0) {
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20 md:py-32 text-center">
         <ScrollReveal animation="scale-in">

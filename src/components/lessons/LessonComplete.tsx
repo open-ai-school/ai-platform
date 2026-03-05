@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 interface LessonCompleteProps {
-  slug: string;
+  slug: string; // "programSlug/lessonSlug"
+  programSlug: string;
   totalLessons: number;
   currentIndex: number;
   nextSlug?: string;
@@ -19,6 +20,7 @@ interface LessonCompleteProps {
 
 export function LessonComplete({
   slug,
+  programSlug,
   totalLessons,
   currentIndex,
   nextSlug,
@@ -29,16 +31,21 @@ export function LessonComplete({
   programPath,
   programTitle,
 }: LessonCompleteProps) {
-  const { isCompleted, markComplete, completedCount } = useProgress();
+  const { isCompleted, markComplete, getProgram } = useProgress(programSlug);
   const [justCompleted, setJustCompleted] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const completed = isCompleted(slug);
-  const allDone = completedCount === totalLessons || (completedCount === totalLessons - 1 && justCompleted);
+
+  // Use per-program completed count, not global
+  const progData = getProgram(programSlug);
+  const progCompleted = progData.completed.length;
+  const allDone = progCompleted >= totalLessons || (progCompleted >= totalLessons - 1 && justCompleted);
 
   const handleComplete = () => {
     markComplete(slug);
     setJustCompleted(true);
-    if (completedCount + 1 === totalLessons) {
+    // Check if this completion finishes the program
+    if (progCompleted + 1 >= totalLessons) {
       setShowConfetti(true);
     }
   };
@@ -59,14 +66,13 @@ export function LessonComplete({
           Lesson {currentIndex + 1} of {totalLessons}
         </span>
         <span>
-          {completed ? completedCount : completedCount} of {totalLessons}{" "}
-          completed
+          {progCompleted + (justCompleted && !completed ? 0 : 0)} of {totalLessons} completed
         </span>
       </div>
       <div className="progress-bar">
         <div
           className="progress-bar-fill"
-          style={{ width: `${((completed ? completedCount : completedCount) / totalLessons) * 100}%` }}
+          style={{ width: `${(progCompleted / totalLessons) * 100}%` }}
         />
       </div>
 
@@ -110,22 +116,7 @@ export function LessonComplete({
                 <p className="text-[var(--color-text-muted)]">
                   You&apos;ve completed all {totalLessons} lessons in <strong>{programTitle}</strong>!
                 </p>
-                <Link
-                  href={programPath}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl font-medium hover:shadow-lg hover:shadow-indigo-500/30 hover:scale-[1.02] transition-all"
-                >
-                  Back to {programTitle} →
-                </Link>
               </div>
-            )}
-
-            {!allDone && nextSlug && (
-              <Link
-                href={`${basePath}/${nextSlug}`}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-primary)] text-white rounded-xl font-medium hover:brightness-110 transition-all"
-              >
-                Next: {nextTitle} →
-              </Link>
             )}
           </div>
         ) : (
@@ -138,7 +129,7 @@ export function LessonComplete({
         )}
       </div>
 
-      {/* Back / Next Navigation */}
+      {/* Back / Next Navigation — always visible */}
       <div className="pt-6 border-t border-[var(--color-border)] flex items-center justify-between gap-4">
         {prevSlug ? (
           <Link
@@ -167,7 +158,7 @@ export function LessonComplete({
           </Link>
         ) : (
           <Link
-            href={programPath}
+            href={`${programPath}`}
             className="group flex items-center gap-2 text-sm font-medium px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl hover:shadow-lg transition-all"
           >
             <span>All lessons</span>

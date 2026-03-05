@@ -77,6 +77,7 @@ export default async function ProgramLessonPage({
       {/* Mark as Complete + Navigation */}
       <LessonComplete
         slug={`${programSlug}/${slug}`}
+        programSlug={programSlug}
         totalLessons={allLessons.length}
         currentIndex={currentIdx}
         nextSlug={next?.slug}
