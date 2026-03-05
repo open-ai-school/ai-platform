@@ -144,7 +144,9 @@
     "timeline2020": "Moved to London 🇬🇧",
     "timeline2021": "Cloud-native microservices and data pipelines at scale 🛒",
     "timeline2024": "Open-source contributions — Apache Gravitino, GOV.UK, Spring Boot MCP 🌐",
-    "timeline2025": "Founded Open AI School — free AI education for everyone 🎓"
+    "timeline2025": "Founded Open AI School — free AI education for everyone 🎓",
+    "pageTitle": "About Open AI School",
+    "pageDescription": "Open AI School is a free, open-source AI education platform built for everyone. Learn about our mission to make AI education accessible worldwide."
   },
   "lessons": {
     "title": "Lessons",
@@ -202,7 +204,9 @@
       "result": "Detected mood:",
       "comingSoon": "Coming soon — help us build it!",
       "contribute": "Contribute"
-    }
+    },
+    "pageTitle": "AI Playground",
+    "pageDescription": "Experiment with AI concepts hands-on. Play mini-games, analyze sentiment, visualize neural networks, explore sorting algorithms, and understand tokenization."
   },
   "programs": {
     "badge": "5 Learning Levels",
@@ -226,7 +230,9 @@
     "trackCraft": "Craft Engineering",
     "trackCraftDesc": "Ace your dream interview — workshop-inspired mastery",
     "trackCraftTagline": "Sketch → Chisel → Craft → Polish → Masterpiece",
-    "trackCraftBrand": "Learn the algorithms that power AI, design the systems that scale AI, and ace the interviews that land you AI-era jobs."
+    "trackCraftBrand": "Learn the algorithms that power AI, design the systems that scale AI, and ace the interviews that land you AI-era jobs.",
+    "pageTitle": "AI & Engineering Programs",
+    "pageDescription": "Explore our free AI learning tracks and software engineering programs. From absolute beginner to advanced — learn at your own pace in 5 languages."
   },
   "homePrograms": {
     "startFromZero": "Start from zero",

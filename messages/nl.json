@@ -144,7 +144,9 @@
     "timeline2020": "Verhuisd naar Londen 🇬🇧",
     "timeline2021": "Cloud-native microservices en datapipelines op schaal 🛒",
     "timeline2024": "Open-source bijdragen — Apache Gravitino, GOV.UK, Spring Boot MCP 🌐",
-    "timeline2025": "Oprichting van Open AI School — gratis AI-onderwijs voor iedereen 🎓"
+    "timeline2025": "Oprichting van Open AI School — gratis AI-onderwijs voor iedereen 🎓",
+    "pageTitle": "Over Open AI School",
+    "pageDescription": "Open AI School is een gratis, open-source AI-onderwijsplatform voor iedereen. Leer over onze missie om AI-onderwijs wereldwijd toegankelijk te maken."
   },
   "lessons": {
     "title": "Lessen",
@@ -202,7 +204,9 @@
       "result": "Gedetecteerde stemming:",
       "comingSoon": "Binnenkort beschikbaar — help ons het te bouwen!",
       "contribute": "Bijdragen"
-    }
+    },
+    "pageTitle": "AI Speeltuin",
+    "pageDescription": "Experimenteer hands-on met AI-concepten. Speel minigames, analyseer sentiment, visualiseer neurale netwerken en verken tokenisatie."
   },
   "programs": {
     "badge": "5 leerniveaus",
@@ -226,7 +230,9 @@
     "trackCraft": "Craft Engineering",
     "trackCraftDesc": "Slaag voor je droomgesprek — door ambacht geïnspireerde meesterschap",
     "trackCraftTagline": "Schets → Beitel → Ambacht → Polijst → Meesterwerk",
-    "trackCraftBrand": "Leer de algoritmes achter AI, ontwerp de systemen die AI schalen, en slaag voor de interviews."
+    "trackCraftBrand": "Leer de algoritmes achter AI, ontwerp de systemen die AI schalen, en slaag voor de interviews.",
+    "pageTitle": "AI & Engineering Programma's",
+    "pageDescription": "Ontdek onze gratis AI-leerpaden en software engineering programma's. Van absolute beginner tot gevorderd — leer in je eigen tempo in 5 talen."
   },
   "homePrograms": {
     "startFromZero": "Begin vanaf nul",

@@ -1,8 +1,31 @@
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getProgramsByTrack } from "@/lib/programs";
 import { ScrollReveal } from "@open-ai-school/ai-ui-library";
 import type { ProgramMeta } from "@/lib/programs";
+
+const BASE_URL = "https://openaischool.vercel.app";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "programs" });
+  return {
+    title: t("pageTitle"),
+    description: t("pageDescription"),
+    alternates: {
+      canonical: `${BASE_URL}/${locale}/programs`,
+    },
+    openGraph: {
+      title: `${t("pageTitle")} | Open AI School`,
+      description: t("pageDescription"),
+    },
+  };
+}
 
 export default async function ProgramsPage({
   params,

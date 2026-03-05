@@ -144,7 +144,9 @@
     "timeline2020": "Déménagement à Londres 🇬🇧",
     "timeline2021": "Microservices cloud-native et pipelines de données à grande échelle 🛒",
     "timeline2024": "Contributions open-source — Apache Gravitino, GOV.UK, Spring Boot MCP 🌐",
-    "timeline2025": "Fondation d'Open AI School — éducation IA gratuite pour tous 🎓"
+    "timeline2025": "Fondation d'Open AI School — éducation IA gratuite pour tous 🎓",
+    "pageTitle": "À Propos d'Open AI School",
+    "pageDescription": "Open AI School est une plateforme éducative IA gratuite et open-source construite pour tous. Découvrez notre mission de rendre l'éducation IA accessible dans le monde entier."
   },
   "lessons": {
     "title": "Leçons",
@@ -202,7 +204,9 @@
       "result": "Humeur détectée :",
       "comingSoon": "Bientôt disponible — aidez-nous à le construire !",
       "contribute": "Contribuer"
-    }
+    },
+    "pageTitle": "Terrain de Jeu IA",
+    "pageDescription": "Expérimentez les concepts d'IA en pratique. Jouez à des mini-jeux, analysez les sentiments, visualisez les réseaux neuronaux et explorez la tokenisation."
   },
   "programs": {
     "badge": "5 niveaux d'apprentissage",
@@ -226,7 +230,9 @@
     "trackCraft": "Craft Engineering",
     "trackCraftDesc": "Réussissez votre entretien de rêve — maîtrise inspirée de l'artisanat",
     "trackCraftTagline": "Esquisse → Ciseau → Artisanat → Polissage → Chef-d'œuvre",
-    "trackCraftBrand": "Apprenez les algorithmes qui alimentent l'IA, concevez les systèmes qui la mettent à l'échelle, et réussissez les entretiens."
+    "trackCraftBrand": "Apprenez les algorithmes qui alimentent l'IA, concevez les systèmes qui la mettent à l'échelle, et réussissez les entretiens.",
+    "pageTitle": "Programmes IA & Ingénierie",
+    "pageDescription": "Explorez nos parcours gratuits d'apprentissage de l'IA et nos programmes d'ingénierie logicielle. Du débutant à l'avancé — apprenez à votre rythme en 5 langues."
   },
   "homePrograms": {
     "startFromZero": "Partir de zéro",

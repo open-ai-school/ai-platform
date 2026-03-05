@@ -5,6 +5,10 @@ import "../globals.css";
 import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
 import { Providers } from "@/components/ui/Providers";
+import { OrganizationJsonLd } from "@/components/seo/JsonLd";
+
+const BASE_URL = "https://openaischool.vercel.app";
+const locales = ["en", "fr", "nl", "hi", "te"];
 
 export async function generateMetadata({
   params,
@@ -14,29 +18,67 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
 
+  const languages = Object.fromEntries(
+    locales.map((l) => [l, `${BASE_URL}/${l}`])
+  );
+
   return {
-    title: t("title"),
+    metadataBase: new URL(BASE_URL),
+    title: {
+      default: t("title"),
+      template: `%s | Open AI School`,
+    },
     description: t("description"),
     keywords: [
       "AI education",
       "artificial intelligence",
+      "free AI course",
+      "learn AI",
+      "machine learning",
       "free learning",
-      "open source",
-      "multilingual",
-      "beginner friendly",
+      "open source education",
+      "multilingual AI",
+      "beginner AI",
+      "AI for beginners",
+      "AI school",
+      "open ai school",
     ],
     authors: [{ name: "Ramesh Reddy Adutla" }],
+    creator: "Ramesh Reddy Adutla",
+    publisher: "Open AI School",
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages,
+    },
     openGraph: {
       title: t("title"),
       description: t("description"),
       type: "website",
       siteName: "Open AI School",
+      locale: locale,
+      url: `${BASE_URL}/${locale}`,
     },
     twitter: {
       card: "summary_large_image",
       title: "Open AI School",
       description: t("description"),
     },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    verification: {
+      // Add Google Search Console verification when available
+      // google: "your-verification-code",
+    },
+    category: "education",
   };
 }
 
@@ -57,8 +99,11 @@ export default async function LocaleLayout({
     <html lang={locale} dir="ltr" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
       <body className="antialiased">
+        <OrganizationJsonLd />
         <Providers>
           <NextIntlClientProvider messages={messages}>
             <div className="min-h-screen flex flex-col">
