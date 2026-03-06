@@ -19,7 +19,7 @@
     "title": "L'éducation en IA",
     "titleHighlight": "pour Tous.",
     "subtitle": "Leçons interactives, expériences pratiques et projets concrets — directement dans votre navigateur. Aucune connaissance en programmation ou en maths requise.",
-    "cta": "Commencer",
+    "cta": "Commencez Votre Aventure IA",
     "ctaSecondary": "Explorer le Playground",
     "students": "Étudiants apprenant",
     "languages": "Langues",
@@ -381,7 +381,7 @@
     "subtitle": "Du débutant absolu à l'expert en IA — choisissez le niveau qui correspond à votre situation actuelle.",
     "level": "Niveau",
     "comingSoon": "Bientôt disponible",
-    "startLearning": "Commencer",
+    "startLearning": "Découvrir le Programme",
     "hours": "h",
     "levelLabels": {
       "1": "Débutant",
@@ -488,9 +488,16 @@
     "invalidCredentials": "Nom d'utilisateur ou mot de passe incorrect",
     "welcomeBack": "Bon retour",
     "accountCreated": "Compte créé avec succès",
-    "signInPrompt": "Connectez-vous pour suivre votre progression",
+    "signInPrompt": "Connectez-vous pour suivre votre progression sur tous vos appareils",
     "noAccount": "Vous n'avez pas de compte ?",
-    "hasAccount": "Vous avez déjà un compte ?"
+    "hasAccount": "Vous avez déjà un compte ?",
+    "continueWithGoogle": "Continuer avec Google",
+    "continueWithGithub": "Continuer avec GitHub",
+    "orUseEmail": "Ou par e-mail",
+    "emailPlaceholder": "vous@exemple.com",
+    "sendMagicLink": "Envoyez-moi un lien magique",
+    "magicLinkSent": "Vérifiez votre boîte de réception ! Nous vous avons envoyé un lien de connexion.",
+    "magicLinkError": "Impossible d'envoyer le lien. Réessayez."
   },
   "lessonTitles": {
     "what-is-ai": "Qu'est-ce que l'IA ?",
@@ -524,7 +531,8 @@
     "backToBlog": "Retour au Blog",
     "publishedOn": "Publié le",
     "minuteRead": "min de lecture",
-    "tags": "Étiquettes"
+    "tags": "Étiquettes",
+    "badge": "Derniers Articles"
   },
   "feedback": {
     "title": "Cette leçon vous a-t-elle été utile ?",

@@ -59,11 +59,6 @@ export default async function HomePage({
         <div className="absolute inset-0 bg-grid" />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative">
           <div className="text-center max-w-4xl mx-auto">
-            {/* Badge */}
-            <div className="inline-flex items-center px-5 py-2 rounded-full bg-indigo-600 text-white text-sm font-semibold mb-8 shadow-lg shadow-indigo-500/30 animate-fade-up" style={{ animationDelay: "100ms" }}>
-              {t("hero.badge")}
-            </div>
-
             {/* Title */}
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-6 animate-fade-up" style={{ animationDelay: "200ms" }}>
               <span className="block">{t("hero.title")}</span>

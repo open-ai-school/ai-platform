@@ -19,7 +19,7 @@
     "title": "AI Education",
     "titleHighlight": "for Everyone.",
     "subtitle": "Interactive lessons, hands-on experiments, and real-world projects — all in your browser. No background in coding or maths required.",
-    "cta": "Start Learning",
+    "cta": "Start Your AI Journey",
     "ctaSecondary": "Explore Playground",
     "students": "Students learning",
     "languages": "Languages",
@@ -424,7 +424,7 @@
     "subtitle": "From absolute beginner to AI expert — pick the level that matches where you are right now.",
     "level": "Level",
     "comingSoon": "Coming Soon",
-    "startLearning": "Start Learning",
+    "startLearning": "Explore Program",
     "hours": "h",
     "levelLabels": {
       "1": "Beginner",
@@ -531,9 +531,16 @@
     "invalidCredentials": "Invalid username or password",
     "welcomeBack": "Welcome back",
     "accountCreated": "Account created successfully",
-    "signInPrompt": "Sign in to track your learning progress",
+    "signInPrompt": "Sign in to track your learning progress across devices",
     "noAccount": "Don't have an account?",
-    "hasAccount": "Already have an account?"
+    "hasAccount": "Already have an account?",
+    "continueWithGoogle": "Continue with Google",
+    "continueWithGithub": "Continue with GitHub",
+    "orUseEmail": "Or use email",
+    "emailPlaceholder": "you@example.com",
+    "sendMagicLink": "Email me a magic link",
+    "magicLinkSent": "Check your inbox! We sent you a sign-in link.",
+    "magicLinkError": "Could not send magic link. Try again."
   },
   "lessonTitles": {
     "what-is-ai": "What is AI?",
@@ -567,7 +574,8 @@
     "backToBlog": "Back to Blog",
     "publishedOn": "Published on",
     "minuteRead": "min read",
-    "tags": "Tags"
+    "tags": "Tags",
+    "badge": "Latest Posts"
   },
   "feedback": {
     "title": "Was this lesson helpful?",

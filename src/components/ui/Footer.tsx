@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { locales } from "@/i18n/request";
 
+import { Logo } from "./Logo";
+
 export function Footer() {
   const t = useTranslations("footer");
   const pathname = usePathname();
@@ -21,8 +23,8 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href={`${basePath}/`} className="flex items-center gap-2 font-bold text-lg mb-3">
-              <span className="text-lg">🎓</span>
-              <span className="text-gradient">Open AI School</span>
+              <Logo size={24} />
+              <span className="text-gradient text-sm font-bold tracking-tight">openai.school</span>
             </Link>
             <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
               {t("tagline")}

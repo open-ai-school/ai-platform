@@ -39,29 +39,21 @@ export function LanguageSwitcher() {
       return;
     }
 
-    // Set the NEXT_LOCALE cookie so middleware respects the choice
     document.cookie = `NEXT_LOCALE=${newLocale};path=/;max-age=31536000;SameSite=Lax`;
 
     const segments = pathname.split("/").filter(Boolean);
-
-    // Remove any locale prefix if present (covers both prefixed and unprefixed cases)
     if ((locales as readonly string[]).includes(segments[0])) {
       segments.shift();
     }
 
-    // Build new path
     let newPath: string;
     if (newLocale === "en") {
-      // English uses no prefix (localePrefix: "as-needed")
       newPath = "/" + segments.join("/");
     } else {
       newPath = "/" + newLocale + (segments.length > 0 ? "/" + segments.join("/") : "");
     }
 
-    // Ensure clean path (no double slashes, no trailing slash except root)
     newPath = newPath.replace(/\/+/g, "/").replace(/\/$/, "") || "/";
-
-    // Use window.location for a full navigation to ensure middleware processes the new cookie
     window.location.href = newPath;
   }
 
@@ -69,31 +61,19 @@ export function LanguageSwitcher() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium border border-[var(--color-border)] hover:bg-[var(--color-bg-card)] hover:border-[var(--color-primary)]/30 transition-all duration-200 active:scale-95"
+        className="flex items-center justify-center w-9 h-9 rounded-full border border-[var(--color-border)] hover:bg-[var(--color-bg-card)] hover:border-[var(--color-primary)]/30 transition-all duration-200 active:scale-95"
         aria-label={t("language")}
         aria-expanded={open}
         aria-haspopup="listbox"
       >
-        <span className="text-base leading-none">{localeFlags[currentLocale as Locale]}</span>
-        <span className="hidden sm:inline text-xs">
-          {localeNames[currentLocale as Locale]}
-        </span>
-        <svg
-          className={`w-3 h-3 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <span className="text-sm leading-none">{localeFlags[currentLocale as Locale]}</span>
       </button>
 
       {open && (
         <>
-          {/* Backdrop for mobile */}
           <div className="fixed inset-0 z-40 md:hidden" onClick={() => setOpen(false)} />
           <div
-            className="absolute right-0 mt-2 w-52 py-1.5 bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-xl z-50 animate-fade-in"
+            className="absolute right-0 mt-2 w-44 py-1 bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-xl shadow-xl z-50 animate-fade-in overflow-hidden"
             role="listbox"
             aria-label="Select language"
           >
@@ -103,16 +83,16 @@ export function LanguageSwitcher() {
                 onClick={() => switchLocale(locale)}
                 role="option"
                 aria-selected={locale === currentLocale}
-                className={`w-full text-left px-4 py-2.5 text-sm flex items-center gap-3 transition-colors ${
+                className={`w-full text-left px-3 py-2 text-sm flex items-center gap-2.5 transition-colors ${
                   locale === currentLocale
                     ? "text-[var(--color-primary)] font-semibold bg-[var(--color-primary)]/5"
                     : "text-[var(--color-text)] hover:bg-[var(--color-bg)]"
                 }`}
               >
-                <span className="text-lg leading-none w-6 text-center">{localeFlags[locale]}</span>
-                <span className="flex-1">{localeNames[locale]}</span>
+                <span className="text-base leading-none">{localeFlags[locale]}</span>
+                <span className="flex-1 text-xs">{localeNames[locale]}</span>
                 {locale === currentLocale && (
-                  <svg className="w-4 h-4 text-[var(--color-primary)] shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-3.5 h-3.5 text-[var(--color-primary)] shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 )}

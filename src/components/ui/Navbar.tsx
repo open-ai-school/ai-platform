@@ -7,36 +7,38 @@ import { useState, useEffect } from "react";
 import { locales } from "@/i18n/request";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
+import { Logo } from "./Logo";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { useGuestProfile } from "@/hooks/useGuestProfile";
 
 export function Navbar() {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { profile } = useGuestProfile();
 
-  // Detect locale from pathname
   const segments = pathname.split("/").filter(Boolean);
   const locale = (locales as readonly string[]).includes(segments[0]) ? segments[0] : "en";
   const basePath = locale === "en" ? "" : `/${locale}`;
 
-  // Strip locale prefix for route matching
   const pathWithoutLocale = locale === "en"
     ? pathname
     : pathname.replace(new RegExp(`^/${locale}`), "") || "/";
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
   const links = [
-    { href: `${basePath}/`, label: t("home"), match: "/" },
     { href: `${basePath}/programs`, label: t("programs"), match: "/programs" },
-    { href: `${basePath}/playground`, label: t("playground"), match: "/playground" },
     { href: `${basePath}/blog`, label: t("blog"), match: "/blog" },
-    { href: `${basePath}/dashboard`, label: t("dashboard"), match: "/dashboard" },
     { href: `${basePath}/about`, label: t("about"), match: "/about" },
   ];
+
+  // Show Dashboard only when logged in
+  if (profile) {
+    links.push({ href: `${basePath}/dashboard`, label: t("dashboard"), match: "/dashboard" });
+  }
 
   function isActive(match: string) {
     if (match === "/") return pathWithoutLocale === "/";
@@ -46,25 +48,27 @@ export function Navbar() {
   return (
     <nav className="sticky top-0 z-50 glass border-b border-[var(--color-border)]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+        <div className="flex items-center justify-between h-14">
+          {/* Logo + Wordmark */}
           <Link
             href={`${basePath}/`}
-            className="flex items-center gap-2 font-bold text-lg shrink-0"
+            className="flex items-center gap-2.5 shrink-0 group"
           >
-            <span className="text-xl">🎓</span>
-            <span className="text-gradient whitespace-nowrap">
-              Open AI School
-            </span>
+            <Logo size={30} />
+            <div className="flex flex-col leading-none">
+              <span className="text-[15px] font-bold tracking-tight text-gradient">
+                openai.school
+              </span>
+            </div>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Desktop Nav — centered */}
+          <div className="hidden md:flex items-center gap-0.5">
             {links.map((link) => (
               <Link
                 key={link.match}
                 href={link.href}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${
                   isActive(link.match)
                     ? "text-[var(--color-primary)] bg-[var(--color-primary)]/10 font-semibold"
                     : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-bg-card)]"
@@ -75,25 +79,19 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-2 shrink-0">
+          {/* Desktop Actions — compact */}
+          <div className="hidden md:flex items-center gap-1.5 shrink-0">
             <ThemeToggle />
             <LanguageSwitcher />
             <UserMenu />
-            <Link
-              href={`${basePath}/programs/ai-seeds`}
-              className="ml-1 px-4 py-1.5 bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-600 hover:to-violet-600 shadow-md shadow-indigo-500/25 text-white rounded-full text-sm font-medium transition-all active:scale-95 whitespace-nowrap"
-            >
-              {t("getStarted")}
-            </Link>
           </div>
 
           {/* Mobile Actions */}
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-1.5 md:hidden">
             <ThemeToggle />
             <LanguageSwitcher />
             <button
-              className="p-2 rounded-lg text-[var(--color-text-muted)] hover:bg-[var(--color-bg-card)] transition-colors"
+              className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:bg-[var(--color-bg-card)] transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
               aria-expanded={mobileOpen}
@@ -111,29 +109,24 @@ export function Navbar() {
 
         {/* Mobile Nav */}
         {mobileOpen && (
-          <div className="md:hidden pb-4 pt-2 mt-2 bg-[var(--color-bg-card)] rounded-2xl shadow-lg border border-[var(--color-border)]">
-            <div className="space-y-1 px-2">
+          <div className="md:hidden pb-3 pt-1 mt-1 bg-[var(--color-bg-card)] rounded-xl shadow-lg border border-[var(--color-border)]">
+            <div className="space-y-0.5 px-2">
               {links.map((link) => (
                 <Link
                   key={link.match}
                   href={link.href}
-                  className={`block py-2.5 px-4 rounded-xl text-sm font-medium transition-colors ${
+                  className={`block py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
                     isActive(link.match)
                       ? "text-[var(--color-primary)] bg-[var(--color-primary)]/8"
-                      : "text-[var(--color-text)] hover:bg-[var(--color-bg-card)]"
+                      : "text-[var(--color-text)] hover:bg-[var(--color-bg)]"
                   }`}
                 >
                   {link.label}
                 </Link>
               ))}
             </div>
-            <div className="mt-3 px-4">
-              <Link
-                href={`${basePath}/programs/ai-seeds`}
-                className="block w-full text-center px-4 py-2.5 bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-600 hover:to-violet-600 shadow-md shadow-indigo-500/25 text-white rounded-xl text-sm font-medium"
-              >
-                {t("getStarted")}
-              </Link>
+            <div className="mt-2 px-2">
+              <UserMenu />
             </div>
           </div>
         )}

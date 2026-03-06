@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useProgress } from "@/hooks/useProgress";
 import { useStreak } from "@/hooks/useStreak";
+import { useSession } from "next-auth/react";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
-import { SignInModal } from "@/components/auth/SignInModal";
 import { Certificate } from "@/components/dashboard/Certificate";
 import { ScrollReveal } from "@open-ai-school/ai-ui-library";
 import { locales } from "@/i18n/request";
@@ -82,8 +82,9 @@ export default function DashboardPage() {
   const tl = useTranslations("lessonTitles");
   const { totalCompleted, getProgram, isCompleted, getCompletedAt, reset } = useProgress();
   const { currentStreak, longestStreak } = useStreak();
-  const { profile, isSignedIn } = useGuestProfile();
-  const [showModal, setShowModal] = useState(false);
+  const { data: session } = useSession();
+  const { profile, isSignedIn: isGuestSignedIn } = useGuestProfile();
+  const isSignedIn = !!session?.user || isGuestSignedIn;
   const [certProgram, setCertProgram] = useState<string | null>(null);
   const pathname = usePathname();
 
@@ -122,24 +123,21 @@ export default function DashboardPage() {
   // Auth gate — prompt to sign in
   if (!isSignedIn) {
     return (
-      <>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20 md:py-32 text-center">
-          <ScrollReveal animation="scale-in">
-            <div className="text-7xl mb-6 animate-float-slow">🔒</div>
-            <h1 className="text-4xl font-bold mb-4 text-gradient">{t("title")}</h1>
-            <p className="text-lg text-[var(--color-text-muted)] max-w-md mx-auto mb-10 leading-relaxed">
-              {ta("signInPrompt")}
-            </p>
-            <button
-              onClick={() => setShowModal(true)}
-              className="btn-primary inline-flex items-center gap-2 px-10 py-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-2xl text-lg font-bold shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-[1.02] transition-all cursor-pointer"
-            >
-              {ta("signIn")} →
-            </button>
-          </ScrollReveal>
-        </div>
-        <SignInModal isOpen={showModal} onClose={() => setShowModal(false)} />
-      </>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20 md:py-32 text-center">
+        <ScrollReveal animation="scale-in">
+          <div className="text-7xl mb-6 animate-float-slow">🔒</div>
+          <h1 className="text-4xl font-bold mb-4 text-gradient">{t("title")}</h1>
+          <p className="text-lg text-[var(--color-text-muted)] max-w-md mx-auto mb-10 leading-relaxed">
+            {ta("signInPrompt")}
+          </p>
+          <Link
+            href={`${basePath}/signin`}
+            className="btn-primary inline-flex items-center gap-2 px-10 py-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-2xl text-lg font-bold shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-[1.02] transition-all"
+          >
+            {ta("signIn")} →
+          </Link>
+        </ScrollReveal>
+      </div>
     );
   }
 
@@ -199,7 +197,7 @@ export default function DashboardPage() {
             <div className="text-5xl mb-4">{profile?.avatar}</div>
           )}
           <h1 className="text-4xl font-bold mb-2 text-gradient">
-            {isSignedIn ? t("titleUser", { name: profile?.name ?? "" }) : t("title")}
+            {isSignedIn ? t("titleUser", { name: session?.user?.name || profile?.name || "" }) : t("title")}
           </h1>
           <p className="text-lg text-[var(--color-text-muted)] max-w-md mx-auto">
             {t("subtitle")}

@@ -19,7 +19,7 @@
     "title": "AI-onderwijs",
     "titleHighlight": "voor Iedereen.",
     "subtitle": "Interactieve lessen, praktische experimenten en echte projecten — rechtstreeks in je browser. Geen programmeer- of wiskundekennis vereist.",
-    "cta": "Begin met Leren",
+    "cta": "Begin Je AI Reis",
     "ctaSecondary": "Verken de Playground",
     "students": "Studenten leren",
     "languages": "Talen",
@@ -381,7 +381,7 @@
     "subtitle": "Van absolute beginner tot AI-expert — kies het niveau dat bij je past.",
     "level": "Niveau",
     "comingSoon": "Binnenkort beschikbaar",
-    "startLearning": "Begin met leren",
+    "startLearning": "Ontdek Programma",
     "hours": "u",
     "levelLabels": {
       "1": "Beginner",
@@ -488,9 +488,16 @@
     "invalidCredentials": "Ongeldige gebruikersnaam of wachtwoord",
     "welcomeBack": "Welkom terug",
     "accountCreated": "Account succesvol aangemaakt",
-    "signInPrompt": "Log in om je leervoortgang bij te houden",
+    "signInPrompt": "Log in om je voortgang bij te houden op al je apparaten",
     "noAccount": "Heb je nog geen account?",
-    "hasAccount": "Heb je al een account?"
+    "hasAccount": "Heb je al een account?",
+    "continueWithGoogle": "Doorgaan met Google",
+    "continueWithGithub": "Doorgaan met GitHub",
+    "orUseEmail": "Of gebruik e-mail",
+    "emailPlaceholder": "jij@voorbeeld.com",
+    "sendMagicLink": "Stuur me een magische link",
+    "magicLinkSent": "Controleer je inbox! We hebben je een inloglink gestuurd.",
+    "magicLinkError": "Kon magische link niet verzenden. Probeer opnieuw."
   },
   "lessonTitles": {
     "what-is-ai": "Wat is AI?",
@@ -524,7 +531,8 @@
     "backToBlog": "Terug naar Blog",
     "publishedOn": "Gepubliceerd op",
     "minuteRead": "min leestijd",
-    "tags": "Tags"
+    "tags": "Tags",
+    "badge": "Laatste Berichten"
   },
   "feedback": {
     "title": "Was deze les nuttig?",
