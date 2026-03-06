@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getProgramsByTrack } from "@/lib/programs";
-import { ScrollReveal } from "@open-ai-school/ai-ui-library";
+import { ScrollReveal } from "@ai-educademy/ai-ui-library";
 import { ComingSoonProgramCard } from "@/components/ui/ComingSoon";
 import type { ProgramMeta } from "@/lib/programs";
 

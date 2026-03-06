@@ -9,7 +9,7 @@ import { useStreak } from "@/hooks/useStreak";
 import { useSession } from "next-auth/react";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
 import { Certificate } from "@/components/dashboard/Certificate";
-import { ScrollReveal } from "@open-ai-school/ai-ui-library";
+import { ScrollReveal } from "@ai-educademy/ai-ui-library";
 import { locales } from "@/i18n/request";
 import { Flame, ArrowRight, Trophy } from "lucide-react";
 

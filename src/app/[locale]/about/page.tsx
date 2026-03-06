@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { ScrollReveal } from "@open-ai-school/ai-ui-library";
+import { ScrollReveal } from "@ai-educademy/ai-ui-library";
 
 export default function AboutPage() {
   const t = useTranslations("about");

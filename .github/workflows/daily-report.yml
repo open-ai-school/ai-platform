@@ -16,7 +16,7 @@ jobs:
       - name: Gather analytics and send report
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          SITE_URL: https://openaischool.vercel.app
+          SITE_URL: https://aieducademy.vercel.app
         run: |
           echo "📊 Open AI School — Daily Report"
           echo "================================="
@@ -65,14 +65,14 @@ jobs:
           echo ""
           echo "🔒 SSL Certificate"
           echo "───────────────────"
-          EXPIRY=$(echo | openssl s_client -connect openaischool.vercel.app:443 -servername openaischool.vercel.app 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
+          EXPIRY=$(echo | openssl s_client -connect aieducademy.vercel.app:443 -servername aieducademy.vercel.app 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
           echo "  Expires: ${EXPIRY:-Unable to check}"
 
           # --- GitHub Repo Stats ---
           echo ""
           echo "📦 Repository"
           echo "─────────────"
-          REPO_DATA=$(curl -s -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/open-ai-school/ai-platform")
+          REPO_DATA=$(curl -s -H "Accept: application/vnd.github.v3+json" "https://api.github.com/repos/ai-educademy/ai-platform")
           STARS=$(echo "$REPO_DATA" | python3 -c "import sys,json;print(json.load(sys.stdin).get('stargazers_count','?'))" 2>/dev/null)
           FORKS=$(echo "$REPO_DATA" | python3 -c "import sys,json;print(json.load(sys.stdin).get('forks_count','?'))" 2>/dev/null)
           ISSUES=$(echo "$REPO_DATA" | python3 -c "import sys,json;print(json.load(sys.stdin).get('open_issues_count','?'))" 2>/dev/null)
@@ -88,6 +88,6 @@ jobs:
           else
             echo "✅ All systems operational"
           fi
-          echo "📊 Full analytics: https://vercel.com/open-ai-school/ai-platform/analytics"
+          echo "📊 Full analytics: https://vercel.com/ai-educademy/ai-platform/analytics"
           echo "🔍 Search Console: https://search.google.com/search-console"
           echo "════════════════════════════════"

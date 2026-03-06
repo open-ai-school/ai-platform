@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "@open-ai-school/ai-ui-library";
+import { useTheme } from "@ai-educademy/ai-ui-library";
 
 export function ThemeToggle({ compact = false }: { compact?: boolean }) {
   const { resolvedTheme, setTheme } = useTheme();

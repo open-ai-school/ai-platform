@@ -1,7 +1,7 @@
 "use client";
 
 import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from "@open-ai-school/ai-ui-library";
+import { ThemeProvider } from "@ai-educademy/ai-ui-library";
 import {
   GuestProfileContext,
   useGuestProfileState,

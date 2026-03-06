@@ -1,11 +1,11 @@
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
-import { CourseProgress } from "@open-ai-school/ai-ui-library";
-import { WelcomeBanner } from "@open-ai-school/ai-ui-library";
-import { ScrollReveal } from "@open-ai-school/ai-ui-library";
+import { CourseProgress } from "@ai-educademy/ai-ui-library";
+import { WelcomeBanner } from "@ai-educademy/ai-ui-library";
+import { ScrollReveal } from "@ai-educademy/ai-ui-library";
 import { ComingSoonCard } from "@/components/ui/ComingSoon";
-import { FloatingParticles } from "@open-ai-school/ai-ui-library";
+import { FloatingParticles } from "@ai-educademy/ai-ui-library";
 import { getProgramsByTrack } from "@/lib/programs";
 import { Mail, Github } from "lucide-react";
 import { NewsletterSignup } from "@/components/ui/NewsletterSignup";

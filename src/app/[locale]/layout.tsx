@@ -52,7 +52,7 @@ export async function generateMetadata({
       "beginner AI",
       "AI for beginners",
       "AI school",
-      "open ai school",
+      "ai educademy",
     ],
     authors: [{ name: "Ramesh Reddy Adutla" }],
     creator: "Ramesh Reddy Adutla",
