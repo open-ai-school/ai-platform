@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "AI Educademy — Free AI Education for Everyone",
+    "title": "AI Educademy, Free AI Education for Everyone",
     "description": "Learn Artificial Intelligence from scratch, in your language. No coding experience needed."
   },
   "nav": {
@@ -8,7 +8,7 @@
     "lessons": "Lessons",
     "dashboard": "Dashboard",
     "about": "About",
-    "getStarted": "Start Learning — It's Free",
+    "getStarted": "Start Learning, It's Free",
     "language": "Language",
     "programs": "Programmes",
     "blog": "Blog",
@@ -33,15 +33,15 @@
     "subtitle": "No coding, no maths, no prerequisites. We start from zero.",
     "beginner": {
       "title": "Start from Zero",
-      "description": "Never touched code? Good. We use everyday language and real-world examples — how Netflix recommends films, how your phone recognises your face."
+      "description": "Never touched code? Good. We use everyday language and real-world examples, how Netflix recommends films, how your phone recognises your face."
     },
     "interactive": {
       "title": "Learn by Doing",
-      "description": "Hands-on experiments in your browser. Train an AI to recognise drawings, teach a chatbot — see results instantly."
+      "description": "Hands-on experiments in your browser. Train an AI to recognise drawings, teach a chatbot, see results instantly."
     },
     "multilingual": {
       "title": "In Your Language",
-      "description": "Learn in Hindi, Telugu, French, Dutch, or English — whichever feels like home."
+      "description": "Learn in Hindi, Telugu, French, Dutch, or English, whichever feels like home."
     },
     "free": {
       "title": "Free Forever",
@@ -57,7 +57,7 @@
     }
   },
   "founder": {
-    "description": "Engineer and tech lead with a decade of building systems across India, Belgium, and the UK. Founded AI Educademy to make AI education free and accessible — in every language, for every background.",
+    "description": "Engineer and tech lead with a decade of building systems across India, Belgium, and the UK. Founded AI Educademy to make AI education free and accessible, in every language, for every background.",
     "cta": "Read Full Story",
     "role": "Founder · Engineering Leader · Open Source Advocate"
   },
@@ -70,7 +70,7 @@
     "coc": "Code of Conduct",
     "buyMeACoffee": "Buy Me a Coffee",
     "mission": "Free AI education for everyone",
-    "license": "MIT Licence — Open Source",
+    "license": "MIT Licence. Open Source",
     "learnHeader": "Learn",
     "communityHeader": "Community",
     "supportHeader": "Support",
@@ -83,9 +83,9 @@
     "mission": "Our Mission",
     "missionText": "AI education for every student, regardless of language, background, or experience.",
     "story": "The Mind Behind the Idea",
-    "storyText1": "I'm Ramesh Reddy Adutla — an engineer who has spent a decade building systems at JP Morgan, Sky, and Marks & Spencer across India, Belgium, and the UK.",
+    "storyText1": "I'm Ramesh Reddy Adutla, an engineer who has spent a decade building systems at JP Morgan, Sky, and Marks & Spencer across India, Belgium, and the UK.",
     "storyText2": "AI is transformative. But AI education is locked behind expensive universities in wealthy countries. Most of the world doesn't have the same access.",
-    "storyText3": "A conversation about millions of students being left behind started this. AI Educademy began as a side project — it grew into something real.",
+    "storyText3": "A conversation about millions of students being left behind started this. AI Educademy began as a side project, it grew into something real.",
     "storyText4": "I speak English, French, and Telugu. Building across languages and cultures felt natural.",
     "values": "Our Values",
     "value1": {
@@ -98,7 +98,7 @@
     },
     "value3": {
       "title": "Honest",
-      "description": "We teach what AI can do AND what it can't. No hype, no fear — just understanding."
+      "description": "We teach what AI can do AND what it can't. No hype, no fear, just understanding."
     },
     "value4": {
       "title": "Open",
@@ -113,13 +113,13 @@
     "sponsor": "☕ Buy Me a Coffee",
     "subtitle": "Founder · Engineering Leader · Open Source Advocate",
     "timeline2011": "Started career in software engineering in India 🇮🇳",
-    "timeline2014": "Moved to Belgium — built fintech systems, learned French 🇧🇪",
-    "timeline2017": "JP Morgan — trading platforms and high-performance systems ��",
-    "timeline2019": "Sky — streaming platform serving millions of users 📺",
+    "timeline2014": "Moved to Belgium, built fintech systems, learned French 🇧🇪",
+    "timeline2017": "JP Morgan, trading platforms and high-performance systems ��",
+    "timeline2019": "Sky, streaming platform serving millions of users 📺",
     "timeline2020": "Moved to London 🇬🇧",
     "timeline2021": "Cloud-native microservices and data pipelines at scale 🛒",
-    "timeline2024": "Open-source contributions — Apache Gravitino, GOV.UK, Spring Boot MCP 🌐",
-    "timeline2025": "Founded AI Educademy — free AI education for everyone 🎓",
+    "timeline2024": "Open-source contributions, Apache Gravitino, GOV.UK, Spring Boot MCP 🌐",
+    "timeline2025": "Founded AI Educademy, free AI education for everyone 🎓",
     "pageTitle": "About AI Educademy",
     "pageDescription": "AI Educademy is a free, open-source AI education platform built for everyone. Learn about our mission to make AI education accessible worldwide.",
     "pageSubtitle": "Free, open-source AI education for every student."
@@ -169,14 +169,26 @@
     },
     "viewAll": "View All Programmes",
     "trackAI": "Understanding AI",
-    "trackAIDesc": "Grow from zero to AI expert — nature-inspired progression",
+    "trackAIDesc": "Grow from zero to AI expert, nature-inspired progression",
     "trackAITagline": "Seeds → Sprouts → Branches → Canopy → Forest",
     "trackCraft": "Code & Algorithms",
-    "trackCraftDesc": "Ace your dream interview — workshop-inspired mastery",
+    "trackCraftDesc": "Ace your dream interview, workshop-inspired mastery",
     "trackCraftTagline": "Sketch → Chisel → Craft → Polish → Masterpiece",
     "trackCraftBrand": "Learn the algorithms that power AI, design the systems that scale AI, and ace the interviews that land you AI-era jobs.",
     "pageTitle": "AI & Engineering Programmes",
-    "pageDescription": "Explore our free AI learning tracks and software engineering programmes. From absolute beginner to advanced — learn at your own pace in 5 languages."
+    "pageDescription": "Explore our free AI learning tracks and software engineering programmes. From absolute beginner to advanced, learn at your own pace in 5 languages.",
+    "tileLabel": {
+      "ai-seeds": "Basics",
+      "ai-sprouts": "Algorithms",
+      "ai-branches": "Applications",
+      "ai-canopy": "Deep Learning",
+      "ai-forest": "Research",
+      "ai-sketch": "DSA",
+      "ai-chisel": "Patterns",
+      "ai-craft": "System Design",
+      "ai-polish": "Interviews",
+      "ai-masterpiece": "Architecture"
+    }
   },
   "homePrograms": {
     "startFromZero": "Start from zero",
@@ -298,7 +310,7 @@
     "installPrompt": "Install AI Educademy for offline access",
     "dismiss": "Not now",
     "offline": "You're Offline",
-    "offlineMessage": "Don't worry — previously visited lessons are still available.",
+    "offlineMessage": "Don't worry, previously visited lessons are still available.",
     "goHome": "Go to Homepage"
   },
   "blog": {
@@ -330,15 +342,15 @@
   "community": {
     "updates": "Stay Updated",
     "openSource": "Open Source",
-    "openSourceDesc": "Built openly — view code, contribute, or fork"
+    "openSourceDesc": "Built openly, view code, contribute, or fork"
   },
   "lab": {
     "title": "AI Lab",
-    "subtitle": "Experiment with real AI concepts right in your browser. No installation, no coding — just play and learn!",
+    "subtitle": "Experiment with real AI concepts right in your browser. No installation, no coding, just play and learn!",
     "badge": "Interactive • Fun • Educational",
     "pageTitle": "AI Lab",
     "pageDescription": "Experiment with AI concepts. Analyse sentiment, visualise neural networks, explore sorting algorithms, and understand tokenisation.",
-    "footer": "All demos run entirely in your browser — no data is sent to any server.",
+    "footer": "All demos run entirely in your browser, no data is sent to any server.",
     "tabs": {
       "games": {
         "label": "Mini Games",
@@ -422,7 +434,7 @@
       "greatDetective": "Great detective work!",
       "reviewedBias": "You reviewed {count} bias scenarios. Understanding bias is the first step to building fairer AI.",
       "perfectOrder": "Perfect order!",
-      "notQuiteTimeline": "Not quite — here's the correct timeline:",
+      "notQuiteTimeline": "Not quite, here's the correct timeline:",
       "allPairsMatched": "All {count} pairs matched",
       "celebration": "🎉 Congratulations!",
       "newHighScore": "New Personal Best!"
@@ -506,7 +518,7 @@
         "justInTime": "Just in time!"
       },
       "neuralNetwork": {
-        "title": "Neural Network Playground",
+        "title": "Neural Network Sandbox",
         "instruction": "Place data points and train a neural network to classify them"
       },
       "promptDojo": {
@@ -520,7 +532,7 @@
     },
     "sentimentSection": {
       "title": "Sentiment Analysis",
-      "description": "Analyse the emotional tone of any text using keyword-based NLP — runs entirely in your browser.",
+      "description": "Analyse the emotional tone of any text using keyword-based NLP, runs entirely in your browser.",
       "placeholder": "Type or paste any text to analyse its sentiment...",
       "analyse": "Analyse Sentiment",
       "analysing": "Analysing...",
@@ -553,16 +565,16 @@
     },
     "tokenizerSection": {
       "title": "AI Tokeniser",
-      "description": "See how LLMs break text into tokens — the fundamental units AI processes.",
+      "description": "See how LLMs break text into tokens, the fundamental units AI processes.",
       "placeholder": "Type text to see how AI breaks it into tokens...",
       "tokens": "tokens",
       "characters": "characters",
       "wordsEquivalent": "~{count} words equivalent",
-      "explanation": "AI doesn't read text like humans. It breaks text into tokens — subword pieces processed individually. Longer words get split into smaller chunks."
+      "explanation": "AI doesn't read text like humans. It breaks text into tokens, subword pieces processed individually. Longer words get split into smaller chunks."
     },
     "hub": {
       "title": "AI Lab",
-      "subtitle": "Interactive AI games and tools. No coding needed — just play and learn.",
+      "subtitle": "Interactive AI games and tools. No coding needed, just play and learn.",
       "badge": "Interactive • Fun • Educational",
       "gamesAvailable": "{count} games available",
       "searchPlaceholder": "Search games...",

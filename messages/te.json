@@ -201,7 +201,19 @@
     "trackCraftTagline": "స్కెచ్ → ఉలి → హస్తకళ → పాలిష్ → కళాఖండం",
     "trackCraftBrand": "AI ని శక్తివంతం చేసే అల్గారిథమ్‌లు నేర్చుకోండి, AI ని స్కేల్ చేసే వ్యవస్థలు డిజైన్ చేయండి.",
     "pageTitle": "AI & ఇంజనీరింగ్ ప్రోగ్రామ్‌లు",
-    "pageDescription": "మా ఉచిత AI లెర్నింగ్ ట్రాక్‌లు మరియు సాఫ్ట్‌వేర్ ఇంజనీరింగ్ ప్రోగ్రామ్‌లను అన్వేషించండి. బిగినర్ నుండి అడ్వాన్స్‌డ్ వరకు — 5 భాషల్లో మీ వేగంతో నేర్చుకోండి."
+    "pageDescription": "మా ఉచిత AI లెర్నింగ్ ట్రాక్‌లు మరియు సాఫ్ట్‌వేర్ ఇంజనీరింగ్ ప్రోగ్రామ్‌లను అన్వేషించండి. బిగినర్ నుండి అడ్వాన్స్‌డ్ వరకు — 5 భాషల్లో మీ వేగంతో నేర్చుకోండి.",
+    "tileLabel": {
+      "ai-seeds": "Basics",
+      "ai-sprouts": "Algorithms",
+      "ai-branches": "Applications",
+      "ai-canopy": "Deep Learning",
+      "ai-forest": "Research",
+      "ai-sketch": "DSA",
+      "ai-chisel": "Patterns",
+      "ai-craft": "System Design",
+      "ai-polish": "Interviews",
+      "ai-masterpiece": "Architecture"
+    }
   },
   "homePrograms": {
     "startFromZero": "సున్నా నుండి ప్రారంభించండి",

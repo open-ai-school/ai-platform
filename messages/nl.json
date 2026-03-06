@@ -201,7 +201,19 @@
     "trackCraftTagline": "Schets → Beitel → Ambacht → Polijst → Meesterwerk",
     "trackCraftBrand": "Leer de algoritmes achter AI, ontwerp de systemen die AI schalen, en slaag voor de interviews.",
     "pageTitle": "AI & Engineering Programma's",
-    "pageDescription": "Ontdek onze gratis AI-leerpaden en software engineering programma's. Van absolute beginner tot gevorderd — leer in je eigen tempo in 5 talen."
+    "pageDescription": "Ontdek onze gratis AI-leerpaden en software engineering programma's. Van absolute beginner tot gevorderd — leer in je eigen tempo in 5 talen.",
+    "tileLabel": {
+      "ai-seeds": "Basics",
+      "ai-sprouts": "Algorithms",
+      "ai-branches": "Applications",
+      "ai-canopy": "Deep Learning",
+      "ai-forest": "Research",
+      "ai-sketch": "DSA",
+      "ai-chisel": "Patterns",
+      "ai-craft": "System Design",
+      "ai-polish": "Interviews",
+      "ai-masterpiece": "Architecture"
+    }
   },
   "homePrograms": {
     "startFromZero": "Begin vanaf nul",

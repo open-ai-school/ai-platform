@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getProgramsByTrack } from "@/lib/programs";
+import { getLessons } from "@/lib/lessons";
 import { ScrollReveal } from "@ai-educademy/ai-ui-library";
 import { ComingSoonProgramCard } from "@/components/ui/ComingSoon";
 import type { ProgramMeta } from "@/lib/programs";
@@ -38,6 +39,15 @@ export default async function ProgramsPage({
   const aiLearning = getProgramsByTrack("ai-learning");
   const craftEngineering = getProgramsByTrack("craft-engineering");
   const basePath = locale === "en" ? "" : `/${locale}`;
+
+  const allPrograms = [...aiLearning, ...craftEngineering];
+  const firstLessonSlugs: Record<string, string | undefined> = {};
+  for (const p of allPrograms) {
+    if (p.status === "active") {
+      const lessons = getLessons(p.slug, locale);
+      firstLessonSlugs[p.slug] = lessons[0]?.slug;
+    }
+  }
 
   const levelLabels: Record<number, string> = {
     1: t("levelLabels.1"),
@@ -76,7 +86,10 @@ export default async function ProgramsPage({
               <div className="flex items-center gap-1 text-2xl">
                 {aiLearning.map((p, i) => (
                   <span key={p.slug} className="flex items-center">
-                    <span>{p.icon}</span>
+                    <span className="flex flex-col items-center">
+                      <span>{p.icon}</span>
+                      <span className="text-[9px] text-[var(--color-text-muted)] mt-0.5">{t(`tileLabel.${p.slug}`)}</span>
+                    </span>
                     {i < aiLearning.length - 1 && <span className="mx-1 text-sm text-[var(--color-text-muted)]">→</span>}
                   </span>
                 ))}
@@ -95,7 +108,10 @@ export default async function ProgramsPage({
               <div className="flex items-center gap-1 text-2xl">
                 {craftEngineering.map((p, i) => (
                   <span key={p.slug} className="flex items-center">
-                    <span>{p.icon}</span>
+                    <span className="flex flex-col items-center">
+                      <span>{p.icon}</span>
+                      <span className="text-[9px] text-[var(--color-text-muted)] mt-0.5">{t(`tileLabel.${p.slug}`)}</span>
+                    </span>
                     {i < craftEngineering.length - 1 && <span className="mx-1 text-sm text-[var(--color-text-muted)]">→</span>}
                   </span>
                 ))}
@@ -119,7 +135,7 @@ export default async function ProgramsPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {aiLearning.map((program, idx) => (
             <ScrollReveal key={program.slug} animation="fade-up" delay={idx * 80}>
-              <ProgramCard program={program} basePath={basePath} levelLabels={levelLabels} t={t} />
+              <ProgramCard program={program} basePath={basePath} levelLabels={levelLabels} t={t} firstLessonSlug={firstLessonSlugs[program.slug]} />
             </ScrollReveal>
           ))}
         </div>
@@ -140,7 +156,7 @@ export default async function ProgramsPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {craftEngineering.map((program, idx) => (
             <ScrollReveal key={program.slug} animation="fade-up" delay={idx * 80}>
-              <ProgramCard program={program} basePath={basePath} levelLabels={levelLabels} t={t} />
+              <ProgramCard program={program} basePath={basePath} levelLabels={levelLabels} t={t} firstLessonSlug={firstLessonSlugs[program.slug]} />
             </ScrollReveal>
           ))}
         </div>
@@ -154,11 +170,13 @@ function ProgramCard({
   basePath,
   levelLabels,
   t,
+  firstLessonSlug,
 }: {
   program: ProgramMeta;
   basePath: string;
   levelLabels: Record<number, string>;
   t: (key: string) => string;
+  firstLessonSlug?: string;
 }) {
   const isActive = program.status === "active";
 
@@ -226,8 +244,12 @@ function ProgramCard({
     </div>
   );
 
+  const programHref = firstLessonSlug
+    ? `${basePath}/programs/${program.slug}/lessons/${firstLessonSlug}`
+    : `${basePath}/programs/${program.slug}`;
+
   return isActive ? (
-    <Link href={`${basePath}/programs/${program.slug}`} className="block h-full">{card}</Link>
+    <Link href={programHref} className="block h-full">{card}</Link>
   ) : (
     <ComingSoonProgramCard title={program.title}>
       {card}

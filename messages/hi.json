@@ -201,7 +201,19 @@
     "trackCraftTagline": "स्केच → छेनी → शिल्प → पॉलिश → कृतित्व",
     "trackCraftBrand": "AI को शक्ति देने वाले एल्गोरिदम सीखें, AI को स्केल करने वाली प्रणालियां डिज़ाइन करें।",
     "pageTitle": "AI और इंजीनियरिंग प्रोग्राम",
-    "pageDescription": "हमारे मुफ्त AI लर्निंग ट्रैक और सॉफ्टवेयर इंजीनियरिंग प्रोग्राम खोजें। शुरुआत से एडवांस तक — 5 भाषाओं में अपनी गति से सीखें।"
+    "pageDescription": "हमारे मुफ्त AI लर्निंग ट्रैक और सॉफ्टवेयर इंजीनियरिंग प्रोग्राम खोजें। शुरुआत से एडवांस तक — 5 भाषाओं में अपनी गति से सीखें।",
+    "tileLabel": {
+      "ai-seeds": "Basics",
+      "ai-sprouts": "Algorithms",
+      "ai-branches": "Applications",
+      "ai-canopy": "Deep Learning",
+      "ai-forest": "Research",
+      "ai-sketch": "DSA",
+      "ai-chisel": "Patterns",
+      "ai-craft": "System Design",
+      "ai-polish": "Interviews",
+      "ai-masterpiece": "Architecture"
+    }
   },
   "homePrograms": {
     "startFromZero": "शून्य से शुरू करें",

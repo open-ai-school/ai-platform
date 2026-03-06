@@ -1,4 +1,3 @@
-import type { NextConfig } from "next";
 import withSerwist from "@serwist/next";
 import createNextIntlPlugin from "next-intl/plugin";
 import createMDX from "@next/mdx";
@@ -19,7 +18,8 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
 ];
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   images: {
     remotePatterns: [

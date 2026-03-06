@@ -158,7 +158,7 @@ export function LessonComplete({
               href={`${basePath}/${nextSlug}`}
               className="group flex items-center gap-2 text-sm font-medium px-5 py-2.5 bg-[var(--color-primary)] text-white rounded-xl hover:brightness-110 transition-all min-w-0"
             >
-              <span className="truncate">Next Lesson: {nextTitle}</span>
+              <span className="truncate">{nextTitle}</span>
               <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
             </Link>
           ) : nextProgram ? (

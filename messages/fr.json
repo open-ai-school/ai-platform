@@ -201,7 +201,19 @@
     "trackCraftTagline": "Esquisse → Ciseau → Artisanat → Polissage → Chef-d'œuvre",
     "trackCraftBrand": "Apprenez les algorithmes qui alimentent l'IA, concevez les systèmes qui la mettent à l'échelle, et réussissez les entretiens.",
     "pageTitle": "Programmes IA & Ingénierie",
-    "pageDescription": "Explorez nos parcours gratuits d'apprentissage de l'IA et nos programmes d'ingénierie logicielle. Du débutant à l'avancé — apprenez à votre rythme en 5 langues."
+    "pageDescription": "Explorez nos parcours gratuits d'apprentissage de l'IA et nos programmes d'ingénierie logicielle. Du débutant à l'avancé — apprenez à votre rythme en 5 langues.",
+    "tileLabel": {
+      "ai-seeds": "Basics",
+      "ai-sprouts": "Algorithms",
+      "ai-branches": "Applications",
+      "ai-canopy": "Deep Learning",
+      "ai-forest": "Research",
+      "ai-sketch": "DSA",
+      "ai-chisel": "Patterns",
+      "ai-craft": "System Design",
+      "ai-polish": "Interviews",
+      "ai-masterpiece": "Architecture"
+    }
   },
   "homePrograms": {
     "startFromZero": "Partir de zéro",
