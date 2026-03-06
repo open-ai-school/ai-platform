@@ -847,14 +847,8 @@ export interface GameEntry {
 
 export const ALL_GAMES: GameEntry[] = [
   { id: "emoji-decoder", name: "Emoji Decoder", desc: "Guess AI concepts from emojis", icon: "🧩", component: EmojiDecoder, difficulty: "easy", estimatedMinutes: 2, category: "quick" },
-  { id: "binary-translator", name: "Binary Translator", desc: "Decode binary to text", icon: "💾", component: BinaryTranslator, difficulty: "medium", estimatedMinutes: 3, category: "knowledge" },
-  { id: "speed-typer", name: "Speed Typer", desc: "Type AI terms fast", icon: "⚡", component: SpeedTyper, difficulty: "easy", estimatedMinutes: 2, category: "quick" },
-  { id: "pattern-matcher", name: "Odd One Out", desc: "Spot what doesn't belong", icon: "🔍", component: PatternMatcher, difficulty: "medium", estimatedMinutes: 2, category: "knowledge" },
-  { id: "memory-match", name: "Memory Match", desc: "Match terms with definitions", icon: "🃏", component: MemoryMatch, difficulty: "easy", estimatedMinutes: 3, category: "quick" },
-  { id: "ai-timeline", name: "AI Timeline", desc: "Sort milestones chronologically", icon: "📅", component: AITimeline, difficulty: "hard", estimatedMinutes: 3, category: "knowledge" },
-  { id: "bias-detective", name: "Bias Detective", desc: "Spot AI bias in scenarios", icon: "🕵️", component: BiasDetective, difficulty: "medium", estimatedMinutes: 4, category: "ethics" },
-  { id: "token-counter", name: "Token Counter", desc: "Guess how LLMs tokenise text", icon: "🔢", component: TokenCounter, difficulty: "hard", estimatedMinutes: 3, category: "knowledge" },
   { id: "prompt-engineer", name: "Prompt Engineer", desc: "Pick the better prompt", icon: "🧙", component: PromptEngineer, difficulty: "medium", estimatedMinutes: 3, category: "creative" },
-  { id: "jargon-buster", name: "Jargon Buster", desc: "True or false on AI terms", icon: "📖", component: JargonBuster, difficulty: "easy", estimatedMinutes: 3, category: "knowledge" },
+  { id: "memory-match", name: "Memory Match", desc: "Match terms with definitions", icon: "🃏", component: MemoryMatch, difficulty: "easy", estimatedMinutes: 3, category: "quick" },
+  { id: "bias-detective", name: "Bias Detective", desc: "Spot AI bias in scenarios", icon: "🕵️", component: BiasDetective, difficulty: "medium", estimatedMinutes: 4, category: "ethics" },
   { id: "ai-trivia", name: "AI Trivia Challenge", desc: "Test your AI knowledge with timed questions", icon: "🧠", component: AITriviaChallenge, difficulty: "medium", estimatedMinutes: 4, category: "knowledge" },
 ];

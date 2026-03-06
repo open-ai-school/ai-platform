@@ -71,12 +71,12 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://github.com/open-ai-school/ai-seeds/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-primary)] hover:translate-x-0.5 transition-all inline-block">
+                <a href="https://github.com/open-ai-school/ai-platform/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-primary)] hover:translate-x-0.5 transition-all inline-block">
                   {t("contributing")}
                 </a>
               </li>
               <li>
-                <a href="https://github.com/open-ai-school/ai-seeds/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-primary)] hover:translate-x-0.5 transition-all inline-block">
+                <a href="https://github.com/open-ai-school/ai-platform/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-primary)] hover:translate-x-0.5 transition-all inline-block">
                   {t("coc")}
                 </a>
               </li>

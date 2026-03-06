@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 
 if (!process.env.AUTH_SECRET) {
   console.warn(
@@ -7,8 +8,12 @@ if (!process.env.AUTH_SECRET) {
   );
 }
 
+const providers = [];
+if (process.env.AUTH_GITHUB_ID) providers.push(GitHub);
+if (process.env.AUTH_GOOGLE_ID) providers.push(Google);
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: process.env.AUTH_GITHUB_ID ? [GitHub] : [],
+  providers,
   secret: process.env.AUTH_SECRET,
   trustHost: true,
   callbacks: {

@@ -368,7 +368,7 @@ export default async function HomePage({
             {/* Discussions */}
             <ScrollReveal animation="fade-up">
               <a
-                href="https://github.com/orgs/open-ai-school/discussions"
+                href="https://github.com/open-ai-school/ai-platform/discussions"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] card-hover h-full"
@@ -439,7 +439,7 @@ export default async function HomePage({
                 {t("cta.button")} →
               </Link>
               <a
-                href="https://github.com/open-ai-school/ai-seeds"
+                href="https://github.com/open-ai-school/ai-platform"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-10 py-4 border-2 border-white/30 rounded-2xl text-lg font-bold text-white hover:bg-white/10 hover:border-white/60 transition-all backdrop-blur-sm"

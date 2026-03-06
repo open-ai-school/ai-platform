@@ -117,7 +117,6 @@ const CATEGORIES: { id: GameCategory | "all"; label: string; icon: string }[] = 
   { id: "quick", label: "categoryQuickGames", icon: "🎮" },
   { id: "ethics", label: "categoryEthics", icon: "⚖️" },
   { id: "creative", label: "categoryCreative", icon: "✍️" },
-  { id: "tools", label: "categoryTools", icon: "🔧" },
 ];
 
 const FEATURED_GAME: GameMeta = {
