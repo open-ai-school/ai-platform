@@ -21,7 +21,7 @@ This is a **capstone case study** — you'll combine everything from AI Sketch t
 **What makes this hard:**
 
 - **Scale:** 500M daily active users, 500M+ tweets/day
-- **Latency:** Feed must load in <200ms
+- **Latency:** Feed must load in under 200ms
 - **Freshness:** New tweets appear in seconds
 - **Personalisation:** Each user sees a unique feed
 - **Cold start:** New users with no history
@@ -82,7 +82,7 @@ Why use a Bloom Filter instead of a regular HashSet for "already seen" detection
 
 ### Fan-Out Strategy: Hybrid Approach
 
-**Fan-out on write** for users with < 10K followers:
+**Fan-out on write** for users with fewer than 10K followers:
 - When a user tweets, push to all follower timelines
 - Low-latency reads (timeline is pre-computed)
 - O(followers) writes per tweet
