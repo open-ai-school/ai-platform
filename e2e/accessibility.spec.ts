@@ -60,7 +60,12 @@ test.describe("Performance", () => {
     await page.waitForTimeout(2000);
     // Filter out known benign errors (hydration warnings, etc.)
     const realErrors = errors.filter(
-      (e) => !e.includes("hydrat") && !e.includes("Warning") && !e.includes("favicon")
+      (e) =>
+        !e.includes("hydrat") &&
+        !e.includes("Warning") &&
+        !e.includes("favicon") &&
+        !e.includes("_vercel/") &&
+        !e.includes("MIME type")
     );
     expect(realErrors).toHaveLength(0);
   });

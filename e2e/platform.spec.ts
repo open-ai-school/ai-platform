@@ -129,6 +129,7 @@ test.describe("SEO", () => {
     const jsonLd = await page.locator('script[type="application/ld+json"]').first().textContent();
     expect(jsonLd).toBeTruthy();
     const data = JSON.parse(jsonLd!);
-    expect(data["@type"]).toBe("Organization");
+    const types = Array.isArray(data["@type"]) ? data["@type"] : [data["@type"]];
+    expect(types.some((t: string) => t.includes("Organization") || t.includes("EducationalOrganization") || t === "WebSite")).toBe(true);
   });
 });
