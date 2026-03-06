@@ -5,7 +5,7 @@ const LOCALES = ["en", "fr", "nl", "hi", "te"];
 test.describe("Navigation & Pages", () => {
   test("homepage loads and shows hero", async ({ page }) => {
     await page.goto("/en");
-    await expect(page).toHaveTitle(/Open AI School/);
+    await expect(page).toHaveTitle(/AI Educademy/);
     await expect(page.locator("h1").first()).toBeVisible();
   });
 
