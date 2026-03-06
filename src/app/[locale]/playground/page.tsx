@@ -7,6 +7,109 @@ import { ALL_GAMES, type GameEntry } from "@/components/playground/MiniGames";
 import GameCard, { type GameMeta, type GameCategory } from "@/components/playground/GameCard";
 import AIOrHumanGame from "@/components/playground/AIOrHumanGame";
 
+/* ─── CSS Animations ─── */
+const PLAYGROUND_STYLES = `
+@keyframes pg-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes pg-card-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pg-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pg-slide-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pg-slide-down {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(40px); }
+}
+@keyframes pg-gradient-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes pg-shine {
+  from { left: -100%; }
+  to { left: 200%; }
+}
+@keyframes pg-play-reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pg-float { animation: pg-float 3s ease-in-out infinite; }
+.pg-card-stagger { animation: pg-card-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.pg-overlay-enter { animation: pg-overlay-in 0.3s ease-out both; }
+.pg-slide-up-enter { animation: pg-slide-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+.pg-featured-border {
+  background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899, #6366f1);
+  background-size: 300% 300%;
+  animation: pg-gradient-rotate 4s ease infinite;
+}
+
+.pg-pill-shine {
+  position: relative;
+  overflow: hidden;
+}
+.pg-pill-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  transition: none;
+}
+.pg-pill-shine:hover::after {
+  animation: pg-shine 0.6s ease-out;
+}
+
+.pg-game-card {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+.pg-game-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
+}
+.pg-game-card .pg-play-btn {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.pg-game-card:hover .pg-play-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pg-pill-active {
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.35);
+}
+`;
+
+/* ─── Category colours for hover gradients ─── */
+const CATEGORY_COLORS: Record<GameCategory | "all", string> = {
+  all: "from-indigo-500/8 to-violet-500/8",
+  knowledge: "from-blue-500/8 to-cyan-500/8",
+  quick: "from-amber-500/8 to-orange-500/8",
+  ethics: "from-emerald-500/8 to-teal-500/8",
+  creative: "from-pink-500/8 to-rose-500/8",
+  tools: "from-slate-500/8 to-gray-500/8",
+};
+
+const DIFFICULTY_DOT: Record<string, string> = {
+  easy: "bg-emerald-400",
+  medium: "bg-amber-400",
+  hard: "bg-red-400",
+};
+
 /* ─── Category + Featured Game Definitions ─── */
 const CATEGORIES: { id: GameCategory | "all"; label: string; icon: string }[] = [
   { id: "all", label: "allCategories", icon: "🎯" },
@@ -53,11 +156,12 @@ export default function PlaygroundPage() {
   const [category, setCategory] = useState<GameCategory | "all">("all");
   const [search, setSearch] = useState("");
   const overlayRef = useRef<HTMLDivElement>(null);
+  const [closing, setClosing] = useState(false);
 
   const allGames = useMemo(() => buildGameList(), []);
 
   const filteredGames = useMemo(() => {
-    let games = allGames;
+    let games = allGames.filter((g) => g.id !== FEATURED_GAME.id);
     if (category !== "all") {
       games = games.filter((g) => g.category === category);
     }
@@ -72,11 +176,16 @@ export default function PlaygroundPage() {
 
   const handlePlay = useCallback((game: GameMeta) => {
     setActiveGame(game);
+    setClosing(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   const handleClose = useCallback(() => {
-    setActiveGame(null);
+    setClosing(true);
+    setTimeout(() => {
+      setActiveGame(null);
+      setClosing(false);
+    }, 300);
   }, []);
 
   // Escape key to close game
@@ -92,128 +201,174 @@ export default function PlaygroundPage() {
   if (activeGame) {
     const GameComponent = activeGame.component;
     return (
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-16" ref={overlayRef}>
-        {/* Back button */}
-        <button
-          onClick={handleClose}
-          className="min-h-[40px] inline-flex items-center gap-2 px-4 py-2 mb-6 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)] rounded-xl hover:border-[var(--color-primary)] transition-all"
+      <>
+        <style>{PLAYGROUND_STYLES}</style>
+        <div
+          ref={overlayRef}
+          className={`fixed inset-0 z-50 flex items-end sm:items-center justify-center ${closing ? "" : "pg-overlay-enter"}`}
+          style={{
+            backgroundColor: "rgba(0,0,0,0.6)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            ...(closing ? { opacity: 0, transition: "opacity 0.3s ease" } : {}),
+          }}
+          onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
         >
-          {t("hub.backToHub")}
-        </button>
-
-        {/* Game container */}
-        <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] overflow-hidden shadow-2xl shadow-black/10">
-          {/* Game header */}
-          <div className="px-5 sm:px-8 py-5 border-b border-[var(--color-border)] bg-gradient-to-r from-indigo-500/5 to-violet-500/5">
-            <div className="flex items-center gap-3">
-              <span className="text-3xl">{activeGame.icon}</span>
-              <div>
-                <h2 className="text-xl font-bold">{activeGame.name}</h2>
-                <p className="text-sm text-[var(--color-text-muted)]">{activeGame.desc}</p>
+          <div
+            className={`relative w-full max-w-4xl max-h-[90vh] overflow-auto rounded-t-2xl sm:rounded-2xl bg-[var(--color-bg)] border border-[var(--color-border)] shadow-2xl ${closing ? "" : "pg-slide-up-enter"}`}
+            style={closing ? { opacity: 0, transform: "translateY(40px)", transition: "all 0.3s ease" } : {}}
+          >
+            {/* Game header */}
+            <div className="sticky top-0 z-10 px-5 sm:px-8 py-4 border-b border-[var(--color-border)] bg-[var(--color-bg)]/95 backdrop-blur-sm flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">{activeGame.icon}</span>
+                <div>
+                  <h2 className="text-lg font-bold">{activeGame.name}</h2>
+                  <p className="text-xs text-[var(--color-text-muted)] hidden sm:block">{activeGame.desc}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] text-[var(--color-text-muted)] hidden sm:inline font-mono">ESC</span>
+                <button
+                  onClick={handleClose}
+                  className="min-h-[36px] min-w-[36px] inline-flex items-center justify-center rounded-xl border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-[var(--color-primary)] transition-all text-lg"
+                  aria-label="Close"
+                >
+                  ✕
+                </button>
               </div>
             </div>
-          </div>
 
-          {/* Game content */}
-          <div className="p-5 sm:p-8">
-            <GameComponent />
+            {/* Game content */}
+            <div className="p-5 sm:p-8">
+              <GameComponent />
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 
   /* ─── Game Hub (Lobby) ─── */
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-20">
-      {/* Hero */}
-      <ScrollReveal animation="fade-up">
-        <div className="relative mb-12 text-center">
-          {/* Animated gradient background */}
-          <div className="absolute inset-0 -z-10 overflow-hidden rounded-3xl">
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-violet-500/5 to-fuchsia-500/10 animate-pulse" style={{ animationDuration: "4s" }} />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 rounded-full blur-3xl" />
-          </div>
+    <>
+      <style>{PLAYGROUND_STYLES}</style>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 md:py-12">
 
-          <div className="py-12 px-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-violet-500/10 border border-indigo-500/20 text-xs font-medium text-indigo-400 mb-4">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-              </svg>
-              {t("hub.badge")}
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-indigo-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+        {/* ── Compact Hero ── */}
+        <ScrollReveal animation="fade-up">
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-indigo-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
               {t("hub.title")}
             </h1>
-            <p className="text-base sm:text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto leading-relaxed">
-              {t("hub.subtitle")}
-            </p>
-            <p className="text-sm text-[var(--color-text-muted)] mt-3">
-              🎮 {t("hub.gamesAvailable", { count: allGames.length })}
+            <p className="text-sm text-[var(--color-text-muted)] mt-1.5">
+              {t("hub.subtitle")} <span className="opacity-60">· {allGames.length} games</span>
             </p>
           </div>
-        </div>
-      </ScrollReveal>
+        </ScrollReveal>
 
-      {/* Search + Category Filter */}
-      <ScrollReveal animation="fade-up">
-        <div className="mb-8 space-y-4">
-          {/* Search */}
-          <div className="relative max-w-md mx-auto">
-            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-text-muted)]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-            </svg>
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={t("hub.searchPlaceholder")}
-              className="w-full min-h-[44px] pl-10 pr-4 py-2.5 rounded-xl bg-[var(--color-bg)] border border-[var(--color-border)] text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all"
-            />
+        {/* ── Featured Game Spotlight ── */}
+        <ScrollReveal animation="fade-up">
+          <button
+            onClick={() => handlePlay(FEATURED_GAME)}
+            className="group relative w-full mb-8 rounded-2xl p-[2px] pg-featured-border cursor-pointer text-left"
+          >
+            <div className="relative rounded-[14px] bg-[var(--color-bg)] px-6 py-5 sm:px-8 sm:py-6 flex items-center gap-5 overflow-hidden">
+              {/* Subtle bg gradient */}
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-violet-500/5 to-fuchsia-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <span className="relative text-5xl sm:text-6xl pg-float shrink-0">{FEATURED_GAME.icon}</span>
+              <div className="relative flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-indigo-400">Featured</span>
+                  <span className={`w-1.5 h-1.5 rounded-full ${DIFFICULTY_DOT[FEATURED_GAME.difficulty]}`} />
+                </div>
+                <h2 className="text-xl sm:text-2xl font-bold truncate">{FEATURED_GAME.name}</h2>
+                <p className="text-sm text-[var(--color-text-muted)] mt-0.5 line-clamp-1">{FEATURED_GAME.desc}</p>
+              </div>
+              <div className="relative shrink-0 hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-500 text-white text-sm font-semibold group-hover:bg-indigo-400 transition-colors">
+                ▶ Play Now
+              </div>
+            </div>
+          </button>
+        </ScrollReveal>
+
+        {/* ── Category Pills ── */}
+        <ScrollReveal animation="fade-up">
+          <div className="mb-6 -mx-4 px-4 overflow-x-auto scrollbar-none">
+            <div className="flex gap-2 w-max mx-auto">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setCategory(cat.id)}
+                  className={`pg-pill-shine min-h-[32px] px-3.5 py-1 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
+                    category === cat.id
+                      ? "bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 pg-pill-active"
+                      : "bg-[var(--color-bg-section)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:border-indigo-400/40 hover:text-[var(--color-text)]"
+                  }`}
+                >
+                  <span className="mr-1">{cat.icon}</span>
+                  {t(`hub.${cat.label}`)}
+                </button>
+              ))}
+            </div>
           </div>
+        </ScrollReveal>
 
-          {/* Category tabs */}
-          <div className="flex flex-wrap justify-center gap-2">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setCategory(cat.id)}
-                className={`min-h-[36px] px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  category === cat.id
-                    ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/20"
-                    : "bg-[var(--color-bg-section)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:border-indigo-400 hover:text-[var(--color-text)]"
-                }`}
-              >
-                <span className="mr-1.5">{cat.icon}</span>
-                {t(`hub.${cat.label}`)}
-              </button>
-            ))}
-          </div>
-        </div>
-      </ScrollReveal>
-
-      {/* Game Grid */}
-      <ScrollReveal animation="fade-up">
+        {/* ── Game Grid ── */}
         {filteredGames.length === 0 ? (
           <div className="text-center py-16 text-[var(--color-text-muted)]">
             <p className="text-4xl mb-3">🔍</p>
             <p className="text-sm">{t("hub.noGamesFound")}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {filteredGames.map((game) => (
-              <GameCard key={game.id} game={game} onPlay={handlePlay} />
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            {filteredGames.map((game, i) => (
+              <button
+                key={game.id}
+                onClick={() => handlePlay(game)}
+                className="pg-game-card pg-card-stagger group relative rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-4 sm:p-5 text-left cursor-pointer overflow-hidden"
+                style={{ animationDelay: `${i * 50}ms` }}
+              >
+                {/* Hover gradient */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${CATEGORY_COLORS[game.category]} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+
+                <div className="relative">
+                  {/* Icon + Difficulty dot */}
+                  <div className="flex items-start justify-between mb-3">
+                    <span className="text-3xl sm:text-4xl pg-float" style={{ animationDelay: `${i * 200}ms` }}>
+                      {game.icon}
+                    </span>
+                    <span className={`w-2 h-2 rounded-full mt-1 ${DIFFICULTY_DOT[game.difficulty] ?? "bg-gray-400"}`} title={game.difficulty} />
+                  </div>
+
+                  {/* Title + Desc */}
+                  <h3 className="text-sm sm:text-base font-semibold leading-tight mb-1 truncate">{game.name}</h3>
+                  <p className="text-xs text-[var(--color-text-muted)] line-clamp-2 leading-relaxed mb-3">
+                    {game.desc}
+                  </p>
+
+                  {/* Time + Play CTA */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] text-[var(--color-text-muted)] tabular-nums">
+                      {game.estimatedMinutes} min
+                    </span>
+                    <span className="pg-play-btn text-xs font-semibold text-indigo-400">
+                      Play →
+                    </span>
+                  </div>
+                </div>
+              </button>
             ))}
           </div>
         )}
-      </ScrollReveal>
 
-      {/* Footer */}
-      <div className="mt-12 text-center">
-        <p className="text-xs text-[var(--color-text-muted)]">
-          {t("footer")}
-        </p>
+        {/* Footer */}
+        <div className="mt-10 text-center">
+          <p className="text-[11px] text-[var(--color-text-muted)]">
+            {t("footer")}
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

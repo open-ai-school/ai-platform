@@ -9,6 +9,7 @@ import { FloatingParticles } from "@open-ai-school/ai-ui-library";
 import { getProgramsByTrack } from "@/lib/programs";
 import { MessageCircle, Star, Mail } from "lucide-react";
 import { NewsletterSignup } from "@/components/ui/NewsletterSignup";
+import NeuralBackground from "@/components/ui/NeuralBackground";
 
 export default async function HomePage({
   params,
@@ -52,6 +53,7 @@ export default async function HomePage({
     <>
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[60vh] flex items-center">
+        <NeuralBackground variant="hero" />
         <FloatingParticles />
         <div className="absolute inset-0 bg-grid" />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative">
