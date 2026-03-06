@@ -15,9 +15,9 @@ export async function sendWelcomeEmail(email: string): Promise<void> {
     const htmlContent = welcomeEmailHtml(email);
 
     await resend.emails.send({
-      from: "Open AI School <onboarding@resend.dev>",
+      from: "AI Educademy <onboarding@resend.dev>",
       to: email,
-      subject: "Welcome to Open AI School! 🎓",
+      subject: "Welcome to AI Educademy! 🎓",
       html: htmlContent,
     });
 

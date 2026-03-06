@@ -57,7 +57,7 @@ export function Navbar() {
             <Logo size={30} />
             <div className="flex flex-col leading-none">
               <span className="text-[15px] font-bold tracking-tight text-gradient">
-                openai.school
+                aieducademy
               </span>
             </div>
           </Link>

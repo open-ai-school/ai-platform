@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { getBlogPost } from "@/lib/blog";
 import { LessonRenderer } from "@/components/lessons/LessonRenderer";
 
-const BASE_URL = "https://openaischool.vercel.app";
+const BASE_URL = "https://aieducademy.vercel.app";
 
 export async function generateMetadata({
   params,
@@ -23,7 +23,7 @@ export async function generateMetadata({
       canonical: `${BASE_URL}/${locale}/blog/${slug}`,
     },
     openGraph: {
-      title: `${post.title} | Open AI School`,
+      title: `${post.title} | AI Educademy`,
       description: post.description,
       type: "article",
       publishedTime: post.date,

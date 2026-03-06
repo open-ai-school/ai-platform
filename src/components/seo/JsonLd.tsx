@@ -1,17 +1,17 @@
 "use client";
 
-const BASE_URL = "https://openaischool.vercel.app";
+const BASE_URL = "https://aieducademy.vercel.app";
 
 export function OrganizationJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": ["EducationalOrganization", "WebSite"],
-    name: "Open AI School",
+    name: "AI Educademy",
     url: BASE_URL,
     logo: `${BASE_URL}/favicon.svg`,
     description:
       "Free, open-source, multilingual AI education platform. Learn Artificial Intelligence from scratch through interactive lessons and hands-on experiments.",
-    sameAs: ["https://github.com/open-ai-school"],
+    sameAs: ["https://github.com/aieducademy"],
     founder: {
       "@type": "Person",
       name: "Ramesh Reddy Adutla",
@@ -40,7 +40,7 @@ export function CourseJsonLd({
   description,
   slug,
   level,
-  provider = "Open AI School",
+  provider = "AI Educademy",
 }: {
   locale: string;
   name: string;

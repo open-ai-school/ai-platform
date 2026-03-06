@@ -11,12 +11,12 @@ export function ShareButton() {
       onClick={() => {
         if (typeof navigator !== "undefined" && navigator.share) {
           navigator.share({
-            title: "Open AI School",
+            title: "AI Educademy",
             text: "Free AI education for everyone",
-            url: "https://openaischool.vercel.app",
+            url: "https://aieducademy.vercel.app",
           });
         } else {
-          navigator.clipboard?.writeText("https://openaischool.vercel.app");
+          navigator.clipboard?.writeText("https://aieducademy.vercel.app");
         }
       }}
       className="w-full flex items-center gap-4 p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] card-hover text-left cursor-pointer"

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-const BASE_URL = "https://openaischool.vercel.app";
+const BASE_URL = "https://aieducademy.vercel.app";
 
 export async function generateMetadata({
   params,
@@ -17,7 +17,7 @@ export async function generateMetadata({
       canonical: `${BASE_URL}/${locale}/playground`,
     },
     openGraph: {
-      title: `${t("pageTitle")} | Open AI School`,
+      title: `${t("pageTitle")} | AI Educademy`,
       description: t("pageDescription"),
     },
   };

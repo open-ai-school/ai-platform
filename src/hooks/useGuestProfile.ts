@@ -2,8 +2,8 @@
 
 import { createContext, useContext, useCallback, useState, useEffect } from "react";
 
-const ACCOUNTS_KEY = "open-ai-school-accounts";
-const SESSION_KEY = "open-ai-school-session";
+const ACCOUNTS_KEY = "aieducademy-accounts";
+const SESSION_KEY = "aieducademy-session";
 
 export interface GuestProfile {
   name: string;

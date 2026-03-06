@@ -17,7 +17,7 @@ if (resendKey) {
   providers.push(
     Resend({
       apiKey: resendKey,
-      from: process.env.AUTH_EMAIL_FROM || "Open AI School <noreply@openaischool.dev>",
+      from: process.env.AUTH_EMAIL_FROM || "AI Educademy <noreply@aieducademy.dev>",
     })
   );
 }

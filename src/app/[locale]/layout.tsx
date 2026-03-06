@@ -11,7 +11,7 @@ import { Providers } from "@/components/ui/Providers";
 import { InstallPrompt } from "@/components/ui/InstallPrompt";
 import { OrganizationJsonLd } from "@/components/seo/JsonLd";
 
-const BASE_URL = "https://openaischool.vercel.app";
+const BASE_URL = "https://aieducademy.vercel.app";
 const locales = ["en", "fr", "nl", "hi", "te"];
 
 const inter = Inter({
@@ -37,7 +37,7 @@ export async function generateMetadata({
     metadataBase: new URL(BASE_URL),
     title: {
       default: t("title"),
-      template: `%s | Open AI School`,
+      template: `%s | AI Educademy`,
     },
     description: t("description"),
     keywords: [
@@ -56,7 +56,7 @@ export async function generateMetadata({
     ],
     authors: [{ name: "Ramesh Reddy Adutla" }],
     creator: "Ramesh Reddy Adutla",
-    publisher: "Open AI School",
+    publisher: "AI Educademy",
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
       languages,
@@ -65,13 +65,13 @@ export async function generateMetadata({
       title: t("title"),
       description: t("description"),
       type: "website",
-      siteName: "Open AI School",
+      siteName: "AI Educademy",
       locale: locale,
       url: `${BASE_URL}/${locale}`,
     },
     twitter: {
       card: "summary_large_image",
-      title: "Open AI School",
+      title: "AI Educademy",
       description: t("description"),
     },
     robots: {

@@ -5,7 +5,7 @@ export function welcomeEmailHtml(email: string): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Open AI School</title>
+  <title>Welcome to AI Educademy</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; line-height: 1.6; color: #333;">
   <table cellpadding="0" cellspacing="0" style="width: 100%; background-color: #f9fafb;">
@@ -15,7 +15,7 @@ export function welcomeEmailHtml(email: string): string {
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center; border-radius: 8px 8px 0 0;">
-              <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: 700;">🎓 Open AI School</h1>
+              <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: 700;">🎓 AI Educademy</h1>
               <p style="margin: 8px 0 0 0; color: #e9d8ff; font-size: 14px;">Welcome to our community!</p>
             </td>
           </tr>
@@ -26,7 +26,7 @@ export function welcomeEmailHtml(email: string): string {
               <h2 style="margin: 0 0 16px 0; color: #1f2937; font-size: 24px;">Welcome, ${email}! 👋</h2>
               
               <p style="margin: 0 0 24px 0; color: #4b5563; font-size: 16px; line-height: 1.6;">
-                Thank you for joining the Open AI School community! We're excited to have you on board. Whether you're looking to learn, experiment, or collaborate, you're in the right place.
+                Thank you for joining the AI Educademy community! We're excited to have you on board. Whether you're looking to learn, experiment, or collaborate, you're in the right place.
               </p>
 
               <p style="margin: 0 0 32px 0; color: #4b5563; font-size: 16px; line-height: 1.6;">
@@ -40,7 +40,7 @@ export function welcomeEmailHtml(email: string): string {
                     <table cellpadding="0" cellspacing="0" style="width: 100%; background-color: #667eea; border-radius: 6px;">
                       <tr>
                         <td style="padding: 12px; text-align: center;">
-                          <a href="https://open-ai-school.vercel.app/programs" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px;">Browse Programs</a>
+                          <a href="https://aieducademy.vercel.app/programs" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px;">Browse Programs</a>
                         </td>
                       </tr>
                     </table>
@@ -49,7 +49,7 @@ export function welcomeEmailHtml(email: string): string {
                     <table cellpadding="0" cellspacing="0" style="width: 100%; background-color: #764ba2; border-radius: 6px;">
                       <tr>
                         <td style="padding: 12px; text-align: center;">
-                          <a href="https://open-ai-school.vercel.app/playground" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px;">Try Playground</a>
+                          <a href="https://aieducademy.vercel.app/playground" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px;">Try Playground</a>
                         </td>
                       </tr>
                     </table>
@@ -58,7 +58,7 @@ export function welcomeEmailHtml(email: string): string {
                     <table cellpadding="0" cellspacing="0" style="width: 100%; background-color: #5a67d8; border-radius: 6px;">
                       <tr>
                         <td style="padding: 12px; text-align: center;">
-                          <a href="https://github.com/open-ai-school" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px;">Join GitHub</a>
+                          <a href="https://github.com/aieducademy" style="color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px;">Join GitHub</a>
                         </td>
                       </tr>
                     </table>
@@ -72,7 +72,7 @@ export function welcomeEmailHtml(email: string): string {
 
               <p style="margin: 0; color: #4b5563; font-size: 16px; line-height: 1.6;">
                 Best regards,<br>
-                <strong>The Open AI School Team</strong>
+                <strong>The AI Educademy Team</strong>
               </p>
             </td>
           </tr>
@@ -81,7 +81,7 @@ export function welcomeEmailHtml(email: string): string {
           <tr>
             <td style="padding: 20px 30px; border-top: 1px solid #e5e7eb; background-color: #f9fafb; border-radius: 0 0 8px 8px;">
               <p style="margin: 0; color: #6b7280; font-size: 12px; line-height: 1.5; text-align: center;">
-                You received this email because you subscribed to Open AI School.<br>
+                You received this email because you subscribed to AI Educademy.<br>
                 <a href="#" style="color: #667eea; text-decoration: none;">Unsubscribe</a> · 
                 <a href="#" style="color: #667eea; text-decoration: none;">Preferences</a>
               </p>

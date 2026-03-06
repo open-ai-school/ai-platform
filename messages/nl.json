@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Open AI School — Gratis AI-Onderwijs voor Iedereen",
+    "title": "AI Educademy — Gratis AI-Onderwijs voor Iedereen",
     "description": "Leer Kunstmatige Intelligentie vanaf nul, in jouw taal. Geen programmeerervaring nodig."
   },
   "nav": {
@@ -77,7 +77,7 @@
     }
   },
   "founder": {
-    "description": "Software engineer en engineering leader met meer dan een decennium ervaring in het bouwen van grootschalige systemen in meerdere landen in Azië en Europa. Na het leiden van digitale transformaties in retail, loyaliteit en financiële dienstverlening, heb ik Open AI School opgericht om AI- en engineeringonderwijs van wereldklasse gratis toegankelijk te maken — in elke taal, voor elke achtergrond.",
+    "description": "Software engineer en engineering leader met meer dan een decennium ervaring in het bouwen van grootschalige systemen in meerdere landen in Azië en Europa. Na het leiden van digitale transformaties in retail, loyaliteit en financiële dienstverlening, heb ik AI Educademy opgericht om AI- en engineeringonderwijs van wereldklasse gratis toegankelijk te maken — in elke taal, voor elke achtergrond.",
     "cta": "Lees het volledige verhaal",
     "role": "Oprichter · Engineering Leader · Open Source Voorvechter"
   },
@@ -105,13 +105,13 @@
     "dashboard": "Dashboard"
   },
   "about": {
-    "title": "Over Open AI School",
+    "title": "Over AI Educademy",
     "mission": "Onze Missie",
     "missionText": "AI-onderwijs toegankelijk maken voor elke student ter wereld — ongeacht taal, achtergrond of programmeerervaring.",
     "story": "Het Verhaal",
     "storyText1": "Ik ben Ramesh Reddy Adutla — een software engineer en engineering leader die meer dan een decennium heeft besteed aan het bouwen van grootschalige systemen. Ik heb gewerkt bij JP Morgan, Sky en Marks & Spencer, en heb gewoond en gewerkt in meerdere landen in Azië en Europa.",
     "storyText2": "In mijn carrière heb ik gezien hoe transformatief AI wordt. Maar ik heb ook gezien dat AI-onderwijs geconcentreerd is in dure universiteiten in rijke landen.",
-    "storyText3": "Toen ik een senior collega vertelde dat miljoenen studenten wereldwijd achterblijven in de AI-revolutie, raakte het een gevoelige snaar. Dat gesprek plantte een zaadje — en Open AI School is geboren om dat te veranderen.",
+    "storyText3": "Toen ik een senior collega vertelde dat miljoenen studenten wereldwijd achterblijven in de AI-revolutie, raakte het een gevoelige snaar. Dat gesprek plantte een zaadje — en AI Educademy is geboren om dat te veranderen.",
     "storyText4": "Ik spreek Engels, Frans en Telugu. Ik heb de multiculturele ervaring geleefd. Ik geloof dat de beste persoon om deze kloof te overbruggen iemand is die aan beide kanten heeft gestaan.",
     "values": "Onze Waarden",
     "value1": {
@@ -145,9 +145,9 @@
     "timeline2020": "Verhuisd naar Londen 🇬🇧",
     "timeline2021": "Cloud-native microservices en datapipelines op schaal 🛒",
     "timeline2024": "Open-source bijdragen — Apache Gravitino, GOV.UK, Spring Boot MCP 🌐",
-    "timeline2025": "Oprichting van Open AI School — gratis AI-onderwijs voor iedereen 🎓",
-    "pageTitle": "Over Open AI School",
-    "pageDescription": "Open AI School is een gratis, open-source AI-onderwijsplatform voor iedereen. Leer over onze missie om AI-onderwijs wereldwijd toegankelijk te maken."
+    "timeline2025": "Oprichting van AI Educademy — gratis AI-onderwijs voor iedereen 🎓",
+    "pageTitle": "Over AI Educademy",
+    "pageDescription": "AI Educademy is een gratis, open-source AI-onderwijsplatform voor iedereen. Leer over onze missie om AI-onderwijs wereldwijd toegankelijk te maken."
   },
   "lessons": {
     "title": "Lessen",
@@ -518,7 +518,7 @@
   },
   "pwa": {
     "install": "App installeren",
-    "installPrompt": "Installeer Open AI School voor offline toegang",
+    "installPrompt": "Installeer AI Educademy voor offline toegang",
     "dismiss": "Niet nu",
     "offline": "Je bent offline",
     "offlineMessage": "Geen zorgen — eerder bezochte lessen zijn nog beschikbaar.",
@@ -526,7 +526,7 @@
   },
   "blog": {
     "title": "Blog",
-    "subtitle": "Laatste updates en inzichten van Open AI School",
+    "subtitle": "Laatste updates en inzichten van AI Educademy",
     "readMore": "Lees meer",
     "backToBlog": "Terug naar Blog",
     "publishedOn": "Gepubliceerd op",

@@ -77,7 +77,7 @@ export function SignInModal({
           {/* Header */}
           <div className="relative px-8 pt-10 pb-6 text-center bg-gradient-to-b from-[var(--color-primary)]/5 to-transparent">
             <div className="text-5xl mb-4 animate-float-slow">🎓</div>
-            <h2 className="text-2xl font-bold mb-2">Open AI School</h2>
+            <h2 className="text-2xl font-bold mb-2">AI Educademy</h2>
             <p className="text-[var(--color-text-muted)] text-sm">
               {t("signInPrompt")}
             </p>

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getBlogPosts } from "@/lib/blog";
 
-const BASE_URL = "https://openaischool.vercel.app";
+const BASE_URL = "https://aieducademy.vercel.app";
 
 export async function generateMetadata({
   params,
@@ -19,7 +19,7 @@ export async function generateMetadata({
       canonical: `${BASE_URL}/${locale}/blog`,
     },
     openGraph: {
-      title: `${t("title")} | Open AI School`,
+      title: `${t("title")} | AI Educademy`,
       description: t("subtitle"),
     },
   };

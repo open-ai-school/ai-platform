@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ThumbsUp, ThumbsDown, Loader2 } from "lucide-react";
 
-const STORAGE_KEY = "open-ai-school-feedback";
+const STORAGE_KEY = "aieducademy-feedback";
 
 interface FeedbackEntry {
   lessonSlug: string;

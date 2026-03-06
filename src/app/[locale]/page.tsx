@@ -265,7 +265,7 @@ export default async function HomePage({
                     <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden ring-4 ring-white/30 shadow-2xl">
                       <Image
                         src="https://avatars.githubusercontent.com/u/134313151?v=4"
-                        alt="Ramesh Reddy Adutla — Founder of Open AI School"
+                        alt="Ramesh Reddy Adutla — Founder of AI Educademy"
                         width={512}
                         height={512}
                         className="w-full h-full object-cover"
@@ -382,7 +382,7 @@ export default async function HomePage({
 
             <ScrollReveal animation="fade-up" delay={200}>
               <a
-                href="https://github.com/open-ai-school/ai-platform"
+                href="https://github.com/aieducademy/ai-platform"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-4 p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] card-hover"
@@ -421,7 +421,7 @@ export default async function HomePage({
                 {t("cta.button")} →
               </Link>
               <a
-                href="https://github.com/open-ai-school/ai-platform"
+                href="https://github.com/aieducademy/ai-platform"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-10 py-4 border-2 border-white/30 rounded-2xl text-lg font-bold text-white hover:bg-white/10 hover:border-white/60 transition-all backdrop-blur-sm"

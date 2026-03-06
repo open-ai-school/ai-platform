@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-const STORAGE_PREFIX = "open-ai-school-progress";
-const SESSION_KEY = "open-ai-school-session";
+const STORAGE_PREFIX = "aieducademy-progress";
+const SESSION_KEY = "aieducademy-session";
 
 interface ProgramProgress {
   completed: string[];

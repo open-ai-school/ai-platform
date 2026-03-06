@@ -26,7 +26,7 @@ export default function AboutPage() {
             <div className="relative w-36 h-36 rounded-full overflow-hidden ring-4 ring-[var(--color-primary)]/20 shadow-2xl">
               <Image
                 src="https://avatars.githubusercontent.com/u/134313151?v=4"
-                alt="Ramesh Reddy Adutla — Founder of Open AI School"
+                alt="Ramesh Reddy Adutla — Founder of AI Educademy"
                 width={144}
                 height={144}
                 className="w-full h-full object-cover"

@@ -6,7 +6,7 @@ import { ScrollReveal } from "@open-ai-school/ai-ui-library";
 import { ComingSoonProgramCard } from "@/components/ui/ComingSoon";
 import type { ProgramMeta } from "@/lib/programs";
 
-const BASE_URL = "https://openaischool.vercel.app";
+const BASE_URL = "https://aieducademy.vercel.app";
 
 export async function generateMetadata({
   params,
@@ -22,7 +22,7 @@ export async function generateMetadata({
       canonical: `${BASE_URL}/${locale}/programs`,
     },
     openGraph: {
-      title: `${t("pageTitle")} | Open AI School`,
+      title: `${t("pageTitle")} | AI Educademy`,
       description: t("pageDescription"),
     },
   };

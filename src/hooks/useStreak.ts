@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-const STORAGE_KEY = "open-ai-school-streak";
+const STORAGE_KEY = "aieducademy-streak";
 
 interface StreakData {
   currentStreak: number;

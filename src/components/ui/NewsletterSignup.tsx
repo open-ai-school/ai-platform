@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Mail, Loader2 } from "lucide-react";
 
-const STORAGE_KEY = "open-ai-school-newsletter";
+const STORAGE_KEY = "aieducademy-newsletter";
 
 function saveToLocalStorage(email: string) {
   try {

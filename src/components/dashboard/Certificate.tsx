@@ -96,10 +96,10 @@ function drawCertificate(
   // Branding
   ctx.font = "bold 18px system-ui, -apple-system, sans-serif";
   ctx.fillStyle = "#1e1b4b";
-  ctx.fillText("Open AI School", W / 2, 520);
+  ctx.fillText("AI Educademy", W / 2, 520);
   ctx.font = "12px system-ui, -apple-system, sans-serif";
   ctx.fillStyle = "#9ca3af";
-  ctx.fillText("openai.school", W / 2, 545);
+  ctx.fillText("aieducademy.vercel.app", W / 2, 545);
 }
 
 export function Certificate({ programName, programIcon, userName, completionDate, onClose }: CertificateProps) {
@@ -130,7 +130,7 @@ export function Certificate({ programName, programIcon, userName, completionDate
   };
 
   const handleShare = async () => {
-    const text = `I completed ${programName} on Open AI School! 🎓`;
+    const text = `I completed ${programName} on AI Educademy! 🎓`;
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
