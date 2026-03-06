@@ -6,6 +6,7 @@ import { WelcomeBanner } from "@open-ai-school/ai-ui-library";
 import { ScrollReveal } from "@open-ai-school/ai-ui-library";
 import { ComingSoonCard } from "@/components/ui/ComingSoon";
 import { FloatingParticles } from "@open-ai-school/ai-ui-library";
+import { getProgramsByTrack } from "@/lib/programs";
 
 export default async function HomePage({
   params,
@@ -25,21 +26,24 @@ export default async function HomePage({
     "ai-forest": "masterAI",
   };
 
-  const aiLearningPrograms = [
-    { slug: "ai-seeds", icon: "🌱", title: "AI Seeds", color: "#34D399", active: true, level: 1 },
-    { slug: "ai-sprouts", icon: "🌿", title: "AI Sprouts", color: "#60A5FA", active: false, level: 2 },
-    { slug: "ai-branches", icon: "🌳", title: "AI Branches", color: "#F59E0B", active: false, level: 3 },
-    { slug: "ai-canopy", icon: "🏕️", title: "AI Canopy", color: "#8B5CF6", active: false, level: 4 },
-    { slug: "ai-forest", icon: "🌲", title: "AI Forest", color: "#EF4444", active: false, level: 5 },
-  ];
+  const aiLearningPrograms = getProgramsByTrack("ai-learning").map((p) => ({
+    slug: p.slug,
+    icon: p.icon,
+    title: p.title,
+    color: p.color,
+    active: p.status === "active",
+    level: p.level,
+  }));
 
-  const craftPrograms = [
-    { slug: "ai-sketch", icon: "✏️", title: "AI Sketch", color: "#F97316", active: true, level: 1, desc: "DSA Fundamentals" },
-    { slug: "ai-chisel", icon: "🪨", title: "AI Chisel", color: "#06B6D4", active: true, level: 2, desc: "Intermediate Patterns" },
-    { slug: "ai-craft", icon: "⚒️", title: "AI Craft", color: "#8B5CF6", active: true, level: 3, desc: "System Design" },
-    { slug: "ai-polish", icon: "💎", title: "AI Polish", color: "#EC4899", active: true, level: 4, desc: "Behavioral" },
-    { slug: "ai-masterpiece", icon: "🏆", title: "AI Masterpiece", color: "#EAB308", active: false, level: 5, desc: "Capstone" },
-  ];
+  const craftPrograms = getProgramsByTrack("craft-engineering").map((p) => ({
+    slug: p.slug,
+    icon: p.icon,
+    title: p.title,
+    color: p.color,
+    active: p.status === "active",
+    level: p.level,
+    desc: p.subtitle,
+  }));
 
   return (
     <>
