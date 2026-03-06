@@ -67,7 +67,6 @@ export default async function ProgramLessonPage({
           </div>
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold">{lesson.title}</h1>
-        <p className="text-lg text-[var(--color-text-muted)] mt-2">{lesson.description}</p>
       </div>
 
       {/* Content */}

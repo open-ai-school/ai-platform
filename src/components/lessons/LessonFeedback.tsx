@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ThumbsUp, ThumbsDown, Loader2 } from "lucide-react";
+import { useProgress } from "@/hooks/useProgress";
 
 const STORAGE_KEY = "aieducademy-feedback";
 
@@ -38,10 +39,18 @@ function saveToLocalStorage(lessonSlug: string, isHelpful: boolean, text: string
 
 export function LessonFeedback({ lessonSlug, programSlug, locale }: LessonFeedbackProps) {
   const t = useTranslations("feedback");
+  const { isCompleted } = useProgress(programSlug);
   const [step, setStep] = useState<"ask" | "comment" | "done">("ask");
   const [helpful, setHelpful] = useState<boolean | null>(null);
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Build the completion key the same way LessonComplete does
+  const completionKey = programSlug ? `${programSlug}/${lessonSlug}` : lessonSlug;
+  const lessonComplete = isCompleted(completionKey);
+
+  // Only show feedback after the lesson is marked complete
+  if (!lessonComplete) return null;
 
   const saveFeedback = async (isHelpful: boolean, text: string) => {
     setLoading(true);
@@ -73,7 +82,8 @@ export function LessonFeedback({ lessonSlug, programSlug, locale }: LessonFeedba
   };
 
   const handleSubmit = async () => {
-    await saveFeedback(helpful!, comment);
+    if (helpful === null) return; // validation: thumb required
+    await saveFeedback(helpful, comment);
     setStep("done");
   };
 
@@ -115,8 +125,8 @@ export function LessonFeedback({ lessonSlug, programSlug, locale }: LessonFeedba
           />
           <button
             onClick={handleSubmit}
-            disabled={loading}
-            className="px-6 py-3 bg-[var(--color-primary)] text-white rounded-xl font-semibold text-sm hover:brightness-110 transition-all cursor-pointer min-h-[48px] disabled:opacity-50 flex items-center gap-2"
+            disabled={loading || helpful === null}
+            className="px-6 py-3 bg-[var(--color-primary)] text-white rounded-xl font-semibold text-sm hover:brightness-110 transition-all cursor-pointer min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             {loading && <Loader2 size={16} className="animate-spin" />}
             {t("submit")}

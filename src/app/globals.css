@@ -316,6 +316,27 @@ h1, h2, h3, h4, h5, h6 {
   animation: float-slow 8s ease-in-out infinite;
 }
 
+/* Animation placeholder (replaces Lottie) */
+.animation-placeholder-emoji {
+  animation: emoji-float 3s ease-in-out infinite;
+}
+
+@keyframes emoji-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.08); }
+}
+
+/* Scroll progress bar at top of lesson */
+.lesson-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--color-primary);
+  z-index: 100;
+  transition: width 0.1s linear;
+}
+
 .animate-pulse-glow {
   animation: pulse-glow 3s ease-in-out infinite;
 }

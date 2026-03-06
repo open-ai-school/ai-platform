@@ -7,8 +7,7 @@ import { ScrollReveal } from "@open-ai-school/ai-ui-library";
 import { ComingSoonCard } from "@/components/ui/ComingSoon";
 import { FloatingParticles } from "@open-ai-school/ai-ui-library";
 import { getProgramsByTrack } from "@/lib/programs";
-import { Share2, Mail, Github } from "lucide-react";
-import { ShareButton } from "@/components/ui/ShareButton";
+import { Mail, Github } from "lucide-react";
 import { NewsletterSignup } from "@/components/ui/NewsletterSignup";
 import NeuralBackground from "@/components/ui/NeuralBackground";
 
@@ -183,68 +182,6 @@ export default async function HomePage({
 
       <hr className="section-divider" />
 
-      {/* Interactive Preview */}
-      <section className="py-12 md:py-16 bg-[var(--color-bg-section)]">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <ScrollReveal animation="fade-up">
-            <div className="text-center mb-8">
-              <span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)]">{t("journey.title")}</span>
-              <h2 className="text-3xl sm:text-4xl font-bold mt-3 mb-4">{t("journey.subtitle")}</h2>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal animation="scale-in">
-            <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] overflow-hidden shadow-xl">
-              <div className="grid md:grid-cols-2">
-                {/* Left — Preview content */}
-                <div className="p-8 md:p-10 flex flex-col justify-center">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 text-violet-500 text-xs font-semibold w-fit mb-6">
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    {t("hero.ctaSecondary")}
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4">{t("journey.step1.title")}</h3>
-                  <p className="text-[var(--color-text-muted)] leading-relaxed mb-6">{t("journey.step1.description")}</p>
-                  <div className="space-y-3">
-                    {[
-                      { icon: "🎮", text: t("journey.step2.title") },
-                      { icon: "📊", text: t("journey.step3.title") },
-                      { icon: "🧠", text: t("journey.step4.title") },
-                    ].map((item) => (
-                      <div key={item.text} className="flex items-center gap-3 text-sm">
-                        <span className="text-lg">{item.icon}</span>
-                        <span className="text-[var(--color-text)]">{item.text}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Right — CTA card with gradient */}
-                <div className="relative bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 p-8 md:p-10 flex flex-col items-center justify-center text-center text-white">
-                  <div className="absolute inset-0 bg-grid opacity-10" />
-                  <div className="relative">
-                    <div className="w-20 h-20 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center mx-auto mb-6">
-                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" /></svg>
-                    </div>
-                    <h3 className="text-xl font-bold mb-3 text-white">AI Playground</h3>
-                    <p className="text-indigo-100/80 text-sm mb-6 max-w-xs mx-auto">
-                      Sentiment analysis, neural networks, sorting visualisers, and the AI or Human? guessing game.
-                    </p>
-                    <Link
-                      href={`${basePath}/playground`}
-                      className="inline-flex items-center gap-2 px-8 py-3 bg-white text-indigo-700 rounded-xl font-bold hover:shadow-xl hover:scale-[1.02] transition-all"
-                    >
-                      {t("hero.ctaSecondary")} →
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <hr className="section-divider" />
-
       {/* Meet the Founder */}
       <section className="py-16 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-mesh" />
@@ -346,87 +283,26 @@ export default async function HomePage({
 
       <hr className="section-divider" />
 
-      {/* Community Section */}
-      <section className="py-12 md:py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      {/* Community Strip */}
+      <section className="py-8 md:py-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <ScrollReveal animation="fade-up">
-            <div className="text-center mb-10">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                {tc("title")}
-              </h2>
-              <p className="text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
-                {tc("subtitle")}
-              </p>
-            </div>
-          </ScrollReveal>
-
-          {/* Newsletter — Primary */}
-          <ScrollReveal animation="fade-up">
-            <div className="max-w-2xl mx-auto p-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center mb-8">
-              <div className="w-14 h-14 rounded-2xl bg-[var(--color-primary)]/10 flex items-center justify-center mx-auto mb-4">
-                <Mail size={28} className="text-[var(--color-primary)]" />
+            <div className="flex flex-col sm:flex-row items-center gap-4 p-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)]">
+              <div className="flex items-center gap-3 shrink-0">
+                <Mail size={20} className="text-[var(--color-primary)]" />
+                <span className="text-sm font-semibold">{tc("updates")}</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">{tc("updates")}</h3>
-              <p className="text-sm text-[var(--color-text-muted)] mb-5">
-                {tc("updatesDesc")}
-              </p>
-              <NewsletterSignup />
-            </div>
-          </ScrollReveal>
-
-          {/* Share + Open Source — Secondary row */}
-          <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
-            <ScrollReveal animation="fade-up" delay={100}>
-              <ShareButton />
-            </ScrollReveal>
-
-            <ScrollReveal animation="fade-up" delay={200}>
+              <div className="flex-1 w-full sm:w-auto">
+                <NewsletterSignup />
+              </div>
               <a
                 href="https://github.com/ai-educademy/ai-platform"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] card-hover"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[var(--color-border)] text-sm font-semibold hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-all shrink-0"
               >
-                <div className="w-10 h-10 rounded-lg bg-gray-500/10 flex items-center justify-center shrink-0">
-                  <Github size={20} className="text-[var(--color-text-muted)]" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold">{tc("openSource")}</h4>
-                  <p className="text-xs text-[var(--color-text-muted)]">{tc("openSourceDesc")}</p>
-                </div>
-              </a>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      <hr className="section-divider" />
-
-      {/* Final CTA */}
-      <section className="py-12 md:py-16 relative overflow-hidden bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 text-white">
-        <div className="absolute inset-0 bg-grid opacity-20" />
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative">
-          <ScrollReveal animation="fade-up">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white">
-              {t("cta.title")}
-            </h2>
-            <p className="text-lg text-indigo-100/80 mb-8">
-              {t("cta.subtitle")}
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href={`${basePath}/programs/ai-seeds/lessons/what-is-ai`}
-                className="btn-primary px-10 py-4 bg-white text-indigo-700 rounded-2xl text-lg font-bold shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all"
-              >
-                {t("cta.button")} →
-              </Link>
-              <a
-                href="https://github.com/ai-educademy/ai-platform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-10 py-4 border-2 border-white/30 rounded-2xl text-lg font-bold text-white hover:bg-white/10 hover:border-white/60 transition-all backdrop-blur-sm"
-              >
-                ⭐ {t("cta.github")}
+                <Github size={16} />
+                ⭐ {tc("openSource")}
               </a>
             </div>
           </ScrollReveal>

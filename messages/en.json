@@ -56,36 +56,10 @@
       "description": "Understand how AI works in things you use every day — search engines, voice assistants, social media feeds, self-driving cars, and medical diagnosis."
     }
   },
-  "journey": {
-    "title": "Your Learning Journey",
-    "subtitle": "A clear path from curious beginner to AI-literate citizen",
-    "step1": {
-      "title": "What is AI?",
-      "description": "Start with the basics — what AI actually is, how it's different from regular software, and why everyone's talking about it."
-    },
-    "step2": {
-      "title": "How Machines Learn",
-      "description": "Discover how computers learn from examples, just like you learned to recognise cats and dogs as a child."
-    },
-    "step3": {
-      "title": "Build Your First AI",
-      "description": "Train a simple AI model in your browser — no installation needed. See it learn and improve right before your eyes."
-    },
-    "step4": {
-      "title": "AI in the Real World",
-      "description": "Explore how AI powers the apps and services you use daily — and think critically about its impact on society."
-    }
-  },
   "founder": {
     "description": "Software engineer and engineering leader with over a decade of experience building large-scale systems across multiple countries in Asia and Europe. Having led digital transformations across retail, loyalty, and financial services, I founded AI Educademy to make world-class AI and engineering education freely accessible — in every language, for every background.",
     "cta": "Read Full Story",
     "role": "Founder · Engineering Leader · Open Source Advocate"
-  },
-  "cta": {
-    "title": "Ready to Start?",
-    "subtitle": "Your first lesson takes just 10 minutes. No signup required.",
-    "button": "Begin Lesson 1: What is AI?",
-    "github": "Star us on GitHub"
   },
   "footer": {
     "tagline": "Free AI education for everyone, in every language.",
@@ -594,12 +568,7 @@
     "invalidEmail": "Please enter a valid email"
   },
   "community": {
-    "title": "Join Our Community",
-    "subtitle": "Learn together, grow together",
     "updates": "Stay Updated",
-    "updatesDesc": "Get notified about new lessons and features",
-    "share": "Share with Friends",
-    "shareDesc": "Help others discover free AI education",
     "openSource": "Open Source",
     "openSourceDesc": "Built openly — view code, contribute, or fork"
   }

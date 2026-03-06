@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { Logo } from "@/components/ui/Logo";
+import { BrandMark } from "@/components/ui/BrandMark";
 
 export default function SignInPage() {
   const t = useTranslations("auth");
@@ -25,7 +25,7 @@ export default function SignInPage() {
         {/* Logo + Title */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <Logo size={48} />
+            <BrandMark size="lg" />
           </div>
           <h1 className="text-xl font-bold mb-1">
             {t("signIn")}

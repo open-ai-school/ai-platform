@@ -9,6 +9,7 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
+import { BrandMark } from "./BrandMark";
 
 export function Navbar() {
   const t = useTranslations("nav");
@@ -37,6 +38,7 @@ export function Navbar() {
 
   const links = [
     { href: `${basePath}/programs`, label: t("programs"), match: "/programs" },
+    { href: `${basePath}/playground`, label: t("playground"), match: "/playground" },
     { href: `${basePath}/blog`, label: t("blog"), match: "/blog" },
     { href: `${basePath}/about`, label: t("about"), match: "/about" },
   ];
@@ -57,14 +59,9 @@ export function Navbar() {
           {/* Brand Mark */}
           <Link
             href={`${basePath}/`}
-            className="flex items-center gap-2 shrink-0 group"
+            className="flex items-center shrink-0 group hover:opacity-90 transition-opacity"
           >
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-white text-xs font-black tracking-wider shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-200">
-              AI
-            </span>
-            <span className="text-[15px] font-semibold tracking-tight text-[var(--color-text)]">
-              Educademy
-            </span>
+            <BrandMark size="sm" />
           </Link>
 
           {/* Desktop Nav */}

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { locales } from "@/i18n/request";
 
-import { Logo } from "./Logo";
+import { BrandMark } from "./BrandMark";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -22,9 +22,8 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <Link href={`${basePath}/`} className="flex items-center gap-2 font-bold text-lg mb-3">
-              <Logo size={24} />
-              <span className="text-gradient text-sm font-bold tracking-tight">aieducademy</span>
+            <Link href={`${basePath}/`} className="flex items-center mb-3 hover:opacity-90 transition-opacity">
+              <BrandMark size="sm" />
             </Link>
             <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
               {t("tagline")}
