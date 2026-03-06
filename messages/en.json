@@ -268,7 +268,9 @@
       "reviewedBias": "You reviewed {count} bias scenarios. Understanding bias is the first step to building fairer AI.",
       "perfectOrder": "Perfect order!",
       "notQuiteTimeline": "Not quite — here's the correct timeline:",
-      "allPairsMatched": "All {count} pairs matched"
+      "allPairsMatched": "All {count} pairs matched",
+      "celebration": "🎉 Congratulations!",
+      "newHighScore": "New Personal Best!"
     },
     "games": {
       "emojiDecoder": {
@@ -330,6 +332,23 @@
         "true": "True",
         "false": "False",
         "timeUp": "Time's up!"
+      },
+      "aiTrivia": {
+        "title": "AI Trivia Challenge",
+        "instruction": "Test your knowledge of AI history, concepts, and famous figures!",
+        "timeLeft": "{seconds}s",
+        "multiplier": "×{mult} speed bonus",
+        "questionOf": "Question {current} of {total}",
+        "correctAnswer": "Correct! +{points} points",
+        "wrongAnswer": "The answer was: {answer}",
+        "timesUp": "Time's up!",
+        "finalScore": "Final Score",
+        "questionsCorrect": "{correct}/{total} correct",
+        "leaderboard": "Leaderboard",
+        "noScores": "No scores yet. Be the first!",
+        "fastAnswer": "Lightning fast!",
+        "goodSpeed": "Good speed!",
+        "justInTime": "Just in time!"
       }
     },
     "sentimentSection": {
@@ -373,6 +392,30 @@
       "characters": "characters",
       "wordsEquivalent": "~{count} words equivalent",
       "explanation": "AI models don't read text like humans. They break text into tokens — subword pieces that the model processes individually. Longer words get split into smaller chunks."
+    },
+    "hub": {
+      "title": "AI Playground",
+      "subtitle": "Experiment with real AI concepts through interactive games and tools. No coding required — just play, learn, and have fun!",
+      "badge": "Interactive • Fun • Educational",
+      "gamesAvailable": "{count} games available",
+      "searchPlaceholder": "Search games...",
+      "allCategories": "All",
+      "categoryKnowledge": "AI Knowledge",
+      "categoryQuickGames": "Quick Games",
+      "categoryEthics": "Ethics & Safety",
+      "categoryCreative": "Creative AI",
+      "categoryTools": "AI Tools",
+      "difficultyEasy": "Easy",
+      "difficultyMedium": "Medium",
+      "difficultyHard": "Hard",
+      "estimatedTime": "{time} min",
+      "playNow": "Play Now",
+      "personalBest": "Best: {score}",
+      "noGamesFound": "No games match your search",
+      "backToHub": "← Back to Games",
+      "roundOf": "Round {current} of {total}",
+      "highScore": "New High Score!",
+      "closeGame": "Close"
     }
   },
   "programs": {
