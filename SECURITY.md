@@ -15,7 +15,7 @@ Only the latest deployed version on the `main` branch receives security updates.
 
 Instead, please report them responsibly via one of these channels:
 
-1. **GitHub Security Advisories**: Use the "Report a vulnerability" button on the [Security tab](https://github.com/open-ai-school/ai-platform/security/advisories) of this repository.
+1. **GitHub Security Advisories**: Use the "Report a vulnerability" button on the [Security tab](https://github.com/ai-educademy/ai-platform/security/advisories) of this repository.
 2. **Email**: Send details to the repository maintainer via their GitHub profile.
 
 ### What to Include
@@ -61,4 +61,4 @@ We follow [responsible disclosure](https://en.wikipedia.org/wiki/Responsible_dis
 - Do not access or modify other users' data
 - Act in good faith to avoid privacy violations and disruption
 
-Thank you for helping keep Open AI School and its community safe.
+Thank you for helping keep AI Educademy and its community safe.
