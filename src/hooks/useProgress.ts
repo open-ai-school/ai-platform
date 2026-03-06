@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-const STORAGE_KEY = "open-ai-school-progress";
+const STORAGE_PREFIX = "open-ai-school-progress";
+const SESSION_KEY = "open-ai-school-session";
 
 interface ProgramProgress {
   completed: string[];
@@ -15,31 +16,56 @@ function emptyProgram(): ProgramProgress {
   return { completed: [], timestamps: {} };
 }
 
+function getStorageKey(): string {
+  try {
+    const session = localStorage.getItem(SESSION_KEY);
+    if (session) {
+      const parsed = JSON.parse(session);
+      if (parsed.username) return `${STORAGE_PREFIX}-${parsed.username}`;
+    }
+  } catch { /* ignore */ }
+  return `${STORAGE_PREFIX}-guest`;
+}
+
 function migrateOldFormat(stored: string): ProgressData {
   try {
     const parsed = JSON.parse(stored);
-    // Old format: plain array of slugs
     if (Array.isArray(parsed)) {
       return { "ai-seeds": { completed: parsed, timestamps: {} } };
     }
-    // Old format: { completed: [...], timestamps: {...} }
     if (parsed.completed && Array.isArray(parsed.completed)) {
       return { "ai-seeds": parsed as ProgramProgress };
     }
-    // New format: already namespaced
     return parsed as ProgressData;
   } catch {
     return {};
   }
 }
 
+// Migrate legacy global key to user-scoped key on first load
+function migrateGlobalKey() {
+  const legacy = localStorage.getItem(STORAGE_PREFIX);
+  if (!legacy) return;
+  const userKey = getStorageKey();
+  if (!localStorage.getItem(userKey)) {
+    localStorage.setItem(userKey, legacy);
+  }
+  localStorage.removeItem(STORAGE_PREFIX);
+}
+
 export function useProgress(programSlug?: string) {
   const [data, setData] = useState<ProgressData>({});
+  const [storageKey, setStorageKey] = useState<string>(`${STORAGE_PREFIX}-guest`);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
+    migrateGlobalKey();
+    const key = getStorageKey();
+    setStorageKey(key);
+    const stored = localStorage.getItem(key);
     if (stored) {
       setData(migrateOldFormat(stored));
+    } else {
+      setData({});
     }
   }, []);
 
@@ -50,7 +76,6 @@ export function useProgress(programSlug?: string) {
 
   const markComplete = useCallback((lessonKey: string) => {
     setData((prev) => {
-      // lessonKey can be "programSlug/lessonSlug" or just "lessonSlug" (backward compat)
       const parts = lessonKey.split("/");
       const pSlug = parts.length > 1 ? parts[0] : (programSlug || "ai-seeds");
       const lSlug = parts.length > 1 ? parts.slice(1).join("/") : parts[0];
@@ -65,10 +90,10 @@ export function useProgress(programSlug?: string) {
           timestamps: { ...prog.timestamps, [lSlug]: new Date().toISOString() },
         },
       };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      localStorage.setItem(storageKey, JSON.stringify(next));
       return next;
     });
-  }, [programSlug]);
+  }, [programSlug, storageKey]);
 
   const isCompleted = useCallback(
     (lessonKey: string) => {
@@ -92,8 +117,8 @@ export function useProgress(programSlug?: string) {
 
   const reset = useCallback(() => {
     setData({});
-    localStorage.removeItem(STORAGE_KEY);
-  }, []);
+    localStorage.removeItem(storageKey);
+  }, [storageKey]);
 
   // Per-program counts
   const prog = programSlug ? getProgram(programSlug) : null;

@@ -148,11 +148,26 @@ export default function DashboardPage() {
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20 md:py-32 text-center">
         <ScrollReveal animation="scale-in">
-          <div className="text-7xl mb-6 animate-float-slow">🚀</div>
+          <div className="relative inline-block mb-8">
+            <div className="absolute -inset-4 rounded-full bg-indigo-500/10 blur-xl animate-pulse" />
+            <div className="relative text-8xl animate-float-slow">🚀</div>
+          </div>
           <h1 className="text-4xl font-bold mb-4 text-gradient">{t("emptyTitle")}</h1>
-          <p className="text-lg text-[var(--color-text-muted)] max-w-md mx-auto mb-10 leading-relaxed">
+          <p className="text-lg text-[var(--color-text-muted)] max-w-md mx-auto mb-6 leading-relaxed">
             {t("emptySubtitle")}
           </p>
+          <div className="grid grid-cols-3 gap-4 max-w-sm mx-auto mb-10">
+            {[
+              { icon: "📚", label: "Learn" },
+              { icon: "🧪", label: "Practice" },
+              { icon: "🏆", label: "Earn" },
+            ].map((item) => (
+              <div key={item.label} className="p-3 rounded-xl bg-[var(--color-bg-card)] border border-[var(--color-border)]">
+                <div className="text-2xl mb-1">{item.icon}</div>
+                <div className="text-xs font-semibold text-[var(--color-text-muted)]">{item.label}</div>
+              </div>
+            ))}
+          </div>
           <Link
             href={`${basePath}/programs/ai-seeds/lessons/what-is-ai`}
             className="btn-primary inline-flex items-center gap-2 px-10 py-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-2xl text-lg font-bold shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-[1.02] transition-all"
@@ -321,15 +336,15 @@ export default function DashboardPage() {
                   <ScrollReveal key={lesson.slug} animation="fade-up" delay={pIdx * 100 + idx * 60}>
                     <Link
                       href={`${basePath}/programs/${program.slug}/lessons/${lesson.slug}`}
-                      className="block card-hover"
+                      className="block group"
                     >
-                      <div className={`flex items-center gap-4 p-4 rounded-2xl border transition-all ${
+                      <div className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-200 ${
                         done
                           ? "bg-[var(--color-accent)]/5 border-[var(--color-accent)]/20"
-                          : "bg-[var(--color-bg-card)] border-[var(--color-border)] card-hover"
+                          : "bg-[var(--color-bg-card)] border-[var(--color-border)] hover:border-[var(--color-primary)]/40 hover:shadow-md hover:shadow-[var(--color-primary)]/5 hover:-translate-y-0.5"
                       }`}>
                         <div
-                          className="w-12 h-12 rounded-xl flex items-center justify-center text-xl shrink-0"
+                          className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl shrink-0 transition-transform duration-200 group-hover:scale-110`}
                           style={{ backgroundColor: done ? `${program.color}20` : "var(--color-bg-section)" }}
                         >
                           {lesson.icon}

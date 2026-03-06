@@ -132,7 +132,6 @@ export function useGuestProfileState(): GuestProfileContextValue {
   }, []);
 
   const clearProfile = useCallback(() => {
-    localStorage.removeItem("open-ai-school-progress");
     localStorage.removeItem(SESSION_KEY);
     setProfile(null);
   }, []);

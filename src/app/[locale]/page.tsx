@@ -247,26 +247,27 @@ export default async function HomePage({
 
       <hr className="section-divider" />
 
-      {/* Founder */}
-      <section className="py-12 md:py-16 relative overflow-hidden">
+      {/* Meet the Founder */}
+      <section className="py-16 md:py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-mesh" />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 relative">
           <ScrollReveal animation="fade-up">
-            <div className="text-center mb-8">
-              <span className="text-xs font-semibold tracking-widest uppercase text-[var(--color-text-muted)]">Meet the Founder</span>
+            <div className="text-center mb-10">
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-indigo-600/10 text-indigo-600 dark:text-indigo-400 text-xs font-bold tracking-widest uppercase mb-4">Meet the Founder</span>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gradient">The Person Behind the Platform</h2>
             </div>
           </ScrollReveal>
           <ScrollReveal animation="scale-in">
             <div className="rounded-3xl overflow-hidden bg-gradient-to-br from-[var(--color-bg-card)] to-[var(--color-bg-section)] border border-[var(--color-border)] shadow-2xl">
-              <div className="grid md:grid-cols-[280px_1fr] items-stretch">
+              <div className="grid md:grid-cols-[300px_1fr] items-stretch">
                 {/* Photo column */}
                 <div className="relative bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 p-8 md:p-10 flex flex-col items-center justify-center text-center">
                   <div className="relative mb-5">
-                    <div className="absolute -inset-2 rounded-full bg-white/20 blur-lg" />
-                    <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden ring-[3px] ring-white/40 shadow-2xl">
+                    <div className="absolute -inset-3 rounded-full bg-white/20 blur-xl animate-pulse" />
+                    <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden ring-4 ring-white/30 shadow-2xl">
                       <Image
-                        src="/images/founder.jpg"
-                        alt="Ramesh Reddy Adutla"
+                        src="/images/creator.png"
+                        alt="Ramesh Reddy Adutla — Founder of Open AI School"
                         width={512}
                         height={512}
                         className="w-full h-full object-cover"
@@ -293,7 +294,7 @@ export default async function HomePage({
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-all hover:scale-110"
+                        className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-all hover:scale-110"
                         aria-label={link.label}
                       >
                         {link.icon}
@@ -304,9 +305,23 @@ export default async function HomePage({
 
                 {/* Content column */}
                 <div className="p-8 md:p-10 flex flex-col justify-center">
-                  <p className="text-[var(--color-text-muted)] leading-relaxed text-[17px] mb-8">
+                  <p className="text-[var(--color-text-muted)] leading-relaxed text-[17px] mb-6">
                     {t("founder.description")}
                   </p>
+
+                  {/* Stats row */}
+                  <div className="grid grid-cols-3 gap-4 mb-8">
+                    {[
+                      { value: "10+", label: "Years in Tech" },
+                      { value: "150+", label: "Free Lessons" },
+                      { value: "5", label: "Languages" },
+                    ].map((stat) => (
+                      <div key={stat.label} className="text-center p-3 rounded-xl bg-[var(--color-bg-section)]">
+                        <div className="text-2xl font-bold text-gradient">{stat.value}</div>
+                        <div className="text-xs text-[var(--color-text-muted)] mt-0.5">{stat.label}</div>
+                      </div>
+                    ))}
+                  </div>
 
                   <div className="flex items-center gap-4">
                     <Link
