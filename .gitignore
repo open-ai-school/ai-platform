@@ -138,3 +138,8 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vercel
+
+# Serwist (PWA service worker) — generated at build time
+public/sw.js
+public/sw.js.map
+public/swe-worker-*.js

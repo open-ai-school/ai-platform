@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import withSerwist from "@serwist/next";
 import createNextIntlPlugin from "next-intl/plugin";
 import createMDX from "@next/mdx";
 
@@ -42,4 +43,10 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
 };
 
-export default withNextIntl(withMDX(nextConfig));
+const withPWA = withSerwist({
+  swSrc: "src/app/sw.ts",
+  swDest: "public/sw.js",
+  disable: process.env.NODE_ENV === "development",
+});
+
+export default withPWA(withNextIntl(withMDX(nextConfig)));
