@@ -148,3 +148,4 @@ public/swe-worker-*.js
 data/
 social-drafts.md
 .env*.local
+test-results/
