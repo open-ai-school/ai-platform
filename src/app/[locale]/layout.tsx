@@ -8,7 +8,7 @@ import "../globals.css";
 import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
 import { Providers } from "@/components/ui/Providers";
-import { InstallPrompt } from "@/components/ui/InstallPrompt";
+
 import { OrganizationJsonLd } from "@/components/seo/JsonLd";
 
 const BASE_URL = "https://aieducademy.vercel.app";
@@ -122,7 +122,7 @@ export default async function LocaleLayout({
               <main className="flex-1">{children}</main>
               <Footer />
             </div>
-            <InstallPrompt />
+
           </NextIntlClientProvider>
         </Providers>
         <Analytics />

@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import { locales } from "@/i18n/request";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { ThemeToggle } from "./ThemeToggle";
-import { Logo } from "./Logo";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
 
@@ -15,6 +14,7 @@ export function Navbar() {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { profile } = useGuestProfile();
 
   const segments = pathname.split("/").filter(Boolean);
@@ -29,13 +29,18 @@ export function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const links = [
     { href: `${basePath}/programs`, label: t("programs"), match: "/programs" },
     { href: `${basePath}/blog`, label: t("blog"), match: "/blog" },
     { href: `${basePath}/about`, label: t("about"), match: "/about" },
   ];
 
-  // Show Dashboard only when logged in
   if (profile) {
     links.push({ href: `${basePath}/dashboard`, label: t("dashboard"), match: "/dashboard" });
   }
@@ -46,24 +51,24 @@ export function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 glass border-b border-[var(--color-border)]">
+    <nav className={`sticky top-0 z-50 glass border-b border-[var(--color-border)] transition-shadow duration-300 ${scrolled ? "shadow-md shadow-black/[0.04] dark:shadow-black/20" : ""}`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-14">
-          {/* Logo + Wordmark */}
+          {/* Brand Mark */}
           <Link
             href={`${basePath}/`}
-            className="flex items-center gap-2.5 shrink-0 group"
+            className="flex items-center gap-2 shrink-0 group"
           >
-            <Logo size={30} />
-            <div className="flex flex-col leading-none">
-              <span className="text-[15px] font-bold tracking-tight text-gradient">
-                aieducademy
-              </span>
-            </div>
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-white text-xs font-black tracking-wider shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-200">
+              AI
+            </span>
+            <span className="text-[15px] font-semibold tracking-tight text-[var(--color-text)]">
+              Educademy
+            </span>
           </Link>
 
-          {/* Desktop Nav — centered */}
-          <div className="hidden md:flex items-center gap-0.5">
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-1">
             {links.map((link) => (
               <Link
                 key={link.match}
@@ -79,17 +84,16 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Desktop Actions — compact */}
-          <div className="hidden md:flex items-center gap-1.5 shrink-0">
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center gap-2 shrink-0">
             <ThemeToggle />
             <LanguageSwitcher />
             <UserMenu />
           </div>
 
           {/* Mobile Actions */}
-          <div className="flex items-center gap-1.5 md:hidden">
-            <ThemeToggle />
-            <LanguageSwitcher />
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle compact />
             <button
               className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:bg-[var(--color-bg-card)] transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -109,13 +113,13 @@ export function Navbar() {
 
         {/* Mobile Nav */}
         {mobileOpen && (
-          <div className="md:hidden pb-3 pt-1 mt-1 bg-[var(--color-bg-card)] rounded-xl shadow-lg border border-[var(--color-border)]">
+          <div className="md:hidden pb-3 pt-1 mt-1 bg-[var(--color-bg-card)] rounded-xl shadow-lg border border-[var(--color-border)] animate-fade-in">
             <div className="space-y-0.5 px-2">
               {links.map((link) => (
                 <Link
                   key={link.match}
                   href={link.href}
-                  className={`block py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
+                  className={`block py-2.5 px-3 rounded-lg text-sm font-medium transition-colors ${
                     isActive(link.match)
                       ? "text-[var(--color-primary)] bg-[var(--color-primary)]/8"
                       : "text-[var(--color-text)] hover:bg-[var(--color-bg)]"
@@ -125,8 +129,11 @@ export function Navbar() {
                 </Link>
               ))}
             </div>
-            <div className="mt-2 px-2">
-              <UserMenu />
+            <div className="mt-3 px-2 pt-3 border-t border-[var(--color-border)]">
+              <div className="flex items-center justify-between">
+                <LanguageSwitcher />
+                <UserMenu />
+              </div>
             </div>
           </div>
         )}

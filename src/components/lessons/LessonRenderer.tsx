@@ -1,7 +1,13 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Image from "next/image";
+import { YouTubeEmbed } from "./YouTubeEmbed";
+import { LottieAnimation } from "./LottieAnimation";
+import { Quiz } from "./Quiz";
 
 const components = {
+  YouTube: YouTubeEmbed,
+  Animation: LottieAnimation,
+  Quiz,
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h1 className="text-3xl font-bold mt-8 mb-4 text-[var(--color-primary)]" {...props} />
   ),
