@@ -545,11 +545,11 @@
   "community": {
     "title": "Word lid van onze community",
     "subtitle": "Samen leren, samen groeien",
-    "discussions": "Doe mee aan discussies",
-    "discussionsDesc": "Stel vragen, deel projecten, maak contact met andere leerlingen",
-    "star": "Ster op GitHub",
-    "starDesc": "Steun het project en help het meer leerlingen te bereiken",
     "updates": "Blijf op de hoogte",
-    "updatesDesc": "Ontvang meldingen over nieuwe lessen en functies"
+    "updatesDesc": "Ontvang meldingen over nieuwe lessen en functies",
+    "share": "Deel met vrienden",
+    "shareDesc": "Help anderen gratis AI-onderwijs te ontdekken",
+    "openSource": "Open Source",
+    "openSourceDesc": "Open gebouwd — bekijk code, draag bij of fork"
   }
 }

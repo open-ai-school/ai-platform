@@ -101,7 +101,6 @@ const CATEGORY_COLORS: Record<GameCategory | "all", string> = {
   quick: "from-amber-500/8 to-orange-500/8",
   ethics: "from-emerald-500/8 to-teal-500/8",
   creative: "from-pink-500/8 to-rose-500/8",
-  tools: "from-slate-500/8 to-gray-500/8",
 };
 
 const DIFFICULTY_DOT: Record<string, string> = {
@@ -110,15 +109,7 @@ const DIFFICULTY_DOT: Record<string, string> = {
   hard: "bg-red-400",
 };
 
-/* ─── Category + Featured Game Definitions ─── */
-const CATEGORIES: { id: GameCategory | "all"; label: string; icon: string }[] = [
-  { id: "all", label: "allCategories", icon: "🎯" },
-  { id: "knowledge", label: "categoryKnowledge", icon: "🧠" },
-  { id: "quick", label: "categoryQuickGames", icon: "🎮" },
-  { id: "ethics", label: "categoryEthics", icon: "⚖️" },
-  { id: "creative", label: "categoryCreative", icon: "✍️" },
-];
-
+/* ─── Featured Game Definition ─── */
 const FEATURED_GAME: GameMeta = {
   id: "ai-or-human",
   name: "AI or Human?",
@@ -152,26 +143,14 @@ function buildGameList(): GameMeta[] {
 export default function PlaygroundPage() {
   const t = useTranslations("playground");
   const [activeGame, setActiveGame] = useState<GameMeta | null>(null);
-  const [category, setCategory] = useState<GameCategory | "all">("all");
-  const [search, setSearch] = useState("");
   const overlayRef = useRef<HTMLDivElement>(null);
   const [closing, setClosing] = useState(false);
 
   const allGames = useMemo(() => buildGameList(), []);
 
   const filteredGames = useMemo(() => {
-    let games = allGames.filter((g) => g.id !== FEATURED_GAME.id);
-    if (category !== "all") {
-      games = games.filter((g) => g.category === category);
-    }
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      games = games.filter(
-        (g) => g.name.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q)
-      );
-    }
-    return games;
-  }, [allGames, category, search]);
+    return allGames.filter((g) => g.id !== FEATURED_GAME.id);
+  }, [allGames]);
 
   const handlePlay = useCallback((game: GameMeta) => {
     setActiveGame(game);
@@ -291,28 +270,6 @@ export default function PlaygroundPage() {
           </button>
         </ScrollReveal>
 
-        {/* ── Category Pills ── */}
-        <ScrollReveal animation="fade-up">
-          <div className="mb-6 -mx-4 px-4 overflow-x-auto scrollbar-none">
-            <div className="flex gap-2 w-max mx-auto">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setCategory(cat.id)}
-                  className={`pg-pill-shine min-h-[32px] px-3.5 py-1 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-                    category === cat.id
-                      ? "bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 pg-pill-active"
-                      : "bg-[var(--color-bg-section)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:border-indigo-400/40 hover:text-[var(--color-text)]"
-                  }`}
-                >
-                  <span className="mr-1">{cat.icon}</span>
-                  {t(`hub.${cat.label}`)}
-                </button>
-              ))}
-            </div>
-          </div>
-        </ScrollReveal>
-
         {/* ── Game Grid ── */}
         {filteredGames.length === 0 ? (
           <div className="text-center py-16 text-[var(--color-text-muted)]">
@@ -320,7 +277,7 @@ export default function PlaygroundPage() {
             <p className="text-sm">{t("hub.noGamesFound")}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             {filteredGames.map((game, i) => (
               <button
                 key={game.id}

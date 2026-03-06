@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 export type GameDifficulty = "easy" | "medium" | "hard";
-export type GameCategory = "knowledge" | "quick" | "ethics" | "creative" | "tools";
+export type GameCategory = "knowledge" | "quick" | "ethics" | "creative";
 
 export interface GameMeta {
   id: string;
@@ -28,7 +28,6 @@ const CATEGORY_GRADIENTS: Record<GameCategory, string> = {
   quick: "from-cyan-500/20 via-cyan-500/10 to-transparent",
   ethics: "from-amber-500/20 via-amber-500/10 to-transparent",
   creative: "from-pink-500/20 via-pink-500/10 to-transparent",
-  tools: "from-emerald-500/20 via-emerald-500/10 to-transparent",
 };
 
 const BORDER_GRADIENTS: Record<GameCategory, string> = {
@@ -36,7 +35,6 @@ const BORDER_GRADIENTS: Record<GameCategory, string> = {
   quick: "hover:border-cyan-500/50",
   ethics: "hover:border-amber-500/50",
   creative: "hover:border-pink-500/50",
-  tools: "hover:border-emerald-500/50",
 };
 
 function getPersonalBest(gameId: string): number | null {

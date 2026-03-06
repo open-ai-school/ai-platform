@@ -16,15 +16,21 @@ function emptyProgram(): ProgramProgress {
   return { completed: [], timestamps: {} };
 }
 
-function getStorageKey(): string {
+/** Returns the signed-in username, or null for guests */
+function getSignedInUser(): string | null {
   try {
     const session = localStorage.getItem(SESSION_KEY);
     if (session) {
       const parsed = JSON.parse(session);
-      if (parsed.username) return `${STORAGE_PREFIX}-${parsed.username}`;
+      if (parsed.username) return parsed.username;
     }
   } catch { /* ignore */ }
-  return `${STORAGE_PREFIX}-guest`;
+  return null;
+}
+
+function getStorageKey(): string {
+  const user = getSignedInUser();
+  return user ? `${STORAGE_PREFIX}-${user}` : `${STORAGE_PREFIX}-guest`;
 }
 
 function migrateOldFormat(stored: string): ProgressData {
@@ -56,16 +62,28 @@ function migrateGlobalKey() {
 export function useProgress(programSlug?: string) {
   const [data, setData] = useState<ProgressData>({});
   const [storageKey, setStorageKey] = useState<string>(`${STORAGE_PREFIX}-guest`);
+  const [isGuest, setIsGuest] = useState(true);
 
   useEffect(() => {
     migrateGlobalKey();
     const key = getStorageKey();
+    const guest = getSignedInUser() === null;
     setStorageKey(key);
-    const stored = localStorage.getItem(key);
-    if (stored) {
-      setData(migrateOldFormat(stored));
-    } else {
+    setIsGuest(guest);
+
+    if (guest) {
+      // Guest: never load from storage — progress is ephemeral (in-memory only)
+      // Also clean up any stale guest data from previous sessions
+      localStorage.removeItem(`${STORAGE_PREFIX}-guest`);
       setData({});
+    } else {
+      // Signed-in: load persisted progress
+      const stored = localStorage.getItem(key);
+      if (stored) {
+        setData(migrateOldFormat(stored));
+      } else {
+        setData({});
+      }
     }
   }, []);
 
@@ -90,10 +108,13 @@ export function useProgress(programSlug?: string) {
           timestamps: { ...prog.timestamps, [lSlug]: new Date().toISOString() },
         },
       };
-      localStorage.setItem(storageKey, JSON.stringify(next));
+      // Only persist to localStorage for signed-in users
+      if (!isGuest) {
+        localStorage.setItem(storageKey, JSON.stringify(next));
+      }
       return next;
     });
-  }, [programSlug, storageKey]);
+  }, [programSlug, storageKey, isGuest]);
 
   const isCompleted = useCallback(
     (lessonKey: string) => {
@@ -117,8 +138,10 @@ export function useProgress(programSlug?: string) {
 
   const reset = useCallback(() => {
     setData({});
-    localStorage.removeItem(storageKey);
-  }, [storageKey]);
+    if (!isGuest) {
+      localStorage.removeItem(storageKey);
+    }
+  }, [storageKey, isGuest]);
 
   // Per-program counts
   const prog = programSlug ? getProgram(programSlug) : null;

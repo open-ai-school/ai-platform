@@ -7,7 +7,7 @@ import { ScrollReveal } from "@open-ai-school/ai-ui-library";
 import { ComingSoonCard } from "@/components/ui/ComingSoon";
 import { FloatingParticles } from "@open-ai-school/ai-ui-library";
 import { getProgramsByTrack } from "@/lib/programs";
-import { MessageCircle, Star, Mail } from "lucide-react";
+import { Share2, Mail, Github } from "lucide-react";
 import { NewsletterSignup } from "@/components/ui/NewsletterSignup";
 import NeuralBackground from "@/components/ui/NeuralBackground";
 
@@ -364,55 +364,58 @@ export default async function HomePage({
             </div>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Discussions */}
-            <ScrollReveal animation="fade-up">
-              <a
-                href="https://github.com/open-ai-school/ai-platform/discussions"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] card-hover h-full"
+          {/* Newsletter — Primary */}
+          <ScrollReveal animation="fade-up">
+            <div className="max-w-2xl mx-auto p-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] text-center mb-8">
+              <div className="w-14 h-14 rounded-2xl bg-[var(--color-primary)]/10 flex items-center justify-center mx-auto mb-4">
+                <Mail size={28} className="text-[var(--color-primary)]" />
+              </div>
+              <h3 className="text-xl font-bold mb-2">{tc("updates")}</h3>
+              <p className="text-sm text-[var(--color-text-muted)] mb-5">
+                {tc("updatesDesc")}
+              </p>
+              <NewsletterSignup />
+            </div>
+          </ScrollReveal>
+
+          {/* Share + Open Source — Secondary row */}
+          <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+            <ScrollReveal animation="fade-up" delay={100}>
+              <button
+                onClick={() => {
+                  if (typeof navigator !== "undefined" && navigator.share) {
+                    navigator.share({ title: "Open AI School", text: "Free AI education for everyone", url: "https://openaischool.vercel.app" });
+                  } else {
+                    navigator.clipboard?.writeText("https://openaischool.vercel.app");
+                  }
+                }}
+                className="w-full flex items-center gap-4 p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] card-hover text-left cursor-pointer"
               >
-                <div className="w-12 h-12 rounded-xl bg-[var(--color-primary)]/10 flex items-center justify-center mb-4">
-                  <MessageCircle size={24} className="text-[var(--color-primary)]" />
+                <div className="w-10 h-10 rounded-lg bg-violet-500/10 flex items-center justify-center shrink-0">
+                  <Share2 size={20} className="text-violet-500" />
                 </div>
-                <h3 className="text-lg font-bold mb-2">{tc("discussions")}</h3>
-                <p className="text-sm text-[var(--color-text-muted)]">
-                  {tc("discussionsDesc")}
-                </p>
-              </a>
+                <div>
+                  <h4 className="text-sm font-bold">{tc("share")}</h4>
+                  <p className="text-xs text-[var(--color-text-muted)]">{tc("shareDesc")}</p>
+                </div>
+              </button>
             </ScrollReveal>
 
-            {/* Star on GitHub */}
-            <ScrollReveal animation="fade-up" delay={100}>
+            <ScrollReveal animation="fade-up" delay={200}>
               <a
                 href="https://github.com/open-ai-school/ai-platform"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] card-hover h-full"
+                className="flex items-center gap-4 p-5 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-card)] card-hover"
               >
-                <div className="w-12 h-12 rounded-xl bg-[var(--color-secondary)]/10 flex items-center justify-center mb-4">
-                  <Star size={24} className="text-[var(--color-secondary)]" />
+                <div className="w-10 h-10 rounded-lg bg-gray-500/10 flex items-center justify-center shrink-0">
+                  <Github size={20} className="text-[var(--color-text-muted)]" />
                 </div>
-                <h3 className="text-lg font-bold mb-2">{tc("star")}</h3>
-                <p className="text-sm text-[var(--color-text-muted)]">
-                  {tc("starDesc")}
-                </p>
+                <div>
+                  <h4 className="text-sm font-bold">{tc("openSource")}</h4>
+                  <p className="text-xs text-[var(--color-text-muted)]">{tc("openSourceDesc")}</p>
+                </div>
               </a>
-            </ScrollReveal>
-
-            {/* Newsletter */}
-            <ScrollReveal animation="fade-up" delay={200}>
-              <div className="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] h-full">
-                <div className="w-12 h-12 rounded-xl bg-[var(--color-accent)]/10 flex items-center justify-center mb-4">
-                  <Mail size={24} className="text-[var(--color-accent)]" />
-                </div>
-                <h3 className="text-lg font-bold mb-2">{tc("updates")}</h3>
-                <p className="text-sm text-[var(--color-text-muted)] mb-4">
-                  {tc("updatesDesc")}
-                </p>
-                <NewsletterSignup />
-              </div>
             </ScrollReveal>
           </div>
         </div>

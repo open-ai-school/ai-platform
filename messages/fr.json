@@ -545,11 +545,11 @@
   "community": {
     "title": "Rejoignez notre communauté",
     "subtitle": "Apprenez ensemble, grandissez ensemble",
-    "discussions": "Rejoindre les discussions",
-    "discussionsDesc": "Posez des questions, partagez des projets, connectez-vous avec d'autres apprenants",
-    "star": "Étoile sur GitHub",
-    "starDesc": "Soutenez le projet et aidez-le à atteindre plus d'apprenants",
     "updates": "Restez informé",
-    "updatesDesc": "Recevez des notifications sur les nouvelles leçons et fonctionnalités"
+    "updatesDesc": "Recevez des notifications sur les nouvelles leçons et fonctionnalités",
+    "share": "Partager avec des amis",
+    "shareDesc": "Aidez les autres à découvrir l'éducation IA gratuite",
+    "openSource": "Open Source",
+    "openSourceDesc": "Construit ouvertement — code, contributions ou fork"
   }
 }

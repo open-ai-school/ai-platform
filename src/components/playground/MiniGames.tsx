@@ -64,10 +64,11 @@ export function EmojiDecoder() {
   const [score, setScore] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [gameOver, setGameOver] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
 
   const reset = useCallback(() => {
     setPuzzles([...EMOJI_PUZZLES].sort(() => Math.random() - 0.5).slice(0, 6));
-    setCurrent(0); setScore(0); setSelected(null); setGameOver(false);
+    setCurrent(0); setScore(0); setSelected(null); setGameOver(false); setTransitioning(false);
   }, []);
 
   useEffect(() => { reset(); }, [reset]);
@@ -77,8 +78,9 @@ export function EmojiDecoder() {
     setSelected(option);
     if (option === puzzles[current].answer) setScore(s => s + 1);
     setTimeout(() => {
-      if (current + 1 >= puzzles.length) setGameOver(true);
-      else { setCurrent(c => c + 1); setSelected(null); }
+      if (current + 1 >= puzzles.length) { setGameOver(true); return; }
+      setTransitioning(true);
+      setTimeout(() => { setCurrent(c => c + 1); setSelected(null); setTransitioning(false); }, 300);
     }, 1200);
   };
 
@@ -89,24 +91,46 @@ export function EmojiDecoder() {
   }
 
   const puzzle = puzzles[current];
+  const isCorrect = selected === puzzle.answer;
+  const isWrong = selected !== null && !isCorrect;
+
   return (
-    <GameShell title={t("games.emojiDecoder.title")} icon="🧩">
+    <GameShell title={t("games.emojiDecoder.title")}>
+      <style>{`
+        @keyframes ed-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes ed-shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-6px); } 40%,80% { transform: translateX(6px); } }
+        .ed-pulse { animation: ed-pulse 0.4s ease-in-out; }
+        .ed-shake { animation: ed-shake 0.4s ease-in-out; }
+      `}</style>
       <StatusBar left={`${t("common.round")} ${current + 1}/${puzzles.length}`} right={`${t("common.score")}: ${score}`} />
-      <div className="text-center py-8">
-        <div className="text-7xl sm:text-8xl mb-5 leading-tight">{puzzle.emojis}</div>
+      <div
+        className="text-center py-8"
+        style={{ opacity: transitioning ? 0 : 1, transform: transitioning ? "translateY(12px)" : "translateY(0)", transition: "opacity 0.3s ease, transform 0.3s ease" }}
+      >
+        <div className={`text-8xl sm:text-9xl mb-6 leading-tight ${isCorrect ? "ed-pulse" : isWrong ? "ed-shake" : ""}`}>
+          {puzzle.emojis}
+        </div>
         <p className="text-[var(--color-text-muted)]">{t("games.emojiDecoder.instruction")}</p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {puzzle.options.map(opt => (
-          <button key={opt} onClick={() => handleSelect(opt)} disabled={!!selected}
-            className={`min-h-[48px] p-4 rounded-xl border-2 font-medium text-left transition-all ${
-              selected === opt
-                ? opt === puzzle.answer ? "border-emerald-500 bg-emerald-500/10 text-emerald-400" : "border-red-500 bg-red-500/10 text-red-400"
-                : selected && opt === puzzle.answer ? "border-emerald-500 bg-emerald-500/10" : "border-[var(--color-border)] hover:border-indigo-400 active:scale-[0.98]"
-            }`}>
-            {opt}
-          </button>
-        ))}
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 gap-3"
+        style={{ opacity: transitioning ? 0 : 1, transition: "opacity 0.3s ease" }}
+      >
+        {puzzle.options.map(opt => {
+          const optCorrect = selected === opt && opt === puzzle.answer;
+          const optWrong = selected === opt && opt !== puzzle.answer;
+          return (
+            <button key={opt} onClick={() => handleSelect(opt)} disabled={!!selected}
+              className={`min-h-[48px] p-4 rounded-xl border-2 font-medium text-left transition-all duration-300 ${
+                optCorrect ? "border-emerald-500 bg-emerald-500/15 text-emerald-400 scale-[1.03] shadow-lg shadow-emerald-500/20"
+                : optWrong ? "border-red-500 bg-red-500/10 text-red-400 ed-shake"
+                : selected && opt === puzzle.answer ? "border-emerald-500 bg-emerald-500/10"
+                : "border-[var(--color-border)] hover:border-indigo-400 active:scale-[0.98]"
+              }`}>
+              {opt}
+            </button>
+          );
+        })}
       </div>
     </GameShell>
   );
@@ -156,7 +180,7 @@ export function BinaryTranslator() {
   }
 
   return (
-    <GameShell title={t("games.binaryTranslator.title")} icon="💾">
+    <GameShell title={t("games.binaryTranslator.title")}>
       <StatusBar left={`${t("common.round")} ${current + 1}/${words.length}`} right={`${t("common.score")}: ${score}`} />
       <div className="text-center py-4">
         <p className="text-xs text-[var(--color-text-muted)] mb-3">{t("games.binaryTranslator.hint")}</p>
@@ -221,7 +245,7 @@ export function SpeedTyper() {
 
   const term = terms[current];
   return (
-    <GameShell title={t("games.speedTyper.title")} icon="⚡">
+    <GameShell title={t("games.speedTyper.title")}>
       <StatusBar left={`${t("common.round")} ${current + 1}/${terms.length}`} right={times.length > 0 ? `${(times[times.length - 1] / 1000).toFixed(1)}s` : t("common.ready")} />
       <div className="text-center py-6">
         <div className="text-3xl sm:text-5xl font-mono font-bold tracking-wide leading-relaxed">
@@ -283,7 +307,7 @@ export function PatternMatcher() {
 
   const round = rounds[current];
   return (
-    <GameShell title={t("games.oddOneOut.title")} icon="🔍">
+    <GameShell title={t("games.oddOneOut.title")}>
       <StatusBar left={`${t("common.round")} ${current + 1}/${rounds.length}`} right={`${t("common.score")}: ${score}`} />
       <div className="text-center py-3">
         <p className="text-lg font-semibold mb-1">{t("games.oddOneOut.instruction")}</p>
@@ -324,6 +348,8 @@ export function MemoryMatch() {
   const [flippedIds, setFlippedIds] = useState<number[]>([]);
   const [moves, setMoves] = useState(0);
   const [matched, setMatched] = useState(0);
+  const [justMatchedPair, setJustMatchedPair] = useState<number | null>(null);
+  const [wrongIds, setWrongIds] = useState<number[]>([]);
 
   const reset = useCallback(() => {
     const p = [...MEMORY_PAIRS].sort(() => Math.random() - 0.5).slice(0, 5);
@@ -335,6 +361,7 @@ export function MemoryMatch() {
     });
     setCards(c.sort(() => Math.random() - 0.5));
     setFlippedIds([]); setMoves(0); setMatched(0);
+    setJustMatchedPair(null); setWrongIds([]);
   }, []);
 
   useEffect(() => { reset(); }, [reset]);
@@ -352,15 +379,19 @@ export function MemoryMatch() {
       setMoves(m => m + 1);
       const [a, b] = newFlipped.map(fid => cards.find(c => c.id === fid)!);
       if (a.pairId === b.pairId) {
+        setJustMatchedPair(a.pairId);
         setTimeout(() => {
           setCards(prev => prev.map(c => c.pairId === a.pairId ? { ...c, matched: true } : c));
           setMatched(m => m + 1);
           setFlippedIds([]);
+          setTimeout(() => setJustMatchedPair(null), 600);
         }, 500);
       } else {
+        setWrongIds([...newFlipped]);
         setTimeout(() => {
           setCards(prev => prev.map(c => newFlipped.includes(c.id) ? { ...c, flipped: false } : c));
           setFlippedIds([]);
+          setWrongIds([]);
         }, 1000);
       }
     }
@@ -371,23 +402,50 @@ export function MemoryMatch() {
   }
 
   return (
-    <GameShell title={t("games.memoryMatch.title")} icon="🃏">
+    <GameShell title={t("games.memoryMatch.title")}>
+      <style>{`
+        @keyframes mm-glow { 0%,100% { box-shadow: 0 0 0 rgba(16,185,129,0); } 50% { box-shadow: 0 0 20px rgba(16,185,129,0.5); } }
+        @keyframes mm-shake { 0%,100% { transform: translateX(0) rotateY(180deg); } 25% { transform: translateX(-5px) rotateY(180deg); } 75% { transform: translateX(5px) rotateY(180deg); } }
+        .mm-glow { animation: mm-glow 0.6s ease-in-out; }
+      `}</style>
       <StatusBar left={`${matched}/${pairs.length} ${t("common.pairs")}`} right={`${moves} ${t("common.moves")}`} />
       <p className="text-center text-sm text-[var(--color-text-muted)]">{t("games.memoryMatch.instruction")}</p>
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-        {cards.map(card => (
-          <button key={card.id} onClick={() => handleFlip(card.id)}
-            className={`min-h-[64px] sm:min-h-[72px] p-3 rounded-xl border-2 text-xs sm:text-sm font-medium transition-all duration-300 flex items-center justify-center text-center ${
-              card.matched ? "border-emerald-500 bg-emerald-500/10 text-emerald-400" :
-              card.flipped ? "border-indigo-500 bg-indigo-500/10 scale-105" :
-              "border-[var(--color-border)] bg-[var(--color-bg-section)] hover:border-indigo-400 hover:shadow-md active:scale-[0.97]"
-            }`}
-            style={{ perspective: "600px" }}>
-            <span className={`transition-all duration-300 ${card.flipped || card.matched ? "opacity-100" : "opacity-50 text-2xl"}`}>
-              {card.flipped || card.matched ? card.text : "?"}
-            </span>
-          </button>
-        ))}
+        {cards.map(card => {
+          const isFlipped = card.flipped || card.matched;
+          const isWrong = wrongIds.includes(card.id);
+          const isGlowing = justMatchedPair === card.pairId;
+          return (
+            <button key={card.id} onClick={() => handleFlip(card.id)}
+              className={`relative rounded-xl border-2 transition-shadow duration-300 overflow-hidden ${
+                card.matched ? `border-emerald-500 ${isGlowing ? "mm-glow" : ""}`
+                : isWrong ? "border-red-500"
+                : card.flipped ? "border-indigo-500"
+                : "border-[var(--color-border)] hover:border-indigo-400 hover:shadow-md"
+              }`}
+              style={{ perspective: "600px", minHeight: "80px" }}>
+              <div style={{
+                position: "absolute", inset: 0,
+                transition: isWrong ? "none" : "transform 0.3s ease",
+                transformStyle: "preserve-3d" as const,
+                transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+                animation: isWrong && isFlipped ? "mm-shake 0.4s ease-in-out" : "none",
+              }}>
+                {/* Back face — gradient */}
+                <div style={{ backfaceVisibility: "hidden" as const, position: "absolute" as const, inset: 0, borderRadius: "10px", background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%)", display: "flex", flexDirection: "column" as const, alignItems: "center", justifyContent: "center", gap: "2px" }}>
+                  <span style={{ fontSize: "28px", color: "rgba(255,255,255,0.85)" }}>?</span>
+                  <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.35)", fontWeight: 500, letterSpacing: "0.05em" }}>FLIP</span>
+                </div>
+                {/* Front face — content */}
+                <div className="bg-[var(--color-bg-section)]" style={{ backfaceVisibility: "hidden" as const, transform: "rotateY(180deg)", position: "absolute" as const, inset: 0, borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", padding: "8px" }}>
+                  <span className={`text-xs sm:text-sm font-medium text-center leading-tight ${card.matched ? "text-emerald-400" : ""}`}>
+                    {card.text}
+                  </span>
+                </div>
+              </div>
+            </button>
+          );
+        })}
       </div>
     </GameShell>
   );
@@ -467,7 +525,7 @@ export function AITimeline() {
   }
 
   return (
-    <GameShell title={t("games.aiTimeline.title")} icon="📅">
+    <GameShell title={t("games.aiTimeline.title")}>
       <p className="text-center text-sm text-[var(--color-text-muted)]">{t("games.aiTimeline.instruction")}</p>
       {order.length > 0 && (
         <div className="space-y-1.5">
@@ -531,7 +589,7 @@ export function BiasDetective() {
 
   const s = scenarios[current];
   return (
-    <GameShell title={t("games.biasDetective.title")} icon="🕵️">
+    <GameShell title={t("games.biasDetective.title")}>
       <StatusBar left={`${t("common.round")} ${current + 1}/${scenarios.length}`} />
       <div className="p-5 rounded-xl bg-[var(--color-bg-section)] border border-[var(--color-border)] leading-relaxed">
         <p className="text-sm sm:text-base">{s.scenario}</p>
@@ -604,7 +662,7 @@ export function TokenCounter() {
   const s = sentences[current];
   const diff = Math.abs(guess - s.tokens);
   return (
-    <GameShell title={t("games.tokenCounter.title")} icon="🔢">
+    <GameShell title={t("games.tokenCounter.title")}>
       <StatusBar left={`${t("common.round")} ${current + 1}/${sentences.length}`} />
       <div className="p-5 rounded-xl bg-[var(--color-bg-section)] border border-[var(--color-border)] text-center">
         <p className="text-lg sm:text-xl font-medium">&ldquo;{s.text}&rdquo;</p>
@@ -696,7 +754,7 @@ export function PromptEngineer() {
   }
 
   return (
-    <GameShell title={t("games.promptEngineer.title")} icon="🧙">
+    <GameShell title={t("games.promptEngineer.title")}>
       <StatusBar left={`${t("common.round")} ${current + 1}/${rounds.length}`} right={`${t("common.score")}: ${score}`} />
       <div className="text-center p-4 rounded-xl bg-[var(--color-bg-section)] border border-[var(--color-border)]">
         <p className="text-xs text-[var(--color-text-muted)] mb-1">{t("games.promptEngineer.task")}:</p>
@@ -791,7 +849,7 @@ export function JargonBuster() {
 
   const q = questions[current];
   return (
-    <GameShell title={t("games.jargonBuster.title")} icon="📖">
+    <GameShell title={t("games.jargonBuster.title")}>
       <StatusBar left={`${current + 1}/${questions.length}`} right={`${t("common.score")}: ${score}`} />
       {/* Timer bar */}
       <div className="h-2 rounded-full bg-[var(--color-bg-section)] overflow-hidden">
@@ -847,8 +905,6 @@ export interface GameEntry {
 
 export const ALL_GAMES: GameEntry[] = [
   { id: "emoji-decoder", name: "Emoji Decoder", desc: "Guess AI concepts from emojis", icon: "🧩", component: EmojiDecoder, difficulty: "easy", estimatedMinutes: 2, category: "quick" },
-  { id: "prompt-engineer", name: "Prompt Engineer", desc: "Pick the better prompt", icon: "🧙", component: PromptEngineer, difficulty: "medium", estimatedMinutes: 3, category: "creative" },
-  { id: "memory-match", name: "Memory Match", desc: "Match terms with definitions", icon: "🃏", component: MemoryMatch, difficulty: "easy", estimatedMinutes: 3, category: "quick" },
-  { id: "bias-detective", name: "Bias Detective", desc: "Spot AI bias in scenarios", icon: "🕵️", component: BiasDetective, difficulty: "medium", estimatedMinutes: 4, category: "ethics" },
+  { id: "memory-match", name: "Memory Match", desc: "Match AI terms with definitions", icon: "🃏", component: MemoryMatch, difficulty: "easy", estimatedMinutes: 3, category: "quick" },
   { id: "ai-trivia", name: "AI Trivia Challenge", desc: "Test your AI knowledge with timed questions", icon: "🧠", component: AITriviaChallenge, difficulty: "medium", estimatedMinutes: 4, category: "knowledge" },
 ];
