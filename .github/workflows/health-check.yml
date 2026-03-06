@@ -1,0 +1,35 @@
+name: Health Check
+
+on:
+  schedule:
+    - cron: "0 8 * * *"  # Daily at 8am UTC
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check production site
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://openaischool.vercel.app)
+          echo "Status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "::error::Production site returned $STATUS"
+            exit 1
+          fi
+
+      - name: Check API health
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://openaischool.vercel.app/api/analytics/summary)
+          echo "API Status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "::warning::API endpoint returned $STATUS"
+          fi
+
+      - name: Check sitemap
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://openaischool.vercel.app/sitemap.xml)
+          echo "Sitemap Status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "::warning::Sitemap returned $STATUS"
+          fi

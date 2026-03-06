@@ -1,6 +1,5 @@
 version: 2
 updates:
-  # npm dependencies
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -11,22 +10,38 @@ updates:
       - "rameshreddy-adutla"
     labels:
       - "dependencies"
-      - "security"
     groups:
-      production:
-        dependency-type: "production"
-      development:
-        dependency-type: "development"
+      next:
+        patterns:
+          - "next"
+          - "next-*"
+          - "@next/*"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react*"
+      lint:
+        patterns:
+          - "eslint*"
+          - "@eslint/*"
+          - "typescript"
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+        exclude-patterns:
+          - "next"
+          - "next-*"
+          - "react"
+          - "react-dom"
 
-  # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"
     open-pull-requests-limit: 5
-    reviewers:
-      - "rameshreddy-adutla"
     labels:
+      - "dependencies"
       - "ci"
-      - "security"
