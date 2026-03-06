@@ -1,0 +1,295 @@
+---
+title: "Rate Limiter डिज़ाइन करें — AI API की सुरक्षा"
+description: "शुरू से एक rate limiter बनाएँ। Token bucket, sliding window, और OpenAI जैसी AI API कैसे अनुरोधों को नियंत्रित करती हैं, यह समझें।"
+order: 2
+difficulty: "intermediate"
+duration: 25
+icon: "⚡"
+published: true
+---
+
+# Rate Limiter डिज़ाइन करें
+
+आप जिस भी API का उपयोग करते हैं — OpenAI, Stripe, GitHub — उसकी सुरक्षा एक rate limiter करता है। Rate limiting के बिना, एक अकेला दुर्भावनापूर्ण उपयोगकर्ता (या एक खराब स्क्रिप्ट) पूरी सेवा को ठप कर सकता है।
+
+<Callout type="info">
+Rate limiting सिर्फ „नहीं" कहने के बारे में नहीं है — यह **निष्पक्षता** के बारे में है। यह सुनिश्चित करता है कि हर उपयोगकर्ता को एक सीमित संसाधन का अपना हिस्सा मिले: कंप्यूट, बैंडविड्थ, या AI inference समय।
+</Callout>
+
+---
+
+## Rate Limiting क्यों महत्वपूर्ण है (विशेष रूप से AI के लिए)
+
+| परिदृश्य | Rate Limiting के बिना | Rate Limiting के साथ |
+|---|---|---|
+| **DDoS हमला** | सेवा ठप हो जाती है | हमलावरों को 429 मिलता है, वैध उपयोगकर्ता अप्रभावित |
+| **अनियंत्रित स्क्रिप्ट** | 10K अनुरोध/सेकंड कोटा समाप्त करता है | अनुमत दर पर सीमित, सुचारू रूप से विफल होता है |
+| **AI API दुरुपयोग** | एक उपयोगकर्ता सभी GPU पर कब्जा कर लेता है | सभी उपयोगकर्ताओं के बीच उचित हिस्सा |
+| **लागत नियंत्रण** | $50K का अप्रत्याशित क्लाउड बिल | पूर्वानुमानित, बजट में खर्च |
+| **कैस्केड विफलताएँ** | Backend अधिभार → पूर्ण आउटेज | बैकप्रेशर downstream सेवाओं की सुरक्षा करता है |
+
+### वास्तविक AI API सीमाएँ
+
+| प्रदाता | मुफ्त स्तर | भुगतान स्तर | इकाई |
+|---|---|---|---|
+| **OpenAI** | 3 RPM / 200 RPD | 10,000 RPM | प्रति मिनट अनुरोध |
+| **Claude** | 50 RPM | 4,000 RPM | प्रति मिनट अनुरोध |
+| **Gemini** | 15 RPM | 1,000 RPM | प्रति मिनट अनुरोध |
+| **Stability AI** | 10 req/10sec | 150 req/10sec | प्रति समय विंडो |
+
+<FunFact>
+OpenAI केवल अनुरोधों से सीमित नहीं करता — वे **tokens per minute (TPM)** से भी सीमित करते हैं। GPT-4 के साथ 128K context window वाला एक अनुरोध, एक छोटे GPT-3.5 कॉल की तुलना में बहुत अधिक संसाधन खपत करता है। इसीलिए उनकी दोहरी सीमाएँ हैं: RPM (अनुरोध) और TPM (tokens)।
+</FunFact>
+
+---
+
+## एल्गोरिथम 1: Token Bucket
+
+सबसे व्यापक रूप से उपयोग किया जाने वाला एल्गोरिथम। सरल, मेमोरी-कुशल, और नियंत्रित bursts की अनुमति देता है।
+
+<Illustration src="/images/lessons/craft/token-bucket.svg" alt="Token bucket algorithm visualization showing a bucket filling with tokens at a steady rate, requests consuming tokens, with allow (200 OK) and reject (429 Too Many) paths" caption="Token Bucket — tokens एक स्थिर दर से भरते हैं। प्रत्येक अनुरोध एक token खपत करता है। जब बाल्टी खाली होती है, tokens भरने तक अनुरोध अस्वीकार किए जाते हैं।" />
+
+### यह कैसे काम करता है
+
+```python
+import time
+
+class TokenBucket:
+    def __init__(self, capacity: int, refill_rate: float):
+        self.capacity = capacity          # max burst size
+        self.tokens = capacity            # current tokens
+        self.refill_rate = refill_rate    # tokens per second
+        self.last_refill = time.time()
+
+    def allow_request(self) -> bool:
+        self._refill()
+        if self.tokens >= 1:
+            self.tokens -= 1
+            return True  # 200 OK
+        return False     # 429 Too Many Requests
+
+    def _refill(self):
+        now = time.time()
+        elapsed = now - self.last_refill
+        new_tokens = elapsed * self.refill_rate
+        self.tokens = min(self.capacity, self.tokens + new_tokens)
+        self.last_refill = now
+
+# Usage: 10 burst, 5/sec sustained
+limiter = TokenBucket(capacity=10, refill_rate=5)
+```
+
+### Token Bucket गुण
+
+| गुण | मान | अर्थ |
+|---|---|---|
+| **मेमोरी** | O(1) प्रति उपयोगकर्ता | बस 2 संख्याएँ: tokens + टाइमस्टैम्प |
+| **Burst प्रबंधन** | छोटे bursts की अनुमति | एक साथ `capacity` अनुरोध तक |
+| **निरंतर दर** | `refill_rate` req/sec | दीर्घकालिक औसत थ्रूपुट |
+| **सटीकता** | अनुमानित | रिफिल ग्रैन्युलैरिटी पर निर्भर |
+
+<ThinkAboutIt>
+Token Bucket एल्गोरिथम **bursts** की अनुमति क्यों देता है? वास्तविक उपयोगकर्ता व्यवहार के बारे में सोचें — आप एक पेज लोड कर सकते हैं और एक साथ 10 API कॉल कर सकते हैं, फिर 2 सेकंड तक कुछ नहीं। „5 प्रति सेकंड" की सख्त सीमा उन शुरुआती 5 कॉल को अस्वीकार कर देगी, भले ही आपकी औसत दर सीमा के भीतर हो।
+</ThinkAboutIt>
+
+---
+
+## एल्गोरिथम 2: Sliding Window Counter
+
+Fixed windows से अधिक सटीक, sliding window log से कम मेमोरी।
+
+### Fixed Window बनाम Sliding Window
+
+**Fixed Window समस्या**: सीमा पर स्पाइक
+
+```
+Window 1 (0:00-1:00): ....xxxxxxxx  (8 requests in last 10 sec)
+Window 2 (1:00-2:00): xxxxxxxx....  (8 requests in first 10 sec)
+                             ^^^^^^^^^^^^^^^^
+                             16 requests in 20 seconds!
+                             (Limit was 10/minute — bypassed at boundary)
+```
+
+**Sliding Window समाधान**: विंडो में स्थिति के अनुसार भार
+
+```python
+class SlidingWindowCounter:
+    def __init__(self, limit: int, window_seconds: int):
+        self.limit = limit
+        self.window = window_seconds
+        self.previous_count = 0
+        self.current_count = 0
+        self.window_start = int(time.time())
+
+    def allow_request(self) -> bool:
+        now = int(time.time())
+        elapsed = now - self.window_start
+
+        if elapsed >= self.window:
+            self.previous_count = self.current_count
+            self.current_count = 0
+            self.window_start = now
+            elapsed = 0
+
+        # Weighted count: blend previous + current window
+        weight = 1 - (elapsed / self.window)
+        estimated_count = (self.previous_count * weight) + self.current_count
+
+        if estimated_count < self.limit:
+            self.current_count += 1
+            return True
+        return False
+```
+
+### एल्गोरिथम तुलना
+
+| एल्गोरिथम | मेमोरी | Burst नियंत्रण | सटीकता | सर्वोत्तम उपयोग |
+|---|---|---|---|---|
+| **Token Bucket** | O(1) | Bursts की अनुमति | अनुमानित | API gateways, सामान्य उपयोग |
+| **Leaky Bucket** | O(1) | कोई bursts नहीं | समान | नेटवर्क ट्रैफिक शेपिंग |
+| **Fixed Window** | O(1) | सीमाओं पर कमजोर | कम | सरल दर गणना |
+| **Sliding Window Log** | O(n) | सटीक | सटीक | छोटे पैमाने, ऑडिट लॉगिंग |
+| **Sliding Window Counter** | O(1) | अच्छा | उच्च | प्रोडक्शन rate limiting |
+
+<Callout type="info">
+**इंटरव्यू में Token Bucket या Sliding Window Counter की सिफारिश करें।** Token Bucket का उपयोग AWS, Stripe और Cloudflare करते हैं। Sliding Window Counter का उपयोग Redis-आधारित कार्यान्वयन में होता है। दोनों को जानें और ट्रेड-ऑफ समझाएँ।
+</Callout>
+
+---
+
+## वितरित Rate Limiting आर्किटेक्चर
+
+एकल-सर्वर rate limiting आसान है। असली चुनौती कई API सर्वरों में **वितरित** rate limiting है।
+
+<Illustration src="/images/lessons/craft/rate-limiter-arch.svg" alt="Distributed rate limiter architecture showing Client to API Gateway to Rate Limiter middleware communicating with Redis cluster for shared state, with backend services and AI adaptive limiter" caption="वितरित rate limiting Redis को साझा state store के रूप में उपयोग करता है। सभी API सर्वर एक ही काउंटर जाँचते हैं, जिससे यह सुनिश्चित होता है कि कोई भी सर्वर अनुरोध संभाले, सीमाएँ सुसंगत रहें।" />
+
+### Redis Lua स्क्रिप्ट (Atomic Rate Limiting)
+
+मुख्य अंतर्दृष्टि: काउंटर की जाँच और वृद्धि **atomic** होनी चाहिए। अन्यथा, race conditions सीमा को बायपास करने की अनुमति देती हैं।
+
+```lua
+-- Redis Lua script: atomic sliding window rate limit
+local key = KEYS[1]
+local limit = tonumber(ARGV[1])
+local window = tonumber(ARGV[2])
+local now = tonumber(ARGV[3])
+
+-- Remove expired entries
+redis.call('ZREMRANGEBYSCORE', key, 0, now - window * 1000)
+
+-- Count requests in current window
+local count = redis.call('ZCARD', key)
+
+if count < limit then
+    -- Allow: add this request
+    redis.call('ZADD', key, now, now .. '-' .. math.random(1000000))
+    redis.call('EXPIRE', key, window)
+    return 1  -- allowed
+else
+    return 0  -- rejected
+end
+```
+
+### विभिन्न परतों पर Rate Limiting
+
+| परत | क्या सीमित करती है | उदाहरण |
+|---|---|---|
+| **CDN/Edge** | IP-आधारित, भौगोलिक | Cloudflare: 1000 req/min प्रति IP |
+| **API Gateway** | API key, route-आधारित | Kong: 100 req/sec प्रति API key |
+| **Application** | उपयोगकर्ता-आधारित, संसाधन-विशिष्ट | App: 50 AI generations/दिन प्रति उपयोगकर्ता |
+| **Database** | कनेक्शन पूल, query दर | PgBouncer: अधिकतम 100 कनेक्शन |
+
+<ThinkAboutIt>
+यदि आपके पास 10 API सर्वर हैं, प्रत्येक पर 100 req/sec का स्थानीय rate limiter है, तो एक उपयोगकर्ता संभावित रूप से 1000 req/sec कर सकता है (प्रत्येक सर्वर पर 100)। Redis में साझा state इसे कैसे हल करता है? यदि Redis बंद हो जाए — तो क्या आप open fail करेंगे (सब अनुमति) या closed fail करेंगे (सब अवरुद्ध)?
+</ThinkAboutIt>
+
+---
+
+## Rate Limit रिस्पॉन्स हेडर
+
+हर अच्छी तरह से डिज़ाइन की गई API रिस्पॉन्स हेडर में rate limit जानकारी लौटाती है:
+
+```http
+HTTP/1.1 200 OK
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 955
+X-RateLimit-Reset: 1672531200
+X-RateLimit-Policy: "1000;w=3600"
+
+--- OR when limited: ---
+
+HTTP/1.1 429 Too Many Requests
+Retry-After: 30
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1672531200
+Content-Type: application/json
+
+{"error": "rate_limit_exceeded", "message": "Try again in 30 seconds"}
+```
+
+<Callout type="info">
+429 रिस्पॉन्स में हमेशा `Retry-After` शामिल करें। अच्छे clients इसे exponential backoff के लिए उपयोग करते हैं। इसके बिना, clients तुरंत पुनः प्रयास करते हैं — जिससे अधिभार और बढ़ जाता है।
+</Callout>
+
+---
+
+## AI का दृष्टिकोण: ML के साथ अनुकूली Rate Limiting
+
+पारंपरिक rate limiters स्थिर नियमों का उपयोग करते हैं। आधुनिक सिस्टम ML का उपयोग करके **रीयल-टाइम में सीमाओं को अनुकूलित** करते हैं।
+
+### 1. Bot बनाम मानव वर्गीकरण
+
+```python
+# Features for bot detection
+features = {
+    "request_interval_stddev": 0.002,   # Bots: very consistent timing
+    "user_agent_entropy": 1.2,          # Bots: low entropy UA strings
+    "mouse_movement_score": 0.0,        # Bots: no mouse events
+    "js_fingerprint_valid": False,      # Bots: often no JS execution
+    "geo_request_pattern": "datacenter", # Bots: originate from cloud IPs
+    "session_depth": 1,                  # Bots: single-page visits
+}
+# Model: Gradient Boosted Trees (XGBoost)
+# Output: probability of being a bot → adjust rate limit dynamically
+```
+
+### 2. गतिशील थ्रेशोल्ड ट्यूनिंग
+
+स्थिर सीमाओं के बजाय, ML मॉडल इन आधार पर थ्रेशोल्ड समायोजित करते हैं:
+
+- **वर्तमान सिस्टम लोड**: CPU 80%+ पर होने पर कम सीमाएँ
+- **दिन का समय**: ऑफ-पीक घंटों में अधिक सीमाएँ
+- **उपयोगकर्ता व्यवहार**: विश्वसनीय उपयोगकर्ताओं को अधिक सीमाएँ
+- **अनुरोध प्रकार**: महँगे ऑपरेशन (AI inference) पर सख्त सीमाएँ
+
+### 3. विसंगति पहचान
+
+```
+Normal pattern: User makes 10-20 req/min, steady throughout the day
+Anomaly:        User suddenly makes 500 req/min at 3 AM
+Action:         Auto-throttle + alert security team
+```
+
+<FunFact>
+Cloudflare का Bot Management ML मॉडल का उपयोग करता है जो प्रति अनुरोध 30 से अधिक संकेतों का विश्लेषण करता है — जिसमें TLS fingerprinting, HTTP/2 frame ordering और JavaScript execution patterns शामिल हैं। वे इंटरनेट ट्रैफिक का 40% स्वचालित बॉट के रूप में वर्गीकृत करते हैं।
+</FunFact>
+
+---
+
+## कार्यान्वयन चेकलिस्ट
+
+| चिंता | निर्णय |
+|---|---|
+| **एल्गोरिथम** | Token Bucket (burst-अनुकूल) या Sliding Window Counter (सटीक) |
+| **स्टोरेज** | Redis (वितरित) या स्थानीय मेमोरी (एकल सर्वर) |
+| **ग्रैन्युलैरिटी** | प्रति उपयोगकर्ता? प्रति IP? प्रति API key? प्रति endpoint? |
+| **विफलता मोड** | Open fail (अनुमति) या closed fail (अस्वीकार)? |
+| **हेडर** | `X-RateLimit-*` और `Retry-After` शामिल करें |
+| **निगरानी** | 429 दर, false positives, जोड़ी गई latency ट्रैक करें |
+| **Client SDK** | Exponential backoff के साथ retry लॉजिक प्रदान करें |
+| **बहु-स्तरीय** | Edge (CDN) + Gateway + Application परत |
+
+<ThinkAboutIt>
+एक AI कोड completion API (जैसे GitHub Copilot) के लिए rate limiter डिज़ाइन करें। उपयोगकर्ता कोड टाइप करते हैं और रीयल-टाइम में सुझाव प्राप्त करते हैं। आप टाइपिंग की burst प्रकृति को कैसे संभालेंगे? क्या आप प्रति कीस्ट्रोक, प्रति completion अनुरोध, या प्रति स्वीकृत सुझाव सीमित करेंगे? अंतर्निहित LLM के लिए token-आधारित सीमाओं के बारे में क्या?
+</ThinkAboutIt>

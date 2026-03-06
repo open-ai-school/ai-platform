@@ -1,0 +1,193 @@
+---
+title: "Strings & Pattern Matching — Hoe AI tekst leest"
+description: "Begrijp stringmanipulatie en pattern matching. Ontdek hoe NLP-tokenizers en zoekmachines tekst verwerken."
+order: 2
+difficulty: "beginner"
+duration: 15
+icon: "🔤"
+published: true
+---
+
+# Strings & Pattern Matching
+
+Elke keer dat je een zoekopdracht typt, een bericht stuurt of een vraag stelt aan een AI — worden strings verwerkt. Begrijpen hoe ze onder de motorkap werken, ontgrendelt zowel succes bij sollicitatiegesprekken als AI-intuïtie.
+
+---
+
+## Strings onder de motorkap
+
+Een string is gewoon een **array van tekens** met speciale regels.
+
+<Illustration src="/images/lessons/craft/strings-patterns.svg" alt="String as character array, palindrome two-pointer check, and sliding window technique" caption="Strings zijn arrays van tekens (linksboven). Palindromen worden gecontroleerd met twee pointers vanuit beide uiteinden (rechtsboven). Het schuifvenster vindt optimale substrings (onder)." />
+
+**Belangrijke feiten:**
+
+- **Onveranderlijk** in de meeste talen (Java, Python, Go) — elke "wijziging" maakt een nieuwe string aan
+- **Geïndexeerd** — toegang tot elk teken in O(1)
+- **Gecodeerd** — UTF-8, UTF-16, ASCII bepalen hoe tekens naar bytes worden vertaald
+
+<Callout type="info">
+In Python geeft `s = "hello"` gevolgd door `s[0] = "H"` een fout. Strings zijn **onveranderlijk**. Gebruik `s = "H" + s[1:]` of `list(s)` om te wijzigen.
+</Callout>
+
+---
+
+## Patroon 1: String omdraaien
+
+> Draai een string om op zijn plaats met behulp van twee pointers.
+
+**Visuele doorloop** — `"HELLO"`:
+
+| Stap | L ptr | R ptr | Actie | Resultaat |
+|------|-------|-------|-------|-----------|
+| 1 | H (0) | O (4) | Wissel | **O**ELL**H** |
+| 2 | E (1) | L (3) | Wissel | O**L**L**E**H |
+| 3 | L=L | — | Klaar | OLLEH |
+
+```python
+def reverse_string(s: list[str]) -> None:
+    left, right = 0, len(s) - 1
+    while left < right:
+        s[left], s[right] = s[right], s[left]
+        left += 1
+        right -= 1
+```
+
+**Tijd: O(n) | Ruimte: O(1)** — geen extra geheugen nodig.
+
+---
+
+## Patroon 2: Palindroomcontrole
+
+> Is de string hetzelfde van voor naar achter?
+
+**Twee-pointer-aanpak** — vergelijk vanuit beide uiteinden, beweeg naar binnen:
+
+1. Stel `left = 0`, `right = len - 1` in
+2. Als `s[left] != s[right]` → **geen palindroom**
+3. Verplaats beide pointers naar binnen
+4. Als ze elkaar ontmoeten → **palindroom bevestigd**
+
+```python
+def is_palindrome(s: str) -> bool:
+    left, right = 0, len(s) - 1
+    while left < right:
+        if s[left] != s[right]:
+            return False
+        left += 1
+        right -= 1
+    return True
+```
+
+<ThinkAboutIt>
+Hoe zou je "A man, a plan, a canal: Panama" aanpakken? Je moet **niet-alfanumerieke tekens overslaan** en **hoofdletters negeren**. Voeg `while left &lt; right and not s[left].isalnum(): left += 1` toe vóór elke vergelijking.
+</ThinkAboutIt>
+
+---
+
+## Patroon 3: Anagramdetectie
+
+> Zijn twee strings anagrammen? (Dezelfde tekens, andere volgorde)
+
+**Hash map-aanpak** — tel tekenfrequenties:
+
+```python
+def is_anagram(s: str, t: str) -> bool:
+    if len(s) != len(t):
+        return False
+    count = {}
+    for c in s:
+        count[c] = count.get(c, 0) + 1
+    for c in t:
+        count[c] = count.get(c, 0) - 1
+        if count[c] < 0:
+            return False
+    return True
+```
+
+| | "listen" | "silent" |
+|---|----------|----------|
+| l | 1 | 1 |
+| i | 1 | 1 |
+| s | 1 | 1 |
+| t | 1 | 1 |
+| e | 1 | 1 |
+| n | 1 | 1 |
+
+Alle tellingen nul → **anagram bevestigd**.
+
+---
+
+## Patroon 4: Schuifvenster
+
+> Vind de langste substring zonder herhalende tekens.
+
+**De techniek:** Onderhoud een "venster" van geldige tekens. Breid uit naar rechts, krimp in van links wanneer een duplicaat wordt gevonden.
+
+**Doorloop** met `"ABCABCBB"`:
+
+| Stap | Venster | Gezien | Lengte |
+|------|---------|--------|--------|
+| 1 | **A** | A | 1 |
+| 2 | **AB** | A, B | 2 |
+| 3 | **ABC** | A, B, C | 3 |
+| 4 | A is duplicaat → krimp → **BCA** | B, C, A | 3 |
+| 5 | B is duplicaat → krimp → **CAB** | C, A, B | 3 |
+
+**Antwoord: 3** (elk van "ABC", "BCA" of "CAB")
+
+```python
+def length_of_longest_substring(s: str) -> int:
+    seen = {}
+    left = max_len = 0
+    for right, char in enumerate(s):
+        if char in seen and seen[char] >= left:
+            left = seen[char] + 1
+        seen[char] = right
+        max_len = max(max_len, right - left + 1)
+    return max_len
+```
+
+<Callout type="info">
+Het schuifvensterpatroon lost **tientallen** substringproblemen op. Kernidee: als het uitbreiden van het venster een voorwaarde schendt, krimp dan vanaf links totdat de voorwaarde weer geldt.
+</Callout>
+
+---
+
+## De AI-connectie: Tokenisatie
+
+Voordat een NLP-model (GPT, BERT, LLaMA) tekst verwerkt, wordt het **getokeniseerd** — de tekst wordt opgesplitst in subwoordstukken met technieken die gebouwd zijn op bovenstaande patronen.
+
+**Hoe BPE (Byte Pair Encoding) werkt:**
+
+1. Begin met individuele tekens: `["h", "e", "l", "l", "o"]`
+2. Tel aangrenzende paren — meest voorkomend paar: `("l", "l")`
+3. Voeg samen: `["h", "e", "ll", "o"]`
+4. Herhaal totdat de gewenste vocabulairegrootte is bereikt
+
+**Dit gebruikt:**
+
+- **Frequentietelling** (hash maps) om veelvoorkomende paren te vinden
+- **Schuifvenster** om aangrenzende tekens te scannen
+- **Stringmanipulatie** om tokens samen te voegen
+
+<FunFact>
+De tokenizer van GPT-4 heeft ongeveer 100.000 tokens. Het woord "indescribable" kan worden opgesplitst in ["in", "desc", "rib", "able"] — 4 tokens. Veelgebruikte woorden zoals "the" zijn één enkel token. Daarom "denken" AI-modellen in tokens, niet in woorden!
+</FunFact>
+
+---
+
+## Complexiteitsoverzicht
+
+| Patroon | Tijd | Ruimte | Kerntechniek |
+|---------|------|--------|-------------|
+| String omdraaien | O(n) | O(1) | Twee pointers |
+| Palindroomcontrole | O(n) | O(1) | Twee pointers |
+| Anagramdetectie | O(n) | O(1)* | Hash map-telling |
+| Schuifvenster | O(n) | O(k) | Hash set + twee pointers |
+
+*O(1) omdat de tekenset vast is (26 letters)
+
+<ThinkAboutIt>
+Waarom is het schuifvenster O(n) en niet O(n²)? Omdat elk teken **maximaal één keer** aan het venster wordt toegevoegd en eruit wordt verwijderd. De linkerpointer beweegt alleen vooruit, nooit achteruit — dus het totale werk over alle stappen is lineair.
+</ThinkAboutIt>

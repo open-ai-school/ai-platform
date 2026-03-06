@@ -1,0 +1,205 @@
+---
+title: "Sorting & Searching — AI ఫలితాలను ఎలా ర్యాంక్ చేస్తుంది"
+description: "Sorting algorithms మరియు binary search ను విజువలైజ్ చేయండి. Search engines ఫలితాలను ఎలా ర్యాంక్ చేస్తాయో మరియు ML models sorted data ను ఎలా ఉపయోగిస్తాయో తెలుసుకోండి."
+order: 3
+difficulty: "beginner"
+duration: 15
+icon: "🔍"
+published: true
+---
+
+# Sorting & Searching
+
+మీరు చూసే ప్రతి search result **ఔచిత్యం ప్రకారం sorted** అయి ఉంటుంది. ప్రతి database query indexes పై **binary search** ను ఉపయోగిస్తుంది. ఈ algorithms అన్ని చోట్లా ఉన్నాయి — మరియు ఇవి interview లో తప్పనిసరిగా అడిగే అంశాలు.
+
+---
+
+## పెద్ద చిత్రం
+
+<Illustration src="/images/lessons/craft/sorting-searching.svg" alt="Merge sort divide-and-conquer tree showing split and merge phases, and binary search step-by-step elimination" caption="Merge sort (ఎడమ) పునరావృతంగా విభజిస్తుంది తర్వాత sorted భాగాలను merge చేస్తుంది. Binary search (కుడి) ప్రతి దశలో సగం డేటాను తొలగిస్తుంది." />
+
+---
+
+## Bubble Sort — సరళమైన విధానం
+
+> ప్రక్కనున్న మూలకాలు తప్పు క్రమంలో ఉంటే వాటిని పదే పదే swap చేయండి.
+
+**ప్రదర్శన** `[5, 3, 8, 1]` తో:
+
+| పాస్ | పోలికలు | ఫలితం |
+|------|---------|-------|
+| 1 | 5→3 swap, 5→8 దాటు, 8→1 swap | [3, 5, 1, **8**] |
+| 2 | 3→5 దాటు, 5→1 swap | [3, 1, **5**, 8] |
+| 3 | 3→1 swap | [**1**, 3, 5, 8] |
+
+**సమయం: O(n²) | Space: O(1)**
+
+<Callout type="info">
+Bubble sort నేర్చుకోవడానికి మాత్రమే ఉపయోగపడుతుంది. Interview లో, మెరుగైన algorithms ఎందుకు ఉన్నాయో మీకు తెలుసని చూపించడానికి దీన్ని ప్రస్తావించండి — తర్వాత వెంటనే merge sort లేదా quick sort కు మారండి.
+</Callout>
+
+---
+
+## Merge Sort — విభజించి జయించు
+
+> Array ను పునరావృతంగా రెండు భాగాలుగా విభజించండి, తర్వాత sorted భాగాలను తిరిగి merge చేయండి.
+
+**3 దశల్లో algorithm:**
+
+1. **విభజన** — array ను రెండు భాగాలుగా చీల్చండి
+2. **విజయం** — ప్రతి భాగాన్ని పునరావృతంగా sort చేయండి
+3. **Merge** — రెండు sorted భాగాలను ఒక sorted array గా కలపండి
+
+**Merge దశ** కీలకం — ప్రతి భాగం యొక్క ముందు మూలకాలను పోల్చండి:
+
+| ఎడమ | కుడి | ఎంపిక | ఇప్పటి వరకు ఫలితం |
+|------|------|-------|-------------------|
+| **3**, 27, 38 | **9**, 43, 82 | 3 | [3] |
+| 27, 38 | **9**, 43, 82 | 9 | [3, 9] |
+| **27**, 38 | 43, 82 | 27 | [3, 9, 27] |
+| 38 | 43, 82 | 38 | [3, 9, 27, 38] |
+| — | 43, 82 | 43, 82 | [3, 9, 27, 38, 43, 82] |
+
+```python
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+```
+
+**సమయం: O(n log n) | Space: O(n)**
+
+<ThinkAboutIt>
+O(n log n) ఎందుకు? Array log(n) సార్లు విభజితమవుతుంది (సగం సగం). ప్రతి స్థాయిలో, మనం O(n) merge పని చేస్తాము. మొత్తం: n పని × log(n) స్థాయిలు = O(n log n).
+</ThinkAboutIt>
+
+---
+
+## Sorting Algorithm పోలిక
+
+| Algorithm | ఉత్తమం | సగటు | అధ్వాన్నం | Space | Stable? |
+|-----------|--------|------|----------|-------|---------|
+| Bubble Sort | O(n) | O(n²) | O(n²) | O(1) | అవును |
+| Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) | అవును |
+| Quick Sort | O(n log n) | O(n log n) | O(n²) | O(log n) | కాదు |
+| Heap Sort | O(n log n) | O(n log n) | O(n log n) | O(1) | కాదు |
+
+<Callout type="info">
+**Stable** అంటే సమాన మూలకాలు తమ అసలు క్రమాన్ని నిలుపుకుంటాయి. బహుళ keys తో sort చేసేటప్పుడు ఇది ముఖ్యం — ఉదా., మొదట పేరు ప్రకారం sort చేయండి, తర్వాత వయసు ప్రకారం. ఒక stable sort సమాన వయసు groups లో పేరు క్రమాన్ని నిలుపుతుంది.
+</Callout>
+
+---
+
+## Binary Search — సమస్యను సగం చేయడం
+
+> ప్రతి దశలో సగం మూలకాలను తొలగిస్తూ **sorted** array లో target ను కనుగొనండి.
+
+**ముందస్తు షరతు:** Array sorted అయి ఉండాలి.
+
+**ప్రదర్శన** — `[2, 5, 11, 15, 23, 37, 41, 56]` లో `23` కనుగొనండి:
+
+| దశ | పరిధి | మధ్య | పోలిక | చర్య |
+|-----|-------|------|-------|------|
+| 1 | [2..56] | 15 | 23 > 15 | కుడి భాగంలో వెతకండి |
+| 2 | [23..56] | 37 | 23 &lt; 37 | ఎడమ భాగంలో వెతకండి |
+| 3 | [23] | 23 | 23 = 23 | **index 4 వద్ద దొరికింది!** |
+
+**3 దశలు** 8 (linear scan) బదులు. 10 లక్షల మూలకాలకు: **20 దశలు** 10,00,000 బదులు.
+
+```python
+def binary_search(nums, target):
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        mid = left + (right - left) // 2  # avoids overflow
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1  # not found
+```
+
+**సమయం: O(log n) | Space: O(1)**
+
+<FunFact>
+Binary search ను సరిగ్గా implement చేయడం భ్రమకరంగా కఠినం. Jon Bentley చేసిన ఒక అధ్యయనంలో **90% వృత్తిపరమైన programmers** bug-free binary search రాయలేకపోయారని తేలింది. అత్యంత సాధారణ bug? `(left + right) / 2` లో integer overflow — అందుకే మనం `left + (right - left) // 2` ఉపయోగిస్తాము.
+</FunFact>
+
+---
+
+## Binary Search రకాలు
+
+Binary search కేవలం "ఖచ్చితమైన విలువ కనుగొను" కోసం మాత్రమే కాదు. ఈ రకాలు నిరంతరం కనిపిస్తాయి:
+
+| రకం | వివరణ | ముఖ్య మార్పు |
+|------|--------|------------|
+| **Lower bound** | మూలకాన్ని చేర్చగలిగే మొదటి స్థానం | `left` ఎప్పుడు `nums[mid] >= target` → `right = mid` |
+| **Upper bound** | చివరి సంఘటన తర్వాత స్థానం | `left` ఎప్పుడు `nums[mid] > target` → `right = mid` |
+| **Rotated array లో వెతకడం** | తెలియని pivot వద్ద rotate అయిన sorted array | ముందుగా ఏ భాగం sorted అయిందో తనిఖీ చేయండి |
+| **Answer space లో వెతకడం** | ఒక షరతును సంతృప్తి చేసే min/max కనుగొనండి | Array పై కాదు, సమాధానంపై binary search |
+
+<ThinkAboutIt>
+"Answer space పై binary search" ఒక శక్తివంతమైన టెక్నిక్. ఉదాహరణ: "D రోజుల్లో packages పంపడానికి కనిష్ట సామర్థ్యం ఎంత?" కనిష్ట మరియు గరిష్ట సాధ్యమైన సామర్థ్యం మధ్య binary search చేయండి, ప్రతి అభ్యర్థి పని చేస్తుందో లేదో తనిఖీ చేస్తూ. ఇది ఒక optimization సమస్యను decision సమస్యగా మారుస్తుంది.
+</ThinkAboutIt>
+
+---
+
+## AI సంబంధం: Ranking మరియు Retrieval
+
+AI వ్యవస్థలు ఫలితాలను ఎలా అందజేస్తాయో దానికి sorting మరియు searching ప్రాథమికమైనవి:
+
+**Search engines (Google, Bing):**
+
+- **Inverted indexes** — ప్రతి keyword కోసం document IDs యొక్క sorted జాబితాలు
+- sub-millisecond lookups కోసం ఈ indexes పై **binary search**
+- బహుళ keywords నుండి ఫలితాలను కలపడానికి **merge operations**
+
+**Recommendation systems:**
+
+- అభ్యర్థులను predicted score ప్రకారం sort చేయండి (relevance ranking)
+- **Top-K selection** — పూర్తిగా sort చేయకుండా K ఉత్తమ items కనుగొనండి (partial sort)
+- **Approximate Nearest Neighbour** search binary search లాంటి tree-based నిర్మాణాలను ఉపయోగిస్తుంది
+
+**Database query optimisation:**
+
+- B-trees (binary search trees యొక్క సాధారణీకరణ) ప్రతి SQL index కు శక్తినిస్తాయి
+- Query planners sequential scan (O(n)) మరియు index scan (O(log n)) మధ్య ఎంచుకుంటారు
+
+<FunFact>
+Google రోజుకు 8.5 బిలియన్ కంటే ఎక్కువ searches ప్రాసెస్ చేస్తుంది. ప్రతి query వందల బిలియన్ల web pages యొక్క index ను వెతుకుతుంది. Sorted indexes మరియు binary search లేకుండా, ఒక్క query కు milliseconds బదులు నిమిషాలు పడుతాయి.
+</FunFact>
+
+---
+
+## Complexity చీట్ షీట్
+
+| ఆపరేషన్ | Unsorted Array | Sorted Array |
+|----------|---------------|-------------|
+| వెతకడం | O(n) | O(log n) |
+| Insert | O(1) | O(n)* |
+| Min/max కనుగొనడం | O(n) | O(1) |
+| k-వ మూలకం కనుగొనడం | O(n) | O(1) |
+
+*sorted order నిలుపుకోవడానికి మూలకాలను shift చేయాలి
+
+<Callout type="info">
+సమతుల్యం స్పష్టం: **sorting ముందుగా O(n log n) ఖర్చవుతుంది**, కానీ ఎప్పటికీ O(log n) searches ను అనుమతిస్తుంది. మీరు O(log n) కంటే ఎక్కువ సార్లు search చేస్తే, sorting తన ఖర్చును తిరిగి పొందుతుంది.
+</Callout>

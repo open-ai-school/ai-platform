@@ -1,0 +1,282 @@
+---
+title: "Mock Interview complet — Simulation d'entretien ingénieur senior de 60 minutes"
+description: "Vivez un entretien réaliste d'ingénieur senior du début à la fin. Pratiquez les rounds de coding, conception système et comportemental avec un retour structuré."
+order: 2
+difficulty: "advanced"
+duration: 60
+icon: "🎯"
+published: true
+---
+
+# Mock Interview complet
+
+Cette leçon simule un **entretien d'ingénieur senior de 60 minutes** — le type que vous rencontreriez dans une grande entreprise tech. Travaillez chaque section comme si vous étiez dans la salle.
+
+---
+
+## Structure de l'entretien
+
+| Temps | Round | Focus |
+|-------|-------|-------|
+| 0-5 min | **Introduction** | Votre parcours, rôle actuel, pourquoi cette entreprise |
+| 5-25 min | **Round Coding** | Problème DSA avec questions de suivi |
+| 25-50 min | **System Design** | Concevoir un système réel de bout en bout |
+| 50-60 min | **Comportemental** | Leadership, conflits, histoires d'échec |
+
+---
+
+## Round 1 : Introduction (5 minutes)
+
+L'intervieweur demande : *« Parlez-moi de vous et de ce qui vous amène ici. »*
+
+### Ce qu'ils évaluent
+
+- Pouvez-vous communiquer de manière concise ? (2 minutes max)
+- Comprenez-vous le poste ?
+- Êtes-vous véritablement intéressé ?
+
+### Modèle
+
+```
+"I'm [Name], a [role] at [company] where I [one sentence about what you do].
+Over the past [N] years, I've focused on [2-3 key areas].
+Most recently, I [your biggest recent achievement — quantified].
+I'm excited about [this company] because [specific reason tied to their work]."
+```
+
+<Callout type="warning">
+Erreur courante : Réciter l'intégralité de votre CV. L'intervieweur a votre CV — il veut l'histoire qui se cache derrière. Concentrez-vous sur vos 2-3 dernières années et votre meilleure réalisation.
+</Callout>
+
+---
+
+## Round 2 : Coding (20 minutes)
+
+### Le problème
+
+> **LRU Cache avec TTL**
+>
+> Concevez une structure de données qui supporte les opérations `get(key)` et `put(key, value, ttl)`.
+> - `get(key)` : Retourne la valeur si la clé existe et n'a pas expiré. Sinon retourne -1.
+> - `put(key, value, ttl)` : Définit ou met à jour la paire clé-valeur avec un time-to-live en secondes.
+> - Lorsque le cache dépasse la capacité, évincer l'entrée non expirée la moins récemment utilisée.
+
+### Étape 1 : Clarifier (2 minutes)
+
+Avant de coder, demandez :
+
+- « Quelle est la capacité attendue ? » → *Disons 10 000 entrées*
+- « Est-ce mono-thread ? » → *Oui, pour l'instant*
+- « Quelle précision temporelle — secondes ou millisecondes ? » → *Les secondes suffisent*
+- « Les entrées expirées doivent-elles être nettoyées paresseusement ou activement ? » → *Le nettoyage paresseux est acceptable*
+
+<ThinkAboutIt>
+Les intervieweurs VEULENT que vous posiez des questions. Cela montre que vous réfléchissez aux exigences avant de vous lancer dans le code. Visez 2-3 questions de clarification.
+</ThinkAboutIt>
+
+### Étape 2 : Approche (3 minutes)
+
+Expliquez votre approche avant d'écrire du code :
+
+```
+"I'll combine a hash map for O(1) lookup with a doubly-linked list 
+for O(1) LRU eviction — the classic LRU pattern from AI Sketch.
+
+The twist is TTL: each node stores an expiry timestamp. On get(), 
+I'll check if the entry has expired. On put(), I'll set 
+expiry = now + ttl.
+
+For eviction, I'll skip expired entries when walking from the 
+tail (least recently used)."
+```
+
+### Étape 3 : Coder (10 minutes)
+
+```python
+class Node:
+    def __init__(self, key, value, expires_at):
+        self.key = key
+        self.value = value
+        self.expires_at = expires_at
+        self.prev = None
+        self.next = None
+
+class LRUCacheWithTTL:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.cache = {}  # key → Node
+        self.head = Node(0, 0, 0)  # dummy head (most recent)
+        self.tail = Node(0, 0, 0)  # dummy tail (least recent)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def _now(self):
+        import time
+        return int(time.time())
+
+    def _remove(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+    def _add_to_front(self, node):
+        node.next = self.head.next
+        node.prev = self.head
+        self.head.next.prev = node
+        self.head.next = node
+
+    def _is_expired(self, node):
+        return self._now() > node.expires_at
+
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+        node = self.cache[key]
+        if self._is_expired(node):
+            self._remove(node)
+            del self.cache[key]
+            return -1
+        # Move to front (most recently used)
+        self._remove(node)
+        self._add_to_front(node)
+        return node.value
+
+    def put(self, key, value, ttl):
+        if key in self.cache:
+            self._remove(self.cache[key])
+            del self.cache[key]
+        node = Node(key, value, self._now() + ttl)
+        self.cache[key] = node
+        self._add_to_front(node)
+        # Evict if over capacity
+        while len(self.cache) > self.capacity:
+            lru = self.tail.prev
+            self._remove(lru)
+            del self.cache[lru.key]
+```
+
+### Étape 4 : Tester (3 minutes)
+
+Parcourez un cas de test oralement :
+
+```
+cache = LRUCacheWithTTL(2)
+cache.put("a", 1, ttl=10)    # cache: [a]
+cache.put("b", 2, ttl=5)     # cache: [b, a]
+cache.get("a")                # returns 1, cache: [a, b]
+cache.put("c", 3, ttl=10)    # evicts b (LRU), cache: [c, a]
+# After 6 seconds...
+cache.get("b")                # returns -1 (evicted)
+```
+
+### Étape 5 : Questions de suivi
+
+L'intervieweur poussera plus loin :
+
+1. *« Comment rendriez-vous cela thread-safe ? »*
+   → Verrou lecture-écriture : plusieurs lecteurs, un écrivain exclusif. Ou utiliser `ConcurrentHashMap` + liste chaînée sans verrou.
+
+2. *« Comment ajouteriez-vous un nettoyage actif des expirations ? »*
+   → Thread en arrière-plan avec un min-heap trié par `expires_at`. Retirer les entrées expirées périodiquement.
+
+3. *« Quelle est la complexité temporelle ? »*
+   → get : O(1), put : O(1) amorti. Espace : O(capacity).
+
+---
+
+## Round 3 : System Design (25 minutes)
+
+### Le problème
+
+> **Concevoir un éditeur de documents collaboratif en temps réel** (comme Google Docs).
+> Supporter : édition simultanée, suivi de curseur, historique des versions, mode hors ligne.
+
+### Framework : Utiliser l'approche AI Craft
+
+**Étape 1 — Exigences (3 min) :**
+- Fonctionnel : Synchronisation en temps réel, résolution de conflits, historique des versions, partage
+- Non-fonctionnel : latence de synchronisation inférieure à 100 ms, 100 000 documents simultanés, 50 utilisateurs/document
+
+**Étape 2 — Conception de haut niveau (5 min) :**
+```
+Client (Browser) ←→ WebSocket Gateway ←→ Collaboration Service
+                                               │
+                                     ┌─────────┼─────────┐
+                                     │         │         │
+                                  CRDT      Version    Auth
+                                  Engine    Store      Service
+                                     │         │
+                                  Document  Snapshot
+                                  Store     Store
+```
+
+**Étape 3 — Approfondissement : Résolution de conflits (10 min) :**
+
+Deux approches :
+- **OT (Operational Transformation) :** Transformer les opérations par rapport aux opérations concurrentes. Utilisé par Google Docs. Complexe à implémenter correctement.
+- **CRDT (Conflict-free Replicated Data Types) :** Garantie mathématique de convergence. Pas besoin de serveur central. Utilisé par Figma, Notion.
+
+Recommandation : CRDT pour les nouveaux systèmes — garanties de correction plus simples.
+
+**Étape 4 — Compromis (5 min) :**
+- OT vs CRDT : OT est éprouvé mais complexe ; CRDT est plus simple mais utilise plus de mémoire
+- WebSocket vs SSE : WebSocket pour bidirectionnel ; SSE pour lecture intensive
+- Fréquence des snapshots : Plus de snapshots = chargement plus rapide mais plus de stockage
+
+<Callout type="info">
+Au niveau senior, les intervieweurs se soucient PLUS de votre raisonnement sur les compromis que de la « bonne » réponse. Déclarez explicitement : « Je choisis X plutôt que Y parce que... »
+</Callout>
+
+---
+
+## Round 4 : Comportemental (10 minutes)
+
+### Question 1 : « Racontez-moi une fois où vous étiez en désaccord avec votre équipe. »
+
+Utilisez le **framework STAR** de AI Polish :
+
+| Partie | Votre réponse |
+|--------|--------------|
+| **Situation** | « Nous décidions entre microservices et un monolithe pour un nouveau produit... » |
+| **Tâche** | « Je pensais qu'il fallait commencer par un monolithe, mais l'équipe voulait des microservices... » |
+| **Action** | « J'ai préparé un document comparatif avec des estimations de coûts et proposé une preuve de concept... » |
+| **Résultat** | « Nous avons opté pour le monolithe d'abord, lancé 6 semaines plus tôt, et migré vers les microservices en année 2... » |
+
+### Question 2 : « Racontez-moi un échec. »
+
+<ThinkAboutIt>
+L'intervieweur teste la conscience de soi et l'état d'esprit de croissance. Choisissez un VRAI échec (pas un humble-brag). Structure : Ce qui s'est passé → Pourquoi c'est arrivé → Ce que vous avez appris → Ce que vous avez changé.
+</ThinkAboutIt>
+
+### Question 3 : « Pourquoi devrions-nous vous embaucher ? »
+
+Ne listez pas vos compétences. Reliez votre combinaison unique à leurs besoins spécifiques :
+
+```
+"You're scaling [specific system]. I've done exactly that — 
+I took [system] from [X] to [Y] scale, solving [specific challenge] 
+along the way. I also bring [unique skill] that I notice your 
+team is building toward."
+```
+
+---
+
+## Grille d'auto-évaluation
+
+Après avoir terminé le mock, évaluez-vous :
+
+| Critère | 🔴 À améliorer | 🟡 Bien | 🟢 Excellent |
+|---------|----------------|---------|-------------|
+| **Communication** | Silencieux en codant | Narration occasionnelle | Narration continue et claire |
+| **Clarification** | Foncé tête baissée | Posé 1-2 questions | Posé 3+ questions ciblées |
+| **Coding** | Bugs, incomplet | Fonctionnel avec problèmes mineurs | Propre, testé, optimisé |
+| **System Design** | Boîtes vagues | Architecture solide | Analyse approfondie des compromis |
+| **Comportemental** | Réponses génériques | Structure STAR | Histoires convaincantes et spécifiques |
+
+---
+
+## Que faire ensuite
+
+1. **Enregistrez-vous** pendant ce mock (utilisez votre téléphone) — vous repérerez des habitudes dont vous n'aviez pas conscience
+2. **Chronométrez-vous strictement** — si vous dépassez en pratique, vous dépasserez lors du vrai entretien
+3. **Pratiquez avec un ami** — demandez-lui de poser des questions de suivi inattendues
+4. **Répétez chaque semaine** — les compétences d'entretien sont périssables ; la pratique régulière bat le bachotage

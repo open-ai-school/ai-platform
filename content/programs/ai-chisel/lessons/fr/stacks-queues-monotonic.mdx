@@ -1,0 +1,184 @@
+---
+title: "Piles & Files d'attente — Comment l'IA traite les séquences"
+description: "Maîtrisez les patterns de piles et files d'attente, y compris les piles monotones. Découvrez comment les analyseurs syntaxiques, les systèmes d'annulation et les modèles de séquences utilisent ces structures."
+order: 3
+difficulty: "intermediate"
+duration: 20
+icon: "📚"
+published: true
+---
+
+# Piles & Files d'attente — Comment l'IA traite les séquences
+
+Les piles et les files d'attente sont les structures de données les plus simples avec l'impact le plus profond. Chaque appel récursif, chaque BFS, chaque opération d'annulation — tous reposent sur ces deux structures.
+
+---
+
+## Stack vs Queue : comparaison visuelle
+
+<Illustration src="/images/lessons/craft/stacks-queues.svg" alt="Comparaison côte à côte d'une pile (LIFO, verticale) et d'une file d'attente (FIFO, horizontale) avec des flèches push/pop et enqueue/dequeue" caption="Stack : dernier entré, premier sorti (comme une pile d'assiettes). Queue : premier entré, premier sorti (comme une file dans un magasin)." />
+
+### Stack — LIFO (Last In, First Out)
+
+```python
+stack = []
+stack.append(1)    # push
+stack.append(2)
+stack.append(3)
+top = stack[-1]    # peek -> 3
+val = stack.pop()  # pop -> 3
+```
+
+### Queue — FIFO (First In, First Out)
+
+```python
+from collections import deque
+
+queue = deque()
+queue.append(1)      # enqueue
+queue.append(2)
+queue.append(3)
+front = queue[0]     # peek -> 1
+val = queue.popleft() # dequeue -> 1
+```
+
+<Callout type="info">
+**N'utilisez jamais `list.pop(0)` pour les files d'attente en Python** — c'est O(n) car tous les éléments sont décalés. Utilisez `collections.deque` qui offre un popleft en O(1).
+</Callout>
+
+---
+
+## Patterns classiques de Stack
+
+### Parenthèses valides
+
+```python
+def is_valid(s):
+    stack = []
+    pairs = {')': '(', ']': '[', '}': '{'}
+
+    for char in s:
+        if char in pairs:
+            if not stack or stack[-1] != pairs[char]:
+                return False
+            stack.pop()
+        else:
+            stack.append(char)
+
+    return len(stack) == 0
+```
+
+### Problèmes clés de stack
+
+| Problème | Pattern | Idée clé |
+|----------|---------|----------|
+| Parenthèses valides | Correspondance ouvert/fermé | Le stack stocke les ouvertures |
+| Min stack | Stack auxiliaire | Suivre le minimum à chaque niveau |
+| Évaluer RPN | Stack d'opérandes | Dépiler deux, calculer, empiler le résultat |
+| Températures quotidiennes | Stack monotone | Prochain jour plus chaud = prochain plus grand |
+| Plus grand rectangle dans un histogramme | Stack monotone | Maintenir des hauteurs croissantes |
+
+---
+
+## Le pattern de Stack monotone
+
+Le pattern de stack le plus puissant en entretien. Maintenir un stack où les éléments sont toujours en **ordre croissant ou décroissant**.
+
+<Illustration src="/images/lessons/craft/monotonic-stack.svg" alt="Guide étape par étape pour construire un stack monotone décroissant pour le problème du prochain élément plus grand" caption="Stack monotone décroissant : quand un nouvel élément est plus grand que le sommet, dépiler et l'enregistrer comme le prochain élément plus grand. Chaque élément est empilé et dépilé au plus une fois = O(n)." />
+
+### Prochain élément plus grand (Next Greater Element)
+
+```python
+def next_greater_element(arr):
+    n = len(arr)
+    result = [-1] * n
+    stack = []  # stores indices
+
+    for i in range(n):
+        # Pop all elements smaller than current
+        while stack and arr[stack[-1]] < arr[i]:
+            idx = stack.pop()
+            result[idx] = arr[i]   # arr[i] is the next greater
+        stack.append(i)
+
+    return result
+
+# Example: [2, 1, 5, 3, 4] -> [5, 5, -1, 4, -1]
+```
+
+<ThinkAboutIt>
+Pourquoi est-ce O(n) et non O(n^2) ? Chaque élément entre dans le stack exactement une fois et en sort au plus une fois. Cela fait au maximum 2n opérations, quelle que soit la boucle while à l'intérieur de la boucle for.
+</ThinkAboutIt>
+
+### Variantes de stack monotone
+
+| Variante | Ordre du stack | Trouve |
+|----------|---------------|--------|
+| Stack décroissant | Le sommet est le plus petit | Prochain élément **plus grand** |
+| Stack croissant | Le sommet est le plus grand | Prochain élément **plus petit** |
+| De droite à gauche | Traitement inversé | Élément **précédent** plus grand/petit |
+
+---
+
+## Patterns de Queue
+
+### BFS avec Queue
+
+Déjà couvert dans la leçon Arbres & Graphes — BFS est l'algorithme canonique de file d'attente.
+
+### Maximum de fenêtre glissante (Deque monotone)
+
+La variante deque des stacks monotones — maintenir un deque décroissant d'indices *utiles* :
+
+```python
+from collections import deque
+
+def max_sliding_window(nums, k):
+    dq = deque()  # stores indices, values are decreasing
+    result = []
+
+    for i in range(len(nums)):
+        # Remove elements outside window
+        while dq and dq[0] < i - k + 1:
+            dq.popleft()
+
+        # Maintain decreasing order
+        while dq and nums[dq[-1]] <= nums[i]:
+            dq.pop()
+
+        dq.append(i)
+
+        if i >= k - 1:
+            result.append(nums[dq[0]])  # front is always the max
+
+    return result
+```
+
+<Callout type="info">
+**Le deque monotone** combine les patterns de fenêtre glissante et de stack monotone. C'est le pattern de file d'attente le plus avancé que vous verrez en entretien — et il s'exécute en O(n).
+</Callout>
+
+---
+
+## Connexion IA : Stacks & Queues dans les systèmes d'IA
+
+<FunFact>
+Ces structures simples alimentent des systèmes d'IA complexes :
+
+- **Pile d'appels en récursion :** Chaque réseau de neurones récursif (Tree-LSTM, analyse récursive) repose sur la pile d'appels pour traiter les structures imbriquées.
+- **Piles d'analyseurs syntaxiques :** Les compilateurs et analyseurs NLP utilisent des piles pour l'analyse shift-reduce — empilant des tokens et les réduisant en règles de grammaire.
+- **Annuler/Rétablir dans les éditeurs :** Les éditeurs de code alimentés par l'IA (Copilot, Cursor) utilisent des piles doubles — une pour annuler, une pour rétablir — pour suivre l'historique des modifications.
+- **Files de tâches dans les pipelines ML :** Les ordonnanceurs de tâches d'entraînement (Kubernetes, Celery) utilisent des files de priorité pour gérer l'allocation GPU et l'ordre de traitement par lots.
+- **L'attention comme traitement en file :** Dans les transformers autorégressifs, le KV-cache traite les tokens dans l'ordre FIFO, maintenant une fenêtre de contexte glissante.
+</FunFact>
+
+---
+
+## Référence rapide
+
+| Structure de données | Mode d'accès | Opérations | Temps | Cas d'utilisation |
+|---------------------|-------------|------------|-------|-------------------|
+| Stack | LIFO | push, pop, peek | O(1) | Parenthèses, DFS, annulation |
+| Queue | FIFO | enqueue, dequeue, peek | O(1) | BFS, ordonnancement, streaming |
+| Stack monotone | Décroissant/Croissant | push, pop (conditionnel) | O(n) amorti | Prochain élément plus grand/petit |
+| Deque monotone | Fenêtre décroissante | push, pop des deux côtés | O(n) amorti | Maximum de fenêtre glissante |

@@ -1,0 +1,282 @@
+---
+title: "Volledig Mock Interview — 60 minuten Senior Engineer Simulatie"
+description: "Ervaar een realistisch senior engineer interview van begin tot eind. Oefen coding, systeemontwerp en gedragsrondes met gestructureerde feedback."
+order: 2
+difficulty: "advanced"
+duration: 60
+icon: "🎯"
+published: true
+---
+
+# Volledig Mock Interview
+
+Deze les simuleert een **60 minuten durend senior engineer interview** — het type dat je zou tegenkomen bij een top techbedrijf. Werk elke sectie door alsof je in de kamer zit.
+
+---
+
+## Interviewstructuur
+
+| Tijd | Ronde | Focus |
+|------|-------|-------|
+| 0-5 min | **Introductie** | Je achtergrond, huidige rol, waarom dit bedrijf |
+| 5-25 min | **Codingronde** | DSA-probleem met vervolgvragen |
+| 25-50 min | **System Design** | Ontwerp een echt systeem end-to-end |
+| 50-60 min | **Gedrag** | Leiderschap, conflicten, verhalen over mislukkingen |
+
+---
+
+## Ronde 1: Introductie (5 minuten)
+
+De interviewer vraagt: *"Vertel me over jezelf en wat je hier brengt."*
+
+### Wat ze evalueren
+
+- Kun je beknopt communiceren? (maximaal 2 minuten)
+- Begrijp je de rol?
+- Ben je oprecht geïnteresseerd?
+
+### Sjabloon
+
+```
+"I'm [Name], a [role] at [company] where I [one sentence about what you do].
+Over the past [N] years, I've focused on [2-3 key areas].
+Most recently, I [your biggest recent achievement — quantified].
+I'm excited about [this company] because [specific reason tied to their work]."
+```
+
+<Callout type="warning">
+Veelgemaakte fout: Je hele CV opdreunen. De interviewer heeft je CV — ze willen het verhaal erachter. Focus op je laatste 2-3 jaar en je sterkste prestatie.
+</Callout>
+
+---
+
+## Ronde 2: Coding (20 minuten)
+
+### Het probleem
+
+> **LRU Cache met TTL**
+>
+> Ontwerp een datastructuur die `get(key)` en `put(key, value, ttl)` operaties ondersteunt.
+> - `get(key)`: Geef de waarde terug als de sleutel bestaat en niet is verlopen. Anders geef -1 terug.
+> - `put(key, value, ttl)`: Stel het sleutel-waardepaar in of werk het bij met een time-to-live in seconden.
+> - Wanneer de cache de capaciteit overschrijdt, verwijder de minst recent gebruikte niet-verlopen entry.
+
+### Stap 1: Verduidelijken (2 minuten)
+
+Voordat je gaat coderen, vraag:
+
+- "Wat is de verwachte capaciteit?" → *Zeg 10.000 entries*
+- "Is dit single-threaded?" → *Ja, voorlopig*
+- "Welke tijdprecisie — seconden of milliseconden?" → *Seconden is prima*
+- "Moeten verlopen entries lui of gretig worden opgeruimd?" → *Lui is acceptabel*
+
+<ThinkAboutIt>
+Interviewers WILLEN dat je vragen stelt. Het toont dat je nadenkt over vereisten voordat je in de code springt. Mik op 2-3 verduidelijkingsvragen.
+</ThinkAboutIt>
+
+### Stap 2: Aanpak (3 minuten)
+
+Bespreek je aanpak voordat je code schrijft:
+
+```
+"I'll combine a hash map for O(1) lookup with a doubly-linked list 
+for O(1) LRU eviction — the classic LRU pattern from AI Sketch.
+
+The twist is TTL: each node stores an expiry timestamp. On get(), 
+I'll check if the entry has expired. On put(), I'll set 
+expiry = now + ttl.
+
+For eviction, I'll skip expired entries when walking from the 
+tail (least recently used)."
+```
+
+### Stap 3: Coderen (10 minuten)
+
+```python
+class Node:
+    def __init__(self, key, value, expires_at):
+        self.key = key
+        self.value = value
+        self.expires_at = expires_at
+        self.prev = None
+        self.next = None
+
+class LRUCacheWithTTL:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.cache = {}  # key → Node
+        self.head = Node(0, 0, 0)  # dummy head (most recent)
+        self.tail = Node(0, 0, 0)  # dummy tail (least recent)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def _now(self):
+        import time
+        return int(time.time())
+
+    def _remove(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+    def _add_to_front(self, node):
+        node.next = self.head.next
+        node.prev = self.head
+        self.head.next.prev = node
+        self.head.next = node
+
+    def _is_expired(self, node):
+        return self._now() > node.expires_at
+
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+        node = self.cache[key]
+        if self._is_expired(node):
+            self._remove(node)
+            del self.cache[key]
+            return -1
+        # Move to front (most recently used)
+        self._remove(node)
+        self._add_to_front(node)
+        return node.value
+
+    def put(self, key, value, ttl):
+        if key in self.cache:
+            self._remove(self.cache[key])
+            del self.cache[key]
+        node = Node(key, value, self._now() + ttl)
+        self.cache[key] = node
+        self._add_to_front(node)
+        # Evict if over capacity
+        while len(self.cache) > self.capacity:
+            lru = self.tail.prev
+            self._remove(lru)
+            del self.cache[lru.key]
+```
+
+### Stap 4: Testen (3 minuten)
+
+Loop mondeling door een testcase:
+
+```
+cache = LRUCacheWithTTL(2)
+cache.put("a", 1, ttl=10)    # cache: [a]
+cache.put("b", 2, ttl=5)     # cache: [b, a]
+cache.get("a")                # returns 1, cache: [a, b]
+cache.put("c", 3, ttl=10)    # evicts b (LRU), cache: [c, a]
+# After 6 seconds...
+cache.get("b")                # returns -1 (evicted)
+```
+
+### Stap 5: Vervolgvragen
+
+De interviewer gaat verder:
+
+1. *"Hoe zou je dit thread-safe maken?"*
+   → Read-write lock: meerdere lezers, exclusieve schrijver. Of gebruik `ConcurrentHashMap` + lock-free gelinkte lijst.
+
+2. *"Hoe zou je gretig verlopen entries opruimen?"*
+   → Achtergrondthread met een min-heap gesorteerd op `expires_at`. Verwijder verlopen entries periodiek.
+
+3. *"Wat is de tijdscomplexiteit?"*
+   → get: O(1), put: O(1) geamortiseerd. Ruimte: O(capacity).
+
+---
+
+## Ronde 3: System Design (25 minuten)
+
+### Het probleem
+
+> **Ontwerp een real-time collaboratieve documenteditor** (zoals Google Docs).
+> Ondersteuning: gelijktijdige bewerking, cursortracking, versiegeschiedenis, offline modus.
+
+### Framework: Gebruik de AI Craft-aanpak
+
+**Stap 1 — Vereisten (3 min):**
+- Functioneel: Real-time synchronisatie, conflictresolutie, versiegeschiedenis, delen
+- Niet-functioneel: synchronisatielatentie onder 100 ms, 100.000 gelijktijdige documenten, 50 gebruikers/document
+
+**Stap 2 — Ontwerp op hoog niveau (5 min):**
+```
+Client (Browser) ←→ WebSocket Gateway ←→ Collaboration Service
+                                               │
+                                     ┌─────────┼─────────┐
+                                     │         │         │
+                                  CRDT      Version    Auth
+                                  Engine    Store      Service
+                                     │         │
+                                  Document  Snapshot
+                                  Store     Store
+```
+
+**Stap 3 — Verdieping: Conflictresolutie (10 min):**
+
+Twee benaderingen:
+- **OT (Operational Transformation):** Transformeer operaties tegen gelijktijdige operaties. Gebruikt door Google Docs. Complex om correct te implementeren.
+- **CRDT (Conflict-free Replicated Data Types):** Wiskundige garantie van convergentie. Geen centrale server nodig. Gebruikt door Figma, Notion.
+
+Aanbeveling: CRDT voor nieuwe systemen — eenvoudigere correctheidsgaranties.
+
+**Stap 4 — Afwegingen (5 min):**
+- OT vs CRDT: OT is beproefd maar complex; CRDT is eenvoudiger maar gebruikt meer geheugen
+- WebSocket vs SSE: WebSocket voor bidirectioneel; SSE voor leesintensief
+- Snapshotfrequentie: Meer snapshots = sneller laden maar meer opslag
+
+<Callout type="info">
+Op seniorniveau geven interviewers MEER om je redenering over afwegingen dan het "juiste" antwoord. Verklaar expliciet: "Ik kies X boven Y omdat..."
+</Callout>
+
+---
+
+## Ronde 4: Gedrag (10 minuten)
+
+### Vraag 1: "Vertel me over een keer dat je het oneens was met je team."
+
+Gebruik het **STAR-framework** van AI Polish:
+
+| Deel | Jouw antwoord |
+|------|--------------|
+| **Situatie** | "We beslisten tussen microservices en een monoliet voor een nieuw product..." |
+| **Taak** | "Ik vond dat we monoliet-eerst moesten beginnen, maar het team wilde microservices..." |
+| **Actie** | "Ik bereidde een vergelijkingsdocument voor met kostenramingen en stelde een proof of concept voor..." |
+| **Resultaat** | "We kozen monoliet-eerst, lanceerden 6 weken eerder, en migreerden naar microservices in jaar 2..." |
+
+### Vraag 2: "Vertel me over een mislukking."
+
+<ThinkAboutIt>
+De interviewer test zelfbewustzijn en groeimindset. Kies een ECHTE mislukking (geen bescheiden opscheppen). Structuur: Wat er gebeurde → Waarom het gebeurde → Wat je leerde → Wat je veranderde.
+</ThinkAboutIt>
+
+### Vraag 3: "Waarom zouden we jou moeten aannemen?"
+
+Som je vaardigheden niet op. Verbind je unieke combinatie met hun specifieke behoeften:
+
+```
+"You're scaling [specific system]. I've done exactly that — 
+I took [system] from [X] to [Y] scale, solving [specific challenge] 
+along the way. I also bring [unique skill] that I notice your 
+team is building toward."
+```
+
+---
+
+## Zelfevaluatierubric
+
+Na het voltooien van het mock interview, beoordeel jezelf:
+
+| Criterium | 🔴 Verbetering nodig | 🟡 Goed | 🟢 Uitstekend |
+|-----------|---------------------|---------|--------------|
+| **Communicatie** | Stil tijdens het coderen | Af en toe vertellen | Continu duidelijk vertellen |
+| **Verduidelijking** | Direct begonnen | 1-2 vragen gesteld | 3+ gerichte vragen gesteld |
+| **Coding** | Bugs, onvolledig | Werkend met kleine problemen | Schoon, getest, geoptimaliseerd |
+| **System Design** | Vage vakjes | Solide architectuur | Diepgaande afwegingsanalyse |
+| **Gedrag** | Generieke antwoorden | STAR-structuur | Overtuigende, specifieke verhalen |
+
+---
+
+## Wat nu te doen
+
+1. **Neem jezelf op** tijdens dit mock interview (gebruik je telefoon) — je ontdekt gewoontes waarvan je niet wist dat je ze had
+2. **Houd je strikt aan de tijd** — als je uitloopt tijdens oefening, loop je ook uit tijdens het echte interview
+3. **Oefen met een vriend** — laat hen vervolgvragen stellen die je niet verwacht
+4. **Herhaal wekelijks** — interviewvaardigheden zijn bederfelijk; regelmatige oefening wint van blokken

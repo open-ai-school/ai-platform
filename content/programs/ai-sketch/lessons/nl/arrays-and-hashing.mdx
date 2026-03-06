@@ -1,0 +1,145 @@
+---
+title: "Arrays & Hashing — De bouwstenen van AI"
+description: "Beheers arrays en hash maps via visuele patronen. Ontdek hoe aanbevelingssystemen en zoekindexen deze fundamentele structuren gebruiken."
+order: 1
+difficulty: "beginner"
+duration: 15
+icon: "📊"
+published: true
+---
+
+# Arrays & Hashing
+
+Elk AI-systeem — van aanbevelingssystemen tot zoekindexen — is gebouwd op twee basisprimitieven: **arrays** en **hash maps**. Beheers deze en je beheerst de basis.
+
+---
+
+## Hoe arrays werken
+
+Een array slaat elementen op in **aaneengesloten geheugen** — elke positie is één stap van de volgende.
+
+<Illustration src="/images/lessons/craft/arrays-hashing.svg" alt="Array memory layout showing contiguous cells with index labels and hash map with key-to-bucket mapping" caption="Arrays slaan data op in aaneengesloten geheugen (links). Hash maps gebruiken een hashfunctie om sleutels aan bucketposities te koppelen (rechts)." />
+
+**Belangrijkste kenmerken:**
+
+- **O(1) toegang** — spring direct naar elke index
+- **O(n) invoegen/verwijderen** — het verschuiven van elementen is duur
+- **Cachevriendelijk** — sequentieel geheugen = snelle CPU-leesacties
+- **Vaste grootte** (in de meeste programmeertalen) — capaciteit moet vooraf bekend zijn
+
+<Callout type="info">
+Arrays vormen de ruggengraat van **tensoren** in machine learning. Een 2D-array is een matrix, een 3D-array is een tensor — de kerngegevensstructuur van elk neuraal netwerk.
+</Callout>
+
+---
+
+## Hoe hash maps werken
+
+Een hash map zet een **sleutel** om in een **index** met behulp van een hashfunctie en slaat de waarde vervolgens op in die bucket.
+
+**Het proces:**
+
+1. **Invoer:** `"apple"` (sleutel)
+2. **Hash:** `hash("apple") % size` → bucket `0`
+3. **Opslaan:** bucket `0` = `apple: 3`
+4. **Opzoeken:** gemiddeld O(1) — ga direct naar de bucket
+
+**Belangrijkste kenmerken:**
+
+- **Gemiddeld O(1)** voor opzoeken, invoegen en verwijderen
+- **O(n) in het slechtste geval** — wanneer alle sleutels in dezelfde bucket botsen
+- **Ongeordend** — geen gegarandeerde iteratievolgorde
+- **Sleutels moeten hashbaar zijn** — onveranderlijke typen werken het beste
+
+<ThinkAboutIt>
+Waarom kun je in Python geen lijst als sleutel van een dictionary gebruiken? Omdat lijsten veranderbaar zijn — als je de lijst wijzigt na het hashen, verandert de hashwaarde maar de bucket niet, wat het opzoeken breekt.
+</ThinkAboutIt>
+
+---
+
+## Patroon 1: Two Sum
+
+> Gegeven een array en een doel, vind twee getallen die samen het doel vormen.
+
+**Brute force:** Controleer elk paar → O(n²)
+**Hash map-aanpak:** Controleer voor elk getal of `target - num` bestaat → **O(n)**
+
+**Stap voor stap** met `nums = [2, 7, 11, 15]`, `target = 9`:
+
+| Stap | Huidig | Nodig (9 - huidig) | In de map? | Actie |
+|------|--------|---------------------|------------|-------|
+| 1 | 2 | 7 | Nee | Sla `2: 0` op |
+| 2 | 7 | 2 | **Ja!** | Geef `[0, 1]` terug |
+
+<Callout type="info">
+Dit patroon — "sla op wat je hebt gezien, controleer wat je nodig hebt" — komt voor in **tientallen** sollicitatievraagstukken.
+</Callout>
+
+---
+
+## Patroon 2: Frequentietelling
+
+> Tel hoe vaak elk element voorkomt.
+
+```python
+def frequency_count(nums):
+    freq = {}
+    for num in nums:
+        freq[num] = freq.get(num, 0) + 1
+    return freq
+
+# [1, 2, 2, 3, 3, 3] => {1: 1, 2: 2, 3: 3}
+```
+
+**Gebruikt bij:**
+
+- **Top K Frequent Elements** — tel en sorteer vervolgens op frequentie
+- **Valid Anagram** — vergelijk tekenfrequenties
+- **Group Anagrams** — groepeer woorden met dezelfde gesorteerde tekens
+
+---
+
+## Patroon 3: Groeperen op sleutel
+
+> Groepeer anagrammen: `["eat","tea","tan","ate","nat","bat"]`
+
+**Strategie:** Sorteer elk woord → gebruik de gesorteerde versie als hashsleutel.
+
+| Origineel | Gesorteerd (Sleutel) | Groep |
+|-----------|---------------------|-------|
+| "eat" | "aet" | ["eat", "tea", "ate"] |
+| "tan" | "ant" | ["tan", "nat"] |
+| "bat" | "abt" | ["bat"] |
+
+---
+
+## De AI-connectie: Feature Stores
+
+In productie-ML-systemen gebruiken **feature stores** hash maps in hun kern:
+
+- **Gebruikers-ID → kenmerkvector** — directe opzoeking voor realtime aanbevelingen
+- **Product-ID → embeddings** — gelijkeniszoeking in aanbevelingssystemen
+- **Cachelaag** — vermijd het herberekenen van dure kenmerken
+
+<FunFact>
+De aanbevelingsengine van Netflix voert **miljoenen hash map-opzoekingen per seconde** uit om gebruikers aan content te koppelen. De kijkgeschiedenis van elke gebruiker wordt opgeslagen als een hash map van `movie_id: rating`-paren, waardoor O(1) kenmerkophaling tijdens modelinferentie mogelijk is.
+</FunFact>
+
+---
+
+## Complexiteitsoverzicht
+
+| Bewerking | Array | Hash Map |
+|-----------|-------|----------|
+| Toegang via index | O(1) | — |
+| Zoeken op waarde | O(n) | O(1) gem |
+| Invoegen aan het einde | O(1)* | O(1) gem |
+| Invoegen aan het begin | O(n) | O(1) gem |
+| Verwijderen | O(n) | O(1) gem |
+| Ruimte | O(n) | O(n) |
+
+*geamortiseerd voor dynamische arrays
+
+<ThinkAboutIt>
+Wanneer zou je een array verkiezen boven een hash map? Wanneer je **geordende data** nodig hebt, **cacheprestaties** of **minimale geheugenoverhead**. Hash maps ruilen ruimte in voor snelheid — elke vermelding heeft overhead voor de hash, sleutel en pointer.
+</ThinkAboutIt>

@@ -1,0 +1,159 @@
+---
+title: "Arbres & Graphes — Comment l'IA prend des décisions"
+description: "Visualisez les parcours d'arbres et les algorithmes de graphes. Comprenez comment les arbres de décision, les graphes de connaissances et les réseaux de neurones utilisent ces structures."
+order: 2
+difficulty: "intermediate"
+duration: 25
+icon: "🌲"
+published: true
+---
+
+# Arbres & Graphes — Comment l'IA prend des décisions
+
+Les arbres et les graphes sont **partout** en IA : les arbres de décision classifient les données, les graphes de connaissances stockent les relations, et les réseaux de neurones sont des graphes acycliques dirigés. Maîtriser les parcours est indispensable.
+
+---
+
+## Parcours d'arbres binaires
+
+Chaque problème d'arbre se résume à : **comment visiter chaque nœud ?**
+
+<Illustration src="/images/lessons/craft/tree-traversal.svg" alt="Arbre binaire montrant le parcours BFS par niveau vs le parcours DFS pré-ordre avec la séquence de visite numérotée" caption="BFS visite niveau par niveau (en utilisant une file d'attente). DFS plonge en profondeur d'abord (en utilisant un stack/récursion). Même arbre, ordres de visite différents." />
+
+### BFS — Parcours par niveau (Queue)
+
+```python
+from collections import deque
+
+def level_order(root):
+    if not root:
+        return []
+    result, queue = [], deque([root])
+
+    while queue:
+        level = []
+        for _ in range(len(queue)):   # process one level
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left:  queue.append(node.left)
+            if node.right: queue.append(node.right)
+        result.append(level)
+
+    return result
+```
+
+### DFS — Trois variantes (Stack/Récursion)
+
+```python
+def preorder(node):    # Root -> Left -> Right
+    if not node: return
+    visit(node)
+    preorder(node.left)
+    preorder(node.right)
+
+def inorder(node):     # Left -> Root -> Right (sorted for BST!)
+    if not node: return
+    inorder(node.left)
+    visit(node)
+    inorder(node.right)
+
+def postorder(node):   # Left -> Right -> Root (delete safely)
+    if not node: return
+    postorder(node.left)
+    postorder(node.right)
+    visit(node)
+```
+
+<Callout type="info">
+**Quand utiliser lequel ?** BFS pour le plus court chemin / traitement niveau par niveau. DFS pour la recherche de chemin, le calcul de profondeur, ou quand vous devez traiter les enfants avant les parents (postorder).
+</Callout>
+
+### Problèmes classiques d'arbres
+
+| Problème | Parcours | Idée clé |
+|----------|----------|----------|
+| Profondeur maximale | DFS | `1 + max(depth(left), depth(right))` |
+| Parcours par niveau | BFS | File d'attente avec traitement par lot de taille de niveau |
+| Valider un BST | Inorder DFS | Les valeurs doivent être strictement croissantes |
+| Plus bas ancêtre commun | DFS | Récursion, vérifier les retours gauche/droite |
+| Sérialiser/Désérialiser | BFS ou Preorder | Encoder les nulls comme marqueurs |
+
+---
+
+## Parcours de graphes
+
+Les graphes sont des arbres sans la garantie « pas de cycles ». L'ajout clé : **un ensemble visited** pour éviter les boucles infinies.
+
+<Illustration src="/images/lessons/craft/graph-bfs-dfs.svg" alt="Graphe avec 9 nœuds montrant l'expansion en front d'onde BFS vs l'exploration en profondeur DFS" caption="BFS explore en fronts d'onde (distance la plus courte garantie). DFS plonge sur un chemin avant de revenir en arrière." />
+
+### Graph BFS
+
+```python
+from collections import deque
+
+def bfs(graph, start):
+    visited = {start}
+    queue = deque([start])
+
+    while queue:
+        node = queue.popleft()
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+```
+
+### Graph DFS
+
+```python
+def dfs(graph, node, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(node)
+
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+```
+
+<ThinkAboutIt>
+Pourquoi BFS est-il garanti de trouver le plus court chemin dans un graphe non pondéré ? Parce qu'il explore tous les nœuds à distance d avant tout nœud à distance d+1. DFS n'offre pas cette garantie — il pourrait trouver un chemin plus long en premier.
+</ThinkAboutIt>
+
+### Problèmes classiques de graphes
+
+| Problème | Algorithme | Complexité |
+|----------|-----------|------------|
+| Plus court chemin (non pondéré) | BFS | O(V + E) |
+| Détection de cycle (non dirigé) | DFS avec suivi du parent | O(V + E) |
+| Détection de cycle (dirigé) | DFS avec marquage 3 couleurs | O(V + E) |
+| Nombre d'îles | BFS/DFS remplissage par inondation | O(lignes * colonnes) |
+| Tri topologique | DFS postorder inversé | O(V + E) |
+| Composantes connexes | BFS/DFS depuis chaque non-visité | O(V + E) |
+
+---
+
+## Connexion IA : Arbres & Graphes en ML
+
+<FunFact>
+Les arbres et les graphes ne sont pas que des structures de données — ils sont l'épine dorsale de l'IA moderne :
+
+- **Arbres de décision & Forêts aléatoires :** Chaque prédiction parcourt un arbre binaire de la racine à la feuille. L'ordre de parcours = classement d'importance des caractéristiques.
+- **Graphes de connaissances :** Le Knowledge Graph de Google, Wikidata et les ontologies d'entreprise sont des graphes dirigés massifs parcourus avec BFS/DFS pour répondre aux questions.
+- **Réseaux de neurones graphiques (GNN) :** Le passage de messages dans les GNN est littéralement du BFS — chaque nœud agrège les caractéristiques de son voisinage à k sauts.
+- **Arbres syntaxiques abstraits :** Les LLM qui écrivent du code (Copilot, Codex) analysent et génèrent des AST — des structures arborescentes représentant du code.
+- **DAG de réseaux de neurones :** Un réseau de neurones *est* un graphe acyclique dirigé. La rétropropagation est un DFS postorder inversé à travers le graphe de calcul.
+</FunFact>
+
+---
+
+## Référence rapide
+
+| Structure | Parcours | Structure de données | Espace | Idéal pour |
+|-----------|----------|---------------------|--------|------------|
+| Tree BFS | Par niveau | Queue | O(w) | Traitement par niveau, plus court chemin |
+| Tree DFS | Pre/In/Post | Stack/Récursion | O(h) | Problèmes de chemin, validation BST |
+| Graph BFS | Front d'onde | Queue + Visited | O(V) | Plus court chemin, composantes connexes |
+| Graph DFS | Profondeur d'abord | Stack + Visited | O(V) | Détection de cycle, tri topologique |
+
+*w = largeur max, h = hauteur, V = sommets*

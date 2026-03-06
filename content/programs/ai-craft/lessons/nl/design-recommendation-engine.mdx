@@ -1,0 +1,411 @@
+---
+title: "Ontwerp een Aanbevelingsmotor — AI op schaal"
+description: "Ontwerp aanbevelingen in Netflix/Spotify-stijl. Begrijp collaboratief filteren, inhoudsgebaseerd filteren en realtime ML-serving."
+order: 3
+difficulty: "advanced"
+duration: 30
+icon: "🎯"
+published: true
+---
+
+# Ontwerp een Aanbevelingsmotor
+
+Aanbevelingen bepalen 80% van wat mensen op Netflix bekijken, 30% van de omzet van Amazon, en de volledige TikTok-ervaring. Dit is waar systeemontwerp machine learning op schaal ontmoet.
+
+<Callout type="info">
+Dit is een **gevorderde** systeemontwerpvraag. Het test ML-kennis, data-pipelineontwerp en gedistribueerde systemen — alles in één. Interviewers zijn er dol op omdat er geen enkel „juist" antwoord is.
+</Callout>
+
+---
+
+## Stap 1: Vereisten
+
+### Functionele vereisten
+
+| Vereiste | Detail |
+|---|---|
+| **Gepersonaliseerde aanbevelingen** | Toon items op maat voor elke gebruiker |
+| **Vergelijkbare items** | „Omdat je X hebt bekeken..." |
+| **Trending/Populair** | Niet-gepersonaliseerde terugval voor nieuwe gebruikers |
+| **Realtime updates** | Aanbevelingen weerspiegelen recente acties |
+| **A/B-testen** | Vergelijk aanbevelingsalgoritmen |
+
+### Niet-functionele vereisten
+
+| Vereiste | Doel |
+|---|---|
+| **Latentie** | Minder dan 100ms voor het ophalen van aanbevelingen (p99) |
+| **Schaal** | 200M+ gebruikers, 50K+ items |
+| **Versheid** | Aanbevelingen updaten binnen minuten na gebruikersactie |
+| **Beschikbaarheid** | 99,99% — aanbevelingen moeten altijd verschijnen |
+| **Doorvoer** | 50K+ aanbevelingsverzoeken per seconde |
+
+<ThinkAboutIt>
+Wat gebeurt er wanneer de aanbevelingsservice uitvalt? Toon je een lege pagina? Denk aan sierlijke degradatie — populaire items, gecachede aanbevelingen en categorie-gebaseerde terugval. Netflix heeft een hiërarchie van terugvalstrategieën, elk minder gepersonaliseerd dan de vorige.
+</ThinkAboutIt>
+
+---
+
+## Stap 2: Typen aanbevelingen
+
+De drie fundamentele benaderingen — en waarom productiesystemen alle drie gebruiken.
+
+<Illustration src="/images/lessons/craft/recommendation-types.svg" alt="Three-panel comparison of Collaborative Filtering (user similarity), Content-Based Filtering (item features), and Hybrid approach (ML-ranked combination) with pros, cons, and real-world usage" caption="Drie benaderingen voor aanbevelingen — Collaboratief vindt patronen in gebruikersgedrag, Inhoudsgebaseerd matcht itemkenmerken, en Hybride combineert beide via een ML-ranker voor de beste resultaten." />
+
+### Snelle vergelijking
+
+| Benadering | Benodigde gegevens | Koudestartprobleem? | Diversiteit | Nauwkeurigheid |
+|---|---|---|---|---|
+| **Collaboratief** | Gebruiker-iteminteracties | Ja (nieuwe gebruikers/items) | Hoog | Hoog |
+| **Inhoudsgebaseerd** | Itemmetadata | Alleen voor gebruikers | Laag | Gemiddeld |
+| **Hybride** | Beide | Verminderd | Hoog | Hoogste |
+
+### Het koudestartprobleem
+
+| Scenario | Oplossing |
+|---|---|
+| **Nieuwe gebruiker, geen geschiedenis** | Toon trending/populaire items, vraag voorkeuren bij onboarding |
+| **Nieuw item, geen interacties** | Inhoudsgebaseerde kenmerken, promoot in ontdekkingsplaatsen |
+| **Nieuw platform** | Gebruik demografische gegevens, importeer van andere platforms |
+
+<FunFact>
+Spotify's „Discover Weekly" gebruikt collaboratief filteren op 600M+ playlists. Toen Spotify in een nieuw land lanceerde, losten ze het koudestartprobleem op door aanbevelingen te voeden vanuit het globale model — gebruikers in Japan kregen aanbevelingen beïnvloed door vergelijkbare luisteraars wereldwijd.
+</FunFact>
+
+---
+
+## Stap 3: Gebruiker-item interactiematrix
+
+De basis van collaboratief filteren is de **interactiematrix** — een enorme, schaarse tabel van gebruikersvoorkeuren.
+
+### De matrix
+
+```
+              Item_1  Item_2  Item_3  Item_4  Item_5  ...  Item_50K
+User_1:       [  5      -      3       -       4     ...    -    ]
+User_2:       [  -      4      -       5       -     ...    2    ]
+User_3:       [  4      -      3       -       5     ...    -    ]
+User_4:       [  -      5      -       4       -     ...    3    ]
+...
+User_200M:    [  -      -      4       -       -     ...    5    ]
+
+Sparsity: ~99% empty (users only interact with tiny fraction of items)
+```
+
+### Matrixfactorisatie (hoe Netflix het doet)
+
+```python
+# Decompose the sparse matrix into two dense matrices
+# R (users x items) ≈ U (users x k) × V (k x items)
+# k = latent factors (typically 50-200)
+
+# User_1 embedding: [0.8, -0.2, 0.5, ...]  → "likes sci-fi, dislikes romance"
+# Item_3 embedding: [0.7, -0.3, 0.4, ...]  → "is sci-fi, not romance"
+# Predicted rating = dot_product(User_1, Item_3) = high score!
+
+import numpy as np
+
+def als_step(R, U, V, lambda_reg=0.1):
+    """Alternating Least Squares — one optimization step"""
+    # Fix V, solve for U
+    for i in range(R.shape[0]):
+        rated = R[i].nonzero()[0]
+        if len(rated) == 0:
+            continue
+        V_rated = V[rated]
+        R_rated = R[i, rated]
+        U[i] = np.linalg.solve(
+            V_rated.T @ V_rated + lambda_reg * np.eye(V.shape[1]),
+            V_rated.T @ R_rated
+        )
+    return U
+```
+
+<Callout type="info">
+Moderne systemen zijn verder gegaan dan matrixfactorisatie naar **deep learning-modellen** — twee-torenarchitecturen, transformers en grafische neurale netwerken. Maar het begrijpen van matrixfactorisatie is essentieel: het is de basis die interviewers verwachten dat je kent.
+</Callout>
+
+---
+
+## Stap 4: Volledige systeemarchitectuur
+
+Dit is de complete ML-pipeline — van ruwe gegevens tot aanbevelingen geserveerd op 50K RPS.
+
+<Illustration src="/images/lessons/craft/recommendation-arch.svg" alt="Full recommendation engine ML architecture showing data sources flowing through stream processing to feature store, with offline batch training path and online serving path including candidate generation, ML ranking, and re-ranking layers" caption="De twee-padenarchitectuur: Batch (offline) voor modeltraining, Realtime (online) voor serving. De Feature Store verbindt beide werelden en levert consistente features voor training en inferentie." />
+
+### Diepe duik in architectuurcomponenten
+
+#### Offline pad (batchverwerking)
+
+| Component | Doel | Technologie | Cadans |
+|---|---|---|---|
+| **Data Lake** | Alle ruwe events opslaan | S3, GCS | Continu |
+| **Feature Engineering** | Features berekenen uit ruwe gegevens | Spark, dbt | Uurlijks/Dagelijks |
+| **Modeltraining** | Aanbevelingsmodellen trainen | PyTorch, TF op GPU | Dagelijks |
+| **Modelregister** | Modellen versie-beheren en deployen | MLflow, SageMaker | Op aanvraag |
+
+#### Online pad (realtime serving)
+
+| Component | Doel | Technologie | Latentie |
+|---|---|---|---|
+| **Kandidaatgeneratie** | Verminderen van miljoenen naar ~1000 | FAISS, Milvus (ANN) | Minder dan 20ms |
+| **Rangschikkingsmodel** | Kandidaten scoren en rangschikken | TF Serving, Triton | Minder dan 30ms |
+| **Herrangschikking** | Bedrijfsregels toepassen, diversiteit | Aangepaste logica | Minder dan 5ms |
+| **Responscache** | Recente aanbevelingen cachen | Redis | Minder dan 2ms |
+
+### De tweefasenpipeline
+
+```
+50,000 items in catalog
+        |
+   [Candidate Generation] — fast, approximate (ANN search)
+        |
+    1,000 candidates
+        |
+   [ML Ranking Model] — precise scoring with full features
+        |
+      Top 100 scored
+        |
+   [Re-Ranking Layer] — diversity, freshness, business rules
+        |
+    Final 20 shown to user
+```
+
+<ThinkAboutIt>
+Waarom splitsen in kandidaatgeneratie + rangschikking in plaats van alle 50K items te scoren? Overweeg: als je rangschikkingsmodel 1ms per item kost, duurt het scoren van 50K items = 50 seconden. Het scoren van 1K kandidaten = 1 seconde. De kandidaatgeneratiestap gebruikt approximate nearest neighbor (ANN) zoekopdrachten om goedkoop te filteren tot een beheersbare set.
+</ThinkAboutIt>
+
+---
+
+## Stap 5: Feature Store
+
+De Feature Store is het **belangrijkste infrastructuurcomponent** dat je bespreekt in ML-systeemontwerp-interviews.
+
+### Waarom Feature Stores?
+
+| Probleem zonder | Oplossing met Feature Store |
+|---|---|
+| Training/serving-afwijking | Dezelfde features voor beide gebruikt |
+| Dubbele featurecode | Eén bron van waarheid |
+| Verouderde features | Automatische versheidscontrole |
+| Trage featureberekening | Vooraf berekend, gecacht |
+
+### Feature-voorbeelden
+
+```python
+# User features (computed daily, stored in Feature Store)
+user_features = {
+    "user_id": "u_12345",
+    "avg_session_duration_7d": 45.2,      # minutes
+    "genre_affinity": [0.8, 0.2, 0.5],    # [action, comedy, drama]
+    "active_hours": [18, 19, 20, 21],     # peak usage hours
+    "device_type": "mobile",
+    "account_age_days": 730,
+    "total_items_consumed": 342,
+}
+
+# Item features (updated on catalog change)
+item_features = {
+    "item_id": "movie_789",
+    "embedding": [0.12, -0.34, ...],       # 256-dim vector
+    "genre": ["sci-fi", "action"],
+    "release_year": 2024,
+    "avg_rating": 4.2,
+    "popularity_score_7d": 0.87,
+    "content_length_min": 142,
+}
+
+# Context features (computed real-time)
+context_features = {
+    "time_of_day": "evening",
+    "day_of_week": "saturday",
+    "device": "smart_tv",
+    "recent_interactions": ["movie_123", "movie_456"],
+}
+```
+
+---
+
+## Stap 6: A/B-testframework
+
+Je kunt niet verbeteren wat je niet kunt meten. A/B-testen zijn essentieel voor aanbevelingssystemen.
+
+### Experimentopzet
+
+```yaml
+experiment:
+  name: "two_tower_v2_vs_v1"
+  traffic_split:
+    control:   { model: "v1", weight: 90 }
+    treatment: { model: "v2", weight: 10 }
+  metrics:
+    primary:   "click_through_rate"
+    secondary: ["watch_time", "completion_rate", "diversity_score"]
+  guardrails:
+    - "unsubscribe_rate < 0.5%"
+    - "latency_p99 < 150ms"
+  duration: "14 days"
+  min_sample_size: 100000
+```
+
+### Belangrijke metrics
+
+| Metric | Wat het meet | Doel |
+|---|---|---|
+| **CTR** | Doorklikpercentage op aanbevelingen | Meer dan 5% |
+| **Engagement** | Kijktijd / luistertijd | Meer dan 30 min/sessie |
+| **Diversiteit** | Variatie in aanbevelingen | Intra-lijstafstand groter dan 0,3 |
+| **Dekking** | % van catalogus aanbevolen | Meer dan 40% |
+| **Nieuwheid** | Hoe „nieuw" items zijn voor gebruikers | Balans met relevantie |
+| **Serendipiteit** | Onverwachte maar gewaardeerde items | Moeilijk te meten, cruciaal voor UX |
+
+<Callout type="info">
+Netflix voert **250+ A/B-tests tegelijk** uit op hun aanbevelingssysteem. Elk visueel element — van artwork tot rijvolgorde tot het algoritme zelf — wordt getest. Ze schatten dat aanbevelingen hen $1 miljard/jaar besparen aan verminderd klantverloop.
+</Callout>
+
+---
+
+## Stap 7: Realtime vs batch-aanbevelingen
+
+### Wanneer welke te gebruiken
+
+| Scenario | Benadering | Waarom |
+|---|---|---|
+| **Startpagina „Voor jou"** | Batch + cache | Elk uur berekend, per gebruiker gecacht |
+| **„Omdat je net X hebt bekeken"** | Realtime | Moet laatste actie weerspiegelen |
+| **E-mailsamenvattingen** | Batch | Dagelijks in bulk berekend |
+| **„Nu trending"** | Bijna realtime | Populariteit elke 5 min aggregeren |
+| **Zoekresultaten** | Realtime | Contextafhankelijk, query-specifiek |
+
+### Realtime architectuur
+
+```python
+async def get_recommendations(user_id: str, context: dict) -> list:
+    # 1. Check cache (< 2ms)
+    cached = await redis.get(f"recs:{user_id}")
+    if cached and not context.get("force_refresh"):
+        return json.loads(cached)
+
+    # 2. Fetch user features from Feature Store (< 5ms)
+    user_features = await feature_store.get_online(user_id)
+
+    # 3. Candidate generation via ANN search (< 20ms)
+    user_embedding = user_features["embedding"]
+    candidates = await faiss_index.search(user_embedding, k=1000)
+
+    # 4. Fetch item features for candidates (< 10ms, batch)
+    item_features = await feature_store.get_batch(candidates)
+
+    # 5. Score with ML model (< 30ms)
+    scores = await model_server.predict(user_features, item_features, context)
+
+    # 6. Re-rank: apply diversity + business rules (< 5ms)
+    results = re_rank(candidates, scores, diversity_weight=0.3)
+
+    # 7. Cache results (TTL: 5 min)
+    await redis.setex(f"recs:{user_id}", 300, json.dumps(results[:50]))
+
+    return results[:20]  # Return top 20
+    # Total latency: < 70ms
+```
+
+---
+
+## De AI-diepteduik: Moderne aanbevelingsmodellen
+
+### Twee-torenarchitectuur (industriestandaard)
+
+```
+User Tower                    Item Tower
+    |                             |
+[User ID]                   [Item ID]
+[Demographics]              [Categories]
+[History]                   [Metadata]
+    |                             |
+[Dense Layers]              [Dense Layers]
+    |                             |
+[User Embedding]      [Item Embedding]
+    \                       /
+     \                     /
+      [Dot Product / Cosine]
+              |
+        [Relevance Score]
+```
+
+### Waarom twee torens?
+
+1. **Item-embeddings kunnen vooraf worden berekend** — eenmaal berekenen, miljoenen keren serveren
+2. **ANN-index op item-embeddings** — kandidaten ophalen in minder dan een milliseconde
+3. **Gebruikerstoren draait op verzoektijd** — vangt realtime context
+4. **Onafhankelijke schaalbaarheid** — itemindex wordt elk uur bijgewerkt, gebruikersfeatures per verzoek
+
+### Op embeddings gebaseerde ophaling op schaal
+
+```python
+# Pre-compute all item embeddings (offline, daily)
+item_embeddings = model.item_tower(all_items)  # Shape: [50000, 256]
+faiss_index = faiss.IndexFlatIP(256)            # Inner product index
+faiss_index.add(item_embeddings)                # Build ANN index
+
+# At serving time (online, per request)
+user_embedding = model.user_tower(user_features)  # Shape: [1, 256]
+distances, indices = faiss_index.search(user_embedding, k=1000)  # < 5ms
+candidates = [items[i] for i in indices[0]]
+```
+
+<FunFact>
+YouTube's aanbevelingssysteem verwerkt 800 miljoen video's en bedient 2 miljard ingelogde gebruikers. Hun twee-torenmodel genereert kandidaatvideo's in minder dan 10ms door te zoeken in een FAISS-index van video-embeddings. Het rangschikkingsmodel scoort deze kandidaten vervolgens met meer dan 1000 features, waaronder kijkgeschiedenis, zoekgeschiedenis, demografie en tijdstip van de dag.
+</FunFact>
+
+---
+
+## Omgaan met schaal: 200M gebruikers
+
+| Uitdaging | Oplossing |
+|---|---|
+| **Gebruiker-embeddings** | 200M x 256 dims x 4 bytes = 200GB — past in gedistribueerde Redis |
+| **Itemindex** | 50K x 256 dims = 50MB — past in enkele FAISS-instantie, gerepliceerd |
+| **Feature Store-leesbewerkingen** | Batch-featureophalingen, lokale caching, leesreplica's |
+| **Modelserving** | TF Serving / Triton op GPU, automatisch geschaalde pods |
+| **Trainingsdata** | Dagelijks: ~10 miljard events. Gebruik sampling + feature hashing |
+| **Modelupdates** | Blue-green deployment via modelregister |
+
+### Monitoring en alerting
+
+```yaml
+alerts:
+  - name: "recommendation_latency_high"
+    condition: "p99_latency > 150ms for 5 minutes"
+    severity: critical
+
+  - name: "model_drift_detected"
+    condition: "ctr_7d_avg drops > 10% vs baseline"
+    severity: warning
+
+  - name: "feature_freshness_stale"
+    condition: "user_features_age > 2 hours"
+    severity: warning
+
+  - name: "candidate_coverage_low"
+    condition: "unique_items_recommended_24h < 20% of catalog"
+    severity: info
+```
+
+<ThinkAboutIt>
+Je ontwerpt aanbevelingen voor een nieuws-app. Anders dan Netflix wordt content binnen uren irrelevant. Hoe zou je deze architectuur aanpassen? Denk na over: vereisten voor featureversheid, frequentie van modelhertraining, de rol van trending/recentiesignalen, en hoe collaboratief filteren werkt wanneer items een levensduur van 24 uur hebben.
+</ThinkAboutIt>
+
+---
+
+## Interviewchecklist
+
+- [ ] Vereisten verduidelijkt (gepersonaliseerd vs trending, latentie, schaal)
+- [ ] Aanbevelingstypen uitgelegd met afwegingen
+- [ ] Volledige architectuur getekend (batch + realtime paden)
+- [ ] Tweefasenpipeline beschreven (kandidaatgeneratie + rangschikking)
+- [ ] Feature Store uitgelegd en waarom het belangrijk is
+- [ ] Koudestartoplossingen besproken
+- [ ] A/B-testframework en belangrijke metrics behandeld
+- [ ] Schaal behandeld (gebruikers, items, QPS, opslag)
+- [ ] Monitoring genoemd (driftdetectie, latentie, dekking)
+- [ ] Moderne ML-benaderingen besproken (twee torens, embeddings, ANN)

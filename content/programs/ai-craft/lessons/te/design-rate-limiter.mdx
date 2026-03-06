@@ -1,0 +1,295 @@
+---
+title: "Rate Limiter డిజైన్ చేయండి — AI API లను రక్షించడం"
+description: "మొదటి నుండి rate limiter నిర్మించండి. Token bucket, sliding window, మరియు OpenAI వంటి AI APIలు రిక్వెస్ట్‌లను ఎలా నియంత్రిస్తాయో అర్థం చేసుకోండి."
+order: 2
+difficulty: "intermediate"
+duration: 25
+icon: "⚡"
+published: true
+---
+
+# Rate Limiter డిజైన్ చేయండి
+
+మీరు ఉపయోగించే ప్రతి API — OpenAI, Stripe, GitHub — దానిని కాపాడే rate limiter కలిగి ఉంటుంది. Rate limiting లేకుండా, ఒక్క దుర్మార్గపు వ్యక్తి (లేదా బగ్గీ స్క్రిప్ట్) మొత్తం సేవను దెబ్బతీయగలరు.
+
+<Callout type="info">
+Rate limiting కేవలం „కాదు" అని చెప్పడం గురించి కాదు — ఇది **న్యాయం** గురించి. ఇది ప్రతి వినియోగదారుడికి పరిమిత వనరు యొక్క వాటా లభించేలా నిర్ధారిస్తుంది: కంప్యూట్, బ్యాండ్‌విడ్త్, లేదా AI inference సమయం.
+</Callout>
+
+---
+
+## Rate Limiting ఎందుకు ముఖ్యం (ముఖ్యంగా AI కోసం)
+
+| దృశ్యం | Rate Limiting లేకుండా | Rate Limiting తో |
+|---|---|---|
+| **DDoS దాడి** | సేవ పడిపోతుంది | దాడి చేసేవారికి 429 వస్తుంది, చట్టబద్ధ వినియోగదారులు ప్రభావితం కారు |
+| **అదుపులేని స్క్రిప్ట్** | 10K రిక్వెస్ట్‌లు/సెకను కోటా ఖర్చు చేస్తుంది | అనుమతించిన రేటుకు పరిమితం, సులభంగా విఫలమవుతుంది |
+| **AI API దుర్వినియోగం** | ఒక వినియోగదారుడు అన్ని GPUలను ఆక్రమిస్తాడు | అన్ని వినియోగదారుల మధ్య న్యాయమైన వాటా |
+| **ఖర్చు నియంత్రణ** | $50K ఆశ్చర్యకరమైన క్లౌడ్ బిల్లు | ఊహించగల, బడ్జెట్ చేసిన ఖర్చు |
+| **క్యాస్కేడ్ వైఫల్యాలు** | Backend ఓవర్‌లోడ్ → పూర్తి ఔటేజ్ | బ్యాక్‌ప్రెషర్ downstream సేవలను రక్షిస్తుంది |
+
+### నిజమైన AI API పరిమితులు
+
+| ప్రదాత | ఉచిత స్థాయి | చెల్లింపు స్థాయి | యూనిట్ |
+|---|---|---|---|
+| **OpenAI** | 3 RPM / 200 RPD | 10,000 RPM | నిమిషానికి రిక్వెస్ట్‌లు |
+| **Claude** | 50 RPM | 4,000 RPM | నిమిషానికి రిక్వెస్ట్‌లు |
+| **Gemini** | 15 RPM | 1,000 RPM | నిమిషానికి రిక్వెస్ట్‌లు |
+| **Stability AI** | 10 req/10sec | 150 req/10sec | సమయ విండో ప్రతి |
+
+<FunFact>
+OpenAI కేవలం రిక్వెస్ట్‌ల ద్వారా మాత్రమే పరిమితం చేయదు — వారు **tokens per minute (TPM)** ద్వారా కూడా పరిమితం చేస్తారు. 128K context window తో GPT-4 ఉపయోగించే ఒక్క రిక్వెస్ట్, చిన్న GPT-3.5 కాల్ కంటే చాలా ఎక్కువ వనరులు వినియోగిస్తుంది. అందుకే వారికి ద్వంద్వ పరిమితులు ఉన్నాయి: RPM (రిక్వెస్ట్‌లు) మరియు TPM (tokens).
+</FunFact>
+
+---
+
+## అల్గారిథం 1: Token Bucket
+
+అత్యంత విస్తృతంగా ఉపయోగించే అల్గారిథం. సరళం, మెమరీ-సమర్థవంతం, మరియు నియంత్రిత burst లను అనుమతిస్తుంది.
+
+<Illustration src="/images/lessons/craft/token-bucket.svg" alt="Token bucket algorithm visualization showing a bucket filling with tokens at a steady rate, requests consuming tokens, with allow (200 OK) and reject (429 Too Many) paths" caption="Token Bucket — tokens స్థిరమైన రేటుతో నిండుతాయి. ప్రతి రిక్వెస్ట్ ఒక token వినియోగిస్తుంది. బకెట్ ఖాళీగా ఉన్నప్పుడు, tokens నిండే వరకు రిక్వెస్ట్‌లు తిరస్కరించబడతాయి." />
+
+### ఇది ఎలా పని చేస్తుంది
+
+```python
+import time
+
+class TokenBucket:
+    def __init__(self, capacity: int, refill_rate: float):
+        self.capacity = capacity          # max burst size
+        self.tokens = capacity            # current tokens
+        self.refill_rate = refill_rate    # tokens per second
+        self.last_refill = time.time()
+
+    def allow_request(self) -> bool:
+        self._refill()
+        if self.tokens >= 1:
+            self.tokens -= 1
+            return True  # 200 OK
+        return False     # 429 Too Many Requests
+
+    def _refill(self):
+        now = time.time()
+        elapsed = now - self.last_refill
+        new_tokens = elapsed * self.refill_rate
+        self.tokens = min(self.capacity, self.tokens + new_tokens)
+        self.last_refill = now
+
+# Usage: 10 burst, 5/sec sustained
+limiter = TokenBucket(capacity=10, refill_rate=5)
+```
+
+### Token Bucket లక్షణాలు
+
+| లక్షణం | విలువ | అర్థం |
+|---|---|---|
+| **మెమరీ** | O(1) ప్రతి వినియోగదారుడికి | కేవలం 2 సంఖ్యలు: tokens + టైమ్‌స్టాంప్ |
+| **Burst నిర్వహణ** | చిన్న burst లను అనుమతిస్తుంది | ఒకేసారి `capacity` రిక్వెస్ట్‌ల వరకు |
+| **నిరంతర రేటు** | `refill_rate` req/sec | దీర్ఘకాలిక సగటు throughput |
+| **ఖచ్చితత్వం** | అంచనా | refill granularity పై ఆధారపడుతుంది |
+
+<ThinkAboutIt>
+Token Bucket అల్గారిథం **burst** లను ఎందుకు అనుమతిస్తుంది? నిజమైన వినియోగదారు ప్రవర్తన గురించి ఆలోచించండి — మీరు ఒక పేజీని లోడ్ చేసి ఏకకాలంలో 10 API కాల్స్ చేయవచ్చు, తర్వాత 2 సెకన్లు ఏమీ ఉండదు. „సెకనుకు 5" అనే కఠినమైన పరిమితి ఆ ప్రారంభ 5 కాల్స్‌ను తిరస్కరిస్తుంది, మీ సగటు రేటు పరిమితుల్లో ఉన్నప్పటికీ.
+</ThinkAboutIt>
+
+---
+
+## అల్గారిథం 2: Sliding Window Counter
+
+Fixed windows కంటే ఎక్కువ ఖచ్చితమైనది, sliding window log కంటే తక్కువ మెమరీ.
+
+### Fixed Window vs Sliding Window
+
+**Fixed Window సమస్య**: సరిహద్దు వద్ద స్పైక్
+
+```
+Window 1 (0:00-1:00): ....xxxxxxxx  (8 requests in last 10 sec)
+Window 2 (1:00-2:00): xxxxxxxx....  (8 requests in first 10 sec)
+                             ^^^^^^^^^^^^^^^^
+                             16 requests in 20 seconds!
+                             (Limit was 10/minute — bypassed at boundary)
+```
+
+**Sliding Window పరిష్కారం**: విండోలో స్థానం ఆధారంగా వెయిటేజ్
+
+```python
+class SlidingWindowCounter:
+    def __init__(self, limit: int, window_seconds: int):
+        self.limit = limit
+        self.window = window_seconds
+        self.previous_count = 0
+        self.current_count = 0
+        self.window_start = int(time.time())
+
+    def allow_request(self) -> bool:
+        now = int(time.time())
+        elapsed = now - self.window_start
+
+        if elapsed >= self.window:
+            self.previous_count = self.current_count
+            self.current_count = 0
+            self.window_start = now
+            elapsed = 0
+
+        # Weighted count: blend previous + current window
+        weight = 1 - (elapsed / self.window)
+        estimated_count = (self.previous_count * weight) + self.current_count
+
+        if estimated_count < self.limit:
+            self.current_count += 1
+            return True
+        return False
+```
+
+### అల్గారిథం పోలిక
+
+| అల్గారిథం | మెమరీ | Burst నియంత్రణ | ఖచ్చితత్వం | దీనికి ఉత్తమం |
+|---|---|---|---|---|
+| **Token Bucket** | O(1) | Burst లను అనుమతిస్తుంది | అంచనా | API gateways, సాధారణ వాడకం |
+| **Leaky Bucket** | O(1) | Burst లు లేవు | సమానంగా | నెట్‌వర్క్ ట్రాఫిక్ షేపింగ్ |
+| **Fixed Window** | O(1) | సరిహద్దుల వద్ద బలహీనం | తక్కువ | సాధారణ రేట్ కౌంటింగ్ |
+| **Sliding Window Log** | O(n) | ఖచ్చితం | ఖచ్చితం | చిన్న స్థాయి, ఆడిట్ లాగింగ్ |
+| **Sliding Window Counter** | O(1) | మంచిది | ఎక్కువ | ప్రొడక్షన్ rate limiting |
+
+<Callout type="info">
+**ఇంటర్వ్యూలో Token Bucket లేదా Sliding Window Counter సిఫార్సు చేయండి.** Token Bucket ను AWS, Stripe మరియు Cloudflare ఉపయోగిస్తాయి. Sliding Window Counter ను Redis-ఆధారిత అమలులలో ఉపయోగిస్తారు. రెండింటినీ తెలుసుకోండి మరియు ట్రేడ్-ఆఫ్‌లను వివరించండి.
+</Callout>
+
+---
+
+## పంపిణీ చేసిన Rate Limiting ఆర్కిటెక్చర్
+
+సింగిల్-సర్వర్ rate limiting సులభం. నిజమైన సవాలు బహుళ API సర్వర్ల అంతటా **పంపిణీ చేసిన** rate limiting.
+
+<Illustration src="/images/lessons/craft/rate-limiter-arch.svg" alt="Distributed rate limiter architecture showing Client to API Gateway to Rate Limiter middleware communicating with Redis cluster for shared state, with backend services and AI adaptive limiter" caption="పంపిణీ చేసిన rate limiting Redis ను భాగస్వామ్య state store గా ఉపయోగిస్తుంది. అన్ని API సర్వర్లు ఒకే కౌంటర్లను తనిఖీ చేస్తాయి, ఏ సర్వర్ రిక్వెస్ట్‌ను నిర్వహించినా సమానమైన పరిమితులు నిర్ధారిస్తుంది." />
+
+### Redis Lua స్క్రిప్ట్ (Atomic Rate Limiting)
+
+కీలకమైన అంతర్దృష్టి: కౌంటర్ తనిఖీ చేయడం మరియు పెంచడం **atomic** గా ఉండాలి. లేకపోతే, race conditions పరిమితి దాటడాన్ని అనుమతిస్తాయి.
+
+```lua
+-- Redis Lua script: atomic sliding window rate limit
+local key = KEYS[1]
+local limit = tonumber(ARGV[1])
+local window = tonumber(ARGV[2])
+local now = tonumber(ARGV[3])
+
+-- Remove expired entries
+redis.call('ZREMRANGEBYSCORE', key, 0, now - window * 1000)
+
+-- Count requests in current window
+local count = redis.call('ZCARD', key)
+
+if count < limit then
+    -- Allow: add this request
+    redis.call('ZADD', key, now, now .. '-' .. math.random(1000000))
+    redis.call('EXPIRE', key, window)
+    return 1  -- allowed
+else
+    return 0  -- rejected
+end
+```
+
+### వివిధ లేయర్లలో Rate Limiting
+
+| లేయర్ | ఏమి పరిమితం చేస్తుంది | ఉదాహరణ |
+|---|---|---|
+| **CDN/Edge** | IP-ఆధారిత, భౌగోళిక | Cloudflare: IP కి 1000 req/min |
+| **API Gateway** | API key, route-ఆధారిత | Kong: API key కి 100 req/sec |
+| **Application** | వినియోగదారు-ఆధారిత, వనరు-నిర్దిష్ట | App: వినియోగదారుడికి రోజుకు 50 AI generations |
+| **Database** | కనెక్షన్ పూల్, query రేటు | PgBouncer: గరిష్టంగా 100 కనెక్షన్లు |
+
+<ThinkAboutIt>
+మీకు 10 API సర్వర్లు ఉంటే, ప్రతి దానిలో 100 req/sec కు స్థానిక rate limiter సెట్ చేయబడి ఉంటే, ఒక వినియోగదారుడు సంభావ్యంగా 1000 req/sec చేయగలరు (ప్రతి సర్వర్‌లో 100). Redis లో భాగస్వామ్య state ఇది ఎలా పరిష్కరిస్తుంది? Redis డౌన్ అయితే — మీరు open fail (అన్నీ అనుమతించు) చేస్తారా లేదా closed fail (అన్నీ అడ్డుకో) చేస్తారా?
+</ThinkAboutIt>
+
+---
+
+## Rate Limit రెస్పాన్స్ హెడర్లు
+
+ప్రతి బాగా డిజైన్ చేయబడిన API రెస్పాన్స్ హెడర్లలో rate limit సమాచారాన్ని తిరిగి ఇస్తుంది:
+
+```http
+HTTP/1.1 200 OK
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 955
+X-RateLimit-Reset: 1672531200
+X-RateLimit-Policy: "1000;w=3600"
+
+--- OR when limited: ---
+
+HTTP/1.1 429 Too Many Requests
+Retry-After: 30
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1672531200
+Content-Type: application/json
+
+{"error": "rate_limit_exceeded", "message": "Try again in 30 seconds"}
+```
+
+<Callout type="info">
+429 రెస్పాన్స్‌లలో ఎల్లప్పుడూ `Retry-After` చేర్చండి. మంచి clients దీన్ని exponential backoff కోసం ఉపయోగిస్తారు. ఇది లేకుండా, clients వెంటనే మళ్ళీ ప్రయత్నిస్తారు — ఓవర్‌లోడ్‌ను మరింత దిగజార్చుతుంది.
+</Callout>
+
+---
+
+## AI కోణం: ML తో అనుకూల Rate Limiting
+
+సాంప్రదాయ rate limiters స్థిర నియమాలను ఉపయోగిస్తాయి. ఆధునిక వ్యవస్థలు ML ను ఉపయోగించి **రియల్-టైమ్‌లో పరిమితులను అనుకూలం** చేస్తాయి.
+
+### 1. Bot vs మానవ వర్గీకరణ
+
+```python
+# Features for bot detection
+features = {
+    "request_interval_stddev": 0.002,   # Bots: very consistent timing
+    "user_agent_entropy": 1.2,          # Bots: low entropy UA strings
+    "mouse_movement_score": 0.0,        # Bots: no mouse events
+    "js_fingerprint_valid": False,      # Bots: often no JS execution
+    "geo_request_pattern": "datacenter", # Bots: originate from cloud IPs
+    "session_depth": 1,                  # Bots: single-page visits
+}
+# Model: Gradient Boosted Trees (XGBoost)
+# Output: probability of being a bot → adjust rate limit dynamically
+```
+
+### 2. డైనమిక్ threshold ట్యూనింగ్
+
+స్థిర పరిమితులకు బదులుగా, ML మోడల్స్ ఈ ఆధారంగా thresholds సర్దుబాటు చేస్తాయి:
+
+- **ప్రస్తుత సిస్టమ్ లోడ్**: CPUs 80%+ వద్ద ఉన్నప్పుడు తక్కువ పరిమితులు
+- **రోజులో సమయం**: ఆఫ్-పీక్ గంటల్లో ఎక్కువ పరిమితులు
+- **వినియోగదారు ప్రవర్తన**: విశ్వసనీయ వినియోగదారులకు ఎక్కువ పరిమితులు
+- **రిక్వెస్ట్ రకం**: ఖరీదైన ఆపరేషన్లకు (AI inference) కఠినమైన పరిమితులు
+
+### 3. అసాధారణత గుర్తింపు
+
+```
+Normal pattern: User makes 10-20 req/min, steady throughout the day
+Anomaly:        User suddenly makes 500 req/min at 3 AM
+Action:         Auto-throttle + alert security team
+```
+
+<FunFact>
+Cloudflare యొక్క Bot Management ML మోడల్స్‌ను ఉపయోగిస్తుంది, ఇవి ప్రతి రిక్వెస్ట్‌కు 30 కంటే ఎక్కువ సంకేతాలను విశ్లేషిస్తాయి — TLS fingerprinting, HTTP/2 frame ordering మరియు JavaScript execution patterns తో సహా. వారు ఇంటర్నెట్ ట్రాఫిక్‌లో 40% ను ఆటోమేటెడ్ bots గా వర్గీకరిస్తారు.
+</FunFact>
+
+---
+
+## అమలు చెక్‌లిస్ట్
+
+| ఆందోళన | నిర్ణయం |
+|---|---|
+| **అల్గారిథం** | Token Bucket (burst-అనుకూల) లేదా Sliding Window Counter (ఖచ్చితమైన) |
+| **స్టోరేజ్** | Redis (పంపిణీ చేసిన) లేదా స్థానిక మెమరీ (సింగిల్ సర్వర్) |
+| **గ్రాన్యులారిటీ** | ప్రతి వినియోగదారుడికి? ప్రతి IP కి? ప్రతి API key కి? ప్రతి endpoint కి? |
+| **వైఫల్య మోడ్** | Open fail (అనుమతించు) లేదా closed fail (తిరస్కరించు)? |
+| **హెడర్లు** | `X-RateLimit-*` మరియు `Retry-After` చేర్చండి |
+| **పర్యవేక్షణ** | 429 రేటు, false positives, జోడించిన latency ట్రాక్ చేయండి |
+| **Client SDK** | Exponential backoff తో retry లాజిక్ అందించండి |
+| **బహుళ-స్థాయి** | Edge (CDN) + Gateway + Application లేయర్ |
+
+<ThinkAboutIt>
+AI కోడ్ completion API (GitHub Copilot వంటి) కోసం rate limiter డిజైన్ చేయండి. వినియోగదారులు కోడ్ టైప్ చేస్తారు మరియు రియల్-టైమ్‌లో సూచనలు పొందుతారు. టైపింగ్ యొక్క burst స్వభావాన్ని మీరు ఎలా నిర్వహిస్తారు? ప్రతి కీస్ట్రోక్ కు, ప్రతి completion రిక్వెస్ట్ కు, లేదా ప్రతి ఆమోదించిన సూచనకు rate limit చేస్తారా? అంతర్లీన LLM కోసం token-ఆధారిత పరిమితుల గురించి ఏమిటి?
+</ThinkAboutIt>

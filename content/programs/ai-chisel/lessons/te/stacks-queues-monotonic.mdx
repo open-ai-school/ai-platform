@@ -1,0 +1,184 @@
+---
+title: "Stacks & Queues — AI క్రమాలను ఎలా ప్రాసెస్ చేస్తుంది"
+description: "Monotonic stacks సహా stack మరియు queue నమూనాలను నేర్చుకోండి. Parsers, undo వ్యవస్థలు మరియు sequence మోడల్స్ ఈ నిర్మాణాలను ఎలా ఉపయోగిస్తాయో తెలుసుకోండి."
+order: 3
+difficulty: "intermediate"
+duration: 20
+icon: "📚"
+published: true
+---
+
+# Stacks & Queues — AI క్రమాలను ఎలా ప్రాసెస్ చేస్తుంది
+
+Stacks మరియు queues అత్యంత సరళమైన డేటా నిర్మాణాలు, కానీ అత్యంత లోతైన ప్రభావాన్ని కలిగి ఉంటాయి. ప్రతి recursive కాల్, ప్రతి BFS, ప్రతి undo ఆపరేషన్ — అన్నీ ఈ రెండింటిపై ఆధారపడతాయి.
+
+---
+
+## Stack vs Queue: దృశ్య పోలిక
+
+<Illustration src="/images/lessons/craft/stacks-queues.svg" alt="Stack (LIFO, నిలువు) మరియు queue (FIFO, అడ్డం) యొక్క పక్క-పక్కన పోలిక, push/pop మరియు enqueue/dequeue బాణాలతో" caption="Stack: చివరిగా లోపలికి, మొదటగా బయటకు (ప్లేట్ల గుట్ట లాగా). Queue: మొదటగా లోపలికి, మొదటగా బయటకు (దుకాణంలో వరుస లాగా)." />
+
+### Stack — LIFO (Last In, First Out)
+
+```python
+stack = []
+stack.append(1)    # push
+stack.append(2)
+stack.append(3)
+top = stack[-1]    # peek -> 3
+val = stack.pop()  # pop -> 3
+```
+
+### Queue — FIFO (First In, First Out)
+
+```python
+from collections import deque
+
+queue = deque()
+queue.append(1)      # enqueue
+queue.append(2)
+queue.append(3)
+front = queue[0]     # peek -> 1
+val = queue.popleft() # dequeue -> 1
+```
+
+<Callout type="info">
+**Python లో queues కోసం ఎప్పుడూ `list.pop(0)` వాడకండి** — ఇది O(n) ఎందుకంటే ఇది అన్ని ఎలిమెంట్లను షిఫ్ట్ చేస్తుంది. O(1) popleft ఇచ్చే `collections.deque` వాడండి.
+</Callout>
+
+---
+
+## క్లాసిక్ Stack నమూనాలు
+
+### సరైన కుండలీకరణాలు (Valid Parentheses)
+
+```python
+def is_valid(s):
+    stack = []
+    pairs = {')': '(', ']': '[', '}': '{'}
+
+    for char in s:
+        if char in pairs:
+            if not stack or stack[-1] != pairs[char]:
+                return False
+            stack.pop()
+        else:
+            stack.append(char)
+
+    return len(stack) == 0
+```
+
+### ముఖ్యమైన stack సమస్యలు
+
+| సమస్య | నమూనా | ముఖ్య అంతర్దృష్టి |
+|--------|--------|-------------------|
+| సరైన కుండలీకరణాలు | తెరవడం/మూయడం జతచేయడం | Stack ఓపెనర్లను నిల్వ చేస్తుంది |
+| Min stack | సహాయక stack | ప్రతి స్థాయిలో కనిష్టాన్ని ట్రాక్ చేయండి |
+| RPN మూల్యాంకనం | ఆపరాండ్ stack | రెండు పాప్ చేయండి, లెక్కించండి, ఫలితాన్ని పుష్ చేయండి |
+| రోజువారీ ఉష్ణోగ్రతలు | Monotonic stack | తదుపరి వెచ్చని రోజు = తదుపరి పెద్దది |
+| హిస్టోగ్రామ్‌లో అతిపెద్ద దీర్ఘచతురస్రం | Monotonic stack | పెరుగుతున్న ఎత్తులను నిర్వహించండి |
+
+---
+
+## Monotonic Stack నమూనా
+
+ఇంటర్వ్యూలలో అత్యంత శక్తివంతమైన stack నమూనా. ఎలిమెంట్లు ఎల్లప్పుడూ **పెరుగుతున్న లేదా తగ్గుతున్న క్రమంలో** ఉండే stack ని నిర్వహించండి.
+
+<Illustration src="/images/lessons/craft/monotonic-stack.svg" alt="Next greater element సమస్య కోసం తగ్గుతున్న monotonic stack నిర్మించడం యొక్క దశల వారీ వివరణ" caption="Monotonic తగ్గుతున్న stack: కొత్త ఎలిమెంట్ శీర్షం కంటే పెద్దది అయినప్పుడు, పాప్ చేసి దానిని తదుపరి పెద్ద ఎలిమెంట్‌గా నమోదు చేయండి. ప్రతి ఎలిమెంట్ గరిష్టంగా ఒకసారి పుష్ మరియు పాప్ అవుతుంది = O(n)." />
+
+### తదుపరి పెద్ద ఎలిమెంట్ (Next Greater Element)
+
+```python
+def next_greater_element(arr):
+    n = len(arr)
+    result = [-1] * n
+    stack = []  # stores indices
+
+    for i in range(n):
+        # Pop all elements smaller than current
+        while stack and arr[stack[-1]] < arr[i]:
+            idx = stack.pop()
+            result[idx] = arr[i]   # arr[i] is the next greater
+        stack.append(i)
+
+    return result
+
+# Example: [2, 1, 5, 3, 4] -> [5, 5, -1, 4, -1]
+```
+
+<ThinkAboutIt>
+ఇది O(n) ఎందుకు మరియు O(n^2) ఎందుకు కాదు? ప్రతి ఎలిమెంట్ stack లో సరిగ్గా ఒకసారి ప్రవేశిస్తుంది మరియు గరిష్టంగా ఒకసారి బయటకు వస్తుంది. for loop లోని while loop తో సంబంధం లేకుండా ఇది గరిష్టంగా 2n ఆపరేషన్లు.
+</ThinkAboutIt>
+
+### Monotonic stack రకాలు
+
+| రకం | Stack క్రమం | కనుగొంటుంది |
+|------|------------|-------------|
+| తగ్గుతున్న stack | శీర్షం చిన్నది | తదుపరి **పెద్ద** ఎలిమెంట్ |
+| పెరుగుతున్న stack | శీర్షం పెద్దది | తదుపరి **చిన్న** ఎలిమెంట్ |
+| కుడి నుండి ఎడమకు | వెనుకకు ప్రాసెస్ చేయడం | **మునుపటి** పెద్ద/చిన్న |
+
+---
+
+## Queue నమూనాలు
+
+### Queue తో BFS
+
+ఇప్పటికే Trees & Graphs పాఠంలో కవర్ చేయబడింది — BFS ప్రామాణిక queue అల్గారిథం.
+
+### Sliding Window Maximum (Monotonic Deque)
+
+Monotonic stacks యొక్క deque రకం — *ఉపయోగకరమైన* సూచికల యొక్క తగ్గుతున్న deque ని నిర్వహించండి:
+
+```python
+from collections import deque
+
+def max_sliding_window(nums, k):
+    dq = deque()  # stores indices, values are decreasing
+    result = []
+
+    for i in range(len(nums)):
+        # Remove elements outside window
+        while dq and dq[0] < i - k + 1:
+            dq.popleft()
+
+        # Maintain decreasing order
+        while dq and nums[dq[-1]] <= nums[i]:
+            dq.pop()
+
+        dq.append(i)
+
+        if i >= k - 1:
+            result.append(nums[dq[0]])  # front is always the max
+
+    return result
+```
+
+<Callout type="info">
+**Monotonic deque** sliding window మరియు monotonic stack నమూనాలను కలుపుతుంది. ఇది ఇంటర్వ్యూలలో మీరు చూసే అత్యంత అధునాతన queue నమూనా — మరియు ఇది O(n) లో నడుస్తుంది.
+</Callout>
+
+---
+
+## AI కనెక్షన్: AI వ్యవస్థలలో Stacks & Queues
+
+<FunFact>
+ఈ సరళ నిర్మాణాలు సంక్లిష్ట AI వ్యవస్థలను నడిపిస్తాయి:
+
+- **Recursion లో Call Stack:** ప్రతి recursive న్యూరల్ నెట్‌వర్క్ (Tree-LSTM, recursive parsing) సమూహ నిర్మాణాలను ప్రాసెస్ చేయడానికి call stack పై ఆధారపడుతుంది.
+- **Parser Stacks:** కంపైలర్లు మరియు NLP parsers shift-reduce parsing కోసం stacks ఉపయోగిస్తాయి — tokens ను పుష్ చేసి వాటిని వ్యాకరణ నియమాలుగా తగ్గిస్తాయి.
+- **ఎడిటర్లలో Undo/Redo:** AI-ఆధారిత కోడ్ ఎడిటర్లు (Copilot, Cursor) డ్యూయల్ stacks ఉపయోగిస్తాయి — undo కోసం ఒకటి, redo కోసం ఒకటి — ఎడిట్ చరిత్రను ట్రాక్ చేయడానికి.
+- **ML Pipelines లో Task Queues:** శిక్షణ కార్య షెడ్యూలర్లు (Kubernetes, Celery) GPU కేటాయింపు మరియు బ్యాచ్ ప్రాసెసింగ్ క్రమాన్ని నిర్వహించడానికి priority queues ఉపయోగిస్తాయి.
+- **Queue ప్రాసెసింగ్ గా Attention:** Autoregressive transformers లో, KV-cache FIFO క్రమంలో tokens ను ప్రాసెస్ చేస్తుంది, sliding context window ను నిర్వహిస్తుంది.
+</FunFact>
+
+---
+
+## శీఘ్ర సూచన
+
+| డేటా నిర్మాణం | యాక్సెస్ నమూనా | ఆపరేషన్లు | సమయం | వాడుక సందర్భం |
+|--------------|---------------|-----------|-------|--------------|
+| Stack | LIFO | push, pop, peek | O(1) | కుండలీకరణాలు, DFS, undo |
+| Queue | FIFO | enqueue, dequeue, peek | O(1) | BFS, షెడ్యూలింగ్, streaming |
+| Monotonic Stack | తగ్గుతున్న/పెరుగుతున్న | push, pop (షరతులతో) | O(n) అమార్టైజ్డ్ | తదుపరి పెద్ద/చిన్న ఎలిమెంట్ |
+| Monotonic Deque | తగ్గుతున్న విండో | push, pop రెండు వైపుల నుండి | O(n) అమార్టైజ్డ్ | Sliding window maximum |

@@ -1,0 +1,205 @@
+---
+title: "Sorting & Searching — Comment l'IA classe les résultats"
+description: "Visualisez les algorithmes de tri et la recherche binaire. Découvrez comment les moteurs de recherche classent les résultats et comment les modèles de ML utilisent les données triées."
+order: 3
+difficulty: "beginner"
+duration: 15
+icon: "🔍"
+published: true
+---
+
+# Sorting & Searching
+
+Chaque résultat de recherche que vous voyez est **trié par pertinence**. Chaque requête de base de données utilise la **recherche binaire** sur des index. Ces algorithmes sont partout — et ce sont des incontournables des entretiens.
+
+---
+
+## Vue d'ensemble
+
+<Illustration src="/images/lessons/craft/sorting-searching.svg" alt="Merge sort divide-and-conquer tree showing split and merge phases, and binary search step-by-step elimination" caption="Le merge sort (à gauche) divise récursivement puis fusionne les moitiés triées. La recherche binaire (à droite) élimine la moitié des données à chaque étape." />
+
+---
+
+## Bubble Sort — L'approche naïve
+
+> Échanger répétitivement les éléments adjacents s'ils sont dans le mauvais ordre.
+
+**Démonstration** avec `[5, 3, 8, 1]` :
+
+| Passe | Comparaisons | Résultat |
+|-------|-------------|----------|
+| 1 | 5→3 échange, 5→8 passe, 8→1 échange | [3, 5, 1, **8**] |
+| 2 | 3→5 passe, 5→1 échange | [3, 1, **5**, 8] |
+| 3 | 3→1 échange | [**1**, 3, 5, 8] |
+
+**Temps : O(n²) | Espace : O(1)**
+
+<Callout type="info">
+Le bubble sort n'est utile que pour l'apprentissage. En entretien, mentionnez-le pour montrer que vous comprenez pourquoi de meilleurs algorithmes existent — puis passez immédiatement au merge sort ou au quick sort.
+</Callout>
+
+---
+
+## Merge Sort — Diviser pour régner
+
+> Diviser le array en deux récursivement, puis fusionner les moitiés triées ensemble.
+
+**L'algorithme en 3 étapes :**
+
+1. **Diviser** — couper le array en deux moitiés
+2. **Régner** — trier récursivement chaque moitié
+3. **Fusionner** — combiner les deux moitiés triées en un seul array trié
+
+**L'étape de fusion** est la clé — comparer les éléments en tête de chaque moitié :
+
+| Gauche | Droite | Choix | Résultat jusque-là |
+|--------|--------|-------|---------------------|
+| **3**, 27, 38 | **9**, 43, 82 | 3 | [3] |
+| 27, 38 | **9**, 43, 82 | 9 | [3, 9] |
+| **27**, 38 | 43, 82 | 27 | [3, 9, 27] |
+| 38 | 43, 82 | 38 | [3, 9, 27, 38] |
+| — | 43, 82 | 43, 82 | [3, 9, 27, 38, 43, 82] |
+
+```python
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+```
+
+**Temps : O(n log n) | Espace : O(n)**
+
+<ThinkAboutIt>
+Pourquoi O(n log n) ? Le array se divise log(n) fois (par moitié). À chaque niveau, on effectue O(n) opérations de fusion. Total : n opérations × log(n) niveaux = O(n log n).
+</ThinkAboutIt>
+
+---
+
+## Comparaison des algorithmes de tri
+
+| Algorithme | Meilleur | Moyen | Pire | Espace | Stable ? |
+|-----------|----------|-------|------|--------|----------|
+| Bubble Sort | O(n) | O(n²) | O(n²) | O(1) | Oui |
+| Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) | Oui |
+| Quick Sort | O(n log n) | O(n log n) | O(n²) | O(log n) | Non |
+| Heap Sort | O(n log n) | O(n log n) | O(n log n) | O(1) | Non |
+
+<Callout type="info">
+**Stable** signifie que les éléments égaux conservent leur ordre d'origine. C'est important lorsqu'on trie par plusieurs clés — par exemple, trier par nom, puis par âge. Un tri stable préserve l'ordre des noms au sein des groupes de même âge.
+</Callout>
+
+---
+
+## Recherche binaire — Diviser le problème par deux
+
+> Trouver une cible dans un array **trié** en éliminant la moitié des éléments à chaque étape.
+
+**Prérequis :** Le array DOIT être trié.
+
+**Démonstration** — trouver `23` dans `[2, 5, 11, 15, 23, 37, 41, 56]` :
+
+| Étape | Plage | Milieu | Comparaison | Action |
+|-------|-------|--------|-------------|--------|
+| 1 | [2..56] | 15 | 23 > 15 | Chercher dans la moitié droite |
+| 2 | [23..56] | 37 | 23 &lt; 37 | Chercher dans la moitié gauche |
+| 3 | [23] | 23 | 23 = 23 | **Trouvé à l'index 4 !** |
+
+**3 étapes** au lieu de 8 (parcours linéaire). Pour 1 million d'éléments : **20 étapes** au lieu de 1 000 000.
+
+```python
+def binary_search(nums, target):
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        mid = left + (right - left) // 2  # avoids overflow
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1  # not found
+```
+
+**Temps : O(log n) | Espace : O(1)**
+
+<FunFact>
+La recherche binaire est trompeusement difficile à implémenter correctement. Une étude de Jon Bentley a révélé que **90 % des programmeurs professionnels** ne pouvaient pas écrire une recherche binaire sans bug. Le bug le plus courant ? Le dépassement d'entier dans `(left + right) / 2` — c'est pourquoi on utilise `left + (right - left) // 2`.
+</FunFact>
+
+---
+
+## Variantes de la recherche binaire
+
+La recherche binaire ne sert pas uniquement à « trouver une valeur exacte ». Ces variantes apparaissent constamment :
+
+| Variante | Description | Modification clé |
+|----------|-------------|-----------------|
+| **Borne inférieure** | Première position où l'élément pourrait être inséré | `left` quand `nums[mid] >= target` → `right = mid` |
+| **Borne supérieure** | Position après la dernière occurrence | `left` quand `nums[mid] > target` → `right = mid` |
+| **Recherche dans un array pivoté** | Array trié pivoté à un point inconnu | Vérifier d'abord quelle moitié est triée |
+| **Recherche dans l'espace de réponses** | Trouver le min/max satisfaisant une condition | Recherche binaire sur la réponse, pas sur le array |
+
+<ThinkAboutIt>
+« La recherche binaire sur l'espace de réponses » est une technique puissante. Exemple : « Quelle est la capacité minimale pour expédier des colis en D jours ? » Faites une recherche binaire entre la capacité minimale et maximale possible, en vérifiant si chaque candidat fonctionne. Cela transforme un problème d'optimisation en un problème de décision.
+</ThinkAboutIt>
+
+---
+
+## Le lien avec l'IA : Classement et récupération
+
+Le tri et la recherche sont fondamentaux dans la façon dont les systèmes d'IA délivrent des résultats :
+
+**Moteurs de recherche (Google, Bing) :**
+
+- **Index inversés** — listes triées d'identifiants de documents par mot-clé
+- **Recherche binaire** sur ces index pour des recherches en sous-milliseconde
+- **Opérations de fusion** pour combiner les résultats de plusieurs mots-clés
+
+**Systèmes de recommandation :**
+
+- Trier les candidats par score prédit (classement par pertinence)
+- **Sélection Top-K** — trouver les K meilleurs éléments sans tri complet (tri partiel)
+- La recherche **Approximate Nearest Neighbour** utilise des structures arborescentes similaires à la recherche binaire
+
+**Optimisation des requêtes de base de données :**
+
+- Les B-trees (une généralisation des arbres binaires de recherche) alimentent chaque index SQL
+- Les planificateurs de requêtes choisissent entre un parcours séquentiel (O(n)) et un parcours indexé (O(log n))
+
+<FunFact>
+Google traite plus de 8,5 milliards de recherches par jour. Chaque requête explore un index de centaines de milliards de pages web. Sans index triés et recherche binaire, une seule requête prendrait des minutes au lieu de millisecondes.
+</FunFact>
+
+---
+
+## Tableau récapitulatif de complexité
+
+| Opération | Array non trié | Array trié |
+|-----------|---------------|------------|
+| Recherche | O(n) | O(log n) |
+| Insertion | O(1) | O(n)* |
+| Trouver min/max | O(n) | O(1) |
+| Trouver le k-ème élément | O(n) | O(1) |
+
+*Il faut décaler les éléments pour maintenir l'ordre trié
+
+<Callout type="info">
+Le compromis est clair : **le tri coûte O(n log n) au départ**, mais permet des recherches en O(log n) pour toujours. Si vous effectuez plus de O(log n) recherches, le tri est rentabilisé.
+</Callout>

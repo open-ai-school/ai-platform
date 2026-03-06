@@ -1,0 +1,184 @@
+---
+title: "Stacks & Queues — AI अनुक्रमों को कैसे संसाधित करता है"
+description: "Monotonic stacks सहित stack और queue पैटर्न में महारत हासिल करें। जानें कि parsers, undo सिस्टम और अनुक्रम मॉडल इन संरचनाओं का उपयोग कैसे करते हैं।"
+order: 3
+difficulty: "intermediate"
+duration: 20
+icon: "📚"
+published: true
+---
+
+# Stacks & Queues — AI अनुक्रमों को कैसे संसाधित करता है
+
+Stacks और queues सबसे सरल डेटा संरचनाएँ हैं जिनका प्रभाव सबसे गहरा है। हर recursive कॉल, हर BFS, हर undo ऑपरेशन — ये सभी इन दोनों पर निर्भर करते हैं।
+
+---
+
+## Stack vs Queue: दृश्य तुलना
+
+<Illustration src="/images/lessons/craft/stacks-queues.svg" alt="Stack (LIFO, ऊर्ध्वाधर) और queue (FIFO, क्षैतिज) की साथ-साथ तुलना, push/pop और enqueue/dequeue तीरों के साथ" caption="Stack: अंतिम अंदर, पहले बाहर (प्लेटों के ढेर की तरह)। Queue: पहले अंदर, पहले बाहर (दुकान पर कतार की तरह)।" />
+
+### Stack — LIFO (Last In, First Out)
+
+```python
+stack = []
+stack.append(1)    # push
+stack.append(2)
+stack.append(3)
+top = stack[-1]    # peek -> 3
+val = stack.pop()  # pop -> 3
+```
+
+### Queue — FIFO (First In, First Out)
+
+```python
+from collections import deque
+
+queue = deque()
+queue.append(1)      # enqueue
+queue.append(2)
+queue.append(3)
+front = queue[0]     # peek -> 1
+val = queue.popleft() # dequeue -> 1
+```
+
+<Callout type="info">
+**Python में queues के लिए कभी भी `list.pop(0)` का उपयोग न करें** — यह O(n) है क्योंकि यह सभी तत्वों को शिफ्ट करता है। `collections.deque` का उपयोग करें जो O(1) popleft देता है।
+</Callout>
+
+---
+
+## क्लासिक Stack पैटर्न
+
+### मान्य कोष्ठक (Valid Parentheses)
+
+```python
+def is_valid(s):
+    stack = []
+    pairs = {')': '(', ']': '[', '}': '{'}
+
+    for char in s:
+        if char in pairs:
+            if not stack or stack[-1] != pairs[char]:
+                return False
+            stack.pop()
+        else:
+            stack.append(char)
+
+    return len(stack) == 0
+```
+
+### मुख्य stack समस्याएँ
+
+| समस्या | पैटर्न | मुख्य अंतर्दृष्टि |
+|---------|--------|-------------------|
+| मान्य कोष्ठक | खुला/बंद मिलान | Stack खोलने वालों को संग्रहीत करता है |
+| Min stack | सहायक stack | प्रत्येक स्तर पर न्यूनतम ट्रैक करें |
+| RPN मूल्यांकन | ऑपरेंड stack | दो पॉप करें, गणना करें, परिणाम पुश करें |
+| दैनिक तापमान | Monotonic stack | अगला गर्म दिन = अगला बड़ा |
+| हिस्टोग्राम में सबसे बड़ा आयत | Monotonic stack | बढ़ती ऊँचाइयाँ बनाए रखें |
+
+---
+
+## Monotonic Stack पैटर्न
+
+साक्षात्कार में सबसे शक्तिशाली stack पैटर्न। एक stack बनाए रखें जहाँ तत्व हमेशा **बढ़ते या घटते क्रम** में हों।
+
+<Illustration src="/images/lessons/craft/monotonic-stack.svg" alt="Next greater element समस्या के लिए घटते monotonic stack बनाने की चरण-दर-चरण प्रक्रिया" caption="Monotonic घटता stack: जब कोई नया तत्व शीर्ष से बड़ा हो, पॉप करें और इसे अगले बड़े तत्व के रूप में दर्ज करें। प्रत्येक तत्व अधिकतम एक बार पुश और पॉप होता है = O(n)।" />
+
+### अगला बड़ा तत्व (Next Greater Element)
+
+```python
+def next_greater_element(arr):
+    n = len(arr)
+    result = [-1] * n
+    stack = []  # stores indices
+
+    for i in range(n):
+        # Pop all elements smaller than current
+        while stack and arr[stack[-1]] < arr[i]:
+            idx = stack.pop()
+            result[idx] = arr[i]   # arr[i] is the next greater
+        stack.append(i)
+
+    return result
+
+# Example: [2, 1, 5, 3, 4] -> [5, 5, -1, 4, -1]
+```
+
+<ThinkAboutIt>
+यह O(n) क्यों है और O(n^2) क्यों नहीं? प्रत्येक तत्व stack में ठीक एक बार प्रवेश करता है और अधिकतम एक बार बाहर निकलता है। यह while लूप के बावजूद for लूप के अंदर अधिकतम 2n ऑपरेशन हैं।
+</ThinkAboutIt>
+
+### Monotonic stack के प्रकार
+
+| प्रकार | Stack क्रम | खोजता है |
+|--------|-----------|----------|
+| घटता stack | शीर्ष सबसे छोटा | अगला **बड़ा** तत्व |
+| बढ़ता stack | शीर्ष सबसे बड़ा | अगला **छोटा** तत्व |
+| दाएँ से बाएँ | पीछे से प्रसंस्करण | **पिछला** बड़ा/छोटा |
+
+---
+
+## Queue पैटर्न
+
+### Queue के साथ BFS
+
+पहले से ही Trees & Graphs पाठ में कवर किया गया — BFS विहित queue एल्गोरिथम है।
+
+### Sliding Window Maximum (Monotonic Deque)
+
+Monotonic stacks का deque संस्करण — *उपयोगी* सूचकांकों का एक घटता deque बनाए रखें:
+
+```python
+from collections import deque
+
+def max_sliding_window(nums, k):
+    dq = deque()  # stores indices, values are decreasing
+    result = []
+
+    for i in range(len(nums)):
+        # Remove elements outside window
+        while dq and dq[0] < i - k + 1:
+            dq.popleft()
+
+        # Maintain decreasing order
+        while dq and nums[dq[-1]] <= nums[i]:
+            dq.pop()
+
+        dq.append(i)
+
+        if i >= k - 1:
+            result.append(nums[dq[0]])  # front is always the max
+
+    return result
+```
+
+<Callout type="info">
+**Monotonic deque** sliding window और monotonic stack पैटर्न को जोड़ता है। यह सबसे उन्नत queue पैटर्न है जो आप साक्षात्कार में देखेंगे — और यह O(n) में चलता है।
+</Callout>
+
+---
+
+## AI कनेक्शन: AI सिस्टम में Stacks & Queues
+
+<FunFact>
+ये सरल संरचनाएँ जटिल AI सिस्टम को चलाती हैं:
+
+- **Recursion में Call Stack:** हर recursive न्यूरल नेटवर्क (Tree-LSTM, recursive parsing) नेस्टेड संरचनाओं को प्रोसेस करने के लिए call stack पर निर्भर करता है।
+- **Parser Stacks:** कंपाइलर और NLP parsers shift-reduce parsing के लिए stacks का उपयोग करते हैं — tokens को पुश करना और उन्हें व्याकरण नियमों में कम करना।
+- **एडिटर में Undo/Redo:** AI-संचालित कोड एडिटर (Copilot, Cursor) दोहरे stacks का उपयोग करते हैं — एक undo के लिए, एक redo के लिए — संपादन इतिहास ट्रैक करने के लिए।
+- **ML Pipelines में Task Queues:** प्रशिक्षण कार्य शेड्यूलर (Kubernetes, Celery) GPU आवंटन और बैच प्रोसेसिंग क्रम प्रबंधित करने के लिए priority queues का उपयोग करते हैं।
+- **Queue प्रोसेसिंग के रूप में Attention:** Autoregressive transformers में, KV-cache FIFO क्रम में tokens प्रोसेस करता है, एक sliding context window बनाए रखता है।
+</FunFact>
+
+---
+
+## त्वरित संदर्भ
+
+| डेटा संरचना | एक्सेस पैटर्न | ऑपरेशन | समय | उपयोग का मामला |
+|-------------|--------------|---------|------|----------------|
+| Stack | LIFO | push, pop, peek | O(1) | कोष्ठक, DFS, undo |
+| Queue | FIFO | enqueue, dequeue, peek | O(1) | BFS, शेड्यूलिंग, streaming |
+| Monotonic Stack | घटता/बढ़ता | push, pop (सशर्त) | O(n) परिशोधित | अगला बड़ा/छोटा तत्व |
+| Monotonic Deque | घटती विंडो | push, pop दोनों सिरों से | O(n) परिशोधित | Sliding window maximum |

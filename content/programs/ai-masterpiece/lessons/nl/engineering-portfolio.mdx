@@ -1,0 +1,229 @@
+---
+title: "Engineering Portfolio — Bouw je professionele merk"
+description: "Maak een opvallend engineering portfolio dat je vaardigheden laat zien. Leer waar hiring managers echt naar zoeken en hoe je je werk effectief presenteert."
+order: 3
+difficulty: "advanced"
+duration: 25
+icon: "💼"
+published: true
+---
+
+# Engineering Portfolio
+
+Een sterk portfolio maakt het verschil tussen *"wie is deze persoon?"* en *"laten we deze kandidaat versneld behandelen."* Deze les leert je hoe je er een bouwt dat opvalt.
+
+---
+
+## Waarom portfolio's ertoe doen
+
+De meeste engineers vertrouwen uitsluitend op hun CV. Een portfolio geeft je een oneerlijk voordeel:
+
+| Zonder portfolio | Met portfolio |
+|------------------|---------------|
+| "Ik heb een aanbevelingssysteem gebouwd" | Live demo + architectuurdiagram + metrieken |
+| Recruiter scant 6 seconden | Hiring manager slaat op voor het team |
+| Concurreren op trefwoorden | Concurreren op bewijs |
+| Eendimensionaal (alleen tekst) | Multidimensionaal (code + visuals + schrijven) |
+
+<Callout type="info">
+Een portfolio hoeft geen fancy website te zijn. Een goed georganiseerd GitHub-profiel met sterke READMEs is een portfolio. Deze les behandelt beide benaderingen.
+</Callout>
+
+---
+
+## De drie pijlers
+
+### Pijler 1: GitHub-profiel
+
+Je GitHub is je engineering-CV. Optimaliseer het:
+
+**Profiel-README** (maak een repo aan met je gebruikersnaam):
+```markdown
+# Hi, I'm [Name] 👋
+
+**Senior Engineer** specialising in [2-3 areas]
+
+## 🔭 What I'm working on
+- [Project 1] — one-line description
+- [Project 2] — one-line description
+
+## 📊 This Week's Focus
+- [Current learning/building goal]
+
+## 🛠️ Tech Stack
+[Badges for your core technologies]
+
+## 📈 Stats
+[GitHub stats card — use github-readme-stats]
+```
+
+**Vastgepinde repositories** (kies verstandig — pin je 6 beste):
+
+| Repotype | Waarom vastpinnen |
+|----------|-------------------|
+| **Productiekwaliteit project** | Laat zien dat je kunt opleveren |
+| **Open-source bijdrage** | Laat zien dat je samenwerkt |
+| **Systeemontwerp-implementatie** | Laat zien dat je op schaal denkt |
+| **Onderwijs/documentatie** | Laat zien dat je communiceert |
+| **Algoritmecollectie** | Toont technische diepgang |
+| **Zijproject met gebruikers** | Toont productdenken |
+
+### Pijler 2: Projectverdiepingen
+
+Elk vastgepind project heeft een **uitstekende README** nodig:
+
+```markdown
+# Project Name
+
+One-sentence hook that explains the value.
+
+## 🏗️ Architecture
+[Architecture diagram — use Mermaid, Excalidraw, or draw.io]
+
+## 🚀 Quick Start
+[3-step setup that actually works]
+
+## 📊 Performance
+[Real metrics: response times, throughput, test coverage]
+
+## 🧠 Key Design Decisions
+[2-3 trade-offs you made and WHY]
+
+## 📝 Blog Post / Write-up
+[Link to detailed technical write-up]
+```
+
+<ThinkAboutIt>
+Wat maakt een README bijzonder? Niet de lengte — de duidelijkheid. Een hiring manager moet binnen 30 seconden na het openen van de pagina begrijpen wat je hebt gebouwd, waarom het indrukwekkend is en hoe het werkt.
+</ThinkAboutIt>
+
+### Pijler 3: Technisch schrijven
+
+Schrijven is een **superkracht van senior engineers**. Begin met:
+
+1. **Dev.to- of Hashnode-blog** — schrijf over wat je bouwt
+2. **Architecture Decision Records** — documenteer afwegingen in je projecten
+3. **"Vandaag heb ik geleerd"-collectie** — korte berichten over interessante ontdekkingen
+
+**Blogpostformule die werkt:**
+
+```
+Title: "How I [achieved result] with [technology]"
+
+1. The Problem (2 paragraphs — make it relatable)
+2. What I Tried First (and why it didn't work)
+3. The Solution (with code + diagrams)
+4. Results (metrics, before/after)
+5. What I'd Do Differently (shows maturity)
+```
+
+---
+
+## Portfolioprojectideeën
+
+### Niveau 1: Demonstreer fundamenten
+
+| Project | Wat het demonstreert | Tijd |
+|---------|---------------------|------|
+| **CLI-tool** (bijv. git-stats) | Schone code, testen, packaging | 1 week |
+| **REST API** met authenticatie | Backend-vaardigheden, beveiligingsbewustzijn | 1 week |
+| **Dashboard** met echte data | Frontend + datavisualisatie | 1 week |
+
+### Niveau 2: Demonstreer schaaldenken
+
+| Project | Wat het demonstreert | Tijd |
+|---------|---------------------|------|
+| **URL-verkorter** met analytics | Systeemontwerp, databaseschaling | 2 weken |
+| **Real-time chat** | WebSockets, berichtenwachtrijen | 2 weken |
+| **Rate limiter-bibliotheek** | Algoritmen, gedistribueerde systemen | 1 week |
+
+### Niveau 3: Demonstreer Senior+-vaardigheden
+
+| Project | Wat het demonstreert | Tijd |
+|---------|---------------------|------|
+| **Open-source bibliotheek** | API-ontwerp, documentatie, community | Doorlopend |
+| **Blogserie over systeemontwerp** | Technische communicatie, diepgang | 4 weken |
+| **Full-stack app met CI/CD** | End-to-end oplevering, DevOps | 3 weken |
+
+<Callout type="warning">
+Kwaliteit boven kwantiteit. **3 uitstekende projecten** winnen van 20 halfafgemaakte. Elk project moet hebben: werkende code, tests, documentatie en een README waar je trots op bent om aan een hiring manager te laten zien.
+</Callout>
+
+---
+
+## Veelgemaakte fouten
+
+### ❌ Fout 1: Tutorialprojecten
+
+> "Ik heb een YouTube-tutorial gevolgd en een taken-app gebouwd"
+
+Dit laat zien dat je instructies kunt volgen, niet dat je problemen kunt oplossen. **Oplossing:** Neem elk tutorialproject en voeg 2-3 functies toe die niet in de tutorial stonden. Documenteer WAAROM je ze hebt toegevoegd.
+
+### ❌ Fout 2: Geen documentatie
+
+> Repository met code maar geen README, geen opmerkingen, geen context
+
+Als een hiring manager je project niet binnen 30 seconden kan begrijpen, gaan ze verder. **Oplossing:** Besteed 20% van de projecttijd aan documentatie.
+
+### ❌ Fout 3: Verlaten repositories
+
+> 15 repositories, allemaal met "Initial commit" en verder niets
+
+Dit signaleert dat je dingen begint maar niet afmaakt. **Oplossing:** Archiveer of verwijder onvoltooide repositories. Toon alleen afgerond werk.
+
+### ❌ Fout 4: Geen metrieken
+
+> "Ik heb een snelle API gebouwd"
+
+Snel vergeleken met wat? **Oplossing:** Voeg benchmarks toe, belastingtestresultaten, Lighthouse-scores — alles wat kwantificeerbaar is.
+
+---
+
+## Checklist voor portfoliobeoordeling
+
+Controleer voordat je je portfolio deelt:
+
+**GitHub-profiel:**
+- [ ] Profiel-README met duidelijke introductie
+- [ ] 6 vastgepinde repo's (je beste werk)
+- [ ] Consistente commitgeschiedenis (groene vierkantjes)
+- [ ] Professionele avatar en bio
+
+**Elk project:**
+- [ ] README met architectuurdiagram
+- [ ] Werkende snelstartinstructies
+- [ ] Tests met zichtbare dekking
+- [ ] Minstens één "Kernbeslissing" gedocumenteerd
+- [ ] Geen geheimen of inloggegevens in gitgeschiedenis
+
+**Online aanwezigheid:**
+- [ ] LinkedIn bijgewerkt met projectlinks
+- [ ] Minstens 2 technische blogposts
+- [ ] Dev.to / Hashnode-profiel gekoppeld
+
+**Klaar voor interview:**
+- [ ] Elk project 5 minuten kunnen uitleggen zonder aantekeningen
+- [ ] Afwegingen voor elke kernbeslissing kunnen bespreken
+- [ ] Kunnen beschrijven wat je zou verbeteren met meer tijd
+- [ ] Metrieken hebben voor minstens 2 projecten
+
+---
+
+## Actieplan: Bouw je portfolio in 30 dagen
+
+| Week | Doel |
+|------|------|
+| **Week 1** | GitHub profiel-README opzetten + 3 projecten kiezen om te presenteren |
+| **Week 2** | Project 1 afronden met volledige README en tests |
+| **Week 3** | Project 2 afronden + eerste blogpost schrijven |
+| **Week 4** | Project 3 afronden + portfoliosite maken (optioneel) |
+
+<Callout type="info">
+Je hoeft niet te wachten tot het portfolio "perfect" is om te solliciteren. Publiceer wat je hebt, itereer, en laat echte feedback je verbeteringen sturen.
+</Callout>
+
+---
+
+## Laatste gedachte
+
+De engineers die de beste aanbiedingen krijgen zijn niet altijd de meest vaardige — het zijn degenen die **hun vaardigheden zichtbaar maken**. Je portfolio is hoe je dat doet. Begin vandaag.

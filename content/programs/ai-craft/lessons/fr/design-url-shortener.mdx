@@ -1,0 +1,266 @@
+---
+title: "Concevoir un URL Shortener — Votre premier exercice de conception système"
+description: "Apprenez les fondamentaux de la conception système en construisant TinyURL. Comprenez le hachage, les bases de données, le caching et comment fonctionne la prédiction de liens par IA."
+order: 1
+difficulty: "intermediate"
+duration: 25
+icon: "🔗"
+published: true
+---
+
+# Concevoir un URL Shortener
+
+Chaque entretien de conception système commence quelque part — et les URL shorteners sont le premier problème idéal. Assez simple à comprendre en 5 minutes, assez profond pour en discuter pendant 45.
+
+<Callout type="info">
+C'est le « Hello World » de la conception système. Maîtrisez ce modèle et vous aurez le vocabulaire pour chaque question de conception qui suivra.
+</Callout>
+
+---
+
+## Étape 1 : Recueil des exigences
+
+Avant de dessiner le moindre diagramme, **clarifiez les exigences**. C'est là que les recruteurs distinguent les juniors des seniors.
+
+### Exigences fonctionnelles
+
+| Exigence | Détail |
+|---|---|
+| **Raccourcir l'URL** | Étant donné une URL longue, retourner un alias court et unique |
+| **Redirection** | Quand une URL courte est accédée, rediriger vers l'originale |
+| **Alias personnalisés** | Permettre optionnellement aux utilisateurs de choisir leur propre code court |
+| **Expiration** | Les URLs peuvent avoir un TTL optionnel |
+| **Analytique** | Suivre le nombre de clics, la géolocalisation, l'appareil |
+
+### Exigences non fonctionnelles
+
+| Exigence | Objectif |
+|---|---|
+| **Disponibilité** | 99,99 % de temps de fonctionnement (moins de 53 min d'indisponibilité/an) |
+| **Latence** | Redirection en moins de 50ms (p99) |
+| **Échelle** | 100M nouvelles URLs/mois, 10 milliards de redirections/mois |
+| **Ratio lecture:écriture** | 100:1 (les lectures dominent) |
+| **Durabilité** | Les URLs ne doivent jamais être perdues |
+
+<ThinkAboutIt>
+Pourquoi le ratio lecture/écriture est-il si important ? Comment un ratio de 100:1 change-t-il vos décisions d'architecture par rapport à un ratio de 1:1 ? Pensez à l'endroit où vous mettriez du cache, au nombre de réplicas en lecture dont vous auriez besoin, et à la question de savoir si votre chemin d'écriture doit même être rapide.
+</ThinkAboutIt>
+
+---
+
+## Étape 2 : Architecture de haut niveau
+
+Voici le système complet — étudiez le flux du client à la base de données et retour.
+
+<Illustration src="/images/lessons/craft/url-shortener-arch.svg" alt="URL Shortener system architecture showing Client, Load Balancer, API Servers, Redis Cache, Database, and Analytics pipeline with ML spam detection" caption="Architecture complète du URL Shortener — notez la séparation entre le chemin de lecture/écriture (haut) et le pipeline d'analytique asynchrone (bas)" />
+
+### Composants principaux
+
+| Composant | Objectif | Technologie |
+|---|---|---|
+| **Load Balancer** | Distribuer le trafic entre les serveurs API | Nginx, ALB, Cloudflare |
+| **Serveurs API** | Gérer la logique de création + redirection | Node.js, Go, Java |
+| **Cache** | Accélérer les redirections (URLs populaires) | Redis, Memcached |
+| **Base de données** | Stockage persistant des URLs | PostgreSQL, DynamoDB |
+| **File de messages** | Découpler l'analytique du chemin principal | Kafka, SQS |
+| **Analytique** | Suivre les clics, agréger les métriques | ClickHouse, BigQuery |
+
+### Conception de l'API
+
+```
+POST /api/v1/shorten
+Body: { "long_url": "https://example.com/...", "custom_alias": "my-link", "ttl": 86400 }
+Response: { "short_url": "https://tiny.url/a1B2c3", "expires_at": "2025-01-01T00:00:00Z" }
+
+GET /:short_code
+Response: 301 Redirect → Location: https://example.com/...
+```
+
+<Callout type="info">
+Utilisez **301 (Redirection permanente)** si le SEO est important — les navigateurs la mettent en cache. Utilisez **302 (Redirection temporaire)** si vous devez suivre chaque clic. La plupart des URL shorteners utilisent 302 pour l'analytique.
+</Callout>
+
+---
+
+## Étape 3 : Stratégie d'encodage d'URL
+
+Le cœur du système — comment générons-nous des codes courts et uniques ?
+
+<Illustration src="/images/lessons/craft/url-shortener-encoding.svg" alt="Base62 encoding flow showing long URL to hash function to Base62 conversion to short code with mathematical steps" caption="L'encodage Base62 transforme un identifiant numérique en une chaîne compacte et compatible URL — 6 caractères nous donnent 56,8 milliards d'URLs uniques" />
+
+### Comparaison des approches
+
+| Approche | Avantages | Inconvénients |
+|---|---|---|
+| **Auto-incrément + Base62** | Simple, pas de collisions | Prévisible, point de défaillance unique |
+| **Hash MD5/SHA256** | Distribué, pas de coordinateur | Risque de collision, sortie plus longue |
+| **UUID** | Pas de coordination nécessaire | 36 caractères — trop long pour des URLs courtes |
+| **Clés pré-générées** | Pas de calcul à l'exécution | Nécessite un service de gestion des clés |
+| **Snowflake ID** | Distribué, triable | Plus complexe, identifiants 64 bits |
+
+### La stratégie gagnante : Compteur + Base62
+
+```python
+import string
+
+ALPHABET = string.digits + string.ascii_lowercase + string.ascii_uppercase  # 62 chars
+
+def encode_base62(num: int) -> str:
+    if num == 0:
+        return ALPHABET[0]
+    result = []
+    while num > 0:
+        result.append(ALPHABET[num % 62])
+        num //= 62
+    return ''.join(reversed(result))
+
+# Example: encode_base62(2009215674) → "2bWPgs"
+```
+
+<FunFact>
+bit.ly utilise l'encodage Base62 avec des codes de 6-7 caractères. À leur échelle (~600M de liens créés), ils ont utilisé moins de 0,001 % de l'espace de clés à 6 caractères. Votre URL shortener a largement de la place pour grandir !
+</FunFact>
+
+---
+
+## Étape 4 : Schéma de base de données
+
+```sql
+CREATE TABLE urls (
+    id          BIGSERIAL PRIMARY KEY,
+    short_code  VARCHAR(7) UNIQUE NOT NULL,
+    long_url    TEXT NOT NULL,
+    created_at  TIMESTAMP DEFAULT NOW(),
+    expires_at  TIMESTAMP,
+    user_id     BIGINT,
+    click_count BIGINT DEFAULT 0
+);
+
+CREATE INDEX idx_short_code ON urls(short_code);
+CREATE INDEX idx_expires_at ON urls(expires_at) WHERE expires_at IS NOT NULL;
+```
+
+### Stratégie de sharding
+
+Pour 100M+ URLs, une seule base de données ne suffit pas. Shardez par `short_code` :
+
+| Shard | Plage | Exemple |
+|---|---|---|
+| Shard 0 | short_code commence par 0-9 | `3xK9mP` |
+| Shard 1 | short_code commence par a-m | `aB7nQr` |
+| Shard 2 | short_code commence par n-z | `pL2wXy` |
+| Shard 3 | short_code commence par A-Z | `Rt5vKm` |
+
+<ThinkAboutIt>
+Pourquoi sharder par `short_code` plutôt que par `user_id` ? Pensez au chemin de lecture — quand quelqu'un clique sur une URL courte, vous n'avez que le short_code. Vous devez router directement vers le bon shard sans consulter quoi que ce soit d'autre.
+</ThinkAboutIt>
+
+---
+
+## Étape 5 : Couche de cache
+
+Avec un ratio lecture/écriture de 100:1, le caching est critique. Voici le modèle cache-aside :
+
+### Flux en cas de cache hit (chemin nominal)
+1. La requête arrive : `GET /a1B2c3`
+2. Vérification Redis : `GET url:a1B2c3`
+3. Cache HIT → retourner `long_url` → redirection 301
+4. Latence totale : **~2ms**
+
+### Flux en cas de cache miss
+1. La requête arrive : `GET /a1B2c3`
+2. Vérification Redis : `GET url:a1B2c3` → MISS
+3. Requête base de données : `SELECT long_url FROM urls WHERE short_code = 'a1B2c3'`
+4. Écriture en cache : `SET url:a1B2c3 "https://..." EX 86400`
+5. Retourner `long_url` → redirection 301
+6. Latence totale : **~15ms**
+
+### Configuration du cache
+
+```
+Cache size:    ~20% of total URLs (hot set)
+Eviction:      LRU (Least Recently Used)
+TTL:           24 hours (balance freshness vs hit rate)
+Expected hit rate: 80-90% (Pareto: 20% of URLs get 80% of traffic)
+```
+
+<Callout type="info">
+**Stratégie de préchauffage du cache** : Pré-chargez les 1000 URLs les plus cliquées dans le cache lors du déploiement. Cela empêche un afflux massif de cache miss après un redémarrage.
+</Callout>
+
+---
+
+## Étape 6 : Stratégies de mise à l'échelle
+
+### Liste de vérification pour la mise à l'échelle horizontale
+
+| Couche | Stratégie | Notes |
+|---|---|---|
+| **Serveurs API** | Ajouter plus d'instances derrière le LB | Sans état — mise à l'échelle libre |
+| **Base de données** | Réplicas en lecture + sharding | Écriture sur le primaire, lecture depuis les réplicas |
+| **Cache** | Redis Cluster (6+ nœuds) | Hachage cohérent pour la distribution des clés |
+| **Génération d'ID** | Distribué : basé sur des plages ou Snowflake | Éviter le goulot d'étranglement du compteur unique |
+
+### Gestion des URLs populaires
+
+Certaines URLs deviennent virales — des millions de clics en quelques minutes. Stratégies :
+
+1. **Cache multi-niveaux** : L1 (mémoire locale) → L2 (Redis) → BDD
+2. **Rate limiting** : Protéger le backend contre l'afflux massif
+3. **CDN** : Mettre en cache les redirections en périphérie (attention à l'analytique)
+
+---
+
+## L'angle IA : URL Shortening avec le ML
+
+Les URL shorteners modernes utilisent l'IA dans deux domaines clés :
+
+### 1. Détection de spam/phishing
+
+```python
+# Features for ML spam classifier
+features = {
+    "url_length": len(long_url),
+    "has_ip_address": bool(re.match(r'\d+\.\d+\.\d+\.\d+', domain)),
+    "subdomain_count": domain.count('.'),
+    "uses_https": long_url.startswith('https'),
+    "domain_age_days": get_domain_age(domain),
+    "similar_to_known_brand": brand_similarity_score(domain),
+    "contains_suspicious_keywords": check_keywords(long_url),
+}
+# Model: Random Forest or BERT-based classifier
+# Precision > 99.5% needed to avoid false positives
+```
+
+### 2. Prédiction de clics (préchauffage du cache)
+
+Les modèles ML prédisent quelles URLs recevront des pics de trafic, permettant un préchauffage préventif du cache :
+
+- **Features d'entrée** : Heure de la journée, plateforme source (Twitter/Reddit), catégorie de contenu, modèles historiques
+- **Sortie** : Volume de clics prédit pour l'heure suivante
+- **Action** : Préchauffer le cache pour les URLs prédites comme virales
+
+<FunFact>
+Bitly traite plus de 10 milliards de clics par mois et utilise le ML pour détecter les URLs malveillantes en temps réel. Leur modèle détecte les tentatives de phishing en quelques secondes après la création de l'URL courte — avant que la première victime ne clique.
+</FunFact>
+
+---
+
+## Liste de vérification pour l'entretien
+
+Utilisez ceci pour auto-évaluer votre conception :
+
+- [ ] Clarifier les exigences (fonctionnelles + non fonctionnelles)
+- [ ] Estimer l'échelle (URLs/mois, lectures/sec, stockage)
+- [ ] Concevoir une API propre (REST, codes de statut appropriés)
+- [ ] Choisir une stratégie d'encodage avec justification
+- [ ] Concevoir le schéma de base de données avec indexation
+- [ ] Ajouter du caching avec des flux hit/miss clairs
+- [ ] Discuter de la stratégie de sharding
+- [ ] Traiter les points de défaillance uniques
+- [ ] Mentionner la surveillance et les alertes
+- [ ] Ajouter l'angle IA (détection de spam, prédiction)
+
+<ThinkAboutIt>
+Comment modifieriez-vous cette conception si les URLs devaient être **supprimables** (conformité RGPD) ? Pensez à l'invalidation du cache, aux suppressions logiques vs physiques en base de données, et à comment vous géreriez une requête de redirection pour une URL supprimée.
+</ThinkAboutIt>

@@ -1,0 +1,136 @@
+---
+title: "Two Pointers & Sliding Window — AI डेटा को कैसे स्कैन करता है"
+description: "DSA में दो सबसे शक्तिशाली O(n) पैटर्न में महारत हासिल करें। जानें कि streaming ML सिस्टम और रीयल-टाइम एनालिटिक्स इन सटीक तकनीकों का उपयोग कैसे करते हैं।"
+order: 1
+difficulty: "intermediate"
+duration: 20
+icon: "👆"
+published: true
+---
+
+# Two Pointers & Sliding Window
+
+ये दो पैटर्न आपको **O(n)** में उन समस्याओं को हल करने देते हैं जिन्हें अधिकांश लोग O(n²) में brute-force करते हैं। इनमें एक सामान्य विचार है: *डेटा को दोबारा स्कैन करने के बजाय उसमें एक स्मार्ट विंडो बनाए रखें।*
+
+---
+
+## पैटर्न 1: Two Pointers
+
+एक **सॉर्ट किए गए** array के प्रत्येक सिरे पर एक pointer रखें। एक शर्त के आधार पर उन्हें अंदर की ओर ले जाएँ।
+
+<Illustration src="/images/lessons/craft/two-pointers.svg" alt="दो pointers L और R एक सॉर्ट किए गए array पर लक्ष्य योग खोजने के लिए converge कर रहे हैं" caption="Converging two pointers: योग की तुलना लक्ष्य से करें, बहुत छोटा होने पर L दाएँ ले जाएँ, बहुत बड़ा होने पर R बाएँ ले जाएँ।" />
+
+### कब उपयोग करें
+
+- **सॉर्ट किया गया array** + जोड़ी/शर्त की खोज
+- O(n²) जोड़ी खोजों को O(n) में कम करना
+- विभाजन (Dutch National Flag)
+
+### एल्गोरिथम
+
+```python
+def two_sum_sorted(arr, target):
+    left, right = 0, len(arr) - 1
+
+    while left < right:
+        current_sum = arr[left] + arr[right]
+        if current_sum == target:
+            return [left, right]
+        elif current_sum < target:
+            left += 1       # need bigger sum
+        else:
+            right -= 1      # need smaller sum
+
+    return [-1, -1]
+```
+
+<Callout type="info">
+**मुख्य अपरिवर्तनीय:** `L` के बाईं ओर सब कुछ बहुत छोटा है। `R` के दाईं ओर सब कुछ बहुत बड़ा है। उत्तर *उनके बीच* होना चाहिए।
+</Callout>
+
+### क्लासिक समस्याएँ
+
+| समस्या | तरकीब | जटिलता |
+|---------|--------|---------|
+| Two Sum (सॉर्टेड) | लक्ष्य पर converge करें | O(n) |
+| Container with Most Water | छोटी दीवार को अंदर ले जाएँ | O(n) |
+| 3Sum | एक को ठीक करें, बाकी two-pointer | O(n²) |
+| Remove Duplicates (सॉर्टेड) | धीमा/तेज़ pointer | O(n) |
+
+---
+
+## पैटर्न 2: Sliding Window
+
+एक **विंडो** [left, right] बनाए रखें जो array पर सरकती है। दाएँ विस्तारित करें, बाएँ सिकोड़ें — विंडो को कभी दोबारा स्कैन न करें।
+
+<Illustration src="/images/lessons/craft/sliding-window.svg" alt="आकार k की एक sliding window जो चलती योग को ट्रैक करते हुए एक array पर सरक रही है" caption="निश्चित-आकार की विंडो दाएँ सरकती है: जाने वाले तत्व को घटाएँ, आने वाले तत्व को जोड़ें। कुल O(n)।" />
+
+### दो प्रकार
+
+**निश्चित-आकार विंडो (आकार k):**
+
+```python
+def max_sum_subarray(arr, k):
+    window_sum = sum(arr[:k])
+    max_sum = window_sum
+
+    for i in range(k, len(arr)):
+        window_sum += arr[i] - arr[i - k]  # slide: add new, remove old
+        max_sum = max(max_sum, window_sum)
+
+    return max_sum
+```
+
+**परिवर्तनीय-आकार विंडो (विस्तार/संकुचन):**
+
+```python
+def longest_substring_no_repeat(s):
+    seen = set()
+    left = max_len = 0
+
+    for right in range(len(s)):
+        while s[right] in seen:
+            seen.remove(s[left])
+            left += 1              # shrink window
+        seen.add(s[right])
+        max_len = max(max_len, right - left + 1)
+
+    return max_len
+```
+
+<ThinkAboutIt>
+परिवर्तनीय विंडो फिर भी O(n) में क्यों चलती है? प्रत्येक तत्व सेट में एक बार जोड़ा जाता है और अधिकतम एक बार हटाया जाता है — कुल मिलाकर 2n ऑपरेशन।
+</ThinkAboutIt>
+
+### क्लासिक समस्याएँ
+
+| समस्या | विंडो प्रकार | मुख्य अंतर्दृष्टि |
+|---------|-------------|-------------------|
+| आकार k के उप-सरणी का अधिकतम योग | निश्चित | सरकाएँ और योग ट्रैक करें |
+| बिना दोहराव की सबसे लंबी substring | परिवर्तनीय | दाएँ विस्तारित करें, डुप्लिकेट पर बाएँ सिकोड़ें |
+| न्यूनतम विंडो substring | परिवर्तनीय | सभी अक्षर मिलने पर सिकोड़ें |
+| अधिकतम लगातार एक (k फ्लिप) | परिवर्तनीय | फ्लिप k से अधिक होने पर सिकोड़ें |
+
+---
+
+## AI कनेक्शन: Streaming डेटा प्रसंस्करण
+
+<FunFact>
+ये केवल साक्षात्कार पैटर्न नहीं हैं — प्रोडक्शन ML सिस्टम इसी तरह काम करते हैं:
+
+- **ML में Sliding window:** टाइम-सीरीज़ डेटा पर feature निष्कर्षण (जैसे, "पिछले 5 मिनट में औसत CPU उपयोग") बिल्कुल वही निश्चित-विंडो तकनीक उपयोग करता है।
+- **खोज में Two pointers:** वितरित सॉर्टिंग (MapReduce) में merge ऑपरेशन सॉर्ट किए गए विभाजनों पर two-pointer merging का उपयोग करते हैं।
+- **Streaming एनालिटिक्स:** Apache Kafka और Flink sliding और tumbling windows का उपयोग करके अनंत डेटा स्ट्रीम को प्रोसेस करते हैं — वही O(n) सिंगल-पास लॉजिक।
+- **Attention तंत्र:** Transformers में sliding window attention (जैसे, Longformer) निश्चित-आकार की विंडो का उपयोग करके यह सीमित करता है कि कौन से tokens एक दूसरे पर ध्यान दें।
+</FunFact>
+
+---
+
+## त्वरित संदर्भ
+
+| पैटर्न | कब | समय | स्थान |
+|--------|-----|------|-------|
+| Two Pointers (converging) | सॉर्ट किया गया array, जोड़ी खोजें | O(n) | O(1) |
+| Two Pointers (तेज़/धीमा) | Linked list cycle, विभाजन | O(n) | O(1) |
+| निश्चित Sliding Window | सटीक आकार k का उप-सरणी | O(n) | O(1) |
+| परिवर्तनीय Sliding Window | शर्त के साथ सबसे लंबा/छोटा उप-सरणी | O(n) | O(k) |

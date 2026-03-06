@@ -1,0 +1,411 @@
+---
+title: "Recommendation Engine डिज़ाइन करें — बड़े पैमाने पर AI"
+description: "Netflix/Spotify शैली की सिफारिशें डिज़ाइन करें। Collaborative filtering, content-based filtering और रीयल-टाइम ML serving को समझें।"
+order: 3
+difficulty: "advanced"
+duration: 30
+icon: "🎯"
+published: true
+---
+
+# Recommendation Engine डिज़ाइन करें
+
+सिफारिशें Netflix पर लोग जो देखते हैं उसका 80%, Amazon की आय का 30%, और पूरे TikTok अनुभव को निर्धारित करती हैं। यहाँ सिस्टम डिज़ाइन बड़े पैमाने पर machine learning से मिलता है।
+
+<Callout type="info">
+यह एक **उन्नत** सिस्टम डिज़ाइन प्रश्न है। यह ML ज्ञान, डेटा पाइपलाइन डिज़ाइन और वितरित प्रणालियों — सभी को एक में परखता है। इंटरव्यूअर इसे पसंद करते हैं क्योंकि इसका कोई एक „सही" उत्तर नहीं है।
+</Callout>
+
+---
+
+## चरण 1: आवश्यकताएँ
+
+### कार्यात्मक आवश्यकताएँ
+
+| आवश्यकता | विवरण |
+|---|---|
+| **व्यक्तिगत सिफारिशें** | प्रत्येक उपयोगकर्ता के अनुरूप आइटम दिखाएँ |
+| **समान आइटम** | „क्योंकि आपने X देखा..." |
+| **ट्रेंडिंग/लोकप्रिय** | नए उपयोगकर्ताओं के लिए गैर-व्यक्तिगत फॉलबैक |
+| **रीयल-टाइम अपडेट** | सिफारिशें हाल की गतिविधियों को दर्शाती हैं |
+| **A/B परीक्षण** | सिफारिश एल्गोरिथम की तुलना करें |
+
+### गैर-कार्यात्मक आवश्यकताएँ
+
+| आवश्यकता | लक्ष्य |
+|---|---|
+| **विलंबता** | सिफारिश प्राप्ति के लिए 100ms से कम (p99) |
+| **पैमाना** | 200M+ उपयोगकर्ता, 50K+ आइटम |
+| **ताज़गी** | उपयोगकर्ता क्रिया के मिनटों में सिफारिशें अपडेट |
+| **उपलब्धता** | 99.99% — सिफारिशें हमेशा दिखनी चाहिए |
+| **थ्रूपुट** | प्रति सेकंड 50K+ सिफारिश अनुरोध |
+
+<ThinkAboutIt>
+जब सिफारिश सेवा बंद हो जाए तो क्या होगा? क्या आप खाली पेज दिखाएँगे? सुंदर अवनति के बारे में सोचें — लोकप्रिय आइटम, कैश्ड सिफारिशें, और श्रेणी-आधारित फॉलबैक। Netflix के पास फॉलबैक रणनीतियों की एक श्रेणीबद्ध व्यवस्था है, प्रत्येक पिछली से कम व्यक्तिगत।
+</ThinkAboutIt>
+
+---
+
+## चरण 2: सिफारिश के प्रकार
+
+तीन मूलभूत दृष्टिकोण — और प्रोडक्शन सिस्टम तीनों का उपयोग क्यों करते हैं।
+
+<Illustration src="/images/lessons/craft/recommendation-types.svg" alt="Three-panel comparison of Collaborative Filtering (user similarity), Content-Based Filtering (item features), and Hybrid approach (ML-ranked combination) with pros, cons, and real-world usage" caption="सिफारिश के तीन दृष्टिकोण — Collaborative उपयोगकर्ता व्यवहार में पैटर्न खोजता है, Content-Based आइटम विशेषताओं का मिलान करता है, और Hybrid सर्वोत्तम परिणामों के लिए ML रैंकर के माध्यम से दोनों को जोड़ता है।" />
+
+### त्वरित तुलना
+
+| दृष्टिकोण | आवश्यक डेटा | कोल्ड स्टार्ट? | विविधता | सटीकता |
+|---|---|---|---|---|
+| **Collaborative** | उपयोगकर्ता-आइटम इंटरैक्शन | हाँ (नए उपयोगकर्ता/आइटम) | उच्च | उच्च |
+| **Content-Based** | आइटम मेटाडेटा | केवल उपयोगकर्ताओं के लिए | कम | मध्यम |
+| **Hybrid** | दोनों | कम किया गया | उच्च | सर्वोच्च |
+
+### कोल्ड स्टार्ट समस्या
+
+| परिदृश्य | समाधान |
+|---|---|
+| **नया उपयोगकर्ता, कोई इतिहास नहीं** | ट्रेंडिंग/लोकप्रिय आइटम दिखाएँ, ऑनबोर्डिंग में प्राथमिकताएँ पूछें |
+| **नया आइटम, कोई इंटरैक्शन नहीं** | Content-based विशेषताएँ, एक्सप्लोर स्लॉट में प्रमोट करें |
+| **नया प्लेटफॉर्म** | जनसांख्यिकीय डेटा का उपयोग करें, अन्य प्लेटफॉर्म से आयात करें |
+
+<FunFact>
+Spotify का „Discover Weekly" 600M+ प्लेलिस्ट पर collaborative filtering का उपयोग करता है। जब Spotify ने एक नए देश में लॉन्च किया, तो उन्होंने वैश्विक मॉडल से सिफारिशें खिलाकर कोल्ड-स्टार्ट समस्या को हल किया — जापान में उपयोगकर्ताओं को विश्वभर के समान श्रोताओं से प्रभावित सिफारिशें मिलीं।
+</FunFact>
+
+---
+
+## चरण 3: उपयोगकर्ता-आइटम इंटरैक्शन मैट्रिक्स
+
+Collaborative filtering का आधार **इंटरैक्शन मैट्रिक्स** है — उपयोगकर्ता प्राथमिकताओं की एक विशाल, विरल तालिका।
+
+### मैट्रिक्स
+
+```
+              Item_1  Item_2  Item_3  Item_4  Item_5  ...  Item_50K
+User_1:       [  5      -      3       -       4     ...    -    ]
+User_2:       [  -      4      -       5       -     ...    2    ]
+User_3:       [  4      -      3       -       5     ...    -    ]
+User_4:       [  -      5      -       4       -     ...    3    ]
+...
+User_200M:    [  -      -      4       -       -     ...    5    ]
+
+Sparsity: ~99% empty (users only interact with tiny fraction of items)
+```
+
+### Matrix Factorization (Netflix कैसे करता है)
+
+```python
+# Decompose the sparse matrix into two dense matrices
+# R (users x items) ≈ U (users x k) × V (k x items)
+# k = latent factors (typically 50-200)
+
+# User_1 embedding: [0.8, -0.2, 0.5, ...]  → "likes sci-fi, dislikes romance"
+# Item_3 embedding: [0.7, -0.3, 0.4, ...]  → "is sci-fi, not romance"
+# Predicted rating = dot_product(User_1, Item_3) = high score!
+
+import numpy as np
+
+def als_step(R, U, V, lambda_reg=0.1):
+    """Alternating Least Squares — one optimization step"""
+    # Fix V, solve for U
+    for i in range(R.shape[0]):
+        rated = R[i].nonzero()[0]
+        if len(rated) == 0:
+            continue
+        V_rated = V[rated]
+        R_rated = R[i, rated]
+        U[i] = np.linalg.solve(
+            V_rated.T @ V_rated + lambda_reg * np.eye(V.shape[1]),
+            V_rated.T @ R_rated
+        )
+    return U
+```
+
+<Callout type="info">
+आधुनिक सिस्टम matrix factorization से आगे बढ़कर **deep learning मॉडल** — two-tower architectures, transformers, और graph neural networks पर पहुँच गए हैं। लेकिन matrix factorization को समझना आवश्यक है: यह वह नींव है जिसे इंटरव्यूअर जानने की अपेक्षा करते हैं।
+</Callout>
+
+---
+
+## चरण 4: पूर्ण सिस्टम आर्किटेक्चर
+
+यह पूर्ण ML पाइपलाइन है — कच्चे डेटा से लेकर 50K RPS पर सिफारिशें परोसने तक।
+
+<Illustration src="/images/lessons/craft/recommendation-arch.svg" alt="Full recommendation engine ML architecture showing data sources flowing through stream processing to feature store, with offline batch training path and online serving path including candidate generation, ML ranking, and re-ranking layers" caption="दो-पथ आर्किटेक्चर: Batch (ऑफलाइन) मॉडल प्रशिक्षण के लिए, रीयल-टाइम (ऑनलाइन) serving के लिए। Feature Store दोनों दुनियाओं को जोड़ता है, प्रशिक्षण और inference के लिए सुसंगत features प्रदान करता है।" />
+
+### आर्किटेक्चर घटकों की गहन जानकारी
+
+#### ऑफलाइन पथ (बैच प्रोसेसिंग)
+
+| घटक | उद्देश्य | तकनीक | आवृत्ति |
+|---|---|---|---|
+| **Data Lake** | सभी कच्चे इवेंट संग्रहित करें | S3, GCS | निरंतर |
+| **Feature Engineering** | कच्चे डेटा से features गणना करें | Spark, dbt | प्रति घंटा/दैनिक |
+| **मॉडल प्रशिक्षण** | सिफारिश मॉडल प्रशिक्षित करें | PyTorch, TF on GPU | दैनिक |
+| **मॉडल रजिस्ट्री** | मॉडलों का संस्करण प्रबंधन और तैनाती | MLflow, SageMaker | माँग पर |
+
+#### ऑनलाइन पथ (रीयल-टाइम Serving)
+
+| घटक | उद्देश्य | तकनीक | विलंबता |
+|---|---|---|---|
+| **Candidate Generation** | लाखों से ~1000 तक सीमित करें | FAISS, Milvus (ANN) | 20ms से कम |
+| **Ranking Model** | उम्मीदवारों को स्कोर और रैंक करें | TF Serving, Triton | 30ms से कम |
+| **Re-Ranking** | व्यावसायिक नियम, विविधता लागू करें | कस्टम लॉजिक | 5ms से कम |
+| **Response Cache** | हाल की सिफारिशें कैश करें | Redis | 2ms से कम |
+
+### दो-चरणीय पाइपलाइन
+
+```
+50,000 items in catalog
+        |
+   [Candidate Generation] — fast, approximate (ANN search)
+        |
+    1,000 candidates
+        |
+   [ML Ranking Model] — precise scoring with full features
+        |
+      Top 100 scored
+        |
+   [Re-Ranking Layer] — diversity, freshness, business rules
+        |
+    Final 20 shown to user
+```
+
+<ThinkAboutIt>
+सभी 50K आइटम स्कोर करने के बजाय candidate generation + ranking में क्यों विभाजित करें? विचार करें: यदि आपका ranking model प्रति आइटम 1ms लेता है, तो 50K आइटम स्कोर करना = 50 सेकंड। 1K उम्मीदवारों को स्कोर करना = 1 सेकंड। Candidate generation चरण approximate nearest neighbor (ANN) खोज का उपयोग करके सस्ते में एक प्रबंधनीय सेट तक फ़िल्टर करता है।
+</ThinkAboutIt>
+
+---
+
+## चरण 5: Feature Store
+
+Feature Store वह **सबसे महत्वपूर्ण इन्फ्रास्ट्रक्चर घटक** है जिस पर आप ML सिस्टम डिज़ाइन इंटरव्यू में चर्चा करेंगे।
+
+### Feature Stores क्यों?
+
+| बिना समस्या | Feature Store के साथ समाधान |
+|---|---|
+| Training/serving विसंगति | दोनों के लिए समान features उपयोग |
+| डुप्लिकेट feature कोड | सत्य का एकल स्रोत |
+| पुरानी features | स्वचालित ताज़गी ट्रैकिंग |
+| धीमी feature गणना | पूर्व-गणित, कैश्ड |
+
+### Feature उदाहरण
+
+```python
+# User features (computed daily, stored in Feature Store)
+user_features = {
+    "user_id": "u_12345",
+    "avg_session_duration_7d": 45.2,      # minutes
+    "genre_affinity": [0.8, 0.2, 0.5],    # [action, comedy, drama]
+    "active_hours": [18, 19, 20, 21],     # peak usage hours
+    "device_type": "mobile",
+    "account_age_days": 730,
+    "total_items_consumed": 342,
+}
+
+# Item features (updated on catalog change)
+item_features = {
+    "item_id": "movie_789",
+    "embedding": [0.12, -0.34, ...],       # 256-dim vector
+    "genre": ["sci-fi", "action"],
+    "release_year": 2024,
+    "avg_rating": 4.2,
+    "popularity_score_7d": 0.87,
+    "content_length_min": 142,
+}
+
+# Context features (computed real-time)
+context_features = {
+    "time_of_day": "evening",
+    "day_of_week": "saturday",
+    "device": "smart_tv",
+    "recent_interactions": ["movie_123", "movie_456"],
+}
+```
+
+---
+
+## चरण 6: A/B Testing Framework
+
+जो माप नहीं सकते उसे सुधार नहीं सकते। A/B testing सिफारिश प्रणालियों के लिए आवश्यक है।
+
+### प्रयोग सेटअप
+
+```yaml
+experiment:
+  name: "two_tower_v2_vs_v1"
+  traffic_split:
+    control:   { model: "v1", weight: 90 }
+    treatment: { model: "v2", weight: 10 }
+  metrics:
+    primary:   "click_through_rate"
+    secondary: ["watch_time", "completion_rate", "diversity_score"]
+  guardrails:
+    - "unsubscribe_rate < 0.5%"
+    - "latency_p99 < 150ms"
+  duration: "14 days"
+  min_sample_size: 100000
+```
+
+### प्रमुख मेट्रिक्स
+
+| मेट्रिक | क्या मापता है | लक्ष्य |
+|---|---|---|
+| **CTR** | सिफारिशों पर क्लिक-थ्रू दर | 5% से अधिक |
+| **Engagement** | देखने का समय / सुनने का समय | 30 मिनट/सत्र से अधिक |
+| **विविधता** | सिफारिशों में विविधता | इंट्रा-लिस्ट दूरी 0.3 से अधिक |
+| **कवरेज** | कैटलॉग का % सिफारिश किया गया | 40% से अधिक |
+| **नवीनता** | उपयोगकर्ताओं के लिए आइटम कितने „नए" हैं | प्रासंगिकता के साथ संतुलन |
+| **आकस्मिक खोज** | अप्रत्याशित लेकिन पसंद किए गए आइटम | मापना कठिन, UX के लिए महत्वपूर्ण |
+
+<Callout type="info">
+Netflix अपनी सिफारिश प्रणाली पर **250+ A/B परीक्षण एक साथ** चलाता है। प्रत्येक दृश्य तत्व — आर्टवर्क से लेकर पंक्ति क्रम से लेकर एल्गोरिथम तक — सब परीक्षण किया जाता है। उनका अनुमान है कि सिफारिशें उन्हें कम हुए ग्राहक विच्छेद में $1 बिलियन/वर्ष बचाती हैं।
+</Callout>
+
+---
+
+## चरण 7: रीयल-टाइम बनाम बैच सिफारिशें
+
+### कब कौन सा उपयोग करें
+
+| परिदृश्य | दृष्टिकोण | क्यों |
+|---|---|---|
+| **होमपेज „आपके लिए"** | Batch + cache | प्रति घंटा गणना, प्रति उपयोगकर्ता कैश |
+| **„क्योंकि आपने अभी X देखा"** | रीयल-टाइम | अंतिम क्रिया को दर्शाना चाहिए |
+| **ईमेल डाइजेस्ट** | Batch | दैनिक रूप से थोक में गणना |
+| **„अभी ट्रेंडिंग"** | निकट रीयल-टाइम | हर 5 मिनट में लोकप्रियता एकत्र करें |
+| **खोज परिणाम** | रीयल-टाइम | संदर्भ-निर्भर, क्वेरी-विशिष्ट |
+
+### रीयल-टाइम आर्किटेक्चर
+
+```python
+async def get_recommendations(user_id: str, context: dict) -> list:
+    # 1. Check cache (< 2ms)
+    cached = await redis.get(f"recs:{user_id}")
+    if cached and not context.get("force_refresh"):
+        return json.loads(cached)
+
+    # 2. Fetch user features from Feature Store (< 5ms)
+    user_features = await feature_store.get_online(user_id)
+
+    # 3. Candidate generation via ANN search (< 20ms)
+    user_embedding = user_features["embedding"]
+    candidates = await faiss_index.search(user_embedding, k=1000)
+
+    # 4. Fetch item features for candidates (< 10ms, batch)
+    item_features = await feature_store.get_batch(candidates)
+
+    # 5. Score with ML model (< 30ms)
+    scores = await model_server.predict(user_features, item_features, context)
+
+    # 6. Re-rank: apply diversity + business rules (< 5ms)
+    results = re_rank(candidates, scores, diversity_weight=0.3)
+
+    # 7. Cache results (TTL: 5 min)
+    await redis.setex(f"recs:{user_id}", 300, json.dumps(results[:50]))
+
+    return results[:20]  # Return top 20
+    # Total latency: < 70ms
+```
+
+---
+
+## AI गहन अध्ययन: आधुनिक सिफारिश मॉडल
+
+### Two-Tower Architecture (उद्योग मानक)
+
+```
+User Tower                    Item Tower
+    |                             |
+[User ID]                   [Item ID]
+[Demographics]              [Categories]
+[History]                   [Metadata]
+    |                             |
+[Dense Layers]              [Dense Layers]
+    |                             |
+[User Embedding]      [Item Embedding]
+    \                       /
+     \                     /
+      [Dot Product / Cosine]
+              |
+        [Relevance Score]
+```
+
+### दो टावर क्यों?
+
+1. **आइटम embeddings पूर्व-गणित किए जा सकते हैं** — एक बार गणना करें, लाखों बार सर्व करें
+2. **आइटम embeddings पर ANN index** — मिलीसेकंड से कम में candidate पुनर्प्राप्ति
+3. **User tower अनुरोध समय पर चलता है** — रीयल-टाइम संदर्भ कैप्चर करता है
+4. **स्वतंत्र स्केलिंग** — आइटम index प्रति घंटा अपडेट, user features प्रति अनुरोध अपडेट
+
+### बड़े पैमाने पर Embedding-आधारित पुनर्प्राप्ति
+
+```python
+# Pre-compute all item embeddings (offline, daily)
+item_embeddings = model.item_tower(all_items)  # Shape: [50000, 256]
+faiss_index = faiss.IndexFlatIP(256)            # Inner product index
+faiss_index.add(item_embeddings)                # Build ANN index
+
+# At serving time (online, per request)
+user_embedding = model.user_tower(user_features)  # Shape: [1, 256]
+distances, indices = faiss_index.search(user_embedding, k=1000)  # < 5ms
+candidates = [items[i] for i in indices[0]]
+```
+
+<FunFact>
+YouTube की सिफारिश प्रणाली 800 मिलियन वीडियो प्रोसेस करती है और 2 बिलियन लॉग-इन उपयोगकर्ताओं को सेवा देती है। उनका two-tower model वीडियो embeddings के FAISS index में खोज करके 10ms से कम में उम्मीदवार वीडियो उत्पन्न करता है। फिर ranking model 1000 से अधिक features का उपयोग करके इन उम्मीदवारों को स्कोर करता है, जिसमें देखने का इतिहास, खोज इतिहास, जनसांख्यिकी और दिन का समय शामिल है।
+</FunFact>
+
+---
+
+## पैमाने का प्रबंधन: 200M उपयोगकर्ता
+
+| चुनौती | समाधान |
+|---|---|
+| **User embeddings** | 200M x 256 dims x 4 bytes = 200GB — वितरित Redis में फिट होता है |
+| **आइटम index** | 50K x 256 dims = 50MB — एकल FAISS instance में फिट, प्रतिकृत |
+| **Feature Store पठन** | बैच feature फ़ेच, स्थानीय कैशिंग, पठन प्रतिकृतियाँ |
+| **मॉडल serving** | GPU पर TF Serving / Triton, ऑटो-स्केल्ड pods |
+| **प्रशिक्षण डेटा** | दैनिक: ~10 बिलियन इवेंट। सैम्पलिंग + feature hashing का उपयोग करें |
+| **मॉडल अपडेट** | मॉडल रजिस्ट्री के माध्यम से Blue-green deployment |
+
+### निगरानी और अलर्टिंग
+
+```yaml
+alerts:
+  - name: "recommendation_latency_high"
+    condition: "p99_latency > 150ms for 5 minutes"
+    severity: critical
+
+  - name: "model_drift_detected"
+    condition: "ctr_7d_avg drops > 10% vs baseline"
+    severity: warning
+
+  - name: "feature_freshness_stale"
+    condition: "user_features_age > 2 hours"
+    severity: warning
+
+  - name: "candidate_coverage_low"
+    condition: "unique_items_recommended_24h < 20% of catalog"
+    severity: info
+```
+
+<ThinkAboutIt>
+आप एक समाचार ऐप के लिए सिफारिशें डिज़ाइन कर रहे हैं। Netflix के विपरीत, सामग्री घंटों में अप्रासंगिक हो जाती है। आप इस आर्किटेक्चर को कैसे संशोधित करेंगे? इसके बारे में सोचें: feature ताज़गी आवश्यकताएँ, मॉडल पुनः प्रशिक्षण आवृत्ति, trending/recency संकेतों की भूमिका, और जब आइटम की जीवनअवधि 24 घंटे हो तो collaborative filtering कैसे काम करता है।
+</ThinkAboutIt>
+
+---
+
+## इंटरव्यू चेकलिस्ट
+
+- [ ] आवश्यकताएँ स्पष्ट कीं (व्यक्तिगत बनाम ट्रेंडिंग, विलंबता, पैमाना)
+- [ ] ट्रेड-ऑफ के साथ सिफारिश प्रकार समझाए
+- [ ] पूर्ण आर्किटेक्चर बनाया (batch + रीयल-टाइम पथ)
+- [ ] दो-चरणीय पाइपलाइन वर्णित (candidate generation + ranking)
+- [ ] Feature Store और इसका महत्व समझाया
+- [ ] कोल्ड स्टार्ट समाधानों पर चर्चा की
+- [ ] A/B testing framework और प्रमुख मेट्रिक्स कवर किए
+- [ ] पैमाने को संबोधित किया (उपयोगकर्ता, आइटम, QPS, स्टोरेज)
+- [ ] निगरानी का उल्लेख किया (drift detection, विलंबता, कवरेज)
+- [ ] आधुनिक ML दृष्टिकोणों पर चर्चा की (two-tower, embeddings, ANN)

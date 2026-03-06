@@ -1,0 +1,184 @@
+---
+title: "Stacks & Queues — Hoe AI sequenties verwerkt"
+description: "Beheers stack- en queue-patronen inclusief monotone stacks. Ontdek hoe parsers, undo-systemen en sequentiemodellen deze structuren gebruiken."
+order: 3
+difficulty: "intermediate"
+duration: 20
+icon: "📚"
+published: true
+---
+
+# Stacks & Queues — Hoe AI sequenties verwerkt
+
+Stacks en queues zijn de eenvoudigste datastructuren met de diepste impact. Elke recursieve aanroep, elke BFS, elke undo-operatie — ze zijn allemaal afhankelijk van deze twee.
+
+---
+
+## Stack vs Queue: visuele vergelijking
+
+<Illustration src="/images/lessons/craft/stacks-queues.svg" alt="Vergelijking zij aan zij van stack (LIFO, verticaal) en queue (FIFO, horizontaal) met push/pop- en enqueue/dequeue-pijlen" caption="Stack: laatst erin, eerst eruit (zoals een stapel borden). Queue: eerst erin, eerst eruit (zoals een rij in een winkel)." />
+
+### Stack — LIFO (Last In, First Out)
+
+```python
+stack = []
+stack.append(1)    # push
+stack.append(2)
+stack.append(3)
+top = stack[-1]    # peek -> 3
+val = stack.pop()  # pop -> 3
+```
+
+### Queue — FIFO (First In, First Out)
+
+```python
+from collections import deque
+
+queue = deque()
+queue.append(1)      # enqueue
+queue.append(2)
+queue.append(3)
+front = queue[0]     # peek -> 1
+val = queue.popleft() # dequeue -> 1
+```
+
+<Callout type="info">
+**Gebruik nooit `list.pop(0)` voor queues in Python** — het is O(n) omdat alle elementen worden verschoven. Gebruik `collections.deque` dat O(1) popleft biedt.
+</Callout>
+
+---
+
+## Klassieke stack-patronen
+
+### Geldige haakjes
+
+```python
+def is_valid(s):
+    stack = []
+    pairs = {')': '(', ']': '[', '}': '{'}
+
+    for char in s:
+        if char in pairs:
+            if not stack or stack[-1] != pairs[char]:
+                return False
+            stack.pop()
+        else:
+            stack.append(char)
+
+    return len(stack) == 0
+```
+
+### Belangrijkste stack-problemen
+
+| Probleem | Patroon | Kernidee |
+|----------|---------|----------|
+| Geldige haakjes | Open/sluit matchen | Stack slaat openers op |
+| Min stack | Hulpstack | Min bijhouden op elk niveau |
+| RPN evalueren | Operandenstack | Twee poppen, berekenen, resultaat pushen |
+| Dagelijkse temperaturen | Monotone stack | Volgende warmere dag = volgend groter |
+| Grootste rechthoek in histogram | Monotone stack | Toenemende hoogtes behouden |
+
+---
+
+## Het monotone stack-patroon
+
+Het krachtigste stack-patroon in sollicitatiegesprekken. Onderhoud een stack waarin elementen altijd in **toenemende of afnemende volgorde** staan.
+
+<Illustration src="/images/lessons/craft/monotonic-stack.svg" alt="Stapsgewijze doorloop van het bouwen van een afnemende monotone stack voor het next greater element-probleem" caption="Monotoon afnemende stack: wanneer een nieuw element groter is dan de top, pop en registreer het als het volgende grotere element. Elk element wordt maximaal één keer gepusht en gepopt = O(n)." />
+
+### Next Greater Element
+
+```python
+def next_greater_element(arr):
+    n = len(arr)
+    result = [-1] * n
+    stack = []  # stores indices
+
+    for i in range(n):
+        # Pop all elements smaller than current
+        while stack and arr[stack[-1]] < arr[i]:
+            idx = stack.pop()
+            result[idx] = arr[i]   # arr[i] is the next greater
+        stack.append(i)
+
+    return result
+
+# Example: [2, 1, 5, 3, 4] -> [5, 5, -1, 4, -1]
+```
+
+<ThinkAboutIt>
+Waarom is dit O(n) en niet O(n^2)? Elk element komt precies één keer in de stack en verlaat deze maximaal één keer. Dat zijn maximaal 2n bewerkingen, ongeacht de while-lus binnen de for-lus.
+</ThinkAboutIt>
+
+### Varianten van monotone stacks
+
+| Variant | Stackvolgorde | Vindt |
+|---------|--------------|-------|
+| Afnemende stack | Top is het kleinst | Volgend **groter** element |
+| Toenemende stack | Top is het grootst | Volgend **kleiner** element |
+| Van rechts naar links | Achterwaarts verwerken | **Vorig** groter/kleiner |
+
+---
+
+## Queue-patronen
+
+### BFS met Queue
+
+Al behandeld in de les Bomen & Grafen — BFS is het canonieke queue-algoritme.
+
+### Sliding Window Maximum (monotone deque)
+
+De deque-variant van monotone stacks — onderhoud een afnemende deque van *nuttige* indices:
+
+```python
+from collections import deque
+
+def max_sliding_window(nums, k):
+    dq = deque()  # stores indices, values are decreasing
+    result = []
+
+    for i in range(len(nums)):
+        # Remove elements outside window
+        while dq and dq[0] < i - k + 1:
+            dq.popleft()
+
+        # Maintain decreasing order
+        while dq and nums[dq[-1]] <= nums[i]:
+            dq.pop()
+
+        dq.append(i)
+
+        if i >= k - 1:
+            result.append(nums[dq[0]])  # front is always the max
+
+    return result
+```
+
+<Callout type="info">
+**Monotone deque** combineert de sliding window- en monotone stack-patronen. Het is het meest geavanceerde queue-patroon dat je in sollicitatiegesprekken tegenkomt — en het draait in O(n).
+</Callout>
+
+---
+
+## AI-connectie: Stacks & Queues in AI-systemen
+
+<FunFact>
+Deze eenvoudige structuren drijven complexe AI-systemen aan:
+
+- **Call stack in recursie:** Elk recursief neuraal netwerk (Tree-LSTM, recursief parsen) vertrouwt op de call stack om geneste structuren te verwerken.
+- **Parserstacks:** Compilers en NLP-parsers gebruiken stacks voor shift-reduce parsing — tokens pushen en reduceren tot grammaticaregels.
+- **Ongedaan maken/Opnieuw in editors:** AI-aangedreven code-editors (Copilot, Cursor) gebruiken dubbele stacks — één voor ongedaan maken, één voor opnieuw — om bewerkingsgeschiedenis bij te houden.
+- **Taakqueues in ML-pipelines:** Trainingstaakverdelers (Kubernetes, Celery) gebruiken prioriteitsqueues om GPU-toewijzing en batchverwerkingsvolgorde te beheren.
+- **Attention als queueverwerking:** In autoregressieve transformers verwerkt de KV-cache tokens in FIFO-volgorde en onderhoudt een glijdend contextvenster.
+</FunFact>
+
+---
+
+## Snelle referentie
+
+| Datastructuur | Toegangspatroon | Bewerkingen | Tijd | Gebruiksscenario |
+|---------------|----------------|-------------|------|-------------------|
+| Stack | LIFO | push, pop, peek | O(1) | Haakjes, DFS, ongedaan maken |
+| Queue | FIFO | enqueue, dequeue, peek | O(1) | BFS, planning, streaming |
+| Monotone stack | Afnemend/Toenemend | push, pop (conditioneel) | O(n) geamortiseerd | Volgend groter/kleiner element |
+| Monotone deque | Afnemend venster | push, pop beide kanten | O(n) geamortiseerd | Sliding window maximum |

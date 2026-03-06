@@ -1,0 +1,145 @@
+---
+title: "Arrays & Hashing — AI की नींव"
+description: "विज़ुअल पैटर्न के माध्यम से arrays और hash maps में महारत हासिल करें। जानें कि recommendation engines और search indexes इन मूलभूत संरचनाओं का कैसे उपयोग करते हैं।"
+order: 1
+difficulty: "beginner"
+duration: 15
+icon: "📊"
+published: true
+---
+
+# Arrays & Hashing
+
+हर AI सिस्टम — recommendation engines से लेकर search indexes तक — दो बुनियादी चीज़ों पर बना है: **arrays** और **hash maps**। इन्हें सीख लें और आप नींव में महारत हासिल कर लेंगे।
+
+---
+
+## Arrays कैसे काम करते हैं
+
+एक array तत्वों को **सन्निहित मेमोरी** में संग्रहीत करता है — हर स्लॉट अगले से एक कदम दूर है।
+
+<Illustration src="/images/lessons/craft/arrays-hashing.svg" alt="Array memory layout showing contiguous cells with index labels and hash map with key-to-bucket mapping" caption="Arrays डेटा को सन्निहित मेमोरी में संग्रहीत करते हैं (बाएँ)। Hash maps एक hash function का उपयोग करके keys को bucket positions पर मैप करते हैं (दाएँ)।" />
+
+**मुख्य विशेषताएँ:**
+
+- **O(1) एक्सेस** — किसी भी index पर सीधे पहुँचें
+- **O(n) insert/delete** — तत्वों को शिफ्ट करना महँगा है
+- **Cache-friendly** — अनुक्रमिक मेमोरी = तेज़ CPU रीड
+- **निश्चित आकार** (अधिकांश भाषाओं में) — क्षमता पहले से पता होनी चाहिए
+
+<Callout type="info">
+Arrays मशीन लर्निंग में **tensors** की रीढ़ हैं। एक 2D array एक matrix है, एक 3D array एक tensor है — हर neural network की मुख्य डेटा संरचना।
+</Callout>
+
+---
+
+## Hash Maps कैसे काम करते हैं
+
+एक hash map एक **key** को hash function का उपयोग करके एक **index** में बदलता है, फिर उस bucket में मान संग्रहीत करता है।
+
+**प्रक्रिया:**
+
+1. **इनपुट:** `"apple"` (key)
+2. **Hash:** `hash("apple") % size` → bucket `0`
+3. **स्टोर:** bucket `0` = `apple: 3`
+4. **लुकअप:** औसतन O(1) — सीधे bucket पर जाएँ
+
+**मुख्य विशेषताएँ:**
+
+- **औसतन O(1)** lookup, insert, delete
+- **सबसे खराब स्थिति O(n)** — जब सभी keys एक ही bucket में टकराती हैं
+- **अनक्रमित** — कोई गारंटीशुदा iteration order नहीं
+- **Keys hashable होनी चाहिए** — immutable types सबसे अच्छे काम करते हैं
+
+<ThinkAboutIt>
+Python में एक list को dictionary key के रूप में क्यों नहीं इस्तेमाल किया जा सकता? क्योंकि lists mutable हैं — अगर आप hashing के बाद list बदल दें, तो hash value बदल जाता है लेकिन bucket नहीं बदलता, जिससे lookup टूट जाता है।
+</ThinkAboutIt>
+
+---
+
+## Pattern 1: Two Sum
+
+> एक array और एक target दिया है, दो ऐसी संख्याएँ खोजें जिनका योग target के बराबर हो।
+
+**Brute force:** हर जोड़ी जाँचें → O(n²)
+**Hash map तरीका:** हर संख्या के लिए, जाँचें कि `target - num` मौजूद है या नहीं → **O(n)**
+
+**चरण दर चरण** `nums = [2, 7, 11, 15]`, `target = 9` के साथ:
+
+| चरण | वर्तमान | ज़रूरत (9 - वर्तमान) | Map में है? | क्रिया |
+|------|---------|---------------------|------------|--------|
+| 1 | 2 | 7 | नहीं | `2: 0` स्टोर करें |
+| 2 | 7 | 2 | **हाँ!** | `[0, 1]` लौटाएँ |
+
+<Callout type="info">
+यह pattern — "जो देखा है उसे स्टोर करो, जो चाहिए उसे जाँचो" — **दर्जनों** interview समस्याओं में दिखाई देता है।
+</Callout>
+
+---
+
+## Pattern 2: Frequency Counting
+
+> हर तत्व कितनी बार आता है, यह गिनें।
+
+```python
+def frequency_count(nums):
+    freq = {}
+    for num in nums:
+        freq[num] = freq.get(num, 0) + 1
+    return freq
+
+# [1, 2, 2, 3, 3, 3] => {1: 1, 2: 2, 3: 3}
+```
+
+**इसका उपयोग:**
+
+- **Top K Frequent Elements** — गिनें फिर frequency के अनुसार sort करें
+- **Valid Anagram** — character frequencies की तुलना करें
+- **Group Anagrams** — समान sorted characters वाले शब्दों को group करें
+
+---
+
+## Pattern 3: Key के अनुसार grouping
+
+> Anagrams को group करें: `["eat","tea","tan","ate","nat","bat"]`
+
+**रणनीति:** हर शब्द को sort करें → sorted version को hash key के रूप में उपयोग करें।
+
+| मूल | Sorted (Key) | Group |
+|------|-------------|-------|
+| "eat" | "aet" | ["eat", "tea", "ate"] |
+| "tan" | "ant" | ["tan", "nat"] |
+| "bat" | "abt" | ["bat"] |
+
+---
+
+## AI से जुड़ाव: Feature Stores
+
+प्रोडक्शन ML सिस्टम में, **feature stores** अपने मूल में hash maps का उपयोग करते हैं:
+
+- **User ID → feature vector** — रियल-टाइम recommendations के लिए तुरंत lookup
+- **Product ID → embeddings** — recommendation engines में similarity search
+- **Cache layer** — महँगे features को दोबारा compute करने से बचें
+
+<FunFact>
+Netflix का recommendation engine उपयोगकर्ताओं को कंटेंट से मिलाने के लिए **प्रति सेकंड लाखों hash map lookups** करता है। हर उपयोगकर्ता का देखने का इतिहास `movie_id: rating` जोड़ों के hash map के रूप में संग्रहीत होता है, जो model inference के दौरान O(1) feature retrieval को सक्षम बनाता है।
+</FunFact>
+
+---
+
+## Complexity चीट शीट
+
+| ऑपरेशन | Array | Hash Map |
+|---------|-------|----------|
+| Index से एक्सेस | O(1) | — |
+| मान से खोजें | O(n) | O(1) औसत |
+| अंत में insert | O(1)* | O(1) औसत |
+| शुरू में insert | O(n) | O(1) औसत |
+| Delete | O(n) | O(1) औसत |
+| Space | O(n) | O(n) |
+
+*dynamic arrays के लिए amortised
+
+<ThinkAboutIt>
+आप hash map की जगह array कब चुनेंगे? जब आपको **क्रमबद्ध डेटा**, **cache performance**, या **न्यूनतम memory overhead** चाहिए। Hash maps गति के लिए space का आदान-प्रदान करते हैं — हर entry में hash, key और pointer के लिए overhead होता है।
+</ThinkAboutIt>

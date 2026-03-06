@@ -1,0 +1,295 @@
+---
+title: "Concevoir un Rate Limiter — Protéger les API d'IA"
+description: "Construisez un rate limiter de zéro. Comprenez le token bucket, la fenêtre glissante, et comment les API d'IA comme OpenAI régulent les requêtes."
+order: 2
+difficulty: "intermediate"
+duration: 25
+icon: "⚡"
+published: true
+---
+
+# Concevoir un Rate Limiter
+
+Chaque API que vous utilisez — OpenAI, Stripe, GitHub — dispose d'un rate limiter qui la protège. Sans rate limiting, un seul acteur malveillant (ou un script défaillant) peut faire tomber un service entier.
+
+<Callout type="info">
+Le rate limiting ne se résume pas à dire « non » — c'est une question d'**équité**. Il garantit que chaque utilisateur obtient sa part d'une ressource limitée : calcul, bande passante ou temps d'inférence IA.
+</Callout>
+
+---
+
+## Pourquoi le Rate Limiting est important (surtout pour l'IA)
+
+| Scénario | Sans Rate Limiting | Avec Rate Limiting |
+|---|---|---|
+| **Attaque DDoS** | Le service tombe en panne | Les attaquants reçoivent une erreur 429, les utilisateurs légitimes ne sont pas affectés |
+| **Script incontrôlé** | 10K requêtes/sec épuise le quota | Plafonné au débit autorisé, échoue gracieusement |
+| **Abus d'API IA** | Un utilisateur monopolise tous les GPU | Part équitable entre tous les utilisateurs |
+| **Contrôle des coûts** | Facture cloud surprise de 50K $ | Dépenses prévisibles et budgétées |
+| **Défaillances en cascade** | Surcharge du backend → panne totale | La contre-pression protège les services en aval |
+
+### Limites réelles des API d'IA
+
+| Fournisseur | Niveau gratuit | Niveau payant | Unité |
+|---|---|---|---|
+| **OpenAI** | 3 RPM / 200 RPD | 10 000 RPM | Requêtes par minute |
+| **Claude** | 50 RPM | 4 000 RPM | Requêtes par minute |
+| **Gemini** | 15 RPM | 1 000 RPM | Requêtes par minute |
+| **Stability AI** | 10 req/10sec | 150 req/10sec | Par fenêtre de temps |
+
+<FunFact>
+OpenAI ne limite pas seulement par requêtes — ils limitent aussi par **tokens par minute (TPM)**. Une seule requête utilisant GPT-4 avec une fenêtre de contexte de 128K consomme bien plus de ressources qu'un court appel GPT-3.5. C'est pourquoi ils ont des limites doubles : RPM (requêtes) et TPM (tokens).
+</FunFact>
+
+---
+
+## Algorithme 1 : Token Bucket
+
+L'algorithme le plus largement utilisé. Simple, économe en mémoire, et permet des rafales contrôlées.
+
+<Illustration src="/images/lessons/craft/token-bucket.svg" alt="Token bucket algorithm visualization showing a bucket filling with tokens at a steady rate, requests consuming tokens, with allow (200 OK) and reject (429 Too Many) paths" caption="Token Bucket — les tokens se rechargent à un rythme constant. Chaque requête consomme un token. Quand le seau est vide, les requêtes sont rejetées jusqu'au rechargement des tokens." />
+
+### Comment ça fonctionne
+
+```python
+import time
+
+class TokenBucket:
+    def __init__(self, capacity: int, refill_rate: float):
+        self.capacity = capacity          # max burst size
+        self.tokens = capacity            # current tokens
+        self.refill_rate = refill_rate    # tokens per second
+        self.last_refill = time.time()
+
+    def allow_request(self) -> bool:
+        self._refill()
+        if self.tokens >= 1:
+            self.tokens -= 1
+            return True  # 200 OK
+        return False     # 429 Too Many Requests
+
+    def _refill(self):
+        now = time.time()
+        elapsed = now - self.last_refill
+        new_tokens = elapsed * self.refill_rate
+        self.tokens = min(self.capacity, self.tokens + new_tokens)
+        self.last_refill = now
+
+# Usage: 10 burst, 5/sec sustained
+limiter = TokenBucket(capacity=10, refill_rate=5)
+```
+
+### Propriétés du Token Bucket
+
+| Propriété | Valeur | Signification |
+|---|---|---|
+| **Mémoire** | O(1) par utilisateur | Juste 2 nombres : tokens + horodatage |
+| **Gestion des rafales** | Autorise les rafales courtes | Jusqu'à `capacity` requêtes instantanément |
+| **Débit soutenu** | `refill_rate` req/sec | Débit moyen à long terme |
+| **Précision** | Approximative | Dépend de la granularité de rechargement |
+
+<ThinkAboutIt>
+Pourquoi l'algorithme Token Bucket autorise-t-il les **rafales** ? Pensez au comportement réel des utilisateurs — vous pourriez charger une page et déclencher 10 appels API simultanément, puis plus rien pendant 2 secondes. Une limite stricte de « 5 par seconde » rejetterait 5 de ces appels initiaux, même si votre débit moyen est bien dans les limites.
+</ThinkAboutIt>
+
+---
+
+## Algorithme 2 : Compteur à fenêtre glissante
+
+Plus précis que les fenêtres fixes, moins gourmand en mémoire que le journal à fenêtre glissante.
+
+### Fenêtre fixe vs fenêtre glissante
+
+**Problème de la fenêtre fixe** : Pic aux limites
+
+```
+Window 1 (0:00-1:00): ....xxxxxxxx  (8 requests in last 10 sec)
+Window 2 (1:00-2:00): xxxxxxxx....  (8 requests in first 10 sec)
+                             ^^^^^^^^^^^^^^^^
+                             16 requests in 20 seconds!
+                             (Limit was 10/minute — bypassed at boundary)
+```
+
+**Solution de la fenêtre glissante** : Pondération par position dans la fenêtre
+
+```python
+class SlidingWindowCounter:
+    def __init__(self, limit: int, window_seconds: int):
+        self.limit = limit
+        self.window = window_seconds
+        self.previous_count = 0
+        self.current_count = 0
+        self.window_start = int(time.time())
+
+    def allow_request(self) -> bool:
+        now = int(time.time())
+        elapsed = now - self.window_start
+
+        if elapsed >= self.window:
+            self.previous_count = self.current_count
+            self.current_count = 0
+            self.window_start = now
+            elapsed = 0
+
+        # Weighted count: blend previous + current window
+        weight = 1 - (elapsed / self.window)
+        estimated_count = (self.previous_count * weight) + self.current_count
+
+        if estimated_count < self.limit:
+            self.current_count += 1
+            return True
+        return False
+```
+
+### Comparaison des algorithmes
+
+| Algorithme | Mémoire | Contrôle des rafales | Précision | Idéal pour |
+|---|---|---|---|---|
+| **Token Bucket** | O(1) | Autorise les rafales | Approximative | Passerelles API, usage général |
+| **Leaky Bucket** | O(1) | Pas de rafales | Lisse | Mise en forme du trafic réseau |
+| **Fenêtre fixe** | O(1) | Faible aux limites | Basse | Comptage de débit simple |
+| **Journal à fenêtre glissante** | O(n) | Exact | Exact | Petite échelle, journaux d'audit |
+| **Compteur à fenêtre glissante** | O(1) | Bon | Élevée | Rate limiting en production |
+
+<Callout type="info">
+**En entretien, recommandez le Token Bucket ou le Compteur à fenêtre glissante.** Le Token Bucket est utilisé par AWS, Stripe et Cloudflare. Le Compteur à fenêtre glissante est utilisé par les implémentations basées sur Redis. Connaissez les deux et expliquez les compromis.
+</Callout>
+
+---
+
+## Architecture de Rate Limiting distribué
+
+Le rate limiting sur un seul serveur est simple. Le vrai défi est le rate limiting **distribué** sur plusieurs serveurs API.
+
+<Illustration src="/images/lessons/craft/rate-limiter-arch.svg" alt="Distributed rate limiter architecture showing Client to API Gateway to Rate Limiter middleware communicating with Redis cluster for shared state, with backend services and AI adaptive limiter" caption="Le rate limiting distribué utilise Redis comme magasin d'état partagé. Tous les serveurs API consultent les mêmes compteurs, garantissant des limites cohérentes quel que soit le serveur qui traite la requête." />
+
+### Le script Lua Redis (Rate Limiting atomique)
+
+L'idée clé : vérifier le compteur et l'incrémenter doit être **atomique**. Sinon, les conditions de concurrence permettent de contourner les limites.
+
+```lua
+-- Redis Lua script: atomic sliding window rate limit
+local key = KEYS[1]
+local limit = tonumber(ARGV[1])
+local window = tonumber(ARGV[2])
+local now = tonumber(ARGV[3])
+
+-- Remove expired entries
+redis.call('ZREMRANGEBYSCORE', key, 0, now - window * 1000)
+
+-- Count requests in current window
+local count = redis.call('ZCARD', key)
+
+if count < limit then
+    -- Allow: add this request
+    redis.call('ZADD', key, now, now .. '-' .. math.random(1000000))
+    redis.call('EXPIRE', key, window)
+    return 1  -- allowed
+else
+    return 0  -- rejected
+end
+```
+
+### Rate Limiting à différentes couches
+
+| Couche | Ce qu'elle limite | Exemple |
+|---|---|---|
+| **CDN/Edge** | Basé sur l'IP, géographique | Cloudflare : 1000 req/min par IP |
+| **API Gateway** | Clé API, basé sur la route | Kong : 100 req/sec par clé API |
+| **Application** | Basé sur l'utilisateur, spécifique à la ressource | App : 50 générations IA/jour par utilisateur |
+| **Base de données** | Pool de connexions, débit de requêtes | PgBouncer : max 100 connexions |
+
+<ThinkAboutIt>
+Si vous avez 10 serveurs API, chacun avec un rate limiter local réglé à 100 req/sec, un utilisateur pourrait potentiellement faire 1000 req/sec (100 sur chaque serveur). Comment l'état partagé dans Redis résout-il ce problème ? Que se passe-t-il si Redis tombe en panne — échouez-vous en mode ouvert (tout autoriser) ou en mode fermé (tout bloquer) ?
+</ThinkAboutIt>
+
+---
+
+## En-têtes de réponse du Rate Limit
+
+Toute API bien conçue renvoie les informations de rate limit dans les en-têtes de réponse :
+
+```http
+HTTP/1.1 200 OK
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 955
+X-RateLimit-Reset: 1672531200
+X-RateLimit-Policy: "1000;w=3600"
+
+--- OR when limited: ---
+
+HTTP/1.1 429 Too Many Requests
+Retry-After: 30
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1672531200
+Content-Type: application/json
+
+{"error": "rate_limit_exceeded", "message": "Try again in 30 seconds"}
+```
+
+<Callout type="info">
+Incluez toujours `Retry-After` dans les réponses 429. Les bons clients l'utilisent pour un backoff exponentiel. Sans cela, les clients réessaient immédiatement — aggravant la surcharge.
+</Callout>
+
+---
+
+## L'angle IA : Rate Limiting adaptatif avec le ML
+
+Les rate limiters traditionnels utilisent des règles statiques. Les systèmes modernes utilisent le ML pour **adapter les limites en temps réel**.
+
+### 1. Classification Bot vs Humain
+
+```python
+# Features for bot detection
+features = {
+    "request_interval_stddev": 0.002,   # Bots: very consistent timing
+    "user_agent_entropy": 1.2,          # Bots: low entropy UA strings
+    "mouse_movement_score": 0.0,        # Bots: no mouse events
+    "js_fingerprint_valid": False,      # Bots: often no JS execution
+    "geo_request_pattern": "datacenter", # Bots: originate from cloud IPs
+    "session_depth": 1,                  # Bots: single-page visits
+}
+# Model: Gradient Boosted Trees (XGBoost)
+# Output: probability of being a bot → adjust rate limit dynamically
+```
+
+### 2. Ajustement dynamique des seuils
+
+Au lieu de limites fixes, les modèles ML ajustent les seuils en fonction de :
+
+- **Charge actuelle du système** : Limites plus basses quand les CPU sont à 80%+
+- **Heure de la journée** : Limites plus élevées pendant les heures creuses
+- **Comportement de l'utilisateur** : Les utilisateurs de confiance obtiennent des limites plus élevées
+- **Type de requête** : Les opérations coûteuses (inférence IA) ont des limites plus strictes
+
+### 3. Détection d'anomalies
+
+```
+Normal pattern: User makes 10-20 req/min, steady throughout the day
+Anomaly:        User suddenly makes 500 req/min at 3 AM
+Action:         Auto-throttle + alert security team
+```
+
+<FunFact>
+Le Bot Management de Cloudflare utilise des modèles ML qui analysent plus de 30 signaux par requête — y compris l'empreinte TLS, l'ordonnancement des trames HTTP/2 et les modèles d'exécution JavaScript. Ils classifient 40 % du trafic internet comme des bots automatisés.
+</FunFact>
+
+---
+
+## Liste de vérification pour l'implémentation
+
+| Préoccupation | Décision |
+|---|---|
+| **Algorithme** | Token Bucket (tolérant aux rafales) ou Compteur à fenêtre glissante (précis) |
+| **Stockage** | Redis (distribué) ou mémoire locale (serveur unique) |
+| **Granularité** | Par utilisateur ? Par IP ? Par clé API ? Par endpoint ? |
+| **Mode d'échec** | Échec ouvert (autoriser) ou échec fermé (rejeter) ? |
+| **En-têtes** | Inclure `X-RateLimit-*` et `Retry-After` |
+| **Surveillance** | Suivre le taux de 429, les faux positifs, la latence ajoutée |
+| **SDK client** | Fournir une logique de réessai avec backoff exponentiel |
+| **Multi-couches** | Edge (CDN) + Passerelle + Couche application |
+
+<ThinkAboutIt>
+Concevez un rate limiter pour une API de complétion de code IA (comme GitHub Copilot). Les utilisateurs tapent du code et reçoivent des suggestions en temps réel. Comment géreriez-vous la nature en rafales de la frappe ? Limiteriez-vous par frappe, par requête de complétion, ou par suggestion acceptée ? Qu'en est-il des limites basées sur les tokens pour le LLM sous-jacent ?
+</ThinkAboutIt>

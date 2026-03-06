@@ -1,0 +1,295 @@
+---
+title: "Ontwerp een Rate Limiter — AI API's beschermen"
+description: "Bouw een rate limiter vanaf nul. Begrijp token bucket, sliding window, en hoe AI API's zoals OpenAI verzoeken beperken."
+order: 2
+difficulty: "intermediate"
+duration: 25
+icon: "⚡"
+published: true
+---
+
+# Ontwerp een Rate Limiter
+
+Elke API die je gebruikt — OpenAI, Stripe, GitHub — heeft een rate limiter die deze bewaakt. Zonder rate limiting kan één kwaadwillende actor (of een buggy script) een hele dienst platleggen.
+
+<Callout type="info">
+Rate limiting gaat niet alleen over „nee" zeggen — het gaat over **eerlijkheid**. Het zorgt ervoor dat elke gebruiker zijn deel krijgt van een beperkte bron: rekenkracht, bandbreedte of AI-inferentietijd.
+</Callout>
+
+---
+
+## Waarom Rate Limiting belangrijk is (vooral voor AI)
+
+| Scenario | Zonder Rate Limiting | Met Rate Limiting |
+|---|---|---|
+| **DDoS-aanval** | Service valt uit | Aanvallers krijgen 429, legitieme gebruikers niet beïnvloed |
+| **Ongecontroleerd script** | 10K verzoeken/sec verbruikt quota | Begrensd op toegestaan tarief, faalt netjes |
+| **AI API-misbruik** | Eén gebruiker monopoliseert alle GPU's | Eerlijk aandeel voor alle gebruikers |
+| **Kostenbeheersing** | Verrassingsfactuur van $50K | Voorspelbare, gebudgetteerde uitgaven |
+| **Cascade-storingen** | Backend-overbelasting → totale uitval | Tegendruk beschermt downstream-services |
+
+### Echte AI API-limieten
+
+| Aanbieder | Gratis niveau | Betaald niveau | Eenheid |
+|---|---|---|---|
+| **OpenAI** | 3 RPM / 200 RPD | 10.000 RPM | Verzoeken per minuut |
+| **Claude** | 50 RPM | 4.000 RPM | Verzoeken per minuut |
+| **Gemini** | 15 RPM | 1.000 RPM | Verzoeken per minuut |
+| **Stability AI** | 10 req/10sec | 150 req/10sec | Per tijdvenster |
+
+<FunFact>
+OpenAI beperkt niet alleen op verzoeken — ze beperken ook op **tokens per minuut (TPM)**. Een enkel verzoek met GPT-4 en een 128K contextvenster verbruikt veel meer resources dan een kort GPT-3.5 verzoek. Daarom hebben ze dubbele limieten: RPM (verzoeken) en TPM (tokens).
+</FunFact>
+
+---
+
+## Algoritme 1: Token Bucket
+
+Het meest gebruikte algoritme. Simpel, geheugenefficiënt, en staat gecontroleerde bursts toe.
+
+<Illustration src="/images/lessons/craft/token-bucket.svg" alt="Token bucket algorithm visualization showing a bucket filling with tokens at a steady rate, requests consuming tokens, with allow (200 OK) and reject (429 Too Many) paths" caption="Token Bucket — tokens worden aangevuld met een constant tempo. Elk verzoek verbruikt een token. Wanneer de emmer leeg is, worden verzoeken geweigerd tot de tokens zijn aangevuld." />
+
+### Hoe het werkt
+
+```python
+import time
+
+class TokenBucket:
+    def __init__(self, capacity: int, refill_rate: float):
+        self.capacity = capacity          # max burst size
+        self.tokens = capacity            # current tokens
+        self.refill_rate = refill_rate    # tokens per second
+        self.last_refill = time.time()
+
+    def allow_request(self) -> bool:
+        self._refill()
+        if self.tokens >= 1:
+            self.tokens -= 1
+            return True  # 200 OK
+        return False     # 429 Too Many Requests
+
+    def _refill(self):
+        now = time.time()
+        elapsed = now - self.last_refill
+        new_tokens = elapsed * self.refill_rate
+        self.tokens = min(self.capacity, self.tokens + new_tokens)
+        self.last_refill = now
+
+# Usage: 10 burst, 5/sec sustained
+limiter = TokenBucket(capacity=10, refill_rate=5)
+```
+
+### Token Bucket-eigenschappen
+
+| Eigenschap | Waarde | Betekenis |
+|---|---|---|
+| **Geheugen** | O(1) per gebruiker | Slechts 2 getallen: tokens + tijdstempel |
+| **Burst-afhandeling** | Staat korte bursts toe | Tot `capacity` verzoeken tegelijk |
+| **Aanhoudend tarief** | `refill_rate` req/sec | Langetermijn gemiddelde doorvoer |
+| **Precisie** | Benaderend | Afhankelijk van aanvulgranulariteit |
+
+<ThinkAboutIt>
+Waarom staat het Token Bucket-algoritme **bursts** toe? Denk aan echt gebruikersgedrag — je zou een pagina kunnen laden en 10 API-verzoeken tegelijk afvuren, en dan niets gedurende 2 seconden. Een strikte limiet van „5 per seconde" zou 5 van die initiële verzoeken weigeren, ook al is je gemiddelde tarief ruim binnen de limieten.
+</ThinkAboutIt>
+
+---
+
+## Algoritme 2: Sliding Window Counter
+
+Nauwkeuriger dan vaste vensters, minder geheugen dan sliding window log.
+
+### Vast venster vs schuivend venster
+
+**Probleem van het vaste venster**: Piek op de grens
+
+```
+Window 1 (0:00-1:00): ....xxxxxxxx  (8 requests in last 10 sec)
+Window 2 (1:00-2:00): xxxxxxxx....  (8 requests in first 10 sec)
+                             ^^^^^^^^^^^^^^^^
+                             16 requests in 20 seconds!
+                             (Limit was 10/minute — bypassed at boundary)
+```
+
+**Oplossing met schuivend venster**: Weging op basis van positie in het venster
+
+```python
+class SlidingWindowCounter:
+    def __init__(self, limit: int, window_seconds: int):
+        self.limit = limit
+        self.window = window_seconds
+        self.previous_count = 0
+        self.current_count = 0
+        self.window_start = int(time.time())
+
+    def allow_request(self) -> bool:
+        now = int(time.time())
+        elapsed = now - self.window_start
+
+        if elapsed >= self.window:
+            self.previous_count = self.current_count
+            self.current_count = 0
+            self.window_start = now
+            elapsed = 0
+
+        # Weighted count: blend previous + current window
+        weight = 1 - (elapsed / self.window)
+        estimated_count = (self.previous_count * weight) + self.current_count
+
+        if estimated_count < self.limit:
+            self.current_count += 1
+            return True
+        return False
+```
+
+### Algoritme-vergelijking
+
+| Algoritme | Geheugen | Burst-controle | Precisie | Beste voor |
+|---|---|---|---|---|
+| **Token Bucket** | O(1) | Staat bursts toe | Benaderend | API-gateways, algemeen gebruik |
+| **Leaky Bucket** | O(1) | Geen bursts | Gelijkmatig | Netwerkverkeer vormen |
+| **Vast venster** | O(1) | Slecht op grenzen | Laag | Eenvoudige tarieftelling |
+| **Sliding Window Log** | O(n) | Exact | Exact | Kleine schaal, auditlogging |
+| **Sliding Window Counter** | O(1) | Goed | Hoog | Productie rate limiting |
+
+<Callout type="info">
+**Beveel in interviews Token Bucket of Sliding Window Counter aan.** Token Bucket wordt gebruikt door AWS, Stripe en Cloudflare. Sliding Window Counter wordt gebruikt door op Redis gebaseerde implementaties. Ken beide en leg de afwegingen uit.
+</Callout>
+
+---
+
+## Gedistribueerde Rate Limiting-architectuur
+
+Rate limiting op één server is eenvoudig. De echte uitdaging is **gedistribueerde** rate limiting over meerdere API-servers.
+
+<Illustration src="/images/lessons/craft/rate-limiter-arch.svg" alt="Distributed rate limiter architecture showing Client to API Gateway to Rate Limiter middleware communicating with Redis cluster for shared state, with backend services and AI adaptive limiter" caption="Gedistribueerde rate limiting gebruikt Redis als gedeelde state store. Alle API-servers raadplegen dezelfde tellers, wat consistente limieten garandeert ongeacht welke server het verzoek afhandelt." />
+
+### Het Redis Lua Script (atomaire rate limiting)
+
+Het cruciale inzicht: het controleren van de teller en het ophogen moet **atomair** zijn. Anders kunnen race-condities de limieten omzeilen.
+
+```lua
+-- Redis Lua script: atomic sliding window rate limit
+local key = KEYS[1]
+local limit = tonumber(ARGV[1])
+local window = tonumber(ARGV[2])
+local now = tonumber(ARGV[3])
+
+-- Remove expired entries
+redis.call('ZREMRANGEBYSCORE', key, 0, now - window * 1000)
+
+-- Count requests in current window
+local count = redis.call('ZCARD', key)
+
+if count < limit then
+    -- Allow: add this request
+    redis.call('ZADD', key, now, now .. '-' .. math.random(1000000))
+    redis.call('EXPIRE', key, window)
+    return 1  -- allowed
+else
+    return 0  -- rejected
+end
+```
+
+### Rate Limiting op verschillende lagen
+
+| Laag | Wat het beperkt | Voorbeeld |
+|---|---|---|
+| **CDN/Edge** | IP-gebaseerd, geografisch | Cloudflare: 1000 req/min per IP |
+| **API Gateway** | API-sleutel, route-gebaseerd | Kong: 100 req/sec per API-sleutel |
+| **Applicatie** | Gebruiker-gebaseerd, resource-specifiek | App: 50 AI-generaties/dag per gebruiker |
+| **Database** | Connectiepool, query-tarief | PgBouncer: max 100 verbindingen |
+
+<ThinkAboutIt>
+Als je 10 API-servers hebt, elk met een lokale rate limiter ingesteld op 100 req/sec, zou een gebruiker mogelijk 1000 req/sec kunnen doen (100 op elke server). Hoe lost gedeelde state in Redis dit op? Wat gebeurt er als Redis uitvalt — faal je open (alles toestaan) of faal je gesloten (alles blokkeren)?
+</ThinkAboutIt>
+
+---
+
+## Rate Limit-responsheaders
+
+Elke goed ontworpen API geeft rate limit-informatie terug in de responsheaders:
+
+```http
+HTTP/1.1 200 OK
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 955
+X-RateLimit-Reset: 1672531200
+X-RateLimit-Policy: "1000;w=3600"
+
+--- OR when limited: ---
+
+HTTP/1.1 429 Too Many Requests
+Retry-After: 30
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1672531200
+Content-Type: application/json
+
+{"error": "rate_limit_exceeded", "message": "Try again in 30 seconds"}
+```
+
+<Callout type="info">
+Voeg altijd `Retry-After` toe aan 429-responses. Goede clients gebruiken het voor exponentiële backoff. Zonder dit proberen clients het onmiddellijk opnieuw — wat de overbelasting verergert.
+</Callout>
+
+---
+
+## De AI-invalshoek: Adaptieve Rate Limiting met ML
+
+Traditionele rate limiters gebruiken statische regels. Moderne systemen gebruiken ML om **limieten in realtime aan te passen**.
+
+### 1. Bot vs Mens-classificatie
+
+```python
+# Features for bot detection
+features = {
+    "request_interval_stddev": 0.002,   # Bots: very consistent timing
+    "user_agent_entropy": 1.2,          # Bots: low entropy UA strings
+    "mouse_movement_score": 0.0,        # Bots: no mouse events
+    "js_fingerprint_valid": False,      # Bots: often no JS execution
+    "geo_request_pattern": "datacenter", # Bots: originate from cloud IPs
+    "session_depth": 1,                  # Bots: single-page visits
+}
+# Model: Gradient Boosted Trees (XGBoost)
+# Output: probability of being a bot → adjust rate limit dynamically
+```
+
+### 2. Dynamische drempelaanpassing
+
+In plaats van vaste limieten passen ML-modellen drempels aan op basis van:
+
+- **Huidige systeembelasting**: Lagere limieten wanneer CPU's op 80%+ staan
+- **Tijd van de dag**: Hogere limieten tijdens daluren
+- **Gebruikersgedrag**: Vertrouwde gebruikers krijgen hogere limieten
+- **Type verzoek**: Dure operaties (AI-inferentie) krijgen strengere limieten
+
+### 3. Anomaliedetectie
+
+```
+Normal pattern: User makes 10-20 req/min, steady throughout the day
+Anomaly:        User suddenly makes 500 req/min at 3 AM
+Action:         Auto-throttle + alert security team
+```
+
+<FunFact>
+Cloudflare's Bot Management gebruikt ML-modellen die meer dan 30 signalen per verzoek analyseren — inclusief TLS-fingerprinting, HTTP/2-frameordening en JavaScript-uitvoeringspatronen. Ze classificeren 40% van het internetverkeer als geautomatiseerde bots.
+</FunFact>
+
+---
+
+## Implementatiechecklist
+
+| Aandachtspunt | Beslissing |
+|---|---|
+| **Algoritme** | Token Bucket (burst-vriendelijk) of Sliding Window Counter (precies) |
+| **Opslag** | Redis (gedistribueerd) of lokaal geheugen (enkele server) |
+| **Granulariteit** | Per gebruiker? Per IP? Per API-sleutel? Per endpoint? |
+| **Faalmodus** | Faal open (toestaan) of faal gesloten (weigeren)? |
+| **Headers** | Inclusief `X-RateLimit-*` en `Retry-After` |
+| **Monitoring** | Volg 429-tarief, valse positieven, toegevoegde latentie |
+| **Client SDK** | Bied retry-logica met exponentiële backoff |
+| **Multi-laags** | Edge (CDN) + Gateway + Applicatielaag |
+
+<ThinkAboutIt>
+Ontwerp een rate limiter voor een AI-code-completion-API (zoals GitHub Copilot). Gebruikers typen code en krijgen suggesties in realtime. Hoe zou je omgaan met de burst-achtige aard van typen? Zou je rate limiten per toetsaanslag, per voltooiingsverzoek, of per geaccepteerde suggestie? Hoe zit het met token-gebaseerde limieten voor het onderliggende LLM?
+</ThinkAboutIt>

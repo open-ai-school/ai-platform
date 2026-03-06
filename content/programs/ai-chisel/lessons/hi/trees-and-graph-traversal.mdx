@@ -1,0 +1,159 @@
+---
+title: "Trees & Graphs — AI निर्णय कैसे लेता है"
+description: "Tree traversals और graph एल्गोरिथम को विज़ुअलाइज़ करें। समझें कि decision trees, knowledge graphs और neural networks इन संरचनाओं का उपयोग कैसे करते हैं।"
+order: 2
+difficulty: "intermediate"
+duration: 25
+icon: "🌲"
+published: true
+---
+
+# Trees & Graphs — AI निर्णय कैसे लेता है
+
+Trees और graphs AI में **हर जगह** हैं: decision trees डेटा को वर्गीकृत करते हैं, knowledge graphs संबंधों को संग्रहीत करते हैं, और neural networks directed acyclic graphs हैं। Traversal में महारत हासिल करना अनिवार्य है।
+
+---
+
+## Binary Tree Traversals
+
+हर tree समस्या इस पर आती है: **आप हर node को कैसे विज़िट करते हैं?**
+
+<Illustration src="/images/lessons/craft/tree-traversal.svg" alt="Binary tree जिसमें BFS level-order बनाम DFS pre-order traversal क्रमांकित विज़िट अनुक्रम के साथ दिखाया गया है" caption="BFS स्तर दर स्तर विज़िट करता है (queue का उपयोग करके)। DFS पहले गहराई में जाता है (stack/recursion का उपयोग करके)। एक ही tree, अलग-अलग विज़िट क्रम।" />
+
+### BFS — Level Order (Queue)
+
+```python
+from collections import deque
+
+def level_order(root):
+    if not root:
+        return []
+    result, queue = [], deque([root])
+
+    while queue:
+        level = []
+        for _ in range(len(queue)):   # process one level
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left:  queue.append(node.left)
+            if node.right: queue.append(node.right)
+        result.append(level)
+
+    return result
+```
+
+### DFS — तीन प्रकार (Stack/Recursion)
+
+```python
+def preorder(node):    # Root -> Left -> Right
+    if not node: return
+    visit(node)
+    preorder(node.left)
+    preorder(node.right)
+
+def inorder(node):     # Left -> Root -> Right (sorted for BST!)
+    if not node: return
+    inorder(node.left)
+    visit(node)
+    inorder(node.right)
+
+def postorder(node):   # Left -> Right -> Root (delete safely)
+    if not node: return
+    postorder(node.left)
+    postorder(node.right)
+    visit(node)
+```
+
+<Callout type="info">
+**कौन सा कब उपयोग करें?** BFS सबसे छोटे पथ / स्तर-दर-स्तर प्रसंस्करण के लिए। DFS पथ खोजने, गहराई गणना, या जब आपको माता-पिता से पहले बच्चों को प्रसंस्करित करना हो (postorder) के लिए।
+</Callout>
+
+### क्लासिक tree समस्याएँ
+
+| समस्या | Traversal | मुख्य अंतर्दृष्टि |
+|---------|-----------|-------------------|
+| अधिकतम गहराई | DFS | `1 + max(depth(left), depth(right))` |
+| Level order traversal | BFS | स्तर-आकार बैचिंग के साथ Queue |
+| BST मान्य करें | Inorder DFS | मान कड़ाई से बढ़ने चाहिए |
+| सबसे निचला साझा पूर्वज | DFS | Recurse करें, बाएँ/दाएँ रिटर्न जाँचें |
+| Serialize/Deserialize | BFS या Preorder | Nulls को मार्कर के रूप में एन्कोड करें |
+
+---
+
+## Graph Traversals
+
+Graphs वे trees हैं जिनमें "कोई cycle नहीं" की गारंटी नहीं होती। मुख्य जोड़: अनंत लूप से बचने के लिए **एक visited सेट**।
+
+<Illustration src="/images/lessons/craft/graph-bfs-dfs.svg" alt="9 nodes वाला graph जिसमें BFS वेवफ्रंट विस्तार बनाम DFS गहराई-पहले अन्वेषण दिखाया गया है" caption="BFS विस्तारित तरंगों में खोजता है (सबसे छोटी दूरी की गारंटी)। DFS पीछे हटने से पहले एक पथ में गहराई तक जाता है।" />
+
+### Graph BFS
+
+```python
+from collections import deque
+
+def bfs(graph, start):
+    visited = {start}
+    queue = deque([start])
+
+    while queue:
+        node = queue.popleft()
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+```
+
+### Graph DFS
+
+```python
+def dfs(graph, node, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(node)
+
+    for neighbor in graph[node]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+```
+
+<ThinkAboutIt>
+BFS अनभारित graph में सबसे छोटा पथ खोजने की गारंटी क्यों देता है? क्योंकि यह दूरी d+1 पर किसी भी node से पहले दूरी d पर सभी nodes का अन्वेषण करता है। DFS ऐसी कोई गारंटी नहीं देता — यह पहले एक लंबा पथ खोज सकता है।
+</ThinkAboutIt>
+
+### क्लासिक graph समस्याएँ
+
+| समस्या | एल्गोरिथम | जटिलता |
+|---------|-----------|---------|
+| सबसे छोटा पथ (अनभारित) | BFS | O(V + E) |
+| Cycle पहचान (अनिर्देशित) | DFS parent tracking के साथ | O(V + E) |
+| Cycle पहचान (निर्देशित) | DFS 3-रंग चिह्नांकन के साथ | O(V + E) |
+| द्वीपों की संख्या | BFS/DFS flood fill | O(पंक्तियाँ * स्तंभ) |
+| Topological sort | DFS postorder उल्टा | O(V + E) |
+| संबंधित घटक | BFS/DFS प्रत्येक अनविज़िटेड से | O(V + E) |
+
+---
+
+## AI कनेक्शन: ML में Trees & Graphs
+
+<FunFact>
+Trees और graphs केवल डेटा संरचनाएँ नहीं हैं — ये आधुनिक AI की रीढ़ हैं:
+
+- **Decision Trees & Random Forests:** हर भविष्यवाणी एक binary tree को जड़ से पत्ती तक चलती है। Traversal क्रम = feature महत्व रैंकिंग।
+- **Knowledge Graphs:** Google का Knowledge Graph, Wikidata, और एंटरप्राइज़ ऑन्टोलॉजीज विशाल directed graphs हैं जिन्हें प्रश्नों के उत्तर देने के लिए BFS/DFS से traverse किया जाता है।
+- **Graph Neural Networks (GNNs):** GNNs में message passing शाब्दिक रूप से BFS है — प्रत्येक node अपने k-hop पड़ोस से features एकत्रित करता है।
+- **Abstract Syntax Trees:** कोड लिखने वाले LLMs (Copilot, Codex) ASTs को parse और generate करते हैं — कोड का प्रतिनिधित्व करने वाली tree संरचनाएँ।
+- **Neural Network DAGs:** एक neural network *एक* directed acyclic graph है। Backpropagation computation graph के माध्यम से उल्टा postorder DFS है।
+</FunFact>
+
+---
+
+## त्वरित संदर्भ
+
+| संरचना | Traversal | डेटा संरचना | स्थान | सर्वोत्तम उपयोग |
+|---------|-----------|-------------|-------|----------------|
+| Tree BFS | Level order | Queue | O(w) | स्तर प्रसंस्करण, सबसे छोटा पथ |
+| Tree DFS | Pre/In/Post | Stack/Recursion | O(h) | पथ समस्याएँ, BST मान्यता |
+| Graph BFS | वेवफ्रंट | Queue + Visited | O(V) | सबसे छोटा पथ, संबंधित घटक |
+| Graph DFS | गहराई पहले | Stack + Visited | O(V) | Cycle पहचान, topological sort |
+
+*w = अधिकतम चौड़ाई, h = ऊँचाई, V = शीर्ष*

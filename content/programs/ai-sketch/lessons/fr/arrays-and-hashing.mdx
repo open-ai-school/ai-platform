@@ -1,0 +1,145 @@
+---
+title: "Arrays & Hashing — Les fondations de l'IA"
+description: "Maîtrisez les arrays et les hash maps grâce à des schémas visuels. Découvrez comment les moteurs de recommandation et les index de recherche utilisent ces structures fondamentales."
+order: 1
+difficulty: "beginner"
+duration: 15
+icon: "📊"
+published: true
+---
+
+# Arrays & Hashing
+
+Chaque système d'IA — des moteurs de recommandation aux index de recherche — repose sur deux primitives : les **arrays** et les **hash maps**. Maîtrisez-les et vous maîtrisez les fondations.
+
+---
+
+## Comment fonctionnent les arrays
+
+Un array stocke des éléments en **mémoire contiguë** — chaque emplacement est à un pas du suivant.
+
+<Illustration src="/images/lessons/craft/arrays-hashing.svg" alt="Array memory layout showing contiguous cells with index labels and hash map with key-to-bucket mapping" caption="Les arrays stockent les données en mémoire contiguë (à gauche). Les hash maps utilisent une fonction de hachage pour associer les clés à des positions de compartiments (à droite)." />
+
+**Caractéristiques clés :**
+
+- **Accès en O(1)** — accédez directement à n'importe quel index
+- **Insertion/suppression en O(n)** — le décalage des éléments est coûteux
+- **Compatible avec le cache** — la mémoire séquentielle permet des lectures CPU rapides
+- **Taille fixe** (dans la plupart des langages) — la capacité doit être connue à l'avance
+
+<Callout type="info">
+Les arrays sont la colonne vertébrale des **tenseurs** en apprentissage automatique. Un array 2D est une matrice, un array 3D est un tenseur — la structure de données fondamentale de chaque réseau de neurones.
+</Callout>
+
+---
+
+## Comment fonctionnent les hash maps
+
+Un hash map convertit une **clé** en un **index** à l'aide d'une fonction de hachage, puis stocke la valeur dans ce compartiment.
+
+**Le processus :**
+
+1. **Entrée :** `"apple"` (clé)
+2. **Hachage :** `hash("apple") % size` → compartiment `0`
+3. **Stockage :** compartiment `0` = `apple: 3`
+4. **Recherche :** O(1) en moyenne — accès direct au compartiment
+
+**Caractéristiques clés :**
+
+- **O(1) en moyenne** pour la recherche, l'insertion et la suppression
+- **O(n) dans le pire cas** — quand toutes les clés entrent en collision dans un même compartiment
+- **Non ordonné** — aucun ordre d'itération garanti
+- **Les clés doivent être hashables** — les types immuables fonctionnent le mieux
+
+<ThinkAboutIt>
+Pourquoi ne peut-on pas utiliser une liste comme clé de dictionnaire en Python ? Parce que les listes sont mutables — si vous modifiez la liste après le hachage, la valeur de hachage change mais le compartiment reste le même, ce qui casse la recherche.
+</ThinkAboutIt>
+
+---
+
+## Pattern 1 : Two Sum
+
+> Étant donné un array et une cible, trouvez deux nombres dont la somme est égale à la cible.
+
+**Force brute :** Vérifier chaque paire → O(n²)
+**Approche hash map :** Pour chaque nombre, vérifier si `target - num` existe → **O(n)**
+
+**Étape par étape** avec `nums = [2, 7, 11, 15]`, `target = 9` :
+
+| Étape | Actuel | Besoin (9 - actuel) | Dans la map ? | Action |
+|-------|--------|---------------------|---------------|--------|
+| 1 | 2 | 7 | Non | Stocker `2: 0` |
+| 2 | 7 | 2 | **Oui !** | Retourner `[0, 1]` |
+
+<Callout type="info">
+Ce pattern — « stocker ce que vous avez vu, vérifier ce dont vous avez besoin » — apparaît dans **des dizaines** de problèmes d'entretien.
+</Callout>
+
+---
+
+## Pattern 2 : Comptage de fréquences
+
+> Comptez combien de fois chaque élément apparaît.
+
+```python
+def frequency_count(nums):
+    freq = {}
+    for num in nums:
+        freq[num] = freq.get(num, 0) + 1
+    return freq
+
+# [1, 2, 2, 3, 3, 3] => {1: 1, 2: 2, 3: 3}
+```
+
+**Utilisé dans :**
+
+- **Top K Frequent Elements** — compter puis trier par fréquence
+- **Valid Anagram** — comparer les fréquences de caractères
+- **Group Anagrams** — regrouper les mots ayant les mêmes caractères triés
+
+---
+
+## Pattern 3 : Regroupement par clé
+
+> Regrouper les anagrammes : `["eat","tea","tan","ate","nat","bat"]`
+
+**Stratégie :** Trier chaque mot → utiliser la version triée comme clé de hachage.
+
+| Original | Trié (Clé) | Groupe |
+|----------|-----------|--------|
+| "eat" | "aet" | ["eat", "tea", "ate"] |
+| "tan" | "ant" | ["tan", "nat"] |
+| "bat" | "abt" | ["bat"] |
+
+---
+
+## Le lien avec l'IA : les Feature Stores
+
+Dans les systèmes de ML en production, les **feature stores** utilisent les hash maps à leur cœur :
+
+- **ID utilisateur → vecteur de caractéristiques** — recherche instantanée pour les recommandations en temps réel
+- **ID produit → embeddings** — recherche de similarité dans les moteurs de recommandation
+- **Couche de cache** — éviter de recalculer des caractéristiques coûteuses
+
+<FunFact>
+Le moteur de recommandation de Netflix effectue **des millions de recherches dans des hash maps par seconde** pour associer les utilisateurs au contenu. L'historique de visionnage de chaque utilisateur est stocké sous forme de hash map de paires `movie_id: rating`, permettant une récupération de caractéristiques en O(1) pendant l'inférence du modèle.
+</FunFact>
+
+---
+
+## Tableau récapitulatif de complexité
+
+| Opération | Array | Hash Map |
+|-----------|-------|----------|
+| Accès par index | O(1) | — |
+| Recherche par valeur | O(n) | O(1) moy |
+| Insertion en fin | O(1)* | O(1) moy |
+| Insertion au début | O(n) | O(1) moy |
+| Suppression | O(n) | O(1) moy |
+| Espace | O(n) | O(n) |
+
+*amorti pour les arrays dynamiques
+
+<ThinkAboutIt>
+Quand choisiriez-vous un array plutôt qu'un hash map ? Quand vous avez besoin de **données ordonnées**, de **performances de cache** ou d'un **surcoût mémoire minimal**. Les hash maps échangent de l'espace contre de la vitesse — chaque entrée a un surcoût pour le hash, la clé et le pointeur.
+</ThinkAboutIt>

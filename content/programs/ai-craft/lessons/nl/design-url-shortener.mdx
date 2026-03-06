@@ -1,0 +1,266 @@
+---
+title: "Ontwerp een URL Shortener — Je eerste systeemontwerp"
+description: "Leer de basisprincipes van systeemontwerp door TinyURL te bouwen. Begrijp hashing, databases, caching en hoe AI-linkvoorspelling werkt."
+order: 1
+difficulty: "intermediate"
+duration: 25
+icon: "🔗"
+published: true
+---
+
+# Ontwerp een URL Shortener
+
+Elk systeemontwerp-interview begint ergens — en URL shorteners zijn het perfecte eerste probleem. Simpel genoeg om in 5 minuten te begrijpen, diep genoeg om 45 minuten over te discussiëren.
+
+<Callout type="info">
+Dit is de „Hello World" van systeemontwerp. Beheers dit patroon en je hebt de woordenschat voor elke ontwerpvraag die volgt.
+</Callout>
+
+---
+
+## Stap 1: Vereisten verzamelen
+
+Voordat je ook maar één vakje tekent, **verduidelijk de vereisten**. Dit is waar interviewers junioren van senioren onderscheiden.
+
+### Functionele vereisten
+
+| Vereiste | Detail |
+|---|---|
+| **URL verkorten** | Gegeven een lange URL, geef een korte, unieke alias terug |
+| **Omleiding** | Wanneer een korte URL wordt bezocht, omleiden naar het origineel |
+| **Aangepaste aliassen** | Optioneel gebruikers hun eigen korte code laten kiezen |
+| **Verloopdatum** | URLs kunnen een optionele TTL hebben |
+| **Analytiek** | Klikken bijhouden, geo, apparaat |
+
+### Niet-functionele vereisten
+
+| Vereiste | Doel |
+|---|---|
+| **Beschikbaarheid** | 99,99% uptime (minder dan 53 min downtime/jaar) |
+| **Latentie** | Omleiding in minder dan 50ms (p99) |
+| **Schaal** | 100M nieuwe URLs/maand, 10 miljard omleidingen/maand |
+| **Lees:schrijf-ratio** | 100:1 (lezen domineert) |
+| **Duurzaamheid** | URLs mogen nooit verloren gaan |
+
+<ThinkAboutIt>
+Waarom is de lees-schrijfverhouding zo belangrijk? Hoe verandert een 100:1-ratio je architectuurbeslissingen vergeleken met een 1:1-ratio? Denk na over waar je caching zou plaatsen, hoeveel leesreplica's je nodig zou hebben, en of je schrijfpad überhaupt snel moet zijn.
+</ThinkAboutIt>
+
+---
+
+## Stap 2: Architectuur op hoog niveau
+
+Hier is het volledige systeem — bestudeer de stroom van client naar database en terug.
+
+<Illustration src="/images/lessons/craft/url-shortener-arch.svg" alt="URL Shortener system architecture showing Client, Load Balancer, API Servers, Redis Cache, Database, and Analytics pipeline with ML spam detection" caption="Volledige URL Shortener-architectuur — let op de scheiding tussen het lees/schrijfpad (boven) en de asynchrone analytiekpipeline (onder)" />
+
+### Kerncomponenten
+
+| Component | Doel | Technologie |
+|---|---|---|
+| **Load Balancer** | Verkeer verdelen over API-servers | Nginx, ALB, Cloudflare |
+| **API-servers** | Maak- en omleidingslogica afhandelen | Node.js, Go, Java |
+| **Cache** | Omleidingen versnellen (populaire URLs) | Redis, Memcached |
+| **Database** | Permanente URL-opslag | PostgreSQL, DynamoDB |
+| **Berichtenwachtrij** | Analytiek ontkoppelen van hoofdpad | Kafka, SQS |
+| **Analytiek** | Klikken bijhouden, metrics aggregeren | ClickHouse, BigQuery |
+
+### API-ontwerp
+
+```
+POST /api/v1/shorten
+Body: { "long_url": "https://example.com/...", "custom_alias": "my-link", "ttl": 86400 }
+Response: { "short_url": "https://tiny.url/a1B2c3", "expires_at": "2025-01-01T00:00:00Z" }
+
+GET /:short_code
+Response: 301 Redirect → Location: https://example.com/...
+```
+
+<Callout type="info">
+Gebruik **301 (Permanente omleiding)** als SEO belangrijk is — browsers cachen het. Gebruik **302 (Tijdelijke omleiding)** als je elke klik wilt bijhouden. De meeste URL shorteners gebruiken 302 voor analytiek.
+</Callout>
+
+---
+
+## Stap 3: URL-coderingsstrategie
+
+Het hart van het systeem — hoe genereren we korte, unieke codes?
+
+<Illustration src="/images/lessons/craft/url-shortener-encoding.svg" alt="Base62 encoding flow showing long URL to hash function to Base62 conversion to short code with mathematical steps" caption="Base62-codering transformeert een numeriek ID in een compacte, URL-veilige string — 6 tekens geven ons 56,8 miljard unieke URLs" />
+
+### Vergelijking van benaderingen
+
+| Benadering | Voordelen | Nadelen |
+|---|---|---|
+| **Auto-increment + Base62** | Simpel, geen botsingen | Voorspelbaar, enkel storingspunt |
+| **MD5/SHA256 hash** | Gedistribueerd, geen coördinator | Botsingsrisico, langere output |
+| **UUID** | Geen coördinatie nodig | 36 tekens — te lang voor korte URLs |
+| **Vooraf gegenereerde sleutels** | Geen runtime-berekening | Heeft sleutelbeheerservice nodig |
+| **Snowflake ID** | Gedistribueerd, sorteerbaar | Complexer, 64-bit ID's |
+
+### De winnende strategie: Teller + Base62
+
+```python
+import string
+
+ALPHABET = string.digits + string.ascii_lowercase + string.ascii_uppercase  # 62 chars
+
+def encode_base62(num: int) -> str:
+    if num == 0:
+        return ALPHABET[0]
+    result = []
+    while num > 0:
+        result.append(ALPHABET[num % 62])
+        num //= 62
+    return ''.join(reversed(result))
+
+# Example: encode_base62(2009215674) → "2bWPgs"
+```
+
+<FunFact>
+bit.ly gebruikt Base62-codering met codes van 6-7 tekens. Op hun schaal (~600M aangemaakte links) hebben ze minder dan 0,001% van de 6-tekensleutelruimte gebruikt. Je URL shortener heeft ruim voldoende ruimte om te groeien!
+</FunFact>
+
+---
+
+## Stap 4: Databaseschema
+
+```sql
+CREATE TABLE urls (
+    id          BIGSERIAL PRIMARY KEY,
+    short_code  VARCHAR(7) UNIQUE NOT NULL,
+    long_url    TEXT NOT NULL,
+    created_at  TIMESTAMP DEFAULT NOW(),
+    expires_at  TIMESTAMP,
+    user_id     BIGINT,
+    click_count BIGINT DEFAULT 0
+);
+
+CREATE INDEX idx_short_code ON urls(short_code);
+CREATE INDEX idx_expires_at ON urls(expires_at) WHERE expires_at IS NOT NULL;
+```
+
+### Shardingstrategie
+
+Voor 100M+ URLs is één database niet voldoende. Shard op `short_code`:
+
+| Shard | Bereik | Voorbeeld |
+|---|---|---|
+| Shard 0 | short_code begint met 0-9 | `3xK9mP` |
+| Shard 1 | short_code begint met a-m | `aB7nQr` |
+| Shard 2 | short_code begint met n-z | `pL2wXy` |
+| Shard 3 | short_code begint met A-Z | `Rt5vKm` |
+
+<ThinkAboutIt>
+Waarom sharden op `short_code` in plaats van `user_id`? Denk aan het leespad — wanneer iemand op een korte URL klikt, heb je alleen de short_code. Je moet direct naar de juiste shard routeren zonder iets anders op te zoeken.
+</ThinkAboutIt>
+
+---
+
+## Stap 5: Cachelaag
+
+Met een 100:1 lees-schrijfverhouding is caching cruciaal. Hier is het cache-aside-patroon:
+
+### Cache-hit-stroom (happy path)
+1. Verzoek komt binnen: `GET /a1B2c3`
+2. Redis controleren: `GET url:a1B2c3`
+3. Cache HIT → retourneer `long_url` → 301-omleiding
+4. Totale latentie: **~2ms**
+
+### Cache-miss-stroom
+1. Verzoek komt binnen: `GET /a1B2c3`
+2. Redis controleren: `GET url:a1B2c3` → MISS
+3. Database query: `SELECT long_url FROM urls WHERE short_code = 'a1B2c3'`
+4. Naar cache schrijven: `SET url:a1B2c3 "https://..." EX 86400`
+5. Retourneer `long_url` → 301-omleiding
+6. Totale latentie: **~15ms**
+
+### Cacheconfiguratie
+
+```
+Cache size:    ~20% of total URLs (hot set)
+Eviction:      LRU (Least Recently Used)
+TTL:           24 hours (balance freshness vs hit rate)
+Expected hit rate: 80-90% (Pareto: 20% of URLs get 80% of traffic)
+```
+
+<Callout type="info">
+**Cache-opwarmstrategie**: Laad de top 1000 meest geklikte URLs vooraf in de cache bij deployment. Dit voorkomt een stortvloed van cache-misses na een herstart.
+</Callout>
+
+---
+
+## Stap 6: Schaalbaarheidsstrategieën
+
+### Checklist voor horizontale schaalbaarheid
+
+| Laag | Strategie | Opmerkingen |
+|---|---|---|
+| **API-servers** | Meer instances toevoegen achter LB | Stateless — vrij schaalbaar |
+| **Database** | Leesreplica's + sharding | Schrijven naar primair, lezen van replica's |
+| **Cache** | Redis Cluster (6+ nodes) | Consistent hashing voor sleuteldistributie |
+| **ID-generatie** | Gedistribueerd: bereik-gebaseerd of Snowflake | Vermijd bottleneck van enkele teller |
+
+### Omgaan met populaire URLs
+
+Sommige URLs gaan viraal — miljoenen klikken in minuten. Strategieën:
+
+1. **Multi-level cache**: L1 (lokaal in-memory) → L2 (Redis) → DB
+2. **Rate limiting**: Backend beschermen tegen stortvloed
+3. **CDN**: Omleidingen cachen aan de rand (voorzichtig met analytiek)
+
+---
+
+## De AI-invalshoek: ML-aangedreven URL Shortening
+
+Moderne URL shorteners gebruiken AI op twee kerngebieden:
+
+### 1. Spam/phishing-detectie
+
+```python
+# Features for ML spam classifier
+features = {
+    "url_length": len(long_url),
+    "has_ip_address": bool(re.match(r'\d+\.\d+\.\d+\.\d+', domain)),
+    "subdomain_count": domain.count('.'),
+    "uses_https": long_url.startswith('https'),
+    "domain_age_days": get_domain_age(domain),
+    "similar_to_known_brand": brand_similarity_score(domain),
+    "contains_suspicious_keywords": check_keywords(long_url),
+}
+# Model: Random Forest or BERT-based classifier
+# Precision > 99.5% needed to avoid false positives
+```
+
+### 2. Klikvoorspelling (cache-opwarming)
+
+ML-modellen voorspellen welke URLs verkeerspieken zullen krijgen, waardoor preventieve cache-opwarming mogelijk is:
+
+- **Invoerfeatures**: Tijdstip, bronplatform (Twitter/Reddit), inhoudscategorie, historische patronen
+- **Uitvoer**: Voorspeld klikvolume voor het volgende uur
+- **Actie**: Cache vooraf opwarmen voor voorspelde virale URLs
+
+<FunFact>
+Bitly verwerkt meer dan 10 miljard klikken per maand en gebruikt ML om kwaadaardige URLs in realtime te detecteren. Hun model vangt phishing-pogingen op binnen seconden na het aanmaken van de korte URL — voordat het eerste slachtoffer klikt.
+</FunFact>
+
+---
+
+## Interviewchecklist
+
+Gebruik dit om je ontwerp zelf te evalueren:
+
+- [ ] Vereisten verduidelijkt (functioneel + niet-functioneel)
+- [ ] Schaal geschat (URLs/maand, leesbewerkingen/sec, opslag)
+- [ ] Schone API ontworpen (REST, juiste statuscodes)
+- [ ] Coderingsstrategie gekozen met onderbouwing
+- [ ] Databaseschema ontworpen met indexering
+- [ ] Caching toegevoegd met duidelijke hit/miss-stromen
+- [ ] Shardingstrategie besproken
+- [ ] Enkelvoudige storingspunten behandeld
+- [ ] Monitoring en alerting genoemd
+- [ ] De AI-invalshoek toegevoegd (spamdetectie, voorspelling)
+
+<ThinkAboutIt>
+Hoe zou je dit ontwerp aanpassen als URLs **verwijderbaar** moesten zijn (AVG-naleving)? Denk na over cache-invalidatie, zachte verwijderingen vs harde verwijderingen in de database, en hoe je een omleidingsverzoek voor een verwijderde URL zou afhandelen.
+</ThinkAboutIt>
