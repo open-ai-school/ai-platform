@@ -1,8 +1,10 @@
-name: Update Content Submodules
+name: Update Content
 
 on:
   repository_dispatch:
     types: [content-update]
+  # Also run when ai-courses is updated (can be triggered manually)
+  workflow_dispatch:
 
 concurrency:
   group: content-update
@@ -12,7 +14,7 @@ permissions:
   contents: write
 
 jobs:
-  update-submodules:
+  update-content:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -22,24 +24,19 @@ jobs:
           submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update submodule to latest
+      - name: Update ai-courses submodule
         run: |
-          PROGRAM="${{ github.event.client_payload.program }}"
-          # Sanitise input — only allow alphanumeric, dash, underscore
-          PROGRAM=$(echo "$PROGRAM" | sed 's/[^a-zA-Z0-9_-]//g')
-          echo "Updating content for: ${PROGRAM:-all}"
-          git submodule update --init --remote
+          echo "Updating content submodule to latest..."
+          git submodule update --init --remote content
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Commit and push if changed
         run: |
-          PROGRAM="${{ github.event.client_payload.program }}"
-          PROGRAM=$(echo "$PROGRAM" | sed 's/[^a-zA-Z0-9_-]//g')
           if git diff --quiet; then
-            echo "No submodule changes detected"
+            echo "No content changes detected"
           else
-            git add -A
-            git commit -m "chore: update ${PROGRAM:-content} submodule to latest"
+            git add content
+            git commit -m "chore: update ai-courses content to latest"
             git push
           fi
