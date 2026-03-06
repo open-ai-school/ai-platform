@@ -22,12 +22,10 @@ export default defineConfig({
       use: { ...devices["iPhone 14"] },
     },
   ],
-  webServer: process.env.CI
-    ? undefined
-    : {
-        command: "npm run build && npm run start",
-        port: 3000,
-        reuseExistingServer: true,
-        timeout: 120_000,
-      },
+  webServer: {
+    command: process.env.CI ? "npm run start" : "npm run build && npm run start",
+    port: 3000,
+    reuseExistingServer: !process.env.CI,
+    timeout: 120_000,
+  },
 });
