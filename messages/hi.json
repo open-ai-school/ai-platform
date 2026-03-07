@@ -272,7 +272,11 @@
     "currentStreak": "वर्तमान स्ट्रीक",
     "longestStreak": "सबसे लंबी स्ट्रीक",
     "days": "दिन",
-    "viewCertificate": "प्रमाणपत्र देखें"
+    "viewCertificate": "प्रमाणपत्र देखें",
+    "emptyLearn": "सीखें",
+    "emptyPractice": "अभ्यास करें",
+    "emptyEarn": "अर्जित करें",
+    "defaultUser": "शिक्षार्थी"
   },
   "auth": {
     "startLearning": "सीखना शुरू करें",
@@ -446,7 +450,8 @@
   "community": {
     "updates": "अपडेट रहें",
     "openSource": "ओपन सोर्स",
-    "openSourceDesc": "खुले तौर पर बनाया — कोड देखें, योगदान करें"
+    "openSourceDesc": "खुले तौर पर बनाया — कोड देखें, योगदान करें",
+    "shareText": "सभी के लिए मुफ्त AI शिक्षा"
   },
   "lab": {
     "title": "AI लैब",

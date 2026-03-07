@@ -272,7 +272,11 @@
     "currentStreak": "Current Streak",
     "longestStreak": "Longest Streak",
     "days": "days",
-    "viewCertificate": "View Certificate"
+    "viewCertificate": "View Certificate",
+    "emptyLearn": "Learn",
+    "emptyPractice": "Practice",
+    "emptyEarn": "Earn",
+    "defaultUser": "Learner"
   },
   "auth": {
     "startLearning": "Start Learning",
@@ -446,7 +450,8 @@
   "community": {
     "updates": "Stay Updated",
     "openSource": "Open Source",
-    "openSourceDesc": "Built openly, view code, contribute, or fork"
+    "openSourceDesc": "Built openly, view code, contribute, or fork",
+    "shareText": "Free AI education for everyone"
   },
   "lab": {
     "title": "AI Lab",

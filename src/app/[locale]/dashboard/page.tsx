@@ -140,6 +140,7 @@ export default function DashboardPage() {
   const t = useTranslations("dashboard");
   const ta = useTranslations("auth");
   const tl = useTranslations("lessonTitles");
+  const tp = useTranslations("programTitles");
   const { totalCompleted, getProgram, isCompleted, getCompletedAt, reset } = useProgress();
   const { currentStreak, longestStreak } = useStreak();
   const { data: session } = useSession();
@@ -216,9 +217,9 @@ export default function DashboardPage() {
           </p>
           <div className="grid grid-cols-3 gap-4 max-w-sm mx-auto mb-10">
             {[
-              { icon: "📚", label: "Learn" },
-              { icon: "🧪", label: "Practice" },
-              { icon: "🏆", label: "Earn" },
+              { icon: "📚", label: t("emptyLearn") },
+              { icon: "🧪", label: t("emptyPractice") },
+              { icon: "🏆", label: t("emptyEarn") },
             ].map((item) => (
               <div key={item.label} className="p-3 rounded-xl bg-[var(--color-bg-card)] border border-[var(--color-border)]">
                 <div className="text-2xl mb-1">{item.icon}</div>
@@ -242,9 +243,9 @@ export default function DashboardPage() {
       {/* Certificate Modal */}
       {certProgramData && (
         <Certificate
-          programName={certProgramData.title}
+          programName={tp(certProgramData.slug as any)}
           programIcon={certProgramData.icon}
-          userName={profile?.name || "Learner"}
+          userName={profile?.name || t("defaultUser")}
           completionDate={certCompletionDate}
           onClose={() => setCertProgram(null)}
         />
@@ -284,7 +285,7 @@ export default function DashboardPage() {
                 {nextLesson.lesson.icon}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs text-[var(--color-text-muted)] mb-0.5">{nextLesson.program.icon} {nextLesson.program.title}</p>
+                <p className="text-xs text-[var(--color-text-muted)] mb-0.5">{nextLesson.program.icon} {tp(nextLesson.program.slug as any)}</p>
                 <h3 className="font-bold text-sm truncate">{tl(nextLesson.lesson.slug as any)}</h3>
                 <span className="text-xs text-[var(--color-text-muted)]">⏱️ {nextLesson.lesson.duration} {t("min")}</span>
               </div>
@@ -362,7 +363,7 @@ export default function DashboardPage() {
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-4xl">{program.icon}</span>
                 <div className="flex-1 min-w-0">
-                  <h2 className="text-xl font-bold">{program.title}</h2>
+                  <h2 className="text-xl font-bold">{tp(program.slug as any)}</h2>
                   <div className="flex items-center gap-3 mt-1">
                     <div className="flex-1 h-3 rounded-full bg-[var(--color-bg-section)] overflow-hidden">
                       <div

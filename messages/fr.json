@@ -272,7 +272,11 @@
     "currentStreak": "Série actuelle",
     "longestStreak": "Meilleure série",
     "days": "jours",
-    "viewCertificate": "Voir le certificat"
+    "viewCertificate": "Voir le certificat",
+    "emptyLearn": "Apprendre",
+    "emptyPractice": "Pratiquer",
+    "emptyEarn": "Gagner",
+    "defaultUser": "Apprenant"
   },
   "auth": {
     "startLearning": "Commencer à apprendre",
@@ -446,7 +450,8 @@
   "community": {
     "updates": "Restez informé",
     "openSource": "Open Source",
-    "openSourceDesc": "Construit ouvertement — code, contributions ou fork"
+    "openSourceDesc": "Construit ouvertement — code, contributions ou fork",
+    "shareText": "Éducation IA gratuite pour tous"
   },
   "lab": {
     "title": "Labo IA",

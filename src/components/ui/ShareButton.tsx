@@ -12,7 +12,7 @@ export function ShareButton() {
         if (typeof navigator !== "undefined" && navigator.share) {
           navigator.share({
             title: "AI Educademy",
-            text: "Free AI education for everyone",
+            text: tc("shareText"),
             url: "https://aieducademy.org",
           });
         } else {

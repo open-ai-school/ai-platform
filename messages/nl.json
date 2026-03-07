@@ -273,7 +273,11 @@
     "currentStreak": "Huidige reeks",
     "longestStreak": "Langste reeks",
     "days": "dagen",
-    "viewCertificate": "Certificaat bekijken"
+    "viewCertificate": "Certificaat bekijken",
+    "emptyLearn": "Leren",
+    "emptyPractice": "Oefenen",
+    "emptyEarn": "Verdienen",
+    "defaultUser": "Leerling"
   },
   "auth": {
     "startLearning": "Begin met leren",
@@ -447,7 +451,8 @@
   "community": {
     "updates": "Blijf op de hoogte",
     "openSource": "Open Source",
-    "openSourceDesc": "Open gebouwd — bekijk code, draag bij of fork"
+    "openSourceDesc": "Open gebouwd — bekijk code, draag bij of fork",
+    "shareText": "Gratis AI-onderwijs voor iedereen"
   },
   "lab": {
     "title": "AI Lab",
