@@ -83,9 +83,9 @@ export function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-2 shrink-0">
-            <ThemeToggle />
             <LanguageSwitcher />
             <UserMenu />
+            <ThemeToggle />
           </div>
 
           {/* Mobile Actions */}
