@@ -56,36 +56,13 @@
       "description": "समझें कि AI उन चीज़ों में कैसे काम करता है जो आप हर दिन उपयोग करते हैं।"
     }
   },
-  "journey": {
-    "title": "आपकी सीखने की यात्रा",
-    "subtitle": "जिज्ञासु शुरुआती से AI-साक्षर नागरिक तक का स्पष्ट मार्ग",
-    "step1": {
-      "title": "AI क्या है?",
-      "description": "बेसिक्स से शुरू करें — AI वास्तव में क्या है और हर कोई इसके बारे में क्यों बात कर रहा है।"
-    },
-    "step2": {
-      "title": "मशीनें कैसे सीखती हैं",
-      "description": "जानें कि कंप्यूटर उदाहरणों से कैसे सीखते हैं।"
-    },
-    "step3": {
-      "title": "अपना पहला AI बनाएं",
-      "description": "अपने ब्राउज़र में एक सरल AI मॉडल को प्रशिक्षित करें।"
-    },
-    "step4": {
-      "title": "वास्तविक दुनिया में AI",
-      "description": "जानें कि AI आपके द्वारा दैनिक उपयोग किए जाने वाले ऐप्स को कैसे शक्ति देता है।"
-    }
-  },
   "founder": {
     "description": "एशिया और यूरोप के कई देशों में एक दशक से अधिक के अनुभव वाले सॉफ्टवेयर इंजीनियर और इंजीनियरिंग लीडर। रिटेल, लॉयल्टी और वित्तीय सेवाओं में डिजिटल ट्रांसफॉर्मेशन का नेतृत्व करने के बाद, मैंने AI Educademy की स्थापना की ताकि विश्व स्तरीय AI और इंजीनियरिंग शिक्षा हर भाषा में, हर पृष्ठभूमि के लिए मुफ्त में उपलब्ध हो सके।",
     "cta": "पूरी कहानी पढ़ें",
-    "role": "संस्थापक · इंजीनियरिंग लीडर · ओपन सोर्स समर्थक"
-  },
-  "cta": {
-    "title": "शुरू करने के लिए तैयार?",
-    "subtitle": "आपका पहला पाठ केवल 10 मिनट का है। कोई साइनअप जरूरी नहीं।",
-    "button": "पाठ 1 शुरू करें: AI क्या है?",
-    "github": "GitHub पर स्टार दें"
+    "role": "संस्थापक · इंजीनियरिंग लीडर · ओपन सोर्स समर्थक",
+    "statContinents": "महाद्वीपों में कार्य अनुभव",
+    "statRepos": "ओपन सोर्स रिपॉज़िटरीज़",
+    "statYears": "वर्षों का इंजीनियरिंग अनुभव"
   },
   "footer": {
     "tagline": "सभी के लिए, हर भाषा में मुफ्त AI शिक्षा।",
@@ -329,7 +306,22 @@
     "design-recommendation-engine": "रिकमेंडेशन इंजन डिज़ाइन करें",
     "star-framework": "STAR फ्रेमवर्क",
     "system-design-communication": "सिस्टम डिज़ाइन कम्युनिकेशन",
-    "ai-era-leadership": "AI-युग नेतृत्व"
+    "ai-era-leadership": "AI-युग नेतृत्व",
+    "ai-in-healthcare": "स्वास्थ्य सेवा में AI",
+    "algorithms-explained": "एल्गोरिदम की व्याख्या",
+    "building-ai-products": "AI प्रोडक्ट्स बनाना",
+    "chatbots-and-nlp": "चैटबॉट्स और NLP",
+    "computer-vision-basics": "कंप्यूटर विज़न की मूल बातें",
+    "datasets-and-data": "डेटासेट्स और डेटा",
+    "deep-neural-networks": "डीप न्यूरल नेटवर्क्स",
+    "design-twitter-ai-feed": "Twitter AI फ़ीड डिज़ाइन करें",
+    "engineering-portfolio": "इंजीनियरिंग पोर्टफ़ोलियो",
+    "full-mock-interview": "पूर्ण मॉक इंटरव्यू",
+    "future-of-ai": "AI का भविष्य",
+    "large-language-models": "लार्ज लैंग्वेज मॉडल्स",
+    "neural-networks-intro": "न्यूरल नेटवर्क्स का परिचय",
+    "open-source-ai": "ओपन-सोर्स AI",
+    "prompt-engineering-mastery": "प्रॉम्प्ट इंजीनियरिंग में महारत"
   },
   "pwa": {
     "install": "ऐप इंस्टॉल करें",
@@ -366,12 +358,7 @@
     "invalidEmail": "कृपया एक वैध ईमेल दर्ज करें"
   },
   "community": {
-    "title": "हमारे समुदाय से जुड़ें",
-    "subtitle": "साथ सीखें, साथ बढ़ें",
     "updates": "अपडेट रहें",
-    "updatesDesc": "नए पाठों और सुविधाओं के बारे में सूचित रहें",
-    "share": "दोस्तों के साथ शेयर करें",
-    "shareDesc": "दूसरों को मुफ्त AI शिक्षा खोजने में मदद करें",
     "openSource": "ओपन सोर्स",
     "openSourceDesc": "खुले तौर पर बनाया — कोड देखें, योगदान करें"
   },
@@ -466,7 +453,9 @@
       "reviewedBias": "आपने {count} पूर्वाग्रह परिदृश्य देखे। पूर्वाग्रह समझना निष्पक्ष AI बनाने का पहला कदम है।",
       "perfectOrder": "एकदम सही क्रम!",
       "notQuiteTimeline": "बिल्कुल नहीं — यहाँ सही समयरेखा है:",
-      "allPairsMatched": "सभी {count} जोड़े मिलाए"
+      "allPairsMatched": "सभी {count} जोड़े मिलाए",
+      "celebration": "🎉 बधाई हो!",
+      "newHighScore": "नया व्यक्तिगत सर्वश्रेष्ठ!"
     },
     "games": {
       "emojiDecoder": {
@@ -540,6 +529,23 @@
       "algoRace": {
         "title": "Algorithm Race",
         "instruction": "Bet on a sorting algorithm and watch them race!"
+      },
+      "aiTrivia": {
+        "correctAnswer": "सही! +{points} अंक",
+        "fastAnswer": "बिजली की रफ़्तार!",
+        "finalScore": "अंतिम स्कोर",
+        "goodSpeed": "अच्छी गति!",
+        "instruction": "AI के इतिहास, अवधारणाओं और प्रसिद्ध हस्तियों के बारे में अपना ज्ञान परखें!",
+        "justInTime": "बिल्कुल सही समय पर!",
+        "leaderboard": "लीडरबोर्ड",
+        "multiplier": "×{mult} स्पीड बोनस",
+        "noScores": "अभी तक कोई स्कोर नहीं। पहले बनें!",
+        "questionOf": "प्रश्न {current} / {total}",
+        "questionsCorrect": "{correct}/{total} सही",
+        "timeLeft": "{seconds}s",
+        "timesUp": "समय समाप्त!",
+        "title": "AI ट्रिविया चैलेंज",
+        "wrongAnswer": "सही उत्तर था: {answer}"
       }
     },
     "sentimentSection": {
@@ -583,6 +589,30 @@
       "characters": "अक्षर",
       "wordsEquivalent": "~{count} शब्द समतुल्य",
       "explanation": "AI मॉडल इंसानों की तरह टेक्स्ट नहीं पढ़ते। वे टेक्स्ट को टोकन में तोड़ते हैं — उप-शब्द टुकड़े जो मॉडल व्यक्तिगत रूप से प्रोसेस करता है।"
+    },
+    "hub": {
+      "allCategories": "सभी",
+      "backToHub": "← गेम्स पर वापस जाएँ",
+      "badge": "इंटरैक्टिव • मज़ेदार • शैक्षिक",
+      "categoryCreative": "क्रिएटिव AI",
+      "categoryEthics": "नैतिकता और सुरक्षा",
+      "categoryKnowledge": "AI ज्ञान",
+      "categoryQuickGames": "क्विक गेम्स",
+      "categoryTools": "AI टूल्स",
+      "closeGame": "बंद करें",
+      "difficultyEasy": "आसान",
+      "difficultyHard": "कठिन",
+      "difficultyMedium": "मध्यम",
+      "estimatedTime": "{time} मिनट",
+      "gamesAvailable": "{count} गेम्स उपलब्ध",
+      "highScore": "नया हाई स्कोर!",
+      "noGamesFound": "आपकी खोज से कोई गेम नहीं मिला",
+      "personalBest": "सर्वश्रेष्ठ: {score}",
+      "playNow": "अभी खेलें",
+      "roundOf": "राउंड {current} / {total}",
+      "searchPlaceholder": "गेम्स खोजें...",
+      "subtitle": "इंटरैक्टिव AI गेम्स और टूल्स। कोडिंग की ज़रूरत नहीं, बस खेलें और सीखें।",
+      "title": "AI लैब"
     }
   }
 }

@@ -63,7 +63,7 @@ export function LanguageSwitcher() {
         <ul
           role="listbox"
           aria-label="Select language"
-          className="absolute right-0 top-full mt-1 z-50 min-w-[160px] rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] shadow-lg py-1 animate-in fade-in slide-in-from-top-1 duration-150"
+          className="absolute right-0 top-full mt-1 z-50 min-w-[160px] max-sm:left-0 max-sm:right-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] shadow-lg py-1 animate-in fade-in slide-in-from-top-1 duration-150"
         >
           {locales.map((locale) => (
             <li

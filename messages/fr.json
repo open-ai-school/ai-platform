@@ -56,36 +56,13 @@
       "description": "Comprenez comment l'IA fonctionne dans les choses que vous utilisez tous les jours — moteurs de recherche, assistants vocaux, réseaux sociaux, voitures autonomes et diagnostic médical."
     }
   },
-  "journey": {
-    "title": "Votre Parcours d'Apprentissage",
-    "subtitle": "Un chemin clair de débutant curieux à citoyen éclairé en IA",
-    "step1": {
-      "title": "Qu'est-ce que l'IA ?",
-      "description": "Commencez par les bases — ce qu'est réellement l'IA, en quoi elle diffère des logiciels ordinaires, et pourquoi tout le monde en parle."
-    },
-    "step2": {
-      "title": "Comment les Machines Apprennent",
-      "description": "Découvrez comment les ordinateurs apprennent à partir d'exemples, tout comme vous avez appris à reconnaître les chats et les chiens enfant."
-    },
-    "step3": {
-      "title": "Construisez Votre Première IA",
-      "description": "Entraînez un modèle d'IA simple dans votre navigateur — aucune installation nécessaire. Voyez-le apprendre et s'améliorer sous vos yeux."
-    },
-    "step4": {
-      "title": "L'IA dans le Monde Réel",
-      "description": "Explorez comment l'IA alimente les applications et services que vous utilisez quotidiennement — et réfléchissez de manière critique à son impact sur la société."
-    }
-  },
   "founder": {
     "description": "Ingénieur logiciel et leader en ingénierie avec plus d'une décennie d'expérience dans la construction de systèmes à grande échelle dans plusieurs pays d'Asie et d'Europe. Ayant dirigé des transformations numériques dans le commerce de détail, la fidélisation et les services financiers, j'ai fondé AI Educademy pour rendre l'éducation en IA et en ingénierie accessible gratuitement — dans chaque langue, pour chaque parcours.",
     "cta": "Lire l'histoire complète",
-    "role": "Fondateur · Leader en Ingénierie · Défenseur de l'Open Source"
-  },
-  "cta": {
-    "title": "Prêt à Commencer ?",
-    "subtitle": "Votre première leçon ne prend que 10 minutes. Pas d'inscription nécessaire.",
-    "button": "Commencer la Leçon 1 : Qu'est-ce que l'IA ?",
-    "github": "Mettez une étoile sur GitHub"
+    "role": "Fondateur · Leader en Ingénierie · Défenseur de l'Open Source",
+    "statContinents": "Continents parcourus",
+    "statRepos": "Dépôts Open Source",
+    "statYears": "Années d'ingénierie"
   },
   "footer": {
     "tagline": "Éducation IA gratuite pour tous, dans toutes les langues.",
@@ -329,7 +306,22 @@
     "design-recommendation-engine": "Conception d'un Moteur de Recommandation",
     "star-framework": "La Méthode STAR",
     "system-design-communication": "Communication en Conception Système",
-    "ai-era-leadership": "Leadership à l'Ère de l'IA"
+    "ai-era-leadership": "Leadership à l'Ère de l'IA",
+    "ai-in-healthcare": "L'IA dans la santé",
+    "algorithms-explained": "Les algorithmes expliqués",
+    "building-ai-products": "Créer des produits IA",
+    "chatbots-and-nlp": "Chatbots et NLP",
+    "computer-vision-basics": "Bases de la vision par ordinateur",
+    "datasets-and-data": "Jeux de données et données",
+    "deep-neural-networks": "Réseaux de neurones profonds",
+    "design-twitter-ai-feed": "Concevoir le fil IA de Twitter",
+    "engineering-portfolio": "Portfolio d'ingénierie",
+    "full-mock-interview": "Entretien blanc complet",
+    "future-of-ai": "L'avenir de l'IA",
+    "large-language-models": "Grands modèles de langage",
+    "neural-networks-intro": "Introduction aux réseaux de neurones",
+    "open-source-ai": "IA Open Source",
+    "prompt-engineering-mastery": "Maîtrise du prompt engineering"
   },
   "pwa": {
     "install": "Installer l'appli",
@@ -366,12 +358,7 @@
     "invalidEmail": "Veuillez entrer un email valide"
   },
   "community": {
-    "title": "Rejoignez notre communauté",
-    "subtitle": "Apprenez ensemble, grandissez ensemble",
     "updates": "Restez informé",
-    "updatesDesc": "Recevez des notifications sur les nouvelles leçons et fonctionnalités",
-    "share": "Partager avec des amis",
-    "shareDesc": "Aidez les autres à découvrir l'éducation IA gratuite",
     "openSource": "Open Source",
     "openSourceDesc": "Construit ouvertement — code, contributions ou fork"
   },
@@ -466,7 +453,9 @@
       "reviewedBias": "Vous avez examiné {count} scénarios de biais. Comprendre les biais est la première étape pour construire une IA plus juste.",
       "perfectOrder": "Ordre parfait !",
       "notQuiteTimeline": "Pas tout à fait — voici la chronologie correcte :",
-      "allPairsMatched": "Les {count} paires trouvées"
+      "allPairsMatched": "Les {count} paires trouvées",
+      "celebration": "🎉 Félicitations !",
+      "newHighScore": "Nouveau record personnel !"
     },
     "games": {
       "emojiDecoder": {
@@ -540,6 +529,23 @@
       "algoRace": {
         "title": "Algorithm Race",
         "instruction": "Bet on a sorting algorithm and watch them race!"
+      },
+      "aiTrivia": {
+        "correctAnswer": "Correct ! +{points} points",
+        "fastAnswer": "Ultra rapide !",
+        "finalScore": "Score final",
+        "goodSpeed": "Bonne rapidité !",
+        "instruction": "Testez vos connaissances sur l'histoire, les concepts et les grandes figures de l'IA !",
+        "justInTime": "Juste à temps !",
+        "leaderboard": "Classement",
+        "multiplier": "×{mult} bonus de rapidité",
+        "noScores": "Aucun score pour le moment. Soyez le premier !",
+        "questionOf": "Question {current} sur {total}",
+        "questionsCorrect": "{correct}/{total} correct",
+        "timeLeft": "{seconds}s",
+        "timesUp": "Temps écoulé !",
+        "title": "Défi Trivia IA",
+        "wrongAnswer": "La réponse était : {answer}"
       }
     },
     "sentimentSection": {
@@ -583,6 +589,30 @@
       "characters": "caractères",
       "wordsEquivalent": "~{count} mots équivalents",
       "explanation": "Les modèles d'IA ne lisent pas le texte comme les humains. Ils découpent le texte en tokens — des morceaux de sous-mots que le modèle traite individuellement. Les mots plus longs sont divisés en morceaux plus petits."
+    },
+    "hub": {
+      "allCategories": "Tout",
+      "backToHub": "← Retour aux jeux",
+      "badge": "Interactif • Fun • Éducatif",
+      "categoryCreative": "IA Créative",
+      "categoryEthics": "Éthique et Sécurité",
+      "categoryKnowledge": "Connaissances IA",
+      "categoryQuickGames": "Jeux rapides",
+      "categoryTools": "Outils IA",
+      "closeGame": "Fermer",
+      "difficultyEasy": "Facile",
+      "difficultyHard": "Difficile",
+      "difficultyMedium": "Moyen",
+      "estimatedTime": "{time} min",
+      "gamesAvailable": "{count} jeux disponibles",
+      "highScore": "Nouveau record !",
+      "noGamesFound": "Aucun jeu ne correspond à votre recherche",
+      "personalBest": "Meilleur : {score}",
+      "playNow": "Jouer maintenant",
+      "roundOf": "Manche {current} sur {total}",
+      "searchPlaceholder": "Rechercher des jeux...",
+      "subtitle": "Jeux et outils interactifs sur l'IA. Pas besoin de coder, jouez et apprenez.",
+      "title": "Labo IA"
     }
   }
 }

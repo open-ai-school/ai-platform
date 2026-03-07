@@ -56,37 +56,16 @@
       "description": "మీరు రోజూ ఉపయోగించే వాటిలో AI ఎలా పనిచేస్తుందో అర్థం చేసుకోండి."
     }
   },
-  "journey": {
-    "title": "మీ నేర్చుకునే ప్రయాణం",
-    "subtitle": "ఆసక్తిగల ప్రారంభకుడి నుండి AI-అక్షరాస్యత కలిగిన పౌరుడి వరకు స్పష్టమైన మార్గం",
-    "step1": {
-      "title": "AI అంటే ఏమిటి?",
-      "description": "బేసిక్స్ తో ప్రారంభించండి — AI నిజంగా ఏమిటి."
-    },
-    "step2": {
-      "title": "యంత్రాలు ఎలా నేర్చుకుంటాయి",
-      "description": "కంప్యూటర్లు ఉదాహరణల నుండి ఎలా నేర్చుకుంటాయో తెలుసుకోండి."
-    },
-    "step3": {
-      "title": "మీ మొదటి AI నిర్మించండి",
-      "description": "మీ బ్రౌజర్‌లో ఒక సాధారణ AI మోడల్‌ను శిక్షణ ఇవ్వండి."
-    },
-    "step4": {
-      "title": "వాస్తవ ప్రపంచంలో AI",
-      "description": "మీరు రోజూ ఉపయోగించే యాప్‌లను AI ఎలా శక్తివంతం చేస్తుందో అన్వేషించండి."
-    }
-  },
+  "journey": {},
   "founder": {
     "description": "ఆసియా మరియు యూరోప్‌లోని అనేక దేశాలలో ఒక దశాబ్దానికి పైగా అనుభవం ఉన్న సాఫ్ట్‌వేర్ ఇంజినీర్ మరియు ఇంజినీరింగ్ లీడర్. రిటైల్, లాయల్టీ మరియు ఫైనాన్షియల్ సర్వీసెస్‌లో డిజిటల్ ట్రాన్స్‌ఫార్మేషన్‌లను నడిపించిన తర్వాత, ప్రపంచ స్థాయి AI మరియు ఇంజినీరింగ్ విద్యను ప్రతి భాషలో, ప్రతి నేపథ్యం కోసం ఉచితంగా అందుబాటులో ఉంచడానికి AI Educademy ను స్థాపించాను.",
     "cta": "పూర్తి కథ చదవండి",
-    "role": "వ్యవస్థాపకుడు · ఇంజినీరింగ్ లీడర్ · ఓపెన్ సోర్స్ న్యాయవాది"
+    "role": "వ్యవస్థాపకుడు · ఇంజినీరింగ్ లీడర్ · ఓపెన్ సోర్స్ న్యాయవాది",
+    "statContinents": "పని చేసిన ఖండాలు",
+    "statRepos": "ఓపెన్ సోర్స్ రిపోజిటరీలు",
+    "statYears": "ఇంజినీరింగ్ సంవత్సరాలు"
   },
-  "cta": {
-    "title": "ప్రారంభించడానికి సిద్ధమా?",
-    "subtitle": "మీ మొదటి పాఠం కేవలం 10 నిమిషాలు. సైన్అప్ అవసరం లేదు.",
-    "button": "పాఠం 1 ప్రారంభించండి: AI అంటే ఏమిటి?",
-    "github": "GitHub లో స్టార్ ఇవ్వండి"
-  },
+  "cta": {},
   "footer": {
     "tagline": "అందరికీ, ప్రతి భాషలో ఉచిత AI విద్య.",
     "lessons": "పాఠాలు",
@@ -329,7 +308,22 @@
     "design-recommendation-engine": "రికమెండేషన్ ఇంజన్ డిజైన్",
     "star-framework": "STAR ఫ్రేమ్‌వర్క్",
     "system-design-communication": "సిస్టమ్ డిజైన్ కమ్యూనికేషన్",
-    "ai-era-leadership": "AI-యుగ నాయకత్వం"
+    "ai-era-leadership": "AI-యుగ నాయకత్వం",
+    "ai-in-healthcare": "ఆరోగ్య సంరక్షణలో AI",
+    "algorithms-explained": "అల్గారిథమ్‌ల వివరణ",
+    "building-ai-products": "AI ఉత్పత్తుల నిర్మాణం",
+    "chatbots-and-nlp": "చాట్‌బాట్లు మరియు NLP",
+    "computer-vision-basics": "కంప్యూటర్ విజన్ బేసిక్స్",
+    "datasets-and-data": "డేటాసెట్లు మరియు డేటా",
+    "deep-neural-networks": "డీప్ న్యూరల్ నెట్‌వర్క్‌లు",
+    "design-twitter-ai-feed": "Twitter AI ఫీడ్ డిజైన్",
+    "engineering-portfolio": "ఇంజినీరింగ్ పోర్ట్‌ఫోలియో",
+    "full-mock-interview": "పూర్తి మాక్ ఇంటర్వ్యూ",
+    "future-of-ai": "AI భవిష్యత్తు",
+    "large-language-models": "లార్జ్ లాంగ్వేజ్ మోడల్స్",
+    "neural-networks-intro": "న్యూరల్ నెట్‌వర్క్‌ల పరిచయం",
+    "open-source-ai": "ఓపెన్-సోర్స్ AI",
+    "prompt-engineering-mastery": "ప్రాంప్ట్ ఇంజినీరింగ్ నైపుణ్యం"
   },
   "pwa": {
     "install": "యాప్ ఇన్‌స్టాల్ చేయండి",
@@ -366,12 +360,7 @@
     "invalidEmail": "దయచేసి చెల్లుబాటు అయ్యే ఇమెయిల్ నమోదు చేయండి"
   },
   "community": {
-    "title": "మా సమాజంలో చేరండి",
-    "subtitle": "కలిసి నేర్చుకోండి, కలిసి ఎదగండి",
     "updates": "అప్‌డేట్‌గా ఉండండి",
-    "updatesDesc": "కొత్త పాఠాలు మరియు ఫీచర్ల గురించి తెలుసుకోండి",
-    "share": "స్నేహితులతో భాగస్వామ్యం చేయండి",
-    "shareDesc": "ఉచిత AI విద్యను ఇతరులకు తెలియజేయండి",
     "openSource": "ఓపెన్ సోర్స్",
     "openSourceDesc": "బహిరంగంగా నిర్మించబడింది — కోడ్ చూడండి, సహకరించండి"
   },
@@ -466,7 +455,9 @@
       "reviewedBias": "మీరు {count} పక్షపాత దృశ్యాలను సమీక్షించారు. పక్షపాతాన్ని అర్థం చేసుకోవడం న్యాయమైన AI నిర్మించడంలో మొదటి అడుగు.",
       "perfectOrder": "ఖచ్చితమైన క్రమం!",
       "notQuiteTimeline": "సరిగ్గా కాదు — ఇది సరైన కాలక్రమం:",
-      "allPairsMatched": "మొత్తం {count} జతలు కనుగొన్నారు"
+      "allPairsMatched": "మొత్తం {count} జతలు కనుగొన్నారు",
+      "celebration": "🎉 అభినందనలు!",
+      "newHighScore": "కొత్త వ్యక్తిగత ఉత్తమ స్కోర్!"
     },
     "games": {
       "emojiDecoder": {
@@ -540,6 +531,23 @@
       "algoRace": {
         "title": "Algorithm Race",
         "instruction": "Bet on a sorting algorithm and watch them race!"
+      },
+      "aiTrivia": {
+        "correctAnswer": "సరైనది! +{points} పాయింట్లు",
+        "fastAnswer": "మెరుపు వేగం!",
+        "finalScore": "తుది స్కోర్",
+        "goodSpeed": "మంచి వేగం!",
+        "instruction": "AI చరిత్ర, భావనలు మరియు ప్రసిద్ధ వ్యక్తుల గురించి మీ జ్ఞానాన్ని పరీక్షించుకోండి!",
+        "justInTime": "సమయానికి సరిగ్గా!",
+        "leaderboard": "లీడర్‌బోర్డ్",
+        "multiplier": "×{mult} వేగ బోనస్",
+        "noScores": "ఇంకా స్కోర్లు లేవు. మొదటి వారు కండి!",
+        "questionOf": "ప్రశ్న {current} / {total}",
+        "questionsCorrect": "{correct}/{total} సరైనవి",
+        "timeLeft": "{seconds}s",
+        "timesUp": "సమయం అయిపోయింది!",
+        "title": "AI ట్రివియా ఛాలెంజ్",
+        "wrongAnswer": "సమాధానం: {answer}"
       }
     },
     "sentimentSection": {
@@ -583,6 +591,30 @@
       "characters": "అక్షరాలు",
       "wordsEquivalent": "~{count} పదాలు సమానం",
       "explanation": "AI మోడల్‌లు మానవుల వలె టెక్స్ట్ చదవరు. అవి టెక్స్ట్‌ను టోకన్‌లుగా విభజిస్తాయి — మోడల్ వ్యక్తిగతంగా ప్రాసెస్ చేసే ఉప-పద భాగాలు."
+    },
+    "hub": {
+      "allCategories": "అన్నీ",
+      "backToHub": "← గేమ్‌లకు తిరిగి",
+      "badge": "ఇంటరాక్టివ్ • సరదా • విద్యాసంబంధ",
+      "categoryCreative": "సృజనాత్మక AI",
+      "categoryEthics": "నీతి & భద్రత",
+      "categoryKnowledge": "AI జ్ఞానం",
+      "categoryQuickGames": "త్వరిత గేమ్‌లు",
+      "categoryTools": "AI సాధనాలు",
+      "closeGame": "మూసివేయండి",
+      "difficultyEasy": "సులభం",
+      "difficultyHard": "కఠినం",
+      "difficultyMedium": "మధ్యస్థం",
+      "estimatedTime": "{time} నిమి",
+      "gamesAvailable": "{count} గేమ్‌లు అందుబాటులో ఉన్నాయి",
+      "highScore": "కొత్త అత్యధిక స్కోర్!",
+      "noGamesFound": "మీ శోధనకు సరిపోయే గేమ్‌లు లేవు",
+      "personalBest": "ఉత్తమం: {score}",
+      "playNow": "ఇప్పుడు ఆడండి",
+      "roundOf": "రౌండ్ {current} / {total}",
+      "searchPlaceholder": "గేమ్‌లను శోధించండి...",
+      "subtitle": "ఇంటరాక్టివ్ AI గేమ్‌లు మరియు సాధనాలు. కోడింగ్ అవసరం లేదు, ఆడండి మరియు నేర్చుకోండి.",
+      "title": "AI ల్యాబ్"
     }
   }
 }

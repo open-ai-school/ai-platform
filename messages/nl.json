@@ -56,37 +56,15 @@
       "description": "Begrijp hoe AI werkt in dingen die je dagelijks gebruikt — zoekmachines, stemassistenten, sociale media, zelfrijdende auto's en medische diagnose."
     }
   },
-  "journey": {
-    "title": "Jouw Leertraject",
-    "subtitle": "Een duidelijk pad van nieuwsgierige beginner tot AI-geletterde burger",
-    "step1": {
-      "title": "Wat is AI?",
-      "description": "Begin met de basis — wat AI werkelijk is en waarom iedereen erover praat."
-    },
-    "step2": {
-      "title": "Hoe Machines Leren",
-      "description": "Ontdek hoe computers leren van voorbeelden, net zoals jij leerde katten en honden te herkennen."
-    },
-    "step3": {
-      "title": "Bouw Je Eerste AI",
-      "description": "Train een eenvoudig AI-model in je browser — geen installatie nodig."
-    },
-    "step4": {
-      "title": "AI in de Echte Wereld",
-      "description": "Verken hoe AI de apps aandrijft die je dagelijks gebruikt."
-    }
-  },
   "founder": {
     "description": "Software engineer en engineering leader met meer dan een decennium ervaring in het bouwen van grootschalige systemen in meerdere landen in Azië en Europa. Na het leiden van digitale transformaties in retail, loyaliteit en financiële dienstverlening, heb ik AI Educademy opgericht om AI- en engineeringonderwijs van wereldklasse gratis toegankelijk te maken — in elke taal, voor elke achtergrond.",
     "cta": "Lees het volledige verhaal",
-    "role": "Oprichter · Engineering Leader · Open Source Voorvechter"
+    "role": "Oprichter · Engineering Leader · Open Source Voorvechter",
+    "statContinents": "Continenten Gewerkt",
+    "statRepos": "Open Source Repo's",
+    "statYears": "Jaren Engineering"
   },
-  "cta": {
-    "title": "Klaar om te Beginnen?",
-    "subtitle": "Je eerste les duurt maar 10 minuten. Geen aanmelding nodig.",
-    "button": "Begin Les 1: Wat is AI?",
-    "github": "Geef ons een ster op GitHub"
-  },
+  "cta": {},
   "footer": {
     "tagline": "Gratis AI-onderwijs voor iedereen, in elke taal.",
     "lessons": "Lessen",
@@ -329,7 +307,22 @@
     "design-recommendation-engine": "Ontwerp een Aanbevelingsengine",
     "star-framework": "Het STAR Framework",
     "system-design-communication": "Systeemontwerp Communicatie",
-    "ai-era-leadership": "Leiderschap in het AI-tijdperk"
+    "ai-era-leadership": "Leiderschap in het AI-tijdperk",
+    "ai-in-healthcare": "AI in de Gezondheidszorg",
+    "algorithms-explained": "Algoritmen Uitgelegd",
+    "building-ai-products": "AI-producten Bouwen",
+    "chatbots-and-nlp": "Chatbots en NLP",
+    "computer-vision-basics": "Basis van Computer Vision",
+    "datasets-and-data": "Datasets en Data",
+    "deep-neural-networks": "Diepe Neurale Netwerken",
+    "design-twitter-ai-feed": "Ontwerp Twitter AI-feed",
+    "engineering-portfolio": "Engineering Portfolio",
+    "full-mock-interview": "Volledig Oefen-interview",
+    "future-of-ai": "De Toekomst van AI",
+    "large-language-models": "Grote Taalmodellen",
+    "neural-networks-intro": "Introductie tot Neurale Netwerken",
+    "open-source-ai": "Open-Source AI",
+    "prompt-engineering-mastery": "Prompt Engineering Meesterschap"
   },
   "pwa": {
     "install": "App installeren",
@@ -366,12 +359,7 @@
     "invalidEmail": "Voer een geldig e-mailadres in"
   },
   "community": {
-    "title": "Word lid van onze community",
-    "subtitle": "Samen leren, samen groeien",
     "updates": "Blijf op de hoogte",
-    "updatesDesc": "Ontvang meldingen over nieuwe lessen en functies",
-    "share": "Deel met vrienden",
-    "shareDesc": "Help anderen gratis AI-onderwijs te ontdekken",
     "openSource": "Open Source",
     "openSourceDesc": "Open gebouwd — bekijk code, draag bij of fork"
   },
@@ -466,7 +454,9 @@
       "reviewedBias": "Je hebt {count} biasscenario's bekeken. Bias begrijpen is de eerste stap naar eerlijkere AI.",
       "perfectOrder": "Perfecte volgorde!",
       "notQuiteTimeline": "Niet helemaal — hier is de juiste tijdlijn:",
-      "allPairsMatched": "Alle {count} paren gevonden"
+      "allPairsMatched": "Alle {count} paren gevonden",
+      "celebration": "🎉 Gefeliciteerd!",
+      "newHighScore": "Nieuw Persoonlijk Record!"
     },
     "games": {
       "emojiDecoder": {
@@ -540,6 +530,23 @@
       "algoRace": {
         "title": "Algorithm Race",
         "instruction": "Bet on a sorting algorithm and watch them race!"
+      },
+      "aiTrivia": {
+        "correctAnswer": "Juist! +{points} punten",
+        "fastAnswer": "Bliksemsnel!",
+        "finalScore": "Eindscore",
+        "goodSpeed": "Goede snelheid!",
+        "instruction": "Test je kennis van AI-geschiedenis, concepten en beroemde figuren!",
+        "justInTime": "Net op tijd!",
+        "leaderboard": "Scorebord",
+        "multiplier": "×{mult} snelheidsbonus",
+        "noScores": "Nog geen scores. Wees de eerste!",
+        "questionOf": "Vraag {current} van {total}",
+        "questionsCorrect": "{correct}/{total} juist",
+        "timeLeft": "{seconds}s",
+        "timesUp": "Tijd is op!",
+        "title": "AI Trivia Uitdaging",
+        "wrongAnswer": "Het antwoord was: {answer}"
       }
     },
     "sentimentSection": {
@@ -583,6 +590,30 @@
       "characters": "tekens",
       "wordsEquivalent": "~{count} woorden equivalent",
       "explanation": "AI-modellen lezen tekst niet zoals mensen. Ze splitsen tekst op in tokens — subwoordstukken die het model individueel verwerkt. Langere woorden worden in kleinere stukken gesplitst."
+    },
+    "hub": {
+      "allCategories": "Alles",
+      "backToHub": "← Terug naar Spellen",
+      "badge": "Interactief • Leuk • Leerzaam",
+      "categoryCreative": "Creatieve AI",
+      "categoryEthics": "Ethiek & Veiligheid",
+      "categoryKnowledge": "AI-kennis",
+      "categoryQuickGames": "Snelle Spellen",
+      "categoryTools": "AI-tools",
+      "closeGame": "Sluiten",
+      "difficultyEasy": "Makkelijk",
+      "difficultyHard": "Moeilijk",
+      "difficultyMedium": "Gemiddeld",
+      "estimatedTime": "{time} min",
+      "gamesAvailable": "{count} spellen beschikbaar",
+      "highScore": "Nieuwe Topscore!",
+      "noGamesFound": "Geen spellen gevonden voor je zoekopdracht",
+      "personalBest": "Beste: {score}",
+      "playNow": "Nu Spelen",
+      "roundOf": "Ronde {current} van {total}",
+      "searchPlaceholder": "Spellen zoeken...",
+      "subtitle": "Interactieve AI-spellen en tools. Geen code nodig, gewoon spelen en leren.",
+      "title": "AI Lab"
     }
   }
 }
