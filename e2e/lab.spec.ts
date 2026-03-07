@@ -30,12 +30,11 @@ test.describe("Lab", () => {
   });
 
   test("all tabs are clickable", async ({ page }) => {
-    const tabTexts = ["Sentiment", "Neural", "Sorting", "Token"];
+    const tabTexts = ["ALL", "NLP", "LOGIC", "ETHICS", "NEURAL_NET"];
     for (const text of tabTexts) {
-      const tab = page.getByRole("button").filter({ hasText: new RegExp(text, "i") });
+      const tab = page.getByRole("button", { name: text, exact: true });
       if (await tab.isVisible()) {
         await tab.click();
-        // Tab content area should have content
         await page.waitForTimeout(300);
       }
     }
