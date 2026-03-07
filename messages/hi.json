@@ -153,7 +153,8 @@
     "programs": "कार्यक्रम",
     "lessonsComingSoon": "पाठ जल्द आ रहे हैं",
     "checkBackSoon": "जल्द वापस आएं!",
-    "backToProgram": "वापस"
+    "backToProgram": "वापस",
+    "breadcrumbLessons": "पाठ"
   },
   "programs": {
     "badge": "5 सीखने के स्तर",

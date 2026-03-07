@@ -153,7 +153,8 @@
     "programs": "Academics",
     "lessonsComingSoon": "Lessons Coming Soon",
     "checkBackSoon": "Check back soon!",
-    "backToProgram": "Back to"
+    "backToProgram": "Back to",
+    "breadcrumbLessons": "Lessons"
   },
   "programs": {
     "badge": "",

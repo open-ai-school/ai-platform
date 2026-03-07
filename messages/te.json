@@ -155,7 +155,8 @@
     "programs": "ప్రోగ్రాములు",
     "lessonsComingSoon": "పాఠాలు త్వరలో",
     "checkBackSoon": "త్వరలో తిరిగి రండి!",
-    "backToProgram": "తిరిగి"
+    "backToProgram": "తిరిగి",
+    "breadcrumbLessons": "పాఠాలు"
   },
   "programs": {
     "badge": "5 నేర్చుకునే స్థాయిలు",

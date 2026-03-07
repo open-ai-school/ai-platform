@@ -154,7 +154,8 @@
     "programs": "Programma's",
     "lessonsComingSoon": "Lessen komen binnenkort",
     "checkBackSoon": "Kom snel terug!",
-    "backToProgram": "Terug naar"
+    "backToProgram": "Terug naar",
+    "breadcrumbLessons": "Lessen"
   },
   "programs": {
     "badge": "5 leerniveaus",

@@ -17,6 +17,9 @@ export default async function ProgramLessonPage({
   if (!program) notFound();
 
   const t = await getTranslations("lessons");
+  const tPT = await getTranslations("programTitles");
+  const tLT = await getTranslations("lessonTitles");
+  const tP = await getTranslations("programs");
   const lesson = getLesson(programSlug, locale, slug);
 
   if (!lesson) {
@@ -43,18 +46,18 @@ export default async function ProgramLessonPage({
       {/* Breadcrumb */}
       <div className="mb-8 text-sm text-[var(--color-text-muted)]">
         <Link href={`${basePath}/programs`} className="hover:text-[var(--color-primary)] transition-colors">
-          Programs
+          {tP("pageTitle")}
         </Link>
         <span className="mx-2">›</span>
         <Link href={programPath} className="hover:text-[var(--color-primary)] transition-colors">
-          {program.icon} {program.title}
+          {program.icon} {tPT(programSlug)}
         </Link>
         <span className="mx-2">›</span>
         <Link href={`${programPath}/lessons`} className="hover:text-[var(--color-primary)] transition-colors">
-          Lessons
+          {t("breadcrumbLessons")}
         </Link>
         <span className="mx-2">›</span>
-        <span>{lesson.title}</span>
+        <span>{tLT(slug)}</span>
       </div>
 
       {/* Header */}
@@ -66,14 +69,14 @@ export default async function ProgramLessonPage({
               className="text-xs font-medium px-2.5 py-0.5 rounded-full"
               style={{ backgroundColor: `${program.color}20`, color: program.color }}
             >
-              {program.title} • {t(`difficulty.${lesson.difficulty}`)}
+              {tPT(programSlug)} • {t(`difficulty.${lesson.difficulty}`)}
             </span>
             <span className="text-xs text-[var(--color-text-muted)] ml-2">
               ⏱️ {lesson.duration} {t("duration")}
             </span>
           </div>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold">{lesson.title}</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold">{tLT(slug)}</h1>
       </div>
 
       {/* Content */}
@@ -88,12 +91,12 @@ export default async function ProgramLessonPage({
         totalLessons={allLessons.length}
         currentIndex={currentIdx}
         nextSlug={next?.slug}
-        nextTitle={next?.title}
+        nextTitle={next ? tLT(next.slug) : undefined}
         prevSlug={prev?.slug}
-        prevTitle={prev?.title}
+        prevTitle={prev ? tLT(prev.slug) : undefined}
         basePath={`${programPath}/lessons`}
         programPath={programPath}
-        programTitle={program.title}
+        programTitle={tPT(programSlug)}
         programTrack={program.track}
         programLevel={program.level}
         trackLessonCounts={trackLessonCounts}

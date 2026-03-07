@@ -17,6 +17,8 @@ export default async function ProgramLessonsPage({
   if (!program) notFound();
 
   const t = await getTranslations("lessons");
+  const tPT = await getTranslations("programTitles");
+  const tLT = await getTranslations("lessonTitles");
   const lessons = getLessons(programSlug, locale);
   const basePath = locale === "en" ? "" : `/${locale}`;
 
@@ -41,7 +43,7 @@ export default async function ProgramLessonsPage({
         </Link>
         <span className="mx-2">›</span>
         <Link href={`${basePath}/programs/${programSlug}`} className="hover:text-[var(--color-primary)] transition-colors">
-          {program.title}
+          {tPT(programSlug)}
         </Link>
         <span className="mx-2">›</span>
         <span>{t("title")}</span>
@@ -53,7 +55,7 @@ export default async function ProgramLessonsPage({
             className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium mb-4"
             style={{ backgroundColor: `${program.color}20`, color: program.color }}
           >
-            {program.icon} {program.title}
+            {program.icon} {tPT(programSlug)}
           </div>
           <h1 className="text-4xl font-bold mb-4">{t("title")}</h1>
           <p className="text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
@@ -89,7 +91,7 @@ export default async function ProgramLessonsPage({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-xl">{lesson.icon}</span>
-                    <h2 className="text-lg font-bold">{lesson.title}</h2>
+                    <h2 className="text-lg font-bold">{tLT(lesson.slug)}</h2>
                     <LessonProgressBadge slug={`${programSlug}/${lesson.slug}`} />
                   </div>
                   <p className="text-[var(--color-text-muted)] text-sm mb-3">
@@ -125,7 +127,7 @@ export default async function ProgramLessonsPage({
           href={`${basePath}/programs/${programSlug}`}
           className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
         >
-          ← {t("backToProgram")} {program.title}
+          ← {t("backToProgram")} {tPT(programSlug)}
         </Link>
       </div>
     </div>

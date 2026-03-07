@@ -19,6 +19,8 @@ export default async function HomePage({
   const t = await getTranslations();
   const tp = await getTranslations("homePrograms");
   const tc = await getTranslations("community");
+  const tPT = await getTranslations("programTitles");
+  const tLT = await getTranslations("lessonTitles");
   const basePath = locale === "en" ? "" : `/${locale}`;
 
   const programDescKeys: Record<string, string> = {
@@ -56,7 +58,7 @@ export default async function HomePage({
     if (p.active) {
       const lessons = getLessons(p.slug, locale);
       firstLessonSlugs[p.slug] = lessons[0]?.slug;
-      lessonNames[p.slug] = lessons.map((l) => l.title);
+      lessonNames[p.slug] = lessons.map((l) => tLT(l.slug));
     }
   }
 
@@ -151,7 +153,7 @@ export default async function HomePage({
                           <Link key={program.slug} href={href} className="block group relative">
                             <div className="text-center p-3 rounded-xl border border-[var(--color-border)] card-hover" style={{ borderLeftColor: program.color, borderLeftWidth: 3 }}>
                               <div className="text-2xl mb-1">{program.icon}</div>
-                              <div className="text-[10px] font-bold truncate">{program.title.replace("AI ", "")}</div>
+                              <div className="text-[10px] font-bold truncate">{tPT(program.slug).replace("AI ", "")}</div>
                             </div>
                             {lessons.length > 0 && (
                               <div className="hidden group-hover:block absolute top-full left-1/2 -translate-x-1/2 z-30 mt-2 w-48">
@@ -166,7 +168,7 @@ export default async function HomePage({
                             )}
                           </Link>
                         ) : (
-                          <ComingSoonCard key={program.slug} icon={program.icon} label={program.title.replace("AI ", "")} />
+                          <ComingSoonCard key={program.slug} icon={program.icon} label={tPT(program.slug).replace("AI ", "")} />
                         );
                       })}
                     </div>
@@ -195,7 +197,7 @@ export default async function HomePage({
                           <Link key={program.slug} href={href} className="block group relative">
                             <div className="text-center p-3 rounded-xl border border-[var(--color-border)] card-hover" style={{ borderLeftColor: program.color, borderLeftWidth: 3 }}>
                               <div className="text-2xl mb-1">{program.icon}</div>
-                              <div className="text-[10px] font-bold truncate">{program.title.replace("AI ", "")}</div>
+                              <div className="text-[10px] font-bold truncate">{tPT(program.slug).replace("AI ", "")}</div>
                             </div>
                             {lessons.length > 0 && (
                               <div className="hidden group-hover:block absolute top-full left-1/2 -translate-x-1/2 z-30 mt-2 w-48">
@@ -210,7 +212,7 @@ export default async function HomePage({
                             )}
                           </Link>
                         ) : (
-                          <ComingSoonCard key={program.slug} icon={program.icon} label={program.title.replace("AI ", "")} />
+                          <ComingSoonCard key={program.slug} icon={program.icon} label={tPT(program.slug).replace("AI ", "")} />
                         );
                       })}
                     </div>

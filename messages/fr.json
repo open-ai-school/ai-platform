@@ -153,7 +153,8 @@
     "programs": "Programmes",
     "lessonsComingSoon": "Leçons à venir",
     "checkBackSoon": "Revenez bientôt !",
-    "backToProgram": "Retour à"
+    "backToProgram": "Retour à",
+    "breadcrumbLessons": "Leçons"
   },
   "programs": {
     "badge": "5 niveaux d'apprentissage",
