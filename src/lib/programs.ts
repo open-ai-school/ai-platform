@@ -7,7 +7,7 @@ export interface ProgramMeta {
   status: "active" | "coming-soon";
   color: string;
   icon: string;
-  track: "ai-learning" | "craft-engineering";
+  track: string;
   title: string;
   subtitle: string;
   description: string;
