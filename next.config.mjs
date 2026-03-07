@@ -1,3 +1,4 @@
+/* global process */
 import withSerwist from "@serwist/next";
 import createNextIntlPlugin from "next-intl/plugin";
 import createMDX from "@next/mdx";
