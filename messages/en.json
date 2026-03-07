@@ -10,7 +10,7 @@
     "about": "About",
     "getStarted": "Start Learning, It's Free",
     "language": "Language",
-    "programs": "Programmes",
+    "programs": "Academies",
     "blog": "Blog",
     "lab": "Lab"
   },
@@ -74,7 +74,7 @@
     "learnHeader": "Learn",
     "communityHeader": "Community",
     "supportHeader": "Support",
-    "programs": "Programmes",
+    "programs": "Academies",
     "dashboard": "Dashboard",
     "lab": "Lab"
   },
@@ -147,7 +147,7 @@
     "comingSoon3": {
       "title": "How Chatbots Work"
     },
-    "programs": "Programmes",
+    "programs": "Academies",
     "lessonsComingSoon": "Lessons Coming Soon",
     "checkBackSoon": "Check back soon!",
     "backToProgram": "Back to"
@@ -158,7 +158,7 @@
     "subtitle": "Pick the level that matches where you are.",
     "level": "Level",
     "comingSoon": "Coming Soon",
-    "startLearning": "Explore Programme",
+    "startLearning": "Explore Academy",
     "hours": "h",
     "levelLabels": {
       "1": "Beginner",
@@ -167,7 +167,7 @@
       "4": "Advanced",
       "5": "Expert"
     },
-    "viewAll": "View All Programmes",
+    "viewAll": "View All Academies",
     "trackAI": "Understanding AI",
     "trackAIDesc": "Grow from zero to AI expert, nature-inspired progression",
     "trackAITagline": "Seeds → Sprouts → Branches → Canopy → Forest",
@@ -175,8 +175,8 @@
     "trackCraftDesc": "Ace your dream interview, workshop-inspired mastery",
     "trackCraftTagline": "Sketch → Chisel → Craft → Polish → Masterpiece",
     "trackCraftBrand": "Learn the algorithms that power AI, design the systems that scale AI, and ace the interviews that land you AI-era jobs.",
-    "pageTitle": "AI & Engineering Programmes",
-    "pageDescription": "Explore our free AI learning tracks and software engineering programmes. From absolute beginner to advanced, learn at your own pace in 5 languages.",
+    "pageTitle": "AI & Engineering Academies",
+    "pageDescription": "Explore our free AI learning tracks and software engineering academies. From absolute beginner to advanced, learn at your own pace in 5 languages.",
     "tileLabel": {
       "ai-seeds": "Basics",
       "ai-sprouts": "Algorithms",
@@ -198,7 +198,7 @@
     "masterAI": "Master AI",
     "start": "Start",
     "comingSoon": "Coming Soon",
-    "viewAll": "View All Programmes",
+    "viewAll": "View All Academies",
     "trackAI": "Understanding AI",
     "trackCraft": "Code & Algorithms",
     "trackAIHome": "Grow from zero to AI expert",
@@ -214,19 +214,19 @@
     "comingSoon": "Lessons Coming Soon",
     "comingSoonDesc": "We're crafting these lessons with care. Check back soon!",
     "startFirst": "Start First Lesson",
-    "backToAll": "Back to All Programmes"
+    "backToAll": "Back to All Academies"
   },
   "dashboard": {
     "title": "My Learning Dashboard",
     "titleUser": "{name}'s Dashboard",
-    "subtitle": "Track your progress across all programmes",
+    "subtitle": "Track your progress across all academies",
     "overallProgress": "Overall Progress",
     "lessonsCompleted": "{completed} of {total} lessons completed",
     "remaining": "{count} remaining",
     "min": "min",
     "achievements": "Achievements",
     "unlocked": "Unlocked!",
-    "browsePrograms": "Browse Programmes",
+    "browsePrograms": "Browse Academies",
     "resetProgress": "Reset Progress",
     "firstStep": "First Step",
     "firstStepDesc": "Completed your first lesson",
