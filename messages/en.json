@@ -57,9 +57,12 @@
     }
   },
   "founder": {
-    "description": "Engineering leader with 15+ years building large-scale systems at JP Morgan, Sky, and Marks & Spencer across Asia and Europe. Based in London. Speaks English, French, and Telugu. Builds things that make complex ideas accessible.",
+    "description": "Decade and a half across fintech, media, and retail — building large-scale systems at multinational giants like JP Morgan, Sky, and a major UK retailer. Worked across Asia and Europe, currently based in London, helping digitise a global retail tech estate. Working in countries where English isn't the first language made one thing clear — language should never be a barrier to learning. Speaks English, French, and Telugu.",
     "cta": "More About Me",
-    "role": "Engineering Leader · Open Source Builder · London"
+    "role": "Engineering Leader · Open Source Builder · London",
+    "statYears": "Years Engineering",
+    "statRepos": "Open Source Repos",
+    "statContinents": "Continents Worked"
   },
   "footer": {
     "tagline": "Free AI education for everyone, in every language.",
@@ -179,14 +182,14 @@
     "pageDescription": "Explore our free AI learning tracks and software engineering academics. From absolute beginner to advanced, learn at your own pace in 5 languages.",
     "tileLabel": {
       "ai-seeds": "Basics",
-      "ai-sprouts": "Algorithms",
+      "ai-sprouts": "Core Concepts",
       "ai-branches": "Applications",
-      "ai-canopy": "Deep Learning",
-      "ai-forest": "Research",
-      "ai-sketch": "DSA",
-      "ai-chisel": "Patterns",
-      "ai-craft": "System Design",
-      "ai-polish": "Interviews",
+      "ai-canopy": "Advanced",
+      "ai-forest": "Mastery",
+      "ai-sketch": "Foundations",
+      "ai-chisel": "Data Structures",
+      "ai-craft": "Systems",
+      "ai-polish": "Production",
       "ai-masterpiece": "Architecture"
     }
   },

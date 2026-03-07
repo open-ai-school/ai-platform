@@ -24,8 +24,8 @@ test.describe("Navigation & Pages", () => {
     await expect(cards.first()).toBeVisible();
   });
 
-  test("playground page loads", async ({ page }) => {
-    await page.goto("/en/playground");
+  test("lab page loads", async ({ page }) => {
+    await page.goto("/en/lab");
     await expect(page.locator("h1").first()).toBeVisible();
   });
 

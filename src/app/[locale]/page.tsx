@@ -302,9 +302,9 @@ export default async function HomePage({
                   {/* Stats row — personal, from GitHub */}
                   <div className="grid grid-cols-3 gap-4 mb-8">
                     {[
-                      { value: "15+", label: "Years Engineering" },
-                      { value: "14", label: "Open Source Repos" },
-                      { value: "3", label: "Continents Worked" },
+                      { value: "15+", label: t("founder.statYears") },
+                      { value: "14", label: t("founder.statRepos") },
+                      { value: "3", label: t("founder.statContinents") },
                     ].map((stat) => (
                       <div key={stat.label} className="text-center p-3 rounded-xl bg-[var(--color-bg-section)]">
                         <div className="text-2xl font-bold text-gradient">{stat.value}</div>
