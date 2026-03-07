@@ -1,11 +1,11 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Playground", () => {
+test.describe("Lab", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/en/playground");
+    await page.goto("/en/lab");
   });
 
-  test("playground loads with tabs", async ({ page }) => {
+  test("lab loads with tabs", async ({ page }) => {
     await expect(page.locator("h1").first()).toBeVisible();
     // Should have clickable tab buttons
     const buttons = page.locator("button");
@@ -42,11 +42,11 @@ test.describe("Playground", () => {
   });
 });
 
-test.describe("Playground - Mobile", () => {
+test.describe("Lab - Mobile", () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
-  test("playground is usable on mobile", async ({ page }) => {
-    await page.goto("/en/playground");
+  test("lab is usable on mobile", async ({ page }) => {
+    await page.goto("/en/lab");
     await expect(page.locator("h1").first()).toBeVisible();
     // Tabs should be accessible (scrollable or wrapped)
     const buttons = page.locator("button");
