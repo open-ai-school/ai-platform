@@ -106,7 +106,7 @@ function computeAccuracy(w: NNWeights, points: { x: number; y: number; cls: numb
   return Math.round((correct / points.length) * 100);
 }
 
-export const NeuralNetworkPlayground = memo(function NeuralNetworkPlayground() {
+export const NeuralNetworkPlayground = memo(() => {
   const tp = useTranslations("lab.playground");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [points, setPoints] = useState<{ x: number; y: number; cls: number }[]>([]);
@@ -474,7 +474,7 @@ function scorePrompt(prompt: string, challenge: PromptChallenge): { score: numbe
   return { score, feedbackKey, simulatedResponse };
 }
 
-export const PromptEngineeringDojo = memo(function PromptEngineeringDojo() {
+export const PromptEngineeringDojo = memo(() => {
   const tp = useTranslations("lab.playground");
   const tpd = tp as unknown as DynamicTranslate;
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -710,7 +710,7 @@ function* quickSortGen(arr: number[]): Generator<{ array: number[]; comparing: n
 
   function* qsort(lo: number, hi: number): Generator<{ array: number[]; comparing: number[]; swapping: number[]; ops: number }> {
     if (lo < hi) {
-      const pivot = a[lo + Math.floor((hi - lo + 1) / 2)]; // just for partition index
+      const _pivot = a[lo + Math.floor((hi - lo + 1) / 2)]; // just for partition index
       // inline partition
       let i = lo - 1;
       for (let j = lo; j < hi; j++) {
@@ -774,7 +774,7 @@ const ALGO_COLORS: Record<SortAlgo, string> = {
   merge: "#00FF88",
 };
 
-export const AlgorithmVisualizer = memo(function AlgorithmVisualizer() {
+export const AlgorithmVisualizer = memo(() => {
   const tp = useTranslations("lab.playground");
   const ARRAY_SIZE = 24;
   const [baseArray, setBaseArray] = useState<number[]>(() => generateArray(ARRAY_SIZE));
@@ -835,7 +835,7 @@ export const AlgorithmVisualizer = memo(function AlgorithmVisualizer() {
 
       const updates: Partial<Record<SortAlgo, AlgoState>> = {};
       let anyActive = false;
-      let firstDone: SortAlgo | null = null;
+      const _firstDone: SortAlgo | null = null;
 
       for (const key of ["bubble", "quick", "merge"] as SortAlgo[]) {
         const gen = gensRef.current[key];

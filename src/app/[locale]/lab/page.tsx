@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
-import { ALL_GAMES, NeuralNetworkPlayground, type GameEntry } from "@/components/playground/MiniGames";
+import { ALL_GAMES, NeuralNetworkPlayground } from "@/components/playground/MiniGames";
 import { type GameMeta, type GameCategory } from "@/components/playground/GameCard";
 import AIOrHumanGame from "@/components/playground/AIOrHumanGame";
 import type { DynamicTranslate } from "@/lib/i18n-utils";

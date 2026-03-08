@@ -6,6 +6,7 @@ import { useSession, signOut as nextAuthSignOut } from "next-auth/react";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export function UserMenu() {
   const { data: session } = useSession();
@@ -59,7 +60,7 @@ export function UserMenu() {
         aria-label={t("userMenuLabel")}
       >
         {avatar ? (
-          <img src={avatar} alt={t("userAvatar")} className="w-7 h-7 rounded-full" />
+          <Image src={avatar} alt={t("userAvatar")} width={28} height={28} className="w-7 h-7 rounded-full" unoptimized />
         ) : (
           <span className="text-xl">{displayAvatar}</span>
         )}
@@ -78,7 +79,7 @@ export function UserMenu() {
             <div className="px-4 py-3 border-b border-[var(--color-border)]">
               <div className="flex items-center gap-3">
                 {avatar ? (
-                  <img src={avatar} alt={t("userAvatar")} className="w-9 h-9 rounded-full" />
+                  <Image src={avatar} alt={t("userAvatar")} width={36} height={36} className="w-9 h-9 rounded-full" unoptimized />
                 ) : (
                   <span className="text-2xl">{displayAvatar}</span>
                 )}

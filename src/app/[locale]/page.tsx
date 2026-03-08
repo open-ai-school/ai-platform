@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { ScrollReveal } from "@ai-educademy/ai-ui-library";
 import { getProgramsByTrack } from "@/lib/programs";
 import { getLessons } from "@/lib/lessons";
-import { Mail, Github, Star } from "lucide-react";
+import { Github, Star } from "lucide-react";
 import { NewsletterSignup } from "@/components/ui/NewsletterSignup";
 import HeroBackground from "@/components/home/HeroBackground";
 import HomeHero from "@/components/home/HomeHero";

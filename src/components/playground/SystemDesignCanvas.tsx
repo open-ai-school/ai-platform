@@ -127,7 +127,7 @@ function ShapeSVG({ kind, color, w = W, h = H }: { kind: ShapeKind; color: strin
 const ZOOM_MIN = 0.25, ZOOM_MAX = 3, ZOOM_STEP = 0.15;
 
 /* ── main component ───────────────────────────────────────────── */
-export const SystemDesignCanvas = memo(function SystemDesignCanvas() {
+export const SystemDesignCanvas = memo(() => {
   const { data: authSession } = useSession();
   const tp = useTranslations("lab.playground");
   const tpd = tp as unknown as DynamicTranslate;
@@ -135,7 +135,7 @@ export const SystemDesignCanvas = memo(function SystemDesignCanvas() {
 
   const [shapes, setShapes] = useState<Shape[]>([]);
   const [arrows, setArrows] = useState<Arrow[]>([]);
-  const [history, setHistory] = useState<Snapshot[]>([]);
+  const [_history, setHistory] = useState<Snapshot[]>([]);
   const [activeTool, setActiveTool] = useState<ShapeKind | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [connectMode, setConnectMode] = useState(false);
@@ -237,7 +237,7 @@ export const SystemDesignCanvas = memo(function SystemDesignCanvas() {
   }, [activeCanvasId, newCanvas]);
 
   /* rename canvas */
-  const renameCanvas = useCallback((id: string, name: string) => {
+  const _renameCanvas = useCallback((id: string, name: string) => {
     const key = userKeyRef.current;
     const list = loadCanvases(key);
     const c = list.find((x) => x.id === id);

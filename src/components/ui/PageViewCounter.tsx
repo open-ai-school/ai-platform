@@ -41,7 +41,7 @@ export function PageViewCounter() {
     try {
       const res = await fetch("/api/page-views");
       const data = await res.json();
-      if (data.views != null) {
+      if (data.views !== null) {
         setViews(data.views);
       }
     } catch { /* fetch failed, hide counter */ }

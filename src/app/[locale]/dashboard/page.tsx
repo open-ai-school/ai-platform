@@ -192,7 +192,7 @@ export default function DashboardPage() {
   const tld = tl as unknown as DynamicTranslate;
   const tp = useTranslations("programs");
   const tpd = tp as unknown as DynamicTranslate;
-  const { totalCompleted, getProgram, isCompleted, getCompletedAt, reset } = useProgress();
+  const { totalCompleted, getProgram, isCompleted, reset } = useProgress();
   const { currentStreak, longestStreak } = useStreak();
   const { data: session } = useSession();
   const { profile, isSignedIn: isGuestSignedIn } = useGuestProfile();

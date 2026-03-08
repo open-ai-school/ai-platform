@@ -22,13 +22,12 @@ export function ComingSoonCard({
 }
 
 export function ComingSoonProgramCard({
-  title,
+  title: _title,
   children,
 }: {
   title: string;
   children: React.ReactNode;
 }) {
-  const t = useTranslations("ui");
   return (
     <div
       className="block h-full text-left w-full hover:opacity-80 transition-opacity"

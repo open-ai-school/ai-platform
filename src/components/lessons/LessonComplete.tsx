@@ -174,9 +174,9 @@ export function LessonComplete({
   prevTitle,
   basePath,
   programPath,
-  programTitle,
+  programTitle: _programTitle,
   programTrack,
-  programLevel,
+  programLevel: _programLevel,
   trackLessonCounts,
 }: LessonCompleteProps) {
   const { isCompleted, markComplete, getProgram, allData } = useProgress(programSlug);

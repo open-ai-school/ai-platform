@@ -12,12 +12,6 @@ interface ProgramEntry {
   level: number;
 }
 
-interface LessonEntry {
-  slug: string;
-  programSlug: string;
-  programIcon: string;
-}
-
 const PROGRAMS: ProgramEntry[] = Object.entries(programsData.programs)
   .map(([slug, data]) => ({ slug, icon: data.icon, level: data.level }))
   .sort((a, b) => a.level - b.level);
@@ -31,19 +25,9 @@ export function NavSearch() {
   const router = useRouter();
   const locale = useLocale();
   const tP = useTranslations("programs");
-  const tLT = useTranslations("lessonTitles");
   const tNav = useTranslations("nav");
 
   const basePath = locale === "en" ? "" : `/${locale}`;
-
-  // Build searchable lesson list from i18n keys
-  const lessons = useMemo(() => {
-    const result: LessonEntry[] = [];
-    // We derive lesson→program mapping from known structure
-    const PROGRAM_LESSONS: Record<string, string[]> = {};
-    // Populate from lessonTitles keys (we'll search all available)
-    return result;
-  }, []);
 
   const programResults = useMemo(() => {
     if (!query.trim()) return PROGRAMS.slice(0, 5);
