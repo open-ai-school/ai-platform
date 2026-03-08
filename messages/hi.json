@@ -15,7 +15,26 @@
     "lab": "लैब",
     "search": "खोजें",
     "logIn": "लॉग इन",
-    "signUp": "साइन अप"
+    "signUp": "साइन अप",
+    "searchAriaLabel": "कार्यक्रम खोजें",
+    "noResults": "कोई परिणाम नहीं",
+    "toggleMenu": "मेनू टॉगल करें",
+    "viewAllPrograms": "सभी कार्यक्रम देखें",
+    "enterLab": "लैब में जाएँ",
+    "readBlog": "ब्लॉग पढ़ें",
+    "latestArticles": "AI, शिक्षा और तकनीक पर नवीनतम लेख",
+    "aiLearningPath": "AI लर्निंग पाथ",
+    "craftEngineeringPath": "क्राफ्ट इंजीनियरिंग पाथ",
+    "experimentsLoaded": "7 प्रयोग लोड हुए",
+    "mission": "मिशन",
+    "missionDesc": "हर जगह, हर किसी के लिए AI शिक्षा सुलभ बनाना",
+    "values": "मूल्य",
+    "valuesDesc": "ओपन सोर्स, बहुभाषी और हमेशा मुफ़्त",
+    "openSource": "ओपन सोर्स",
+    "openSourceDesc": "GitHub पर सार्वजनिक रूप से निर्मित",
+    "meetCreator": "निर्माता से मिलें",
+    "viewOnGithub": "GitHub पर देखें",
+    "comingSoon": "जल्द आ रहा है"
   },
   "hero": {
     "badge": "मुफ्त • ओपन सोर्स • बहुभाषी",
@@ -358,7 +377,10 @@
     "errorOAuth": "यह ईमेल पहले से किसी अन्य प्रदाता से जुड़ा है।",
     "errorGeneric": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
     "learner": "शिक्षार्थी",
-    "guestLearner": "अतिथि शिक्षार्थी"
+    "guestLearner": "अतिथि शिक्षार्थी",
+    "userMenuLabel": "उपयोगकर्ता मेनू",
+    "myProgress": "मेरी प्रगति",
+    "allPrograms": "सभी कार्यक्रम"
   },
   "lessonTitles": {
     "agentic-workflows": "Agentic Workflows",
@@ -884,6 +906,37 @@
   "ui": {
     "light": "लाइट",
     "dark": "डार्क",
-    "comingSoon": "जल्द"
+    "comingSoon": "जल्द",
+    "lightMode": "लाइट मोड",
+    "darkMode": "डार्क मोड",
+    "comingSoonMessage": "{title} जल्द आ रहा है! हम अभी इस मॉड्यूल पर काम कर रहे हैं।"
+  },
+  "admin": {
+    "loginTitle": "🔐 एडमिन एक्सेस",
+    "passwordPlaceholder": "एडमिन सीक्रेट दर्ज करें",
+    "accessButton": "डैशबोर्ड एक्सेस करें",
+    "loading": "एनालिटिक्स लोड हो रहा है...",
+    "noData": "कोई डेटा उपलब्ध नहीं",
+    "loadError": "एनालिटिक्स डेटा लोड करने में विफल",
+    "invalidSecret": "अमान्य सीक्रेट",
+    "title": "📊 एडमिन एनालिटिक्स",
+    "subscribers": "न्यूज़लेटर सदस्य",
+    "totalFeedback": "कुल फ़ीडबैक",
+    "totalEvents": "कुल इवेंट्स",
+    "feedbackByProgram": "💬 कार्यक्रम अनुसार फ़ीडबैक",
+    "noFeedback": "अभी तक कोई फ़ीडबैक नहीं",
+    "program": "कार्यक्रम",
+    "upVotes": "👍 अप",
+    "downVotes": "👎 डाउन",
+    "total": "कुल",
+    "popularLessons": "🔥 लोकप्रिय पाठ",
+    "noPageViews": "अभी तक कोई पेज व्यू ट्रैक नहीं हुआ",
+    "lesson": "पाठ",
+    "views": "व्यू",
+    "eventBreakdown": "📈 इवेंट ब्रेकडाउन",
+    "noEvents": "अभी तक कोई इवेंट ट्रैक नहीं हुआ",
+    "recentSubscribers": "📧 हाल के सदस्य",
+    "noSubscribers": "अभी तक कोई सदस्य नहीं",
+    "refreshData": "🔄 डेटा रिफ़्रेश करें"
   }
 }

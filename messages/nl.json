@@ -15,7 +15,26 @@
     "lab": "Lab",
     "search": "zoeken",
     "logIn": "Inloggen",
-    "signUp": "Registreren"
+    "signUp": "Registreren",
+    "searchAriaLabel": "Programma's zoeken",
+    "noResults": "Geen resultaten",
+    "toggleMenu": "Menu wisselen",
+    "viewAllPrograms": "Alle programma's bekijken",
+    "enterLab": "Ga naar het lab",
+    "readBlog": "Lees de blog",
+    "latestArticles": "Laatste artikelen over AI, onderwijs en technologie",
+    "aiLearningPath": "AI-leerpad",
+    "craftEngineeringPath": "Ambachtelijk engineeringpad",
+    "experimentsLoaded": "7 experimenten geladen",
+    "mission": "Missie",
+    "missionDesc": "AI-onderwijs toegankelijk maken voor iedereen, overal",
+    "values": "Waarden",
+    "valuesDesc": "Open source, meertalig en altijd gratis",
+    "openSource": "Open Source",
+    "openSourceDesc": "Openbaar gebouwd op GitHub",
+    "meetCreator": "Ontmoet de maker",
+    "viewOnGithub": "Bekijk op GitHub",
+    "comingSoon": "Binnenkort beschikbaar"
   },
   "hero": {
     "badge": "Gratis • Open source • Meertalig",
@@ -358,7 +377,10 @@
     "errorOAuth": "Dit e-mailadres is al gekoppeld aan een andere provider.",
     "errorGeneric": "Er ging iets mis. Probeer het opnieuw.",
     "learner": "Leerling",
-    "guestLearner": "Gastleerling"
+    "guestLearner": "Gastleerling",
+    "userMenuLabel": "Gebruikersmenu",
+    "myProgress": "Mijn voortgang",
+    "allPrograms": "Alle programma's"
   },
   "lessonTitles": {
     "agentic-workflows": "Agentische workflows",
@@ -884,6 +906,37 @@
   "ui": {
     "light": "Licht",
     "dark": "Donker",
-    "comingSoon": "Binnenkort"
+    "comingSoon": "Binnenkort",
+    "lightMode": "Lichte modus",
+    "darkMode": "Donkere modus",
+    "comingSoonMessage": "{title} komt binnenkort! We bouwen deze module nu."
+  },
+  "admin": {
+    "loginTitle": "🔐 Beheerderstoegang",
+    "passwordPlaceholder": "Voer beheerderscode in",
+    "accessButton": "Dashboard openen",
+    "loading": "Analyses laden...",
+    "noData": "Geen gegevens beschikbaar",
+    "loadError": "Kan analysegegevens niet laden",
+    "invalidSecret": "Ongeldige code",
+    "title": "📊 Beheerderanalyses",
+    "subscribers": "Nieuwsbriefabonnees",
+    "totalFeedback": "Totale feedback",
+    "totalEvents": "Totale events",
+    "feedbackByProgram": "💬 Feedback per programma",
+    "noFeedback": "Nog geen feedback",
+    "program": "Programma",
+    "upVotes": "👍 Positief",
+    "downVotes": "👎 Negatief",
+    "total": "Totaal",
+    "popularLessons": "🔥 Populaire lessen",
+    "noPageViews": "Nog geen paginaweergaven bijgehouden",
+    "lesson": "Les",
+    "views": "Weergaven",
+    "eventBreakdown": "📈 Eventoverzicht",
+    "noEvents": "Nog geen events bijgehouden",
+    "recentSubscribers": "📧 Recente abonnees",
+    "noSubscribers": "Nog geen abonnees",
+    "refreshData": "🔄 Gegevens vernieuwen"
   }
 }

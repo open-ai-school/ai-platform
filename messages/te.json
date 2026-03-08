@@ -15,7 +15,26 @@
     "lab": "ల్యాబ్",
     "search": "శోధించు",
     "logIn": "లాగిన్",
-    "signUp": "సైన్ అప్"
+    "signUp": "సైన్ అప్",
+    "searchAriaLabel": "ప్రోగ్రామ్‌లు వెతకండి",
+    "noResults": "ఫలితాలు లేవు",
+    "toggleMenu": "మెనూ టోగుల్ చేయండి",
+    "viewAllPrograms": "అన్ని ప్రోగ్రామ్‌లు చూడండి",
+    "enterLab": "ల్యాబ్‌లోకి వెళ్ళండి",
+    "readBlog": "బ్లాగ్ చదవండి",
+    "latestArticles": "AI, విద్య మరియు టెక్నాలజీపై తాజా వ్యాసాలు",
+    "aiLearningPath": "AI లెర్నింగ్ పాత్",
+    "craftEngineeringPath": "క్రాఫ్ట్ ఇంజనీరింగ్ పాత్",
+    "experimentsLoaded": "7 ప్రయోగాలు లోడ్ అయ్యాయి",
+    "mission": "మిషన్",
+    "missionDesc": "ప్రతి చోటా, ప్రతి ఒక్కరికీ AI విద్యను అందుబాటులోకి తీసుకురావడం",
+    "values": "విలువలు",
+    "valuesDesc": "ఓపెన్ సోర్స్, బహుభాషా మరియు ఎప్పటికీ ఉచితం",
+    "openSource": "ఓపెన్ సోర్స్",
+    "openSourceDesc": "GitHub లో బహిరంగంగా నిర్మించబడింది",
+    "meetCreator": "సృష్టికర్తను కలవండి",
+    "viewOnGithub": "GitHub లో చూడండి",
+    "comingSoon": "త్వరలో వస్తుంది"
   },
   "hero": {
     "badge": "ఉచితం • ఓపెన్ సోర్స్ • బహుభాషా",
@@ -360,7 +379,10 @@
     "errorOAuth": "ఈ ఇమెయిల్ ఇప్పటికే మరొక ప్రొవైడర్‌తో అనుసంధానించబడింది.",
     "errorGeneric": "ఏదో తప్పు జరిగింది. దయచేసి మళ్ళీ ప్రయత్నించండి.",
     "learner": "విద్యార్థి",
-    "guestLearner": "అతిథి విద్యార్థి"
+    "guestLearner": "అతిథి విద్యార్థి",
+    "userMenuLabel": "వినియోగదారు మెనూ",
+    "myProgress": "నా ప్రగతి",
+    "allPrograms": "అన్ని ప్రోగ్రామ్‌లు"
   },
   "lessonTitles": {
     "agentic-workflows": "Agentic Workflows",
@@ -886,6 +908,37 @@
   "ui": {
     "light": "లైట్",
     "dark": "డార్క్",
-    "comingSoon": "త్వరలో"
+    "comingSoon": "త్వరలో",
+    "lightMode": "లైట్ మోడ్",
+    "darkMode": "డార్క్ మోడ్",
+    "comingSoonMessage": "{title} త్వరలో వస్తుంది! మేము ప్రస్తుతం ఈ మాడ్యూల్‌ను నిర్మిస్తున్నాము."
+  },
+  "admin": {
+    "loginTitle": "🔐 అడ్మిన్ యాక్సెస్",
+    "passwordPlaceholder": "అడ్మిన్ సీక్రెట్ నమోదు చేయండి",
+    "accessButton": "డ్యాష్‌బోర్డ్ యాక్సెస్ చేయండి",
+    "loading": "అనలిటిక్స్ లోడ్ అవుతోంది...",
+    "noData": "డేటా అందుబాటులో లేదు",
+    "loadError": "అనలిటిక్స్ డేటా లోడ్ చేయడం విఫలమైంది",
+    "invalidSecret": "చెల్లని సీక్రెట్",
+    "title": "📊 అడ్మిన్ అనలిటిక్స్",
+    "subscribers": "న్యూస్‌లెటర్ చందాదారులు",
+    "totalFeedback": "మొత్తం ఫీడ్‌బ్యాక్",
+    "totalEvents": "మొత్తం ఈవెంట్లు",
+    "feedbackByProgram": "💬 ప్రోగ్రామ్ వారీగా ఫీడ్‌బ్యాక్",
+    "noFeedback": "ఇంకా ఫీడ్‌బ్యాక్ లేదు",
+    "program": "ప్రోగ్రామ్",
+    "upVotes": "👍 అప్",
+    "downVotes": "👎 డౌన్",
+    "total": "మొత్తం",
+    "popularLessons": "🔥 ప్రసిద్ధ పాఠాలు",
+    "noPageViews": "ఇంకా పేజీ వీక్షణలు ట్రాక్ కాలేదు",
+    "lesson": "పాఠం",
+    "views": "వీక్షణలు",
+    "eventBreakdown": "📈 ఈవెంట్ వివరాలు",
+    "noEvents": "ఇంకా ఈవెంట్లు ట్రాక్ కాలేదు",
+    "recentSubscribers": "📧 ఇటీవలి చందాదారులు",
+    "noSubscribers": "ఇంకా చందాదారులు లేరు",
+    "refreshData": "🔄 డేటా రిఫ్రెష్ చేయండి"
   }
 }
