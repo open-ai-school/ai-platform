@@ -1111,5 +1111,11 @@
     "recentSubscribers": "📧 Recent Subscribers",
     "noSubscribers": "No subscribers yet",
     "refreshData": "🔄 Refresh Data"
+  },
+  "listen": {
+    "listen": "Listen",
+    "pause": "Pause",
+    "resume": "Resume",
+    "stop": "Stop"
   }
 }

@@ -1073,5 +1073,11 @@
     "recentSubscribers": "📧 Recente abonnees",
     "noSubscribers": "Nog geen abonnees",
     "refreshData": "🔄 Gegevens vernieuwen"
+  },
+  "listen": {
+    "listen": "Luisteren",
+    "pause": "Pauzeren",
+    "resume": "Hervatten",
+    "stop": "Stoppen"
   }
 }

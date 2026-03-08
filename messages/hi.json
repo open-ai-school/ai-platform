@@ -1073,5 +1073,11 @@
     "recentSubscribers": "📧 हाल के सदस्य",
     "noSubscribers": "अभी तक कोई सदस्य नहीं",
     "refreshData": "🔄 डेटा रिफ़्रेश करें"
+  },
+  "listen": {
+    "listen": "सुनें",
+    "pause": "रोकें",
+    "resume": "जारी रखें",
+    "stop": "बंद करें"
   }
 }

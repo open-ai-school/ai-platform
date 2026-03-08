@@ -6,6 +6,7 @@ import { getProgram, getProgramsByTrack } from "@/lib/programs";
 import { LessonRenderer } from "@/components/lessons/LessonRenderer";
 import { LessonComplete } from "@/components/lessons/LessonComplete";
 import { LessonFeedback } from "@/components/lessons/LessonFeedback";
+import { ListenButton } from "@/components/ui/ListenButton";
 
 export default async function ProgramLessonPage({
   params,
@@ -76,6 +77,9 @@ export default async function ProgramLessonPage({
           </div>
         </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight">{tLT(slug)}</h1>
+        <div className="mt-4">
+          <ListenButton locale={locale} />
+        </div>
       </div>
 
       {/* Content */}

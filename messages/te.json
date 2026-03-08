@@ -1075,5 +1075,11 @@
     "recentSubscribers": "📧 ఇటీవలి చందాదారులు",
     "noSubscribers": "ఇంకా చందాదారులు లేరు",
     "refreshData": "🔄 డేటా రిఫ్రెష్ చేయండి"
+  },
+  "listen": {
+    "listen": "వినండి",
+    "pause": "ఆపండి",
+    "resume": "కొనసాగించు",
+    "stop": "ఆపివేయి"
   }
 }

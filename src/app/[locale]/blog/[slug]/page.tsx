@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { getBlogPost } from "@/lib/blog";
 import { LessonRenderer } from "@/components/lessons/LessonRenderer";
 import { AnimatedSection } from "@/components/ui/MotionWrappers";
+import { ListenButton } from "@/components/ui/ListenButton";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -102,6 +103,9 @@ export default async function BlogPostPage({
                 {tag}
               </span>
             ))}
+          </div>
+          <div className="mt-4">
+            <ListenButton locale={locale} />
           </div>
         </div>
       </AnimatedSection>
