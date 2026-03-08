@@ -146,6 +146,7 @@ public/swe-worker-*.js
 
 # Analytics data (JSON file store)
 data/
+!data/programs.json
 social-drafts.md
 .env*.local
 test-results/

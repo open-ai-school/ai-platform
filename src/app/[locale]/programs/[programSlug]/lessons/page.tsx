@@ -17,7 +17,7 @@ export default async function ProgramLessonsPage({
   if (!program) notFound();
 
   const t = await getTranslations("lessons");
-  const tPT = await getTranslations("programTitles");
+  const tP = await getTranslations("programs");
   const tLT = await getTranslations("lessonTitles");
   const lessons = getLessons(programSlug, locale);
   const basePath = locale === "en" ? "" : `/${locale}`;
@@ -44,7 +44,7 @@ export default async function ProgramLessonsPage({
           </Link>
           <span className="mx-2">›</span>
           <Link href={`${basePath}/programs/${programSlug}`} className="hover:text-[var(--color-primary)] transition-colors">
-            {tPT(programSlug)}
+            {tP(`${programSlug}.title`)}
           </Link>
           <span className="mx-2">›</span>
           <span>{t("title")}</span>
@@ -57,7 +57,7 @@ export default async function ProgramLessonsPage({
             className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium mb-4"
             style={{ backgroundColor: `${program.color}20`, color: program.color }}
           >
-            {program.icon} {tPT(programSlug)}
+            {program.icon} {tP(`${programSlug}.title`)}
           </div>
           <h1 className="text-4xl font-bold mb-4">{t("title")}</h1>
           <p className="text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
@@ -131,7 +131,7 @@ export default async function ProgramLessonsPage({
           href={`${basePath}/programs/${programSlug}`}
           className="group text-sm text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
         >
-          <span className="transition-transform duration-200 inline-block group-hover:-translate-x-0.5">←</span> {t("backToProgram")} {tPT(programSlug)}
+          <span className="transition-transform duration-200 inline-block group-hover:-translate-x-0.5">←</span> {t("backToProgram")} {tP(`${programSlug}.title`)}
         </Link>
       </div>
     </div>

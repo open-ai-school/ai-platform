@@ -16,30 +16,29 @@ export default async function HomePage({
 }) {
   const { locale } = await params;
   const t = await getTranslations();
-  const tp = await getTranslations("homePrograms");
+  const tP = await getTranslations("programs");
   const tc = await getTranslations("community");
   const tf = await getTranslations("features");
-  const tPT = await getTranslations("programTitles");
   const tLT = await getTranslations("lessonTitles");
   const basePath = locale === "en" ? "" : `/${locale}`;
 
   const aiLearningPrograms = getProgramsByTrack("ai-learning").map((p) => ({
     slug: p.slug,
     icon: p.icon,
-    title: p.title,
+    title: tP(`${p.slug}.title`),
     color: p.color,
-    active: p.status === "active",
+    active: true,
     level: p.level,
   }));
 
   const craftPrograms = getProgramsByTrack("craft-engineering").map((p) => ({
     slug: p.slug,
     icon: p.icon,
-    title: p.title,
+    title: tP(`${p.slug}.title`),
     color: p.color,
-    active: p.status === "active",
+    active: true,
     level: p.level,
-    desc: p.subtitle,
+    desc: tP(`${p.slug}.subtitle`),
   }));
 
   // Resolve first lesson slugs for direct navigation
@@ -57,7 +56,7 @@ export default async function HomePage({
   // Build program title map for client components
   const programTitles: Record<string, string> = {};
   for (const p of allHomePrograms) {
-    programTitles[p.slug] = tPT(p.slug);
+    programTitles[p.slug] = tP(`${p.slug}.title`);
   }
 
   // Social link SVG paths for founder section
@@ -123,8 +122,8 @@ export default async function HomePage({
           ]}
           trackAI={{
             trackIcon: "🌳",
-            trackTitle: tp("trackAI"),
-            trackDesc: tp("trackAIHome"),
+            trackTitle: tP("track.ai-learning.title"),
+            trackDesc: tP("track.ai-learning.desc"),
             programs: aiLearningPrograms,
             programTitles,
             firstLessonSlugs,
@@ -134,8 +133,8 @@ export default async function HomePage({
           }}
           trackCraft={{
             trackIcon: "🔨",
-            trackTitle: tp("trackCraft"),
-            trackDesc: tp("trackCraftHome"),
+            trackTitle: tP("track.craft-engineering.title"),
+            trackDesc: tP("track.craft-engineering.desc"),
             programs: craftPrograms,
             programTitles,
             firstLessonSlugs,
@@ -143,7 +142,7 @@ export default async function HomePage({
             basePath,
             href: `${basePath}/programs`,
           }}
-          viewAllText={tp("viewAll")}
+          viewAllText={tP("viewAll")}
           viewAllHref={`${basePath}/programs`}
         />
       </section>

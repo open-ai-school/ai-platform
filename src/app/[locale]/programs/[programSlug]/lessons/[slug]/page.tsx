@@ -17,9 +17,8 @@ export default async function ProgramLessonPage({
   if (!program) notFound();
 
   const t = await getTranslations("lessons");
-  const tPT = await getTranslations("programTitles");
-  const tLT = await getTranslations("lessonTitles");
   const tP = await getTranslations("programs");
+  const tLT = await getTranslations("lessonTitles");
   const lesson = getLesson(programSlug, locale, slug);
 
   if (!lesson) {
@@ -50,7 +49,7 @@ export default async function ProgramLessonPage({
         </Link>
         <span className="mx-2">›</span>
         <Link href={programPath} className="hover:text-[var(--color-primary)] transition-colors">
-          {program.icon} {tPT(programSlug)}
+          {program.icon} {tP(`${programSlug}.title`)}
         </Link>
         <span className="mx-2">›</span>
         <Link href={`${programPath}/lessons`} className="hover:text-[var(--color-primary)] transition-colors">
@@ -69,7 +68,7 @@ export default async function ProgramLessonPage({
               className="text-xs font-medium px-2.5 py-0.5 rounded-full"
               style={{ backgroundColor: `${program.color}20`, color: program.color }}
             >
-              {tPT(programSlug)} • {t(`difficulty.${lesson.difficulty}`)}
+              {tP(`${programSlug}.title`)} • {t(`difficulty.${lesson.difficulty}`)}
             </span>
             <span className="text-xs text-[var(--color-text-muted)] ml-2">
               ⏱️ {lesson.duration} {t("duration")}
@@ -96,7 +95,7 @@ export default async function ProgramLessonPage({
         prevTitle={prev ? tLT(prev.slug) : undefined}
         basePath={`${programPath}/lessons`}
         programPath={programPath}
-        programTitle={tPT(programSlug)}
+        programTitle={tP(`${programSlug}.title`)}
         programTrack={program.track}
         programLevel={program.level}
         trackLessonCounts={trackLessonCounts}

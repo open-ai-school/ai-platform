@@ -15,9 +15,7 @@ export default async function ProgramPage({
   if (!program) notFound();
 
   const t = await getTranslations("programDetail");
-  const tPT = await getTranslations("programTitles");
-  const tPS = await getTranslations("programSubtitles");
-  const tPD = await getTranslations("programDescriptions");
+  const tP = await getTranslations("programs");
   const tLT = await getTranslations("lessonTitles");
   const lessons = getLessons(programSlug, locale);
   const basePath = locale === "en" ? "" : `/${locale}`;
@@ -33,9 +31,9 @@ export default async function ProgramPage({
           >
             {program.icon} {t("level")} {program.level}
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-3 leading-tight text-gradient">{tPT(programSlug)}</h1>
-          <p className="text-xl text-[var(--color-text-muted)] mb-2 leading-relaxed">{tPS(programSlug)}</p>
-          <p className="text-[var(--color-text-muted)] max-w-2xl mx-auto">{tPD(programSlug)}</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-3 leading-tight text-gradient">{tP(`${programSlug}.title`)}</h1>
+          <p className="text-xl text-[var(--color-text-muted)] mb-2 leading-relaxed">{tP(`${programSlug}.subtitle`)}</p>
+          <p className="text-[var(--color-text-muted)] max-w-2xl mx-auto">{tP(`${programSlug}.description`)}</p>
         </div>
       </AnimatedSection>
 
@@ -60,7 +58,7 @@ export default async function ProgramPage({
         <div className="mb-14 p-6 rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)]">
           <h2 className="text-lg font-bold mb-4">🎯 {t("whatYouLearn")}</h2>
           <ul className="space-y-2">
-            {program.outcomes.map((outcome) => (
+            {((tP.raw(`${programSlug}.outcomes`) as string[]) || []).map((outcome) => (
               <li key={outcome} className="flex items-start gap-2 text-sm text-[var(--color-text-muted)]">
                 <span className="text-green-500 mt-0.5">✓</span>
                 {outcome}
@@ -75,7 +73,7 @@ export default async function ProgramPage({
         <div className="mb-14 p-4 rounded-xl bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/20">
           <p className="text-sm">
             <span className="font-semibold">{t("prerequisites")}:</span>{" "}
-            <span className="text-[var(--color-text-muted)]">{program.prerequisites}</span>
+            <span className="text-[var(--color-text-muted)]">{tP(`${programSlug}.prerequisites`)}</span>
           </p>
         </div>
       </AnimatedSection>

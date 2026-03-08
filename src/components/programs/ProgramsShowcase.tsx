@@ -30,7 +30,7 @@ export interface ProgramData {
   description: string;
   color: string;
   level: number;
-  status: string;
+  hasLessons: boolean;
   estimatedHours: number;
   topics: string[];
   lessonCount: number;
@@ -347,7 +347,7 @@ function ProgramCard({ program, basePath, t, index, reducedMotion }: {
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const isActive = program.status === "active";
+  const isActive = program.hasLessons;
   const [lessonsExpanded, setLessonsExpanded] = useState(false);
 
   const href = program.firstLessonSlug

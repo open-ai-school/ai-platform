@@ -47,15 +47,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const programPages: MetadataRoute.Sitemap = programs.flatMap((program) =>
     localizedEntries(
       `/programs/${program.slug}`,
-      program.status === "active" ? "weekly" : "monthly",
-      program.status === "active" ? 0.8 : 0.4,
+      "weekly",
+      0.8,
       now
     )
   );
 
   // Program lesson listing pages
   const programLessonPages: MetadataRoute.Sitemap = programs
-    .filter((p) => p.status === "active")
     .flatMap((program) =>
       localizedEntries(`/programs/${program.slug}/lessons`, "weekly", 0.7, now)
     );

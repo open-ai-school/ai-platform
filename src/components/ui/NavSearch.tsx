@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Search, X } from "lucide-react";
+import programsData from "@data/programs.json";
 
 interface ProgramEntry {
   slug: string;
@@ -17,18 +18,9 @@ interface LessonEntry {
   programIcon: string;
 }
 
-const PROGRAMS: ProgramEntry[] = [
-  { slug: "ai-seeds", icon: "🌱", level: 1 },
-  { slug: "ai-sprouts", icon: "🌿", level: 2 },
-  { slug: "ai-branches", icon: "🌳", level: 3 },
-  { slug: "ai-canopy", icon: "🏕️", level: 4 },
-  { slug: "ai-forest", icon: "🌲", level: 5 },
-  { slug: "ai-sketch", icon: "✏️", level: 1 },
-  { slug: "ai-chisel", icon: "🪨", level: 2 },
-  { slug: "ai-craft", icon: "⚒️", level: 3 },
-  { slug: "ai-polish", icon: "💎", level: 4 },
-  { slug: "ai-masterpiece", icon: "🏆", level: 5 },
-];
+const PROGRAMS: ProgramEntry[] = Object.entries(programsData.programs)
+  .map(([slug, data]) => ({ slug, icon: data.icon, level: data.level }))
+  .sort((a, b) => a.level - b.level);
 
 export function NavSearch() {
   const [open, setOpen] = useState(false);
@@ -38,7 +30,7 @@ export function NavSearch() {
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const locale = useLocale();
-  const tPT = useTranslations("programTitles");
+  const tP = useTranslations("programs");
   const tLT = useTranslations("lessonTitles");
   const tNav = useTranslations("nav");
 
@@ -57,23 +49,23 @@ export function NavSearch() {
     if (!query.trim()) return PROGRAMS.slice(0, 5);
     const q = query.toLowerCase();
     return PROGRAMS.filter((p) => {
-      const title = tPT(p.slug as never);
+      const title = tP(`${p.slug}.title` as never);
       return (
         title.toLowerCase().includes(q) ||
         p.slug.replace(/-/g, " ").includes(q)
       );
     });
-  }, [query, tPT]);
+  }, [query, tP]);
 
   const allResults = useMemo(() => {
     return programResults.map((p) => ({
       type: "program" as const,
       slug: p.slug,
       icon: p.icon,
-      title: tPT(p.slug as never),
+      title: tP(`${p.slug}.title` as never),
       href: `${basePath}/programs/${p.slug}`,
     }));
-  }, [programResults, tPT, basePath]);
+  }, [programResults, tP, basePath]);
 
   const navigate = useCallback(
     (href: string) => {

@@ -35,9 +35,6 @@ export default async function ProgramsPage({
 }) {
   const { locale } = await params;
   const t = await getTranslations("programs");
-  const tPT = await getTranslations("programTitles");
-  const tPS = await getTranslations("programSubtitles");
-  const tPD = await getTranslations("programDescriptions");
   const tLT = await getTranslations("lessonTitles");
   const tracks = getTracks();
   const basePath = locale === "en" ? "" : `/${locale}`;
@@ -48,26 +45,26 @@ export default async function ProgramsPage({
     title: t(`track.${track.slug}.title`),
     desc: t(`track.${track.slug}.desc`),
     tagline: t(`track.${track.slug}.tagline`),
-    brand: track.brand ? t(`track.${track.slug}.brand`) : undefined,
+    brand: t(`track.${track.slug}.brand`),
   }));
 
   const programsByTrack: Record<string, ProgramData[]> = {};
   for (const track of tracks) {
     const progs = getProgramsByTrack(track.slug);
     programsByTrack[track.slug] = progs.map((p) => {
-      const lessons = p.status === "active" ? getLessons(p.slug, locale) : [];
+      const lessons = getLessons(p.slug, locale);
       return {
         slug: p.slug,
         icon: p.icon,
-        title: tPT(p.slug),
-        subtitle: tPS(p.slug),
-        description: tPD(p.slug),
+        title: t(`${p.slug}.title`),
+        subtitle: t(`${p.slug}.subtitle`),
+        description: t(`${p.slug}.description`),
         color: p.color,
         level: p.level,
-        status: p.status,
+        hasLessons: lessons.length > 0,
         estimatedHours: p.estimatedHours,
-        topics: p.topics,
-        lessonCount: p.lessonCount,
+        topics: (t.raw(`${p.slug}.topics`) as string[]) || [],
+        lessonCount: lessons.length,
         firstLessonSlug: lessons[0]?.slug,
         lessons: lessons.map((l) => ({
           slug: l.slug,

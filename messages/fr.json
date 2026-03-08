@@ -229,21 +229,9 @@
       "4": "Avancé",
       "5": "Expert"
     },
-    "viewAll": "Tout voir",
+    "viewAll": "Voir tous les programmes",
     "pageTitle": "Programmes d'IA et d'ingénierie",
     "pageDescription": "Explorez nos parcours gratuits en IA et en ingénierie logicielle. Du grand débutant au niveau avancé, apprenez à votre rythme dans 5 langues.",
-    "tileLabel": {
-      "ai-seeds": "Les bases",
-      "ai-sprouts": "Concepts fondamentaux",
-      "ai-branches": "Applications",
-      "ai-canopy": "Avancé",
-      "ai-forest": "Maîtrise",
-      "ai-sketch": "Fondamentaux",
-      "ai-chisel": "Structures de données",
-      "ai-craft": "Systèmes",
-      "ai-polish": "Production",
-      "ai-masterpiece": "Architecture"
-    },
     "track": {
       "ai-learning": {
         "title": "Comprendre l'IA",
@@ -266,21 +254,201 @@
     "showLess": "Voir moins",
     "searchPlaceholder": "Rechercher des programmes, leçons, sujets…",
     "noResults": "Aucun résultat trouvé",
-    "allTracks": "Tous les parcours"
-  },
-  "homePrograms": {
-    "startFromZero": "Partez de zéro",
-    "buildFoundations": "Construisez les fondations",
-    "applyInPractice": "Mettez en pratique",
-    "goDeep": "Approfondissez",
-    "masterAI": "Maîtrisez l'IA",
-    "start": "Commencer",
-    "comingSoon": "Bientôt disponible",
-    "viewAll": "Voir tous les programmes",
-    "trackAI": "Comprendre l'IA",
-    "trackCraft": "Code et Algorithmes",
-    "trackAIHome": "De zéro à expert en IA",
-    "trackCraftHome": "Réussissez votre entretien technique"
+    "allTracks": "Tous les parcours",
+    "ai-seeds": {
+      "title": "AI Seeds",
+      "subtitle": "Plantez vos premières graines d'IA",
+      "description": "Partez de zéro absolu. Pas de code, pas de maths — juste un langage simple et des exemples du quotidien. Idéal pour quiconque est curieux de l'IA mais ne l'a jamais explorée.",
+      "audience": "Débutants complets sans aucune formation technique",
+      "prerequisites": "Aucun — juste de la curiosité !",
+      "topics": [
+        "Qu'est-ce que l'IA ?",
+        "Comment les machines apprennent",
+        "Votre premier modèle d'IA"
+      ],
+      "outcomes": [
+        "Comprendre ce qu'est l'IA et ce qu'elle n'est pas",
+        "Savoir comment les machines apprennent à partir de données",
+        "Entraîner un modèle d'IA simple dans votre navigateur"
+      ],
+      "tileLabel": "Les bases",
+      "homeDesc": "Partez de zéro"
+    },
+    "ai-sprouts": {
+      "title": "AI Sprouts",
+      "subtitle": "Construisez vos fondations en IA",
+      "description": "Prêt à grandir ? Plongez dans les briques de base de l'IA — données, algorithmes et réseaux de neurones. Des exercices pratiques pour développer votre intuition avant d'écrire du code.",
+      "audience": "Apprenants ayant terminé AI Seeds ou ayant des notions de base en IA",
+      "prerequisites": "AI Seeds (recommandé)",
+      "topics": [
+        "Types d'IA",
+        "Comprendre les données",
+        "Comment l'IA décide",
+        "Éthique de l'IA — les bases"
+      ],
+      "outcomes": [
+        "Distinguer l'apprentissage supervisé, non supervisé et par renforcement",
+        "Comprendre ce que sont les données d'entraînement et pourquoi elles sont importantes",
+        "Réfléchir de manière critique aux biais et à l'équité de l'IA"
+      ],
+      "tileLabel": "Concepts fondamentaux",
+      "homeDesc": "Construisez les fondations"
+    },
+    "ai-branches": {
+      "title": "AI Branches",
+      "subtitle": "Explorer les applications concrètes",
+      "description": "Découvrez l'IA en action dans tous les secteurs — santé, finance, arts créatifs et bien d'autres. Commencez à construire des projets simples et comprenez les outils utilisés par les professionnels.",
+      "audience": "Apprenants prêts à voir l'IA appliquée en pratique",
+      "prerequisites": "AI Sprouts",
+      "topics": [
+        "L'IA dans la santé",
+        "L'IA dans les arts créatifs",
+        "Chatbots et NLP",
+        "Bases de la vision par ordinateur"
+      ],
+      "outcomes": [
+        "Construire un chatbot simple",
+        "Comprendre comment fonctionne la reconnaissance d'images",
+        "Créer un mini-projet alimenté par l'IA"
+      ],
+      "tileLabel": "Applications",
+      "homeDesc": "Mettez en pratique"
+    },
+    "ai-canopy": {
+      "title": "AI Canopy",
+      "subtitle": "Plongée au cœur des systèmes IA",
+      "description": "Allez plus loin dans les réseaux de neurones, les grands modèles de langage et la conception de systèmes IA. Apprenez à évaluer les outils IA de manière critique et à comprendre l'ingénierie derrière l'IA moderne.",
+      "audience": "Apprenants intermédiaires prêts pour la profondeur technique",
+      "prerequisites": "AI Branches",
+      "topics": [
+        "Réseaux de neurones",
+        "Grands modèles de langage",
+        "Ingénierie de prompts",
+        "Conception de systèmes IA"
+      ],
+      "outcomes": [
+        "Comprendre le fonctionnement des réseaux de neurones",
+        "Maîtriser les techniques d'ingénierie de prompts",
+        "Évaluer les outils et services IA de manière critique"
+      ],
+      "tileLabel": "Avancé",
+      "homeDesc": "Approfondissez"
+    },
+    "ai-forest": {
+      "title": "AI Forest",
+      "subtitle": "Maîtriser l'écosystème IA",
+      "description": "La vision d'ensemble — recherche en IA, systèmes IA en production, contributions à l'IA open source, et compréhension de l'évolution du domaine. Pour ceux qui veulent façonner l'avenir.",
+      "audience": "Apprenants avancés et futurs praticiens de l'IA",
+      "prerequisites": "AI Canopy",
+      "topics": [
+        "Construire des produits IA",
+        "IA open source",
+        "Articles de recherche en IA",
+        "L'avenir de l'IA"
+      ],
+      "outcomes": [
+        "Construire et déployer une application alimentée par l'IA",
+        "Lire et comprendre des articles de recherche en IA",
+        "Contribuer à des projets IA open source"
+      ],
+      "tileLabel": "Maîtrise",
+      "homeDesc": "Maîtrisez l'IA"
+    },
+    "ai-sketch": {
+      "title": "AI Sketch",
+      "subtitle": "Premiers contours — Fondamentaux des structures de données et algorithmes",
+      "description": "Maîtrisez les structures de données et algorithmes fondamentaux qui alimentent les systèmes IA. Tableaux, tables de hachage, chaînes de caractères et tri — visualisés avec des diagrammes, expliqués avec des applications IA concrètes.",
+      "audience": "Ingénieurs débutant la préparation aux entretiens ou rafraîchissant les fondamentaux",
+      "prerequisites": "Programmation de base dans n'importe quel langage",
+      "topics": [
+        "Tableaux et hachage",
+        "Chaînes et correspondance de motifs",
+        "Tri et recherche"
+      ],
+      "outcomes": [
+        "Résoudre avec confiance les problèmes de tableaux et tables de hachage",
+        "Comprendre comment ces motifs alimentent les systèmes IA",
+        "Reconnaître les motifs d'entretien courants"
+      ],
+      "tileLabel": "Fondamentaux",
+      "homeDesc": "Partez de zéro"
+    },
+    "ai-chisel": {
+      "title": "AI Chisel",
+      "subtitle": "Précision ciselée — Patrons intermédiaires",
+      "description": "Passez au niveau supérieur avec les patrons algorithmiques intermédiaires : deux pointeurs, fenêtre glissante, BFS/DFS et parcours d'arbres. Chaque patron est relié à des applications concrètes en IA/ML.",
+      "audience": "Ingénieurs avec des bases en DSA prêts pour des problèmes de niveau intermédiaire",
+      "prerequisites": "AI Sketch ou fondamentaux équivalents",
+      "topics": [
+        "Deux pointeurs et fenêtre glissante",
+        "Arbres et parcours de graphes",
+        "Piles, files et motifs monotones"
+      ],
+      "outcomes": [
+        "Appliquer deux pointeurs et fenêtre glissante pour optimiser les solutions",
+        "Parcourir arbres et graphes avec BFS/DFS",
+        "Relier ces motifs à la recherche et l'inférence en IA"
+      ],
+      "tileLabel": "Structures de données",
+      "homeDesc": "Construisez les fondations"
+    },
+    "ai-craft": {
+      "title": "AI Craft",
+      "subtitle": "Construire l'expertise — Conception de systèmes",
+      "description": "Concevez des systèmes à grande échelle qui alimentent l'IA : moteurs de recommandation, autocomplétion de recherche, limiteurs de débit. Apprenez à penser en architectures, pas seulement en code.",
+      "audience": "Ingénieurs de niveau intermédiaire à senior préparant les entretiens de conception système",
+      "prerequisites": "À l'aise avec les entretiens de programmation",
+      "topics": [
+        "Concevoir un raccourcisseur d'URL",
+        "Concevoir un limiteur de débit",
+        "Concevoir un moteur de recommandation"
+      ],
+      "outcomes": [
+        "Structurer clairement les réponses de conception système",
+        "Concevoir des systèmes distribués évolutifs",
+        "Comprendre les motifs d'infrastructure spécifiques à l'IA"
+      ],
+      "tileLabel": "Systèmes",
+      "homeDesc": "Mettez en pratique"
+    },
+    "ai-polish": {
+      "title": "AI Polish",
+      "subtitle": "Perfectionner l'excellence — Maîtrise comportementale",
+      "description": "Maîtrisez l'entretien comportemental grâce à des cadres structurés. La méthode STAR, les principes de leadership, les scénarios de l'ère IA et les stratégies de communication.",
+      "audience": "Ingénieurs de tout niveau préparant les entretiens comportementaux",
+      "prerequisites": "Expérience de projet réelle à partager",
+      "topics": [
+        "La méthode STAR pour les ingénieurs",
+        "Communication en conception système",
+        "Scénarios de leadership à l'ère de l'IA"
+      ],
+      "outcomes": [
+        "Structurer des récits convaincants avec la méthode STAR",
+        "Communiquer clairement les décisions techniques",
+        "Naviguer les questions d'éthique IA et de leadership"
+      ],
+      "tileLabel": "Production",
+      "homeDesc": "Approfondissez"
+    },
+    "ai-masterpiece": {
+      "title": "AI Masterpiece",
+      "subtitle": "Prêt pour le portfolio — Études de cas complètes",
+      "description": "Projets de synthèse combinant structures de données et algorithmes, conception de systèmes et compétences comportementales. Concevez des systèmes réels de bout en bout et construisez votre portfolio d'ingénierie.",
+      "audience": "Ingénieurs prêts pour des postes senior+",
+      "prerequisites": "Avoir terminé AI Sketch à AI Polish",
+      "topics": [
+        "Concevoir le fil IA de Twitter",
+        "Entretien simulé complet",
+        "Portfolio d'ingénierie"
+      ],
+      "outcomes": [
+        "Réaliser des conceptions système de bout en bout",
+        "Performer avec confiance en entretien simulé",
+        "Construire un portfolio d'ingénierie remarquable"
+      ],
+      "tileLabel": "Architecture",
+      "homeDesc": "Maîtrisez l'IA"
+    }
   },
   "programDetail": {
     "level": "Niveau",
@@ -904,42 +1072,6 @@
     "allSystemsOp": "tous les systèmes opérationnels",
     "featuredExperiment": "Expérience en vedette",
     "runButton": "LANCER"
-  },
-  "programTitles": {
-    "ai-branches": "AI Branches",
-    "ai-canopy": "AI Canopy",
-    "ai-chisel": "AI Chisel",
-    "ai-craft": "AI Craft",
-    "ai-forest": "AI Forest",
-    "ai-masterpiece": "AI Masterpiece",
-    "ai-polish": "AI Polish",
-    "ai-seeds": "AI Seeds",
-    "ai-sketch": "AI Sketch",
-    "ai-sprouts": "AI Sprouts"
-  },
-  "programSubtitles": {
-    "ai-branches": "Explorer les applications concrètes",
-    "ai-canopy": "Plongée au cœur des systèmes IA",
-    "ai-chisel": "Précision ciselée — Patrons intermédiaires",
-    "ai-craft": "Construire l'expertise — Conception de systèmes",
-    "ai-forest": "Maîtriser l'écosystème IA",
-    "ai-masterpiece": "Prêt pour le portfolio — Études de cas complètes",
-    "ai-polish": "Perfectionner l'excellence — Maîtrise comportementale",
-    "ai-seeds": "Plantez vos premières graines d'IA",
-    "ai-sketch": "Premiers contours — Fondamentaux des structures de données et algorithmes",
-    "ai-sprouts": "Construisez vos fondations en IA"
-  },
-  "programDescriptions": {
-    "ai-branches": "Découvrez l'IA en action dans tous les secteurs — santé, finance, arts créatifs et bien d'autres. Commencez à construire des projets simples et comprenez les outils utilisés par les professionnels.",
-    "ai-canopy": "Allez plus loin dans les réseaux de neurones, les grands modèles de langage et la conception de systèmes IA. Apprenez à évaluer les outils IA de manière critique et à comprendre l'ingénierie derrière l'IA moderne.",
-    "ai-chisel": "Passez au niveau supérieur avec les patrons algorithmiques intermédiaires : deux pointeurs, fenêtre glissante, BFS/DFS et parcours d'arbres. Chaque patron est relié à des applications concrètes en IA/ML.",
-    "ai-craft": "Concevez des systèmes à grande échelle qui alimentent l'IA : moteurs de recommandation, autocomplétion de recherche, limiteurs de débit. Apprenez à penser en architectures, pas seulement en code.",
-    "ai-forest": "La vision d'ensemble — recherche en IA, systèmes IA en production, contributions à l'IA open source, et compréhension de l'évolution du domaine. Pour ceux qui veulent façonner l'avenir.",
-    "ai-masterpiece": "Projets de synthèse combinant structures de données et algorithmes, conception de systèmes et compétences comportementales. Concevez des systèmes réels de bout en bout et construisez votre portfolio d'ingénierie.",
-    "ai-polish": "Maîtrisez l'entretien comportemental grâce à des cadres structurés. La méthode STAR, les principes de leadership, les scénarios de l'ère IA et les stratégies de communication.",
-    "ai-seeds": "Partez de zéro absolu. Pas de code, pas de maths — juste un langage simple et des exemples du quotidien. Idéal pour quiconque est curieux de l'IA mais ne l'a jamais explorée.",
-    "ai-sketch": "Maîtrisez les structures de données et algorithmes fondamentaux qui alimentent les systèmes IA. Tableaux, tables de hachage, chaînes de caractères et tri — visualisés avec des diagrammes, expliqués avec des applications IA concrètes.",
-    "ai-sprouts": "Prêt à grandir ? Plongez dans les briques de base de l'IA — données, algorithmes et réseaux de neurones. Des exercices pratiques pour développer votre intuition avant d'écrire du code."
   },
   "ui": {
     "light": "Clair",

@@ -229,21 +229,9 @@
       "4": "Gevorderd",
       "5": "Expert"
     },
-    "viewAll": "Bekijk alles",
+    "viewAll": "Bekijk alle opleidingen",
     "pageTitle": "AI & Engineering Opleidingen",
     "pageDescription": "Ontdek onze gratis AI-leertrajecten en software-engineering opleidingen. Van absolute beginner tot gevorderd, leer in je eigen tempo in 5 talen.",
-    "tileLabel": {
-      "ai-seeds": "Basis",
-      "ai-sprouts": "Kernconcepten",
-      "ai-branches": "Toepassingen",
-      "ai-canopy": "Gevorderd",
-      "ai-forest": "Meesterschap",
-      "ai-sketch": "Fundamenten",
-      "ai-chisel": "Datastructuren",
-      "ai-craft": "Systemen",
-      "ai-polish": "Productie",
-      "ai-masterpiece": "Architectuur"
-    },
     "track": {
       "ai-learning": {
         "title": "AI begrijpen",
@@ -266,21 +254,201 @@
     "showLess": "Minder tonen",
     "searchPlaceholder": "Zoek programma's, lessen, onderwerpen…",
     "noResults": "Geen resultaten gevonden",
-    "allTracks": "Alle trajecten"
-  },
-  "homePrograms": {
-    "startFromZero": "Begin bij nul",
-    "buildFoundations": "Bouw een fundament",
-    "applyInPractice": "Pas toe in de praktijk",
-    "goDeep": "Ga de diepte in",
-    "masterAI": "Beheers AI",
-    "start": "Start",
-    "comingSoon": "Binnenkort beschikbaar",
-    "viewAll": "Bekijk alle opleidingen",
-    "trackAI": "AI begrijpen",
-    "trackCraft": "Code & Algoritmen",
-    "trackAIHome": "Groei van nul naar AI-expert",
-    "trackCraftHome": "Haal je technische droombaan"
+    "allTracks": "Alle trajecten",
+    "ai-seeds": {
+      "title": "AI Seeds",
+      "subtitle": "Plant je eerste AI-kennis",
+      "description": "Begin vanaf absoluut nul. Geen code, geen wiskunde — gewoon duidelijke taal en alledaagse voorbeelden. Perfect voor iedereen die nieuwsgierig is naar AI maar het nog nooit heeft verkend.",
+      "audience": "Absolute beginners zonder technische achtergrond",
+      "prerequisites": "Geen — alleen nieuwsgierigheid!",
+      "topics": [
+        "Wat is AI?",
+        "Hoe machines leren",
+        "Je eerste AI-model"
+      ],
+      "outcomes": [
+        "Begrijpen wat AI wel en niet is",
+        "Weten hoe machines leren van data",
+        "Een eenvoudig AI-model trainen in je browser"
+      ],
+      "tileLabel": "Basis",
+      "homeDesc": "Begin bij nul"
+    },
+    "ai-sprouts": {
+      "title": "AI Sprouts",
+      "subtitle": "Bouw je AI-fundament",
+      "description": "Klaar om te groeien? Duik in de bouwstenen van AI — data, algoritmen en neurale netwerken. Praktische oefeningen helpen je intuïtie op te bouwen voordat je code schrijft.",
+      "audience": "Leerlingen die AI Seeds hebben afgerond of basiskennis van AI hebben",
+      "prerequisites": "AI Seeds (aanbevolen)",
+      "topics": [
+        "Soorten AI",
+        "Data begrijpen",
+        "Hoe AI beslist",
+        "AI-ethiek — de basis"
+      ],
+      "outcomes": [
+        "Onderscheid maken tussen begeleid, onbegeleid en versterkend leren",
+        "Begrijpen wat trainingsdata is en waarom het belangrijk is",
+        "Kritisch nadenken over AI-vooroordelen en eerlijkheid"
+      ],
+      "tileLabel": "Kernconcepten",
+      "homeDesc": "Bouw een fundament"
+    },
+    "ai-branches": {
+      "title": "AI Branches",
+      "subtitle": "Ontdek toepassingen in de echte wereld",
+      "description": "Zie AI in actie in verschillende sectoren — gezondheidszorg, financiën, creatieve kunsten en meer. Begin met het bouwen van eenvoudige projecten en begrijp de tools die professionals gebruiken.",
+      "audience": "Leerlingen die klaar zijn om AI in de praktijk te zien",
+      "prerequisites": "AI Sprouts",
+      "topics": [
+        "AI in de gezondheidszorg",
+        "AI in creatieve kunsten",
+        "Chatbots en NLP",
+        "Basis computer vision"
+      ],
+      "outcomes": [
+        "Een eenvoudige chatbot bouwen",
+        "Begrijpen hoe beeldherkenning werkt",
+        "Een AI-aangedreven miniproject maken"
+      ],
+      "tileLabel": "Toepassingen",
+      "homeDesc": "Pas toe in de praktijk"
+    },
+    "ai-canopy": {
+      "title": "AI Canopy",
+      "subtitle": "Diep duiken in AI-systemen",
+      "description": "Ga dieper in op neurale netwerken, grote taalmodellen en het ontwerp van AI-systemen. Leer AI-tools kritisch te beoordelen en begrijp de techniek achter moderne AI.",
+      "audience": "Gevorderde leerlingen klaar voor technische diepgang",
+      "prerequisites": "AI Branches",
+      "topics": [
+        "Neurale netwerken",
+        "Grote taalmodellen",
+        "Prompt engineering",
+        "AI-systeemontwerp"
+      ],
+      "outcomes": [
+        "Begrijpen hoe neurale netwerken werken",
+        "Prompt engineering-technieken beheersen",
+        "AI-tools en -diensten kritisch beoordelen"
+      ],
+      "tileLabel": "Gevorderd",
+      "homeDesc": "Ga de diepte in"
+    },
+    "ai-forest": {
+      "title": "AI Forest",
+      "subtitle": "Beheers het AI-ecosysteem",
+      "description": "Het volledige plaatje — AI-onderzoek, productie-AI-systemen bouwen, bijdragen aan open source AI en begrijpen waar het vakgebied naartoe gaat. Voor wie de toekomst wil vormgeven.",
+      "audience": "Gevorderde leerlingen en aspirant AI-professionals",
+      "prerequisites": "AI Canopy",
+      "topics": [
+        "AI-producten bouwen",
+        "Open-source AI",
+        "AI-onderzoeksartikelen",
+        "De toekomst van AI"
+      ],
+      "outcomes": [
+        "Een AI-aangedreven applicatie bouwen en deployen",
+        "AI-onderzoeksartikelen lezen en begrijpen",
+        "Bijdragen aan open-source AI-projecten"
+      ],
+      "tileLabel": "Meesterschap",
+      "homeDesc": "Beheers AI"
+    },
+    "ai-sketch": {
+      "title": "AI Sketch",
+      "subtitle": "Eerste schetsen — Fundamenten van datastructuren en algoritmen",
+      "description": "Beheers de fundamentele datastructuren en algoritmen die AI-systemen aandrijven. Arrays, hash maps, strings en sorteren — gevisualiseerd met diagrammen, uitgelegd met praktische AI-toepassingen.",
+      "audience": "Engineers die beginnen met sollicitatieprep of fundamenten opfrissen",
+      "prerequisites": "Basisprogrammering in een willekeurige taal",
+      "topics": [
+        "Arrays en hashing",
+        "Strings en patroonherkenning",
+        "Sorteren en zoeken"
+      ],
+      "outcomes": [
+        "Zelfverzekerd array- en hash map-problemen oplossen",
+        "Begrijpen hoe deze patronen AI-systemen aandrijven",
+        "Veelvoorkomende sollicitatiepatronen herkennen"
+      ],
+      "tileLabel": "Fundamenten",
+      "homeDesc": "Begin bij nul"
+    },
+    "ai-chisel": {
+      "title": "AI Chisel",
+      "subtitle": "Precisie slijpen — Gevorderde patronen",
+      "description": "Stap op naar gevorderde algoritmische patronen: twee pointers, sliding window, BFS/DFS en boom-traversals. Elk patroon gekoppeld aan echte AI/ML-toepassingen.",
+      "audience": "Engineers met DSA-basis klaar voor problemen op gemiddeld niveau",
+      "prerequisites": "AI Sketch of gelijkwaardige fundamenten",
+      "topics": [
+        "Twee pointers en sliding window",
+        "Bomen en grafentraversal",
+        "Stacks, queues en monotone patronen"
+      ],
+      "outcomes": [
+        "Twee pointers en sliding window toepassen om oplossingen te optimaliseren",
+        "Bomen en grafen doorkruisen met BFS/DFS",
+        "Deze patronen verbinden met AI-zoeken en inferentie"
+      ],
+      "tileLabel": "Datastructuren",
+      "homeDesc": "Bouw een fundament"
+    },
+    "ai-craft": {
+      "title": "AI Craft",
+      "subtitle": "Vaardigheden opbouwen — Systeemontwerp",
+      "description": "Ontwerp grootschalige systemen die AI aandrijven: aanbevelingssystemen, automatisch aanvullen bij zoeken, rate limiters. Leer denken in architecturen, niet alleen in code.",
+      "audience": "Mid- tot senior engineers die zich voorbereiden op systeemontwerp-rondes",
+      "prerequisites": "Comfortabel met codering-interviews",
+      "topics": [
+        "Een URL-verkorter ontwerpen",
+        "Een rate limiter ontwerpen",
+        "Een aanbevelingssysteem ontwerpen"
+      ],
+      "outcomes": [
+        "Systeemontwerp-antwoorden duidelijk structureren",
+        "Schaalbare gedistribueerde systemen ontwerpen",
+        "AI-specifieke infrastructuurpatronen begrijpen"
+      ],
+      "tileLabel": "Systemen",
+      "homeDesc": "Pas toe in de praktijk"
+    },
+    "ai-polish": {
+      "title": "AI Polish",
+      "subtitle": "Excellentie verfijnen — Gedragsmatige meesterschap",
+      "description": "Beheers het gedragsgerichte sollicitatiegesprek met gestructureerde raamwerken. STAR-methode, leiderschapsprincipes, AI-tijdperkscenario's en communicatiestrategieën.",
+      "audience": "Engineers op elk niveau die zich voorbereiden op gedragsgesprekken",
+      "prerequisites": "Echte projectervaring om uit te putten",
+      "topics": [
+        "STAR-methode voor engineers",
+        "Systeemontwerp-communicatie",
+        "Leiderschapsscenario's in het AI-tijdperk"
+      ],
+      "outcomes": [
+        "Overtuigende verhalen structureren met STAR",
+        "Technische beslissingen helder communiceren",
+        "AI-ethiek- en leiderschapsvragen navigeren"
+      ],
+      "tileLabel": "Productie",
+      "homeDesc": "Ga de diepte in"
+    },
+    "ai-masterpiece": {
+      "title": "AI Masterpiece",
+      "subtitle": "Portfolioklaar — Complete casestudies",
+      "description": "Eindprojecten die datastructuren, systeemontwerp en gedragsvaardigheden combineren. Ontwerp echte systemen van begin tot eind en bouw je engineering portfolio.",
+      "audience": "Engineers klaar voor senior+ rollen",
+      "prerequisites": "AI Sketch tot en met AI Polish afgerond",
+      "topics": [
+        "Twitter's AI-feed ontwerpen",
+        "Volledig proef-interview",
+        "Engineering portfolio"
+      ],
+      "outcomes": [
+        "Complete end-to-end systeemontwerpen uitvoeren",
+        "Zelfverzekerd presteren in proefinterviews",
+        "Een opvallend engineering portfolio bouwen"
+      ],
+      "tileLabel": "Architectuur",
+      "homeDesc": "Beheers AI"
+    }
   },
   "programDetail": {
     "level": "Niveau",
@@ -866,42 +1034,6 @@
     "allSystemsOp": "alle systemen operationeel",
     "featuredExperiment": "Uitgelicht experiment",
     "runButton": "START"
-  },
-  "programTitles": {
-    "ai-branches": "AI Branches",
-    "ai-canopy": "AI Canopy",
-    "ai-chisel": "AI Chisel",
-    "ai-craft": "AI Craft",
-    "ai-forest": "AI Forest",
-    "ai-masterpiece": "AI Masterpiece",
-    "ai-polish": "AI Polish",
-    "ai-seeds": "AI Seeds",
-    "ai-sketch": "AI Sketch",
-    "ai-sprouts": "AI Sprouts"
-  },
-  "programSubtitles": {
-    "ai-branches": "Ontdek toepassingen in de echte wereld",
-    "ai-canopy": "Diep duiken in AI-systemen",
-    "ai-chisel": "Precisie slijpen — Gevorderde patronen",
-    "ai-craft": "Vaardigheden opbouwen — Systeemontwerp",
-    "ai-forest": "Beheers het AI-ecosysteem",
-    "ai-masterpiece": "Portfolioklaar — Complete casestudies",
-    "ai-polish": "Excellentie verfijnen — Gedragsmatige meesterschap",
-    "ai-seeds": "Plant je eerste AI-kennis",
-    "ai-sketch": "Eerste schetsen — Fundamenten van datastructuren en algoritmen",
-    "ai-sprouts": "Bouw je AI-fundament"
-  },
-  "programDescriptions": {
-    "ai-branches": "Zie AI in actie in verschillende sectoren — gezondheidszorg, financiën, creatieve kunsten en meer. Begin met het bouwen van eenvoudige projecten en begrijp de tools die professionals gebruiken.",
-    "ai-canopy": "Ga dieper in op neurale netwerken, grote taalmodellen en het ontwerp van AI-systemen. Leer AI-tools kritisch te beoordelen en begrijp de techniek achter moderne AI.",
-    "ai-chisel": "Stap op naar gevorderde algoritmische patronen: twee pointers, sliding window, BFS/DFS en boom-traversals. Elk patroon gekoppeld aan echte AI/ML-toepassingen.",
-    "ai-craft": "Ontwerp grootschalige systemen die AI aandrijven: aanbevelingssystemen, automatisch aanvullen bij zoeken, rate limiters. Leer denken in architecturen, niet alleen in code.",
-    "ai-forest": "Het volledige plaatje — AI-onderzoek, productie-AI-systemen bouwen, bijdragen aan open source AI en begrijpen waar het vakgebied naartoe gaat. Voor wie de toekomst wil vormgeven.",
-    "ai-masterpiece": "Eindprojecten die datastructuren, systeemontwerp en gedragsvaardigheden combineren. Ontwerp echte systemen van begin tot eind en bouw je engineering portfolio.",
-    "ai-polish": "Beheers het gedragsgerichte sollicitatiegesprek met gestructureerde raamwerken. STAR-methode, leiderschapsprincipes, AI-tijdperkscenario's en communicatiestrategieën.",
-    "ai-seeds": "Begin vanaf absoluut nul. Geen code, geen wiskunde — gewoon duidelijke taal en alledaagse voorbeelden. Perfect voor iedereen die nieuwsgierig is naar AI maar het nog nooit heeft verkend.",
-    "ai-sketch": "Beheers de fundamentele datastructuren en algoritmen die AI-systemen aandrijven. Arrays, hash maps, strings en sorteren — gevisualiseerd met diagrammen, uitgelegd met praktische AI-toepassingen.",
-    "ai-sprouts": "Klaar om te groeien? Duik in de bouwstenen van AI — data, algoritmen en neurale netwerken. Praktische oefeningen helpen je intuïtie op te bouwen voordat je code schrijft."
   },
   "ui": {
     "light": "Licht",

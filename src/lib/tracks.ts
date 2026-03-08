@@ -1,22 +1,9 @@
-import fs from "fs";
-import path from "path";
+import { getTracks as getTracksFromPrograms, type TrackMeta } from "./programs";
 
-export interface TrackMeta {
-  slug: string;
-  title: string;
-  icon: string;
-  description: string;
-  tagline: string;
-  brand: string;
-  order: number;
-}
-
-const tracksPath = path.join(process.cwd(), "content", "tracks.json");
+export type { TrackMeta };
 
 export function getTracks(): TrackMeta[] {
-  if (!fs.existsSync(tracksPath)) return [];
-  const data = JSON.parse(fs.readFileSync(tracksPath, "utf-8"));
-  return (data.tracks as TrackMeta[]).sort((a, b) => a.order - b.order);
+  return getTracksFromPrograms();
 }
 
 export function getTrack(slug: string): TrackMeta | null {

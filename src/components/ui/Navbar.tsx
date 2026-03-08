@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { locales } from "@/i18n/request";
@@ -14,24 +14,27 @@ import { useGuestProfile } from "@/hooks/useGuestProfile";
 import { BrandMark } from "./BrandMark";
 import { NavSearch } from "./NavSearch";
 import { NavDropdown } from "./NavDropdown";
+import programsData from "@data/programs.json";
 
-/* ─── Static program data for dropdown ─── */
+/* ─── Build program lists from registry ─── */
 
-const AI_PATH = [
-  { slug: "ai-seeds", icon: "🌱", title: "AI Seeds", desc: "Start your AI journey", active: true },
-  { slug: "ai-sprouts", icon: "🌿", title: "AI Sprouts", desc: "Build foundations", active: true },
-  { slug: "ai-branches", icon: "🌳", title: "AI Branches", desc: "Applied AI", active: true },
-  { slug: "ai-canopy", icon: "🏕️", title: "AI Canopy", desc: "Advanced topics", active: false },
-  { slug: "ai-forest", icon: "🌲", title: "AI Forest", desc: "Expert mastery", active: false },
-];
+interface NavProgram {
+  slug: string;
+  icon: string;
+}
 
-const CRAFT_PATH = [
-  { slug: "ai-sketch", icon: "🎨", title: "AI Sketch", desc: "DSA fundamentals", active: true },
-  { slug: "ai-chisel", icon: "🔨", title: "AI Chisel", desc: "Advanced DSA", active: true },
-  { slug: "ai-craft", icon: "🏗️", title: "AI Craft", desc: "System design", active: false },
-  { slug: "ai-polish", icon: "💎", title: "AI Polish", desc: "Career skills", active: false },
-  { slug: "ai-masterpiece", icon: "🏆", title: "AI Masterpiece", desc: "Capstone projects", active: false },
-];
+const AI_PATH_SLUGS = programsData.tracks.find((t) => t.slug === "ai-learning")?.programs ?? [];
+const CRAFT_PATH_SLUGS = programsData.tracks.find((t) => t.slug === "craft-engineering")?.programs ?? [];
+
+function buildNavPrograms(slugs: string[]): NavProgram[] {
+  return slugs.map((slug) => {
+    const p = programsData.programs[slug as keyof typeof programsData.programs];
+    return { slug, icon: p?.icon ?? "📚" };
+  });
+}
+
+const AI_PATH = buildNavPrograms(AI_PATH_SLUGS);
+const CRAFT_PATH = buildNavPrograms(CRAFT_PATH_SLUGS);
 
 const LAB_EXPERIMENTS = [
   { slug: "neural-playground", icon: "🧠", title: "Neural Network Playground" },
@@ -130,25 +133,57 @@ function MobileSection({
   );
 }
 
+/* ─── Mobile program list helper ─── */
+
+function MobilePrograms({
+  basePath,
+  closeMobile,
+  pathLabel,
+  programs,
+}: {
+  basePath: string;
+  closeMobile: () => void;
+  pathLabel: string;
+  programs: NavProgram[];
+  trackSlug: string;
+}) {
+  const tP = useTranslations("programs");
+  return (
+    <div className="mb-2">
+      <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 px-1">
+        {pathLabel}
+      </p>
+      {programs.map((p) => (
+        <Link
+          key={p.slug}
+          href={`${basePath}/programs/${p.slug}`}
+          onClick={closeMobile}
+          className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
+        >
+          <span>{p.icon}</span>
+          <span className="font-medium">{tP(`${p.slug}.title`)}</span>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 /* ─── Dropdown content components ─── */
 
 function ProgramItem({
   slug,
   icon,
-  title,
-  desc,
-  active,
   basePath,
-  comingSoonLabel,
+  t,
 }: {
   slug: string;
   icon: string;
-  title: string;
-  desc: string;
-  active: boolean;
   basePath: string;
-  comingSoonLabel: string;
+  t: (key: string) => string;
 }) {
+  const title = t(`${slug}.title`);
+  const desc = t(`${slug}.homeDesc`);
+
   const content = (
     <div className="flex items-start gap-3 py-2 px-3 rounded-lg transition-colors group/item hover:bg-[var(--color-text)]/[0.04]">
       <span className="text-lg mt-0.5 shrink-0">{icon}</span>
@@ -157,29 +192,21 @@ function ProgramItem({
           <span className="text-sm font-medium text-[var(--color-text)] group-hover/item:text-[var(--color-primary)] transition-colors">
             {title}
           </span>
-          {!active && (
-            <span className="text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[var(--color-text)]/[0.06] text-[var(--color-text-muted)]">
-              {comingSoonLabel}
-            </span>
-          )}
         </div>
         <p className="text-xs text-[var(--color-text-muted)] mt-0.5 leading-relaxed">{desc}</p>
       </div>
     </div>
   );
 
-  if (active) {
-    return (
-      <Link href={`${basePath}/programs/${slug}`} role="menuitem">
-        {content}
-      </Link>
-    );
-  }
-
-  return <div className="opacity-60 cursor-default">{content}</div>;
+  return (
+    <Link href={`${basePath}/programs/${slug}`} role="menuitem">
+      {content}
+    </Link>
+  );
 }
 
 function ProgramsDropdownContent({ basePath, t }: { basePath: string; t: (key: string) => string }) {
+  const tP = useTranslations("programs");
   return (
     <div className="w-[540px] p-4">
       <div className="grid grid-cols-2 gap-4">
@@ -193,7 +220,7 @@ function ProgramsDropdownContent({ basePath, t }: { basePath: string; t: (key: s
           </div>
           <div className="space-y-0.5">
             {AI_PATH.map((p) => (
-              <ProgramItem key={p.slug} {...p} basePath={basePath} comingSoonLabel={t("comingSoon")} />
+              <ProgramItem key={p.slug} slug={p.slug} icon={p.icon} basePath={basePath} t={(k: string) => tP(k)} />
             ))}
           </div>
         </div>
@@ -207,7 +234,7 @@ function ProgramsDropdownContent({ basePath, t }: { basePath: string; t: (key: s
           </div>
           <div className="space-y-0.5">
             {CRAFT_PATH.map((p) => (
-              <ProgramItem key={p.slug} {...p} basePath={basePath} comingSoonLabel={t("comingSoon")} />
+              <ProgramItem key={p.slug} slug={p.slug} icon={p.icon} basePath={basePath} t={(k: string) => tP(k)} />
             ))}
           </div>
         </div>
@@ -565,56 +592,8 @@ export function Navbar() {
               <div className="py-2">
                 {/* Programs */}
                 <MobileSection title={t("programs")} icon="📚">
-                  <div className="mb-2">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 px-1">
-                      {t("aiLearningPath")}
-                    </p>
-                    {AI_PATH.map((p) => (
-                      <Link
-                        key={p.slug}
-                        href={p.active ? `${basePath}/programs/${p.slug}` : "#"}
-                        onClick={p.active ? closeMobile : (e) => e.preventDefault()}
-                        className={`flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm ${
-                          p.active
-                            ? "text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
-                            : "text-[var(--color-text-muted)] opacity-50 cursor-default"
-                        }`}
-                      >
-                        <span>{p.icon}</span>
-                        <span className="font-medium">{p.title}</span>
-                        {!p.active && (
-                          <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[var(--color-text)]/[0.06]">
-                            {t("comingSoon")}
-                          </span>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-muted)] mb-1.5 px-1">
-                      {t("craftEngineeringPath")}
-                    </p>
-                    {CRAFT_PATH.map((p) => (
-                      <Link
-                        key={p.slug}
-                        href={p.active ? `${basePath}/programs/${p.slug}` : "#"}
-                        onClick={p.active ? closeMobile : (e) => e.preventDefault()}
-                        className={`flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm ${
-                          p.active
-                            ? "text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
-                            : "text-[var(--color-text-muted)] opacity-50 cursor-default"
-                        }`}
-                      >
-                        <span>{p.icon}</span>
-                        <span className="font-medium">{p.title}</span>
-                        {!p.active && (
-                          <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[var(--color-text)]/[0.06]">
-                            {t("comingSoon")}
-                          </span>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
+                  <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("aiLearningPath")} programs={AI_PATH} trackSlug="ai-learning" />
+                  <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("craftEngineeringPath")} programs={CRAFT_PATH} trackSlug="craft-engineering" />
                 </MobileSection>
 
                 {/* Lab */}

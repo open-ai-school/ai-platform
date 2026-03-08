@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import programsData from "@data/programs.json";
 
 interface LessonCompleteProps {
   slug: string; // "programSlug/lessonSlug"
@@ -24,22 +25,14 @@ interface LessonCompleteProps {
   trackLessonCounts?: Record<string, number>;
 }
 
-const PROGRAM_SEQUENCE: Record<string, { slug: string; title: string; icon: string }[]> = {
-  "ai-learning": [
-    { slug: "ai-seeds", title: "AI Seeds", icon: "🌱" },
-    { slug: "ai-sprouts", title: "AI Sprouts", icon: "🌿" },
-    { slug: "ai-branches", title: "AI Branches", icon: "🌳" },
-    { slug: "ai-canopy", title: "AI Canopy", icon: "🏕️" },
-    { slug: "ai-forest", title: "AI Forest", icon: "🌲" },
-  ],
-  "craft-engineering": [
-    { slug: "ai-sketch", title: "AI Sketch", icon: "✏️" },
-    { slug: "ai-chisel", title: "AI Chisel", icon: "🪨" },
-    { slug: "ai-craft", title: "AI Craft", icon: "⚒️" },
-    { slug: "ai-polish", title: "AI Polish", icon: "💎" },
-    { slug: "ai-masterpiece", title: "AI Masterpiece", icon: "🏆" },
-  ],
-};
+// Build PROGRAM_SEQUENCE from registry
+const PROGRAM_SEQUENCE: Record<string, { slug: string; icon: string }[]> = {};
+for (const track of programsData.tracks) {
+  PROGRAM_SEQUENCE[track.slug] = track.programs.map((slug) => {
+    const p = programsData.programs[slug as keyof typeof programsData.programs];
+    return { slug, icon: p?.icon ?? "📚" };
+  });
+}
 
 /* ── Canvas Confetti ── */
 function ConfettiOverlay({ onDone }: { onDone: () => void }) {
@@ -188,7 +181,7 @@ export function LessonComplete({
 }: LessonCompleteProps) {
   const { isCompleted, markComplete, getProgram, allData } = useProgress(programSlug);
   const tL = useTranslations("lessons");
-  const tPT = useTranslations("programTitles");
+  const tP = useTranslations("programs");
   const prefersReduced = useReducedMotion();
   const noMotion = !!prefersReduced;
   const [justCompleted, setJustCompleted] = useState(false);
@@ -381,7 +374,7 @@ export function LessonComplete({
                 href={programPath.replace(/\/[^/]+$/, `/${nextProgram.slug}`)}
                 className="group flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl hover:shadow-lg active:brightness-90 transition-all min-h-[44px] shadow-lg shadow-indigo-600/20"
               >
-                <span>{nextProgram.icon} {tPT(nextProgram.slug)}</span>
+                <span>{nextProgram.icon} {tP(`${nextProgram.slug}.title`)}</span>
                 <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
               </Link>
             </motion.div>
