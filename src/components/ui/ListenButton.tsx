@@ -34,9 +34,15 @@ function voiceScore(v: SpeechSynthesisVoice): number {
   return score;
 }
 
+/** Strip emojis and other symbols that TTS reads literally */
+function stripEmojis(text: string): string {
+  return text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}\u200d\uFE0F]/gu, "");
+}
+
 /** Split text into speakable chunks — paragraphs, then sentences if too long */
 function chunkText(text: string, maxLen = 400): string[] {
-  const paragraphs = text
+  const cleaned = stripEmojis(text);
+  const paragraphs = cleaned
     .split(/\n{2,}/)
     .map((p) => p.replace(/\s+/g, " ").trim())
     .filter((p) => p.length > 0);
