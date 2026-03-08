@@ -3,7 +3,9 @@
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { locales } from "@/i18n/request";
+import { useGuestProfile } from "@/hooks/useGuestProfile";
 
 import { BrandMark } from "./BrandMark";
 import { PageViewCounter } from "./PageViewCounter";
@@ -11,6 +13,9 @@ import { PageViewCounter } from "./PageViewCounter";
 export function Footer() {
   const t = useTranslations("footer");
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const { profile } = useGuestProfile();
+  const isSignedIn = !!session?.user || !!profile;
 
   const segments = pathname.split("/").filter(Boolean);
   const locale = (locales as readonly string[]).includes(segments[0]) ? segments[0] : "en";
@@ -51,16 +56,13 @@ export function Footer() {
                   {t("lab")}
                 </Link>
               </li>
-              <li>
-                <Link href={`${basePath}/dashboard`} className="hover:text-[var(--color-primary)] hover:translate-x-0.5 transition-all inline-block">
-                  {t("dashboard")}
-                </Link>
-              </li>
-              <li>
-                <Link href={`${basePath}/about`} className="hover:text-[var(--color-primary)] hover:translate-x-0.5 transition-all inline-block">
-                  {t("about")}
-                </Link>
-              </li>
+              {isSignedIn && (
+                <li>
+                  <Link href={`${basePath}/dashboard`} className="hover:text-[var(--color-primary)] hover:translate-x-0.5 transition-all inline-block">
+                    {t("dashboard")}
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 
@@ -82,6 +84,11 @@ export function Footer() {
                 <a href="https://github.com/ai-educademy/ai-platform/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-primary)] hover:translate-x-0.5 transition-all inline-block">
                   {t("coc")}
                 </a>
+              </li>
+              <li>
+                <Link href={`${basePath}/about`} className="hover:text-[var(--color-primary)] hover:translate-x-0.5 transition-all inline-block">
+                  {t("about")}
+                </Link>
               </li>
             </ul>
           </div>

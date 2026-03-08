@@ -342,7 +342,8 @@
     "errorOAuth": "This email is already associated with another provider.",
     "errorGeneric": "Something went wrong. Please try again.",
     "learner": "Learner",
-    "guestLearner": "Guest learner"
+    "guestLearner": "Guest learner",
+    "signUpPrompt": "Create your free account to start learning"
   },
   "lessonTitles": {
     "agentic-workflows": "Agentic Workflows",

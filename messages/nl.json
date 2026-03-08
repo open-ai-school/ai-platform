@@ -343,7 +343,8 @@
     "errorOAuth": "Dit e-mailadres is al gekoppeld aan een andere provider.",
     "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
     "learner": "Leerling",
-    "guestLearner": "Gastleerling"
+    "guestLearner": "Gastleerling",
+    "signUpPrompt": "Maak je gratis account aan om te beginnen met leren"
   },
   "lessonTitles": {
     "agentic-workflows": "Agentic Workflows",

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { BrandMark } from "@/components/ui/BrandMark";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   const t = useTranslations("auth");
   const params = useSearchParams();
   const callbackUrl = params.get("callbackUrl") || "/";
@@ -28,10 +28,10 @@ export default function SignInPage() {
             <BrandMark size="lg" />
           </div>
           <h1 className="text-xl font-bold mb-1">
-            {t("signIn")}
+            {t("signUp")}
           </h1>
           <p className="text-sm text-[var(--color-text-muted)]">
-            {t("signInPrompt")}
+            {t("signUpPrompt")}
           </p>
         </div>
 
@@ -77,11 +77,11 @@ export default function SignInPage() {
           {t("progressSavedLocally")}
         </p>
 
-        {/* Link to sign up */}
+        {/* Link to sign in */}
         <p className="text-center text-sm text-[var(--color-text-muted)] mt-4">
-          {t("noAccount")}{" "}
-          <a href={callbackUrl !== "/" ? `signup?callbackUrl=${encodeURIComponent(callbackUrl)}` : "signup"} className="text-[var(--color-primary)] font-medium hover:underline">
-            {t("signUp")}
+          {t("hasAccount")}{" "}
+          <a href={callbackUrl !== "/" ? `signin?callbackUrl=${encodeURIComponent(callbackUrl)}` : "signin"} className="text-[var(--color-primary)] font-medium hover:underline">
+            {t("signIn")}
           </a>
         </p>
       </div>

@@ -112,7 +112,7 @@ export function Navbar() {
                     {t("logIn")}
                   </Link>
                   <Link
-                    href={`${basePath}/signin?mode=signup`}
+                    href={`${basePath}/signup`}
                     className="px-4 py-1.5 text-sm font-semibold rounded-full bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-dark)] transition-colors"
                   >
                     {t("signUp")}
@@ -175,7 +175,7 @@ export function Navbar() {
                       {t("logIn")}
                     </Link>
                     <Link
-                      href={`${basePath}/signin?mode=signup`}
+                      href={`${basePath}/signup`}
                       className="px-4 py-1.5 text-sm font-semibold rounded-full bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-dark)] transition-colors"
                     >
                       {t("signUp")}
