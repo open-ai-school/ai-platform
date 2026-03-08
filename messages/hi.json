@@ -342,8 +342,7 @@
     "errorOAuth": "यह ईमेल पहले से किसी अन्य प्रदाता से जुड़ा है।",
     "errorGeneric": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
     "learner": "शिक्षार्थी",
-    "guestLearner": "अतिथि शिक्षार्थी",
-    "signUpPrompt": "सीखना शुरू करने के लिए अपना मुफ़्त खाता बनाएं"
+    "guestLearner": "अतिथि शिक्षार्थी"
   },
   "lessonTitles": {
     "agentic-workflows": "Agentic Workflows",

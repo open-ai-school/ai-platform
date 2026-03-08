@@ -76,14 +76,6 @@ export default function SignInPage() {
         <p className="text-center text-xs text-[var(--color-text-muted)] mt-6">
           {t("progressSavedLocally")}
         </p>
-
-        {/* Link to sign up */}
-        <p className="text-center text-sm text-[var(--color-text-muted)] mt-4">
-          {t("noAccount")}{" "}
-          <a href={callbackUrl !== "/" ? `signup?callbackUrl=${encodeURIComponent(callbackUrl)}` : "signup"} className="text-[var(--color-primary)] font-medium hover:underline">
-            {t("signUp")}
-          </a>
-        </p>
       </div>
     </div>
   );
