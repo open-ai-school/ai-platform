@@ -12,7 +12,8 @@
     "language": "Language",
     "programs": "Academics",
     "blog": "Blog",
-    "lab": "Lab"
+    "lab": "Lab",
+    "search": "search"
   },
   "hero": {
     "badge": "Free • Open Source • Multilingual",

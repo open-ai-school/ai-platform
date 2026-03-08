@@ -11,6 +11,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
 import { BrandMark } from "./BrandMark";
+import { NavSearch } from "./NavSearch";
 
 export function Navbar() {
   const t = useTranslations("nav");
@@ -86,6 +87,7 @@ export function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-2 shrink-0">
+            <NavSearch />
             <LanguageSwitcher />
             <UserMenu />
             <ThemeToggle />
@@ -93,6 +95,7 @@ export function Navbar() {
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-2 md:hidden">
+            <NavSearch />
             <ThemeToggle compact />
             <button
               className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:bg-[var(--color-bg-card)] transition-colors"
