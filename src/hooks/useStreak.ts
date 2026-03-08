@@ -36,9 +36,7 @@ function loadStreak(): StreakData {
       }
       return data;
     }
-  } catch {
-    // ignore
-  }
+  } catch { /* localStorage unavailable */ }
   return { currentStreak: 0, longestStreak: 0, lastActiveDate: "" };
 }
 

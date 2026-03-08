@@ -38,7 +38,7 @@ function getLeaderboard(): LeaderboardEntry[] {
   try {
     const val = localStorage.getItem("playground_trivia_leaderboard");
     return val ? JSON.parse(val) : [];
-  } catch {
+  } catch { /* invalid stored data */
     return [];
   }
 }

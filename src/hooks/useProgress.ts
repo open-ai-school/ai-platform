@@ -43,7 +43,7 @@ function migrateOldFormat(stored: string): ProgressData {
       return { "ai-seeds": parsed as ProgramProgress };
     }
     return parsed as ProgressData;
-  } catch {
+  } catch { /* invalid stored data */
     return {};
   }
 }

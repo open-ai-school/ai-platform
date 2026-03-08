@@ -17,7 +17,7 @@ export async function readJsonFile<T>(filename: string, fallback: T): Promise<T>
   try {
     const raw = await fs.readFile(filePath, "utf-8");
     return JSON.parse(raw) as T;
-  } catch {
+  } catch { /* file not found or invalid JSON */
     return fallback;
   }
 }

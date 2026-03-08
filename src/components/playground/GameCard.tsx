@@ -43,7 +43,7 @@ function getPersonalBest(gameId: string): number | null {
   try {
     const val = localStorage.getItem(`playground_best_${gameId}`);
     return val ? Number(val) : null;
-  } catch {
+  } catch { /* localStorage unavailable */
     return null;
   }
 }
@@ -57,7 +57,7 @@ export function savePersonalBest(gameId: string, score: number): boolean {
       return true;
     }
     return false;
-  } catch {
+  } catch { /* localStorage unavailable */
     return false;
   }
 }

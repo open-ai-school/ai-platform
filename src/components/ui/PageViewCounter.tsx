@@ -44,9 +44,7 @@ export function PageViewCounter() {
       if (data.views != null) {
         setViews(data.views);
       }
-    } catch {
-      // Silently fail - counter is optional
-    }
+    } catch { /* fetch failed, hide counter */ }
   }, []);
 
   useEffect(() => {

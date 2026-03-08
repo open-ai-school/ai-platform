@@ -58,7 +58,7 @@ function getAccounts(): StoredAccount[] {
   try {
     const stored = localStorage.getItem(ACCOUNTS_KEY);
     return stored ? JSON.parse(stored) : [];
-  } catch {
+  } catch { /* invalid stored data */
     return [];
   }
 }
@@ -83,9 +83,7 @@ export function useGuestProfileState(): GuestProfileContextValue {
     try {
       const stored = localStorage.getItem(SESSION_KEY);
       if (stored) setProfile(JSON.parse(stored));
-    } catch {
-      // ignore
-    }
+    } catch { /* localStorage unavailable */ }
   }, []);
 
   const saveProfile = useCallback((name: string) => {

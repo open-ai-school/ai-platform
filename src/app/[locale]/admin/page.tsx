@@ -28,7 +28,8 @@ export default function AdminPage() {
       const res = await fetch("/api/analytics/summary");
       if (!res.ok) throw new Error("Failed to fetch");
       setData(await res.json());
-    } catch {
+    } catch (error) {
+      console.error("[Admin]", error);
       setError(t("loadError"));
     } finally {
       setLoading(false);

@@ -4,7 +4,7 @@ import { sendWelcomeEmail } from "@/lib/email";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { email } = body;
+    const { email, locale } = body;
 
     if (!email || typeof email !== "string") {
       return NextResponse.json(
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await sendWelcomeEmail(email.toLowerCase());
+    await sendWelcomeEmail(email.toLowerCase(), locale || "en");
 
     return NextResponse.json(
       { success: true, message: "Subscribed!" },

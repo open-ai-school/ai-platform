@@ -71,7 +71,7 @@ function loadCanvases(key: string): SavedCanvas[] {
   try {
     const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
+  } catch { /* invalid saved data */ return []; }
 }
 
 function saveCanvases(key: string, canvases: SavedCanvas[]) {

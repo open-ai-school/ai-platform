@@ -142,9 +142,7 @@ export function Certificate({ programName, programIcon, userName, completionDate
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // fallback
-    }
+    } catch { /* clipboard unavailable */ }
   };
 
   return (

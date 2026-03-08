@@ -1,10 +1,18 @@
 import { welcomeEmailHtml } from "./emailTemplates";
 
-export async function sendWelcomeEmail(email: string): Promise<void> {
+const subjectByLocale: Record<string, string> = {
+  en: "Welcome to AI Educademy! 🎓",
+  fr: "Bienvenue sur AI Educademy ! 🎓",
+  nl: "Welkom bij AI Educademy! 🎓",
+  hi: "AI Educademy में आपका स्वागत है! 🎓",
+  te: "AI Educademy కి స్వాగతం! 🎓",
+};
+
+export async function sendWelcomeEmail(email: string, locale: string = "en"): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
-    console.log(`[Email] No RESEND_API_KEY set. Skipping email for ${email}`);
+    console.info(`[Email] No RESEND_API_KEY set. Skipping email for ${email}`);
     return;
   }
 
@@ -12,7 +20,7 @@ export async function sendWelcomeEmail(email: string): Promise<void> {
     const { Resend } = await import("resend");
     const resend = new Resend(apiKey);
 
-    const htmlContent = welcomeEmailHtml(email);
+    const htmlContent = welcomeEmailHtml(email, locale);
 
     // Note: onboarding@resend.dev can only deliver to the Resend account owner's
     // email on the free plan. To send to any subscriber, add and verify a custom
@@ -22,14 +30,14 @@ export async function sendWelcomeEmail(email: string): Promise<void> {
     const result = await resend.emails.send({
       from: fromAddress,
       to: email,
-      subject: "Welcome to AI Educademy! 🎓",
+      subject: subjectByLocale[locale] || subjectByLocale.en,
       html: htmlContent,
     });
 
     if (result.error) {
       console.error(`[Email] Resend API error for ${email}:`, result.error);
     } else {
-      console.log(`[Email] Welcome email sent successfully to ${email} (id: ${result.data?.id})`);
+      console.info(`[Email] Welcome email sent successfully to ${email} (id: ${result.data?.id})`);
     }
   } catch (error) {
     console.error(`[Email] Failed to send welcome email to ${email}:`, error);

@@ -28,7 +28,8 @@ export async function GET() {
       { views: count },
       { headers: { "Cache-Control": "no-store, max-age=0" } }
     );
-  } catch {
+  } catch (error) {
+    console.error("[PageViews]", error);
     return NextResponse.json({ views: null });
   }
 }

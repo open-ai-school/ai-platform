@@ -1132,5 +1132,15 @@
     "voice": "Voix",
     "speed": "Vitesse",
     "noVoices": "Aucune voix disponible pour cette langue"
+  },
+  "error": {
+    "title": "Une erreur est survenue",
+    "description": "Une erreur inattendue s'est produite. Veuillez reessayer.",
+    "retry": "Reessayer"
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "La page que vous recherchez n'existe pas ou a ete deplacee.",
+    "backHome": "Retour a l'accueil"
   }
 }
