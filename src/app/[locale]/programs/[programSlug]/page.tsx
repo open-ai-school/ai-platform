@@ -33,8 +33,8 @@ export default async function ProgramPage({
           >
             {program.icon} {t("level")} {program.level}
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">{tPT(programSlug)}</h1>
-          <p className="text-xl text-[var(--color-text-muted)] mb-2">{tPS(programSlug)}</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-3 leading-tight">{tPT(programSlug)}</h1>
+          <p className="text-xl text-[var(--color-text-muted)] mb-2 leading-relaxed">{tPS(programSlug)}</p>
           <p className="text-[var(--color-text-muted)] max-w-2xl mx-auto">{tPD(programSlug)}</p>
         </div>
       </ScrollReveal>
@@ -105,7 +105,7 @@ export default async function ProgramPage({
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
                       <span>{lesson.icon}</span>
-                      <h3 className="font-bold truncate">{tLT(lesson.slug)}</h3>
+                      <h3 className="font-bold line-clamp-2 leading-relaxed">{tLT(lesson.slug)}</h3>
                     </div>
                     <p className="text-sm text-[var(--color-text-muted)] line-clamp-1">{lesson.description}</p>
                   </div>

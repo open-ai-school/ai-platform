@@ -287,7 +287,7 @@ export default function LabPage() {
                 {!heroDone && <span className="pg-blink">▌</span>}
               </p>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold font-mono tracking-tight mb-2">
+            <h1 className="text-3xl sm:text-4xl font-bold font-mono tracking-tight mb-2 leading-tight">
               <span className="text-[var(--color-primary)]">AI</span>{" "}
               <span className="text-[var(--color-text)]">Experiment Lab</span>
             </h1>
@@ -313,7 +313,7 @@ export default function LabPage() {
                     {t(DIFFICULTY_BADGE_KEYS[FEATURED_GAME.difficulty].key as any)}
                   </span>
                 </div>
-                <h2 className="text-lg sm:text-xl font-mono font-bold text-[var(--color-text)] truncate">{FEATURED_GAME.name}</h2>
+                <h2 className="text-lg sm:text-xl font-mono font-bold text-[var(--color-text)] line-clamp-1">{FEATURED_GAME.name}</h2>
                 <p className="text-sm text-[var(--color-text-muted)] mt-0.5 line-clamp-1 font-mono">{FEATURED_GAME.desc}</p>
               </div>
               <div className="shrink-0 hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-xs font-bold border border-[var(--color-primary)]/40 text-[var(--color-primary)] bg-[var(--color-primary)]/5 transition-all group-hover:border-opacity-60">
@@ -377,7 +377,7 @@ export default function LabPage() {
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-sm font-mono font-bold text-[var(--color-text)] mb-1 truncate group-hover:text-[var(--color-primary)] transition-colors">
+                      <h3 className="text-sm font-mono font-bold text-[var(--color-text)] mb-1 line-clamp-1 group-hover:text-[var(--color-primary)] transition-colors">
                         {game.name}
                       </h3>
                       <p className="text-xs text-[var(--color-text-muted)] font-mono line-clamp-2 leading-relaxed mb-3">

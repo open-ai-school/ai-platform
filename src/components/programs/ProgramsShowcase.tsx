@@ -195,7 +195,7 @@ function HeroSection({ t, stats }: { t: ProgramsI18n; stats: { tracks: number; p
       </div>
 
       <motion.h1
-        className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-5 text-gradient relative"
+        className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-5 text-gradient relative leading-tight"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -287,7 +287,7 @@ function TrackTabs({ tracks, active, onChange, allLabel }: {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.45 }}
     >
-      <div className="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] shadow-sm">
+      <div className="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] shadow-sm max-w-full overflow-x-auto whitespace-nowrap">
         {/* All tracks tab */}
         <TabButton
           isActive={active === null}
@@ -412,12 +412,12 @@ function ProgramCard({ program, basePath, t, index }: {
                       {t.level} {program.level}
                     </span>
                   </div>
-                  <p className="text-sm text-[var(--color-text-muted)]">{program.subtitle}</p>
+                  <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">{program.subtitle}</p>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-sm text-[var(--color-text-muted)] leading-relaxed mb-5 line-clamp-2">
+              <p className="text-sm text-[var(--color-text-muted)] leading-relaxed mb-5 line-clamp-3">
                 {program.description}
               </p>
 
@@ -475,7 +475,7 @@ function ProgramCard({ program, basePath, t, index }: {
                       >
                         <Link href={`${basePath}/programs/${program.slug}/lessons/${lesson.slug}`}>
                           <motion.div
-                            className="group/tile relative rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2.5 cursor-pointer overflow-hidden"
+                            className="group/tile relative rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2.5 min-h-[60px] cursor-pointer overflow-hidden"
                             whileHover={{ y: -3, scale: 1.02, borderColor: program.color + "60" }}
                             transition={{ duration: 0.2 }}
                           >
@@ -487,7 +487,7 @@ function ProgramCard({ program, basePath, t, index }: {
                             <div className="relative flex items-center gap-2.5">
                               <span className="text-sm shrink-0">{lesson.icon || "📄"}</span>
                               <div className="min-w-0 flex-1">
-                                <p className="text-xs font-semibold truncate leading-tight">{lesson.title}</p>
+                                <p className="text-xs font-semibold line-clamp-2 leading-tight">{lesson.title}</p>
                                 <p className="text-[10px] text-[var(--color-text-muted)] mt-0.5">{lesson.duration}m</p>
                               </div>
                             </div>

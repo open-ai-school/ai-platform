@@ -76,7 +76,7 @@ export default async function ProgramLessonPage({
             </span>
           </div>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold">{tLT(slug)}</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold leading-tight">{tLT(slug)}</h1>
       </div>
 
       {/* Content */}

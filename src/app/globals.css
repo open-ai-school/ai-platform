@@ -528,6 +528,8 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  padding-bottom: 0.1em;
+  line-height: 1.3;
 }
 
 /* ═══════════════════════════════════════════
@@ -723,3 +725,56 @@ h1, h2, h3, h4, h5, h6 {
 .difficulty-dot.easy { background: #34d399; box-shadow: 0 0 6px rgba(52, 211, 153, 0.5); }
 .difficulty-dot.medium { background: #fbbf24; box-shadow: 0 0 6px rgba(251, 191, 36, 0.5); }
 .difficulty-dot.hard { background: #f87171; box-shadow: 0 0 6px rgba(248, 113, 113, 0.5); }
+
+/* ═══════════════════════════════════════════
+   Premium animation utilities
+   ═══════════════════════════════════════════ */
+
+/* 3D perspective container */
+.perspective-container {
+  perspective: 1000px;
+}
+
+/* Smooth 3D card transform */
+.card-3d {
+  transition: transform 0.3s cubic-bezier(0.03, 0.98, 0.52, 0.99);
+  transform-style: preserve-3d;
+}
+
+/* Cursor-following glow */
+.cursor-glow {
+  position: relative;
+  overflow: hidden;
+}
+.cursor-glow::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  transform: translate(-50%, -50%);
+}
+.cursor-glow:hover::before {
+  opacity: 1;
+}
+
+/* Shimmer sweep for CTA buttons */
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.shimmer-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  animation: shimmer-sweep 3s ease-in-out infinite;
+}

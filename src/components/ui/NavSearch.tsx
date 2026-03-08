@@ -150,7 +150,7 @@ export function NavSearch() {
 
       {/* Expanded search */}
       {open && (
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 z-50 animate-fade-in">
+        <div className="absolute right-0 top-full mt-2 z-50 animate-fade-in">
           <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-xl shadow-xl shadow-black/10 dark:shadow-black/30 overflow-hidden w-[280px] sm:w-[320px]">
             {/* Input */}
             <div className="flex items-center gap-2 px-3 py-2 border-b border-[var(--color-border)]">

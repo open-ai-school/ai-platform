@@ -122,7 +122,7 @@ export function Navbar() {
                 <Link
                   key={link.match}
                   href={link.href}
-                  className={`block py-2.5 px-3 rounded-lg text-sm font-medium transition-colors ${
+                  className={`block py-2.5 px-4 rounded-lg text-sm font-medium transition-colors ${
                     isActive(link.match)
                       ? "text-[var(--color-primary)] bg-[var(--color-primary)]/8"
                       : "text-[var(--color-text)] hover:bg-[var(--color-bg)]"

@@ -45,7 +45,7 @@ export default async function BlogPage({
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-16 md:py-24">
       {/* Hero */}
       <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gradient leading-tight">
           {t("title")}
         </h1>
         <p className="text-lg text-[var(--color-text-muted)] max-w-2xl mx-auto">
@@ -84,7 +84,7 @@ export default async function BlogPage({
                   </div>
 
                   {/* Title */}
-                  <h2 className="text-xl font-bold mb-2 group-hover:text-[var(--color-primary)] transition-colors">
+                  <h2 className="text-xl font-bold mb-2 leading-relaxed group-hover:text-[var(--color-primary)] transition-colors">
                     {post.title}
                   </h2>
 
