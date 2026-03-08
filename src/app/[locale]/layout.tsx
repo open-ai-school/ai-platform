@@ -29,9 +29,14 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
 
-  const languages = Object.fromEntries(
-    locales.map((l) => [l, `${BASE_URL}/${l}`])
-  );
+  const languages: Record<string, string> = {
+    "x-default": BASE_URL,
+    ...Object.fromEntries(
+      locales.map((l) => [l, l === "en" ? BASE_URL : `${BASE_URL}/${l}`])
+    ),
+  };
+
+  const canonicalUrl = locale === "en" ? BASE_URL : `${BASE_URL}/${locale}`;
 
   return {
     metadataBase: new URL(BASE_URL),
@@ -58,7 +63,7 @@ export async function generateMetadata({
     creator: "Ramesh Reddy Adutla",
     publisher: "AI Educademy",
     alternates: {
-      canonical: `${BASE_URL}/${locale}`,
+      canonical: canonicalUrl,
       languages,
     },
     openGraph: {
@@ -67,7 +72,7 @@ export async function generateMetadata({
       type: "website",
       siteName: "AI Educademy",
       locale: locale,
-      url: `${BASE_URL}/${locale}`,
+      url: canonicalUrl,
     },
     twitter: {
       card: "summary_large_image",

@@ -7,7 +7,7 @@ import { NeuralNetworkPlayground } from "./games/NeuralNetworkPlayground";
 import { PromptEngineeringDojo } from "./games/PromptEngineeringDojo";
 import { AlgorithmVisualizer } from "./games/AlgorithmVisualizer";
 import AITriviaChallenge from "./AITriviaChallenge";
-import { SystemDesignCanvas } from "./SystemDesignCanvas";
+import { SystemDesignCanvas } from "./system-design";
 import type { GameEntry } from "./types";
 
 export const ALL_GAMES: GameEntry[] = [

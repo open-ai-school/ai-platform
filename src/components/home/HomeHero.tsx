@@ -121,12 +121,12 @@ export default function HomeHero({
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         >
           <Image
-            src="https://avatars.githubusercontent.com/u/265648179?v=4"
+            src="/images/logo.png"
             alt="AI Educademy"
             width={80}
             height={80}
             className="mx-auto mb-8 rounded-2xl shadow-lg ring-1 ring-[var(--color-border)]"
-            unoptimized
+            priority
           />
         </motion.div>
       </motion.div>

@@ -82,6 +82,14 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid var(--color-glass-border);
 }
 
+/* Reduce blur cost on mobile */
+@media (max-width: 768px) {
+  .glass {
+    backdrop-filter: saturate(150%) blur(12px);
+    -webkit-backdrop-filter: saturate(150%) blur(12px);
+  }
+}
+
 /* ═══════════════════════════════════════════
    Lesson content — rich typography
    ═══════════════════════════════════════════ */

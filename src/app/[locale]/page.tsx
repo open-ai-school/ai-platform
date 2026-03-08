@@ -4,7 +4,7 @@ import { getProgramsByTrack } from "@/lib/programs";
 import { getLessons } from "@/lib/lessons";
 import { Github, Star } from "lucide-react";
 import { NewsletterSignup } from "@/components/ui/NewsletterSignup";
-import HeroBackground from "@/components/home/HeroBackground";
+import HeroBackground from "@/components/home/HeroBackgroundLazy";
 import HomeHero from "@/components/home/HomeHero";
 import HomeProgramCards from "@/components/home/HomeProgramCards";
 import HomeFounder from "@/components/home/HomeFounder";

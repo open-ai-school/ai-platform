@@ -19,7 +19,7 @@ export async function generateMetadata({
     title: t("pageTitle"),
     description: t("pageDescription"),
     alternates: {
-      canonical: `${BASE_URL}/${locale}/programs`,
+      canonical: `${BASE_URL}${locale === "en" ? "" : `/${locale}`}/programs`,
     },
     openGraph: {
       title: `${t("pageTitle")} | AI Educademy`,

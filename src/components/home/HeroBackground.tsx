@@ -156,106 +156,115 @@ export default function HeroBackground() {
     window.addEventListener("resize", resize);
 
     /* ── Animation loop ── */
-    const tick = () => {
-      // Mobile: gentle auto-drift
-      if (isTouch && !reduced.current) {
-        drift += 0.003;
-        target.current = {
-          x: 0.5 + Math.sin(drift) * 0.12,
-          y: 0.5 + Math.cos(drift * 0.7) * 0.08,
-        };
-      }
-
-      // Smooth lerp toward target
-      const lerp = reduced.current ? 1 : 0.04;
-      mouse.current.x += (target.current.x - mouse.current.x) * lerp;
-      mouse.current.y += (target.current.y - mouse.current.y) * lerp;
-
-      const mx = mouse.current.x;
-      const my = mouse.current.y;
-
-      /* ── Layer 1: Neural SVG parallax - perspective tilt + translate ── */
-      if (neuralRef.current && !reduced.current) {
-        neuralRef.current.style.transform =
-          `perspective(600px) rotateX(${(my - 0.5) * 12}deg) rotateY(${(mx - 0.5) * -12}deg) translate(${(mx - 0.5) * -25}px, ${(my - 0.5) * -25}px)`;
-      }
-
-      /* ── Layer 3: Grid parallax - slight opposite shift ── */
-      if (gridRef.current && !reduced.current) {
-        gridRef.current.style.transform = `translate(${(mx - 0.5) * 25}px, ${(my - 0.5) * 25}px)`;
-      }
-
-      /* ── Layer 2: Canvas - depth particles + knowledge symbols ── */
-      if (canvas && ctx) {
-        const { w, h } = bounds.current;
-        ctx.clearRect(0, 0, w, h);
-
-        const dark = document.documentElement.classList.contains("dark");
-        const rgb = dark ? "165,140,255" : "99,102,241";
-
-        // Draw particles
-        for (const p of particles.current) {
-          if (!reduced.current) {
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.x < -30) p.x = w + 30;
-            if (p.x > w + 30) p.x = -30;
-            if (p.y < -30) p.y = h + 30;
-            if (p.y > h + 30) p.y = -30;
-          }
-
-          const px = reduced.current ? 0 : (mx - 0.5) * p.z * 40;
-          const py = reduced.current ? 0 : (my - 0.5) * p.z * 40;
-          const dx = p.x + px;
-          const dy = p.y + py;
-
-          if (p.isSymbol && p.symbol) {
-            ctx.font = `bold ${14 + p.z * 12}px 'JetBrains Mono','Fira Code',monospace`;
-            ctx.fillStyle = `rgba(${rgb},${p.opacity * 0.9})`;
-            ctx.fillText(p.symbol, dx, dy);
-          } else {
-            ctx.beginPath();
-            ctx.arc(dx, dy, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${rgb},${p.opacity})`;
-            ctx.fill();
-          }
+    const startAnimation = () => {
+      const tick = () => {
+        // Mobile: gentle auto-drift
+        if (isTouch && !reduced.current) {
+          drift += 0.003;
+          target.current = {
+            x: 0.5 + Math.sin(drift) * 0.12,
+            y: 0.5 + Math.cos(drift * 0.7) * 0.08,
+          };
         }
 
-        // Connecting lines between nearby dot-particles
-        const pts = particles.current;
-        for (let i = 0; i < pts.length; i++) {
-          const a = pts[i];
-          if (a.isSymbol) continue;
-          for (let j = i + 1; j < pts.length; j++) {
-            const b = pts[j];
-            if (b.isSymbol) continue;
-            const ddx = a.x - b.x;
-            const ddy = a.y - b.y;
-            const dist = Math.sqrt(ddx * ddx + ddy * ddy);
-            if (dist < 120) {
-              const op =
-                (1 - dist / 120) *
-                Math.min(a.opacity, b.opacity) *
-                0.5;
-              const apx = reduced.current ? 0 : (mx - 0.5) * a.z * 40;
-              const apy = reduced.current ? 0 : (my - 0.5) * a.z * 40;
-              const bpx = reduced.current ? 0 : (mx - 0.5) * b.z * 40;
-              const bpy = reduced.current ? 0 : (my - 0.5) * b.z * 40;
+        // Smooth lerp toward target
+        const lerp = reduced.current ? 1 : 0.04;
+        mouse.current.x += (target.current.x - mouse.current.x) * lerp;
+        mouse.current.y += (target.current.y - mouse.current.y) * lerp;
+
+        const mx = mouse.current.x;
+        const my = mouse.current.y;
+
+        /* ── Layer 1: Neural SVG parallax - perspective tilt + translate ── */
+        if (neuralRef.current && !reduced.current) {
+          neuralRef.current.style.transform =
+            `perspective(600px) rotateX(${(my - 0.5) * 12}deg) rotateY(${(mx - 0.5) * -12}deg) translate(${(mx - 0.5) * -25}px, ${(my - 0.5) * -25}px)`;
+        }
+
+        /* ── Layer 3: Grid parallax - slight opposite shift ── */
+        if (gridRef.current && !reduced.current) {
+          gridRef.current.style.transform = `translate(${(mx - 0.5) * 25}px, ${(my - 0.5) * 25}px)`;
+        }
+
+        /* ── Layer 2: Canvas - depth particles + knowledge symbols ── */
+        if (canvas && ctx) {
+          const { w, h } = bounds.current;
+          ctx.clearRect(0, 0, w, h);
+
+          const dark = document.documentElement.classList.contains("dark");
+          const rgb = dark ? "165,140,255" : "99,102,241";
+
+          // Draw particles
+          for (const p of particles.current) {
+            if (!reduced.current) {
+              p.x += p.vx;
+              p.y += p.vy;
+              if (p.x < -30) p.x = w + 30;
+              if (p.x > w + 30) p.x = -30;
+              if (p.y < -30) p.y = h + 30;
+              if (p.y > h + 30) p.y = -30;
+            }
+
+            const px = reduced.current ? 0 : (mx - 0.5) * p.z * 40;
+            const py = reduced.current ? 0 : (my - 0.5) * p.z * 40;
+            const dx = p.x + px;
+            const dy = p.y + py;
+
+            if (p.isSymbol && p.symbol) {
+              ctx.font = `bold ${14 + p.z * 12}px 'JetBrains Mono','Fira Code',monospace`;
+              ctx.fillStyle = `rgba(${rgb},${p.opacity * 0.9})`;
+              ctx.fillText(p.symbol, dx, dy);
+            } else {
               ctx.beginPath();
-              ctx.moveTo(a.x + apx, a.y + apy);
-              ctx.lineTo(b.x + bpx, b.y + bpy);
-              ctx.strokeStyle = `rgba(${rgb},${op})`;
-              ctx.lineWidth = 0.8;
-              ctx.stroke();
+              ctx.arc(dx, dy, p.size, 0, Math.PI * 2);
+              ctx.fillStyle = `rgba(${rgb},${p.opacity})`;
+              ctx.fill();
+            }
+          }
+
+          // Connecting lines between nearby dot-particles
+          const pts = particles.current;
+          for (let i = 0; i < pts.length; i++) {
+            const a = pts[i];
+            if (a.isSymbol) continue;
+            for (let j = i + 1; j < pts.length; j++) {
+              const b = pts[j];
+              if (b.isSymbol) continue;
+              const ddx = a.x - b.x;
+              const ddy = a.y - b.y;
+              const dist = Math.sqrt(ddx * ddx + ddy * ddy);
+              if (dist < 120) {
+                const op =
+                  (1 - dist / 120) *
+                  Math.min(a.opacity, b.opacity) *
+                  0.5;
+                const apx = reduced.current ? 0 : (mx - 0.5) * a.z * 40;
+                const apy = reduced.current ? 0 : (my - 0.5) * a.z * 40;
+                const bpx = reduced.current ? 0 : (mx - 0.5) * b.z * 40;
+                const bpy = reduced.current ? 0 : (my - 0.5) * b.z * 40;
+                ctx.beginPath();
+                ctx.moveTo(a.x + apx, a.y + apy);
+                ctx.lineTo(b.x + bpx, b.y + bpy);
+                ctx.strokeStyle = `rgba(${rgb},${op})`;
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+              }
             }
           }
         }
-      }
+
+        raf.current = requestAnimationFrame(tick);
+      };
 
       raf.current = requestAnimationFrame(tick);
     };
 
-    raf.current = requestAnimationFrame(tick);
+    // Defer animation start to after paint
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(startAnimation);
+    } else {
+      setTimeout(startAnimation, 100);
+    }
 
     return () => {
       window.removeEventListener("mousemove", onMove);
