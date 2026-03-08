@@ -34,14 +34,32 @@ function voiceScore(v: SpeechSynthesisVoice): number {
   return score;
 }
 
-/** Strip emojis and other symbols that TTS reads literally */
-function stripEmojis(text: string): string {
-  return text.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}\u200d\uFE0F]/gu, "");
+/** Strip symbols that TTS reads literally but humans skip when reading aloud */
+function cleanForSpeech(text: string): string {
+  return (
+    text
+      // Emojis (all unicode emoji categories)
+      .replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}\u200d\uFE0F]/gu, "")
+      // Arrows and navigation symbols
+      .replace(/[→←↑↓↔↕⇒⇐⇑⇓➜➤►▶◀▸▾▴«»]/g, "")
+      // Bullets, stars, decorative marks
+      .replace(/[•◦◉○●★☆✦✧✶✴✸❖◆◇■□▪▫♦♠♣♥♡]/g, "")
+      // Check marks, crosses, warning signs
+      .replace(/[✓✔✗✘✕✖❌❎⚠️℗©®™§¶†‡]/g, "")
+      // Math/code symbols that get read weirdly in prose
+      .replace(/[≈≠≤≥±∞∑∏∫∂√∆∇]/g, "")
+      // Decorative punctuation and dividers
+      .replace(/[─━│┃═║╔╗╚╝┌┐└┘├┤┬┴┼…⋯|~`]/g, "")
+      // Standalone numbers used as list markers (e.g., "1." at line start)
+      // but keep numbers in context like "100 lessons"
+      // Clean up leftover whitespace
+      .replace(/  +/g, " ")
+  );
 }
 
 /** Split text into speakable chunks — paragraphs, then sentences if too long */
 function chunkText(text: string, maxLen = 400): string[] {
-  const cleaned = stripEmojis(text);
+  const cleaned = cleanForSpeech(text);
   const paragraphs = cleaned
     .split(/\n{2,}/)
     .map((p) => p.replace(/\s+/g, " ").trim())
