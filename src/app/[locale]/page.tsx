@@ -81,13 +81,13 @@ export default async function HomePage({
   return (
     <>
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[70vh] flex items-center">
+      <section className="relative overflow-hidden min-h-[60vh] flex items-center">
         <NeuralBackground variant="hero" />
         <FloatingParticles />
         <div className="absolute inset-0 bg-grid" />
         {/* Noise texture overlay for depth */}
         <div className="absolute inset-0 noise-texture pointer-events-none z-[1]" />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-24 md:py-32 relative z-[2]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative z-[2]">
           <HomeHero
             title={t("hero.title")}
             titleHighlight={t("hero.titleHighlight")}
@@ -107,7 +107,7 @@ export default async function HomePage({
       </section>
 
       {/* Programs Section — Bento Grid */}
-      <section className="py-20 sm:py-28">
+      <section className="py-12 sm:py-16">
         <HomeProgramCards
           sectionTitle={t("programs.title")}
           sectionSubtitle={t("programs.subtitle")}
@@ -157,7 +157,7 @@ export default async function HomePage({
       </section>
 
       {/* Brains Behind the Idea */}
-      <section className="py-20 sm:py-28 relative overflow-hidden bg-[var(--color-bg-section)]">
+      <section className="py-12 sm:py-16 relative overflow-hidden bg-[var(--color-bg-section)]">
         {/* Noise texture for section depth */}
         <div className="absolute inset-0 noise-texture pointer-events-none" />
         <HomeFounder
@@ -181,14 +181,14 @@ export default async function HomePage({
       </section>
 
       {/* Community CTA — Full-width gradient section */}
-      <section className="py-20 sm:py-28 relative overflow-hidden bg-gradient-mesh-cta">
+      <section className="py-12 sm:py-16 relative overflow-hidden bg-gradient-mesh-cta">
         <div className="absolute inset-0 noise-texture pointer-events-none" />
         <div className="max-w-3xl mx-auto px-4 sm:px-6 relative z-10 text-center">
           <ScrollReveal animation="fade-up">
             <h2 className="text-3xl sm:text-5xl font-black mb-4 text-gradient-animated">
               {tc("headline")}
             </h2>
-            <p className="text-lg text-[var(--color-text-muted)] max-w-xl mx-auto mb-10 leading-relaxed">
+            <p className="text-lg text-[var(--color-text-muted)] max-w-xl mx-auto mb-6 leading-relaxed">
               {tc("subtitle")}
             </p>
 

@@ -409,7 +409,7 @@ export default function HomeProgramCards({
       {/* Section header with animated gradient text */}
       <motion.div
         ref={headerRef}
-        className="text-center mb-16"
+        className="text-center mb-10"
         initial={reduced ? { opacity: 1 } : { opacity: 0, y: 24 }}
         animate={headerInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5, ease }}
