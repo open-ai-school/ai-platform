@@ -1078,6 +1078,9 @@
     "listen": "Luisteren",
     "pause": "Pauzeren",
     "resume": "Hervatten",
-    "stop": "Stoppen"
+    "stop": "Stoppen",
+    "voice": "Stem",
+    "speed": "Snelheid",
+    "noVoices": "Geen stemmen beschikbaar voor deze taal"
   }
 }

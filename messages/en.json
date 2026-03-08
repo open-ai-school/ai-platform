@@ -1116,6 +1116,9 @@
     "listen": "Listen",
     "pause": "Pause",
     "resume": "Resume",
-    "stop": "Stop"
+    "stop": "Stop",
+    "voice": "Voice",
+    "speed": "Speed",
+    "noVoices": "No voices available for this language"
   }
 }
