@@ -3,14 +3,29 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getLesson, getLessons } from "@/lib/lessons";
-import { getProgram, getProgramsByTrack } from "@/lib/programs";
+import { getProgram, getPrograms, getProgramsByTrack } from "@/lib/programs";
 import { LessonRenderer } from "@/components/lessons/LessonRenderer";
 import { LessonComplete } from "@/components/lessons/LessonComplete";
 import { LessonFeedback } from "@/components/lessons/LessonFeedback";
 import { ListenButton } from "@/components/ui/ListenButton";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { routing } from "@/i18n/routing";
 
 const BASE_URL = "https://aieducademy.org";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  const programs = getPrograms();
+  return routing.locales.flatMap((locale) =>
+    programs.flatMap((p) => {
+      const lessons = getLessons(p.slug, "en");
+      return lessons
+        .filter((l) => l.published)
+        .map((l) => ({ locale, programSlug: p.slug, slug: l.slug }));
+    })
+  );
+}
 
 export async function generateMetadata({
   params,
@@ -19,10 +34,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, programSlug, slug } = await params;
   const program = getProgram(programSlug);
-  if (!program) notFound();
+  if (!program) return { robots: { index: false, follow: false } };
 
   const lesson = getLesson(programSlug, locale, slug);
-  if (!lesson) notFound();
+  if (!lesson) return { robots: { index: false, follow: false } };
 
   const tP = await getTranslations({ locale, namespace: "programs" });
   const tLT = await getTranslations({ locale, namespace: "lessonTitles" });

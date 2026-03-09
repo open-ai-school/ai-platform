@@ -17,7 +17,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const post = getBlogPost(slug, locale);
-  if (!post) return {};
+  if (!post) return { robots: { index: false, follow: false } };
 
   return {
     title: post.title,

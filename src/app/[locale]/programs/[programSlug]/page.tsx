@@ -2,12 +2,22 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProgram } from "@/lib/programs";
+import { getProgram, getPrograms } from "@/lib/programs";
 import { getLessons } from "@/lib/lessons";
 import { AnimatedSection } from "@/components/ui/MotionWrappers";
 import { CourseJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { routing } from "@/i18n/routing";
 
 const BASE_URL = "https://aieducademy.org";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  const programs = getPrograms();
+  return routing.locales.flatMap((locale) =>
+    programs.map((p) => ({ locale, programSlug: p.slug }))
+  );
+}
 
 export async function generateMetadata({
   params,
@@ -16,7 +26,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, programSlug } = await params;
   const program = getProgram(programSlug);
-  if (!program) notFound();
+  if (!program) return { robots: { index: false, follow: false } };
 
   const tP = await getTranslations({ locale, namespace: "programs" });
   const title = tP(`${programSlug}.title`);
