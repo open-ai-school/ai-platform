@@ -87,14 +87,15 @@
     "openSourceDesc": "完全透明——查看、fork 或贡献代码"
   },
   "founder": {
-    "description": "创办 AI Educademy，致力于让世界一流的AI教育免费、多语言、人人可及。在 JP Morgan 和 Sky 等公司拥有超过十五年的大规模系统构建经验，横跨金融科技、媒体和零售行业，足迹遍及亚洲和欧洲。这些全球化的经历让一件事变得无比清晰：语言不应该成为学习的障碍。会说英语、法语和泰卢固语。",
+    "description": "从零开始构思、设计并构建了 AI Educademy 的每一个部分——架构、课程、多语言基础设施和开源工具。在摩根大通、Sky 和 Marks & Spencer 跨亚洲和欧洲从事大规模系统工程超过十五年。这段全球经历让一件事变得清晰：语言不应该成为学习的障碍。",
     "cta": "了解更多",
     "role": "创始人 & 创造者 · 工程领导者 · 伦敦",
     "statYears": "年工程经验",
-    "statRepos": "个开源项目",
-    "statContinents": "个大洲的工作经历",
+    "statRepos": "开源仓库",
+    "statContinents": "所在大洲",
     "brainsTitle": "理念的缔造者",
-    "buyCoffee": "请我喝杯咖啡"
+    "buyCoffee": "请我喝杯咖啡",
+    "statLanguages": "语言"
   },
   "footer": {
     "lessons": "课程",

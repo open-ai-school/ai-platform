@@ -87,14 +87,15 @@
     "openSourceDesc": "Volledig transparant - bekijk, fork of draag bij"
   },
   "founder": {
-    "description": "Richtte AI Educademy op om AI-onderwijs van wereldklasse gratis, meertalig en toegankelijk voor iedereen te maken. Meer dan vijftien jaar ervaring met het bouwen van grootschalige systemen in fintech, media en retail bij bedrijven als JP Morgan en Sky — werkend in Azië en Europa. Die wereldwijde ervaring maakte één ding duidelijk: taal mag nooit een barrière zijn om te leren. Spreekt Engels, Frans en Telugu.",
+    "description": "Heeft elk onderdeel van AI Educademy van nul af aan ontworpen en gebouwd — de architectuur, het curriculum, de meertalige infrastructuur en de open-source tools. Meer dan vijftien jaar grote systemen gebouwd bij JP Morgan, Sky en Marks & Spencer in Azië en Europa. Die wereldwijde ervaring maakte één ding duidelijk: taal mag nooit een barrière zijn voor leren.",
     "cta": "Meer over mij",
     "role": "Oprichter & Maker · Engineering Leader · Londen",
-    "statYears": "Jaar engineering",
-    "statRepos": "Open source repo's",
-    "statContinents": "Continenten gewerkt",
+    "statYears": "Jaar Engineering",
+    "statRepos": "Open Source Repos",
+    "statContinents": "Continenten",
     "brainsTitle": "Het brein achter het idee",
-    "buyCoffee": "Koop een koffie voor me"
+    "buyCoffee": "Koop een koffie voor me",
+    "statLanguages": "Talen"
   },
   "footer": {
     "lessons": "Lessen",

@@ -87,14 +87,15 @@
     "openSourceDesc": "Totalmente transparente: mira, bifurca o contribuye"
   },
   "founder": {
-    "description": "Fundó AI Educademy para hacer la educación en IA de primer nivel gratuita, multilingüe y accesible para todos. Más de quince años construyendo sistemas a gran escala en fintech, medios y retail en empresas como JP Morgan y Sky, trabajando entre Asia y Europa. Esa experiencia global dejó algo claro: el idioma nunca debería ser una barrera para aprender. Habla inglés, francés y telugu.",
+    "description": "Concibió, diseñó y construyó cada parte de AI Educademy desde cero — la arquitectura, el currículo, la infraestructura multilingüe y las herramientas open source. Más de quince años de ingeniería de sistemas a gran escala en JP Morgan, Sky y Marks & Spencer en Asia y Europa. Esa experiencia global dejó algo claro: el idioma nunca debería ser una barrera para aprender.",
     "cta": "Más Sobre Mí",
     "role": "Fundador y Creador · Líder de Ingeniería · Londres",
     "statYears": "Años de Ingeniería",
-    "statRepos": "Repos Open Source",
-    "statContinents": "Continentes Trabajados",
+    "statRepos": "Repositorios Open Source",
+    "statContinents": "Continentes",
     "brainsTitle": "El Cerebro Detrás de la Idea",
-    "buyCoffee": "Invítame a un café"
+    "buyCoffee": "Invítame a un café",
+    "statLanguages": "Idiomas"
   },
   "footer": {
     "lessons": "Lecciones",

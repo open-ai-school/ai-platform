@@ -87,14 +87,15 @@
     "openSourceDesc": "Vollständig transparent – ansehen, forken oder beitragen"
   },
   "founder": {
-    "description": "Hat AI Educademy gegründet, um erstklassige KI-Bildung kostenlos, mehrsprachig und für alle zugänglich zu machen. Über fünfzehn Jahre Erfahrung im Aufbau großer Systeme in Fintech, Medien und Einzelhandel bei Unternehmen wie JP Morgan und Sky – tätig in Asien und Europa. Diese globale Erfahrung hat eines deutlich gemacht: Sprache sollte niemals ein Hindernis beim Lernen sein. Spricht Englisch, Französisch und Telugu.",
+    "description": "Hat jeden Teil von AI Educademy von Grund auf konzipiert, entworfen und aufgebaut — die Architektur, den Lehrplan, die mehrsprachige Infrastruktur und die Open-Source-Tools. Über fünfzehn Jahre Erfahrung beim Aufbau groß angelegter Systeme bei JP Morgan, Sky und Marks & Spencer in Asien und Europa. Diese globale Erfahrung machte eines deutlich: Sprache sollte niemals ein Hindernis beim Lernen sein.",
     "cta": "Mehr über mich",
     "role": "Gründer & Gestalter · Engineering Leader · London",
     "statYears": "Jahre Engineering",
-    "statRepos": "Open Source Repos",
-    "statContinents": "Kontinente gearbeitet",
+    "statRepos": "Open-Source-Repos",
+    "statContinents": "Kontinente",
     "brainsTitle": "Der Kopf hinter der Idee",
-    "buyCoffee": "Kauf mir einen Kaffee"
+    "buyCoffee": "Kauf mir einen Kaffee",
+    "statLanguages": "Sprachen"
   },
   "footer": {
     "lessons": "Lektionen",

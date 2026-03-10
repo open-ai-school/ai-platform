@@ -159,7 +159,7 @@ export default async function HomePage({
           description={t("founder.description")}
           stats={[
             { value: "15+", label: t("founder.statYears") },
-            { value: "14", label: t("founder.statRepos") },
+            { value: "10", label: t("founder.statLanguages") },
             { value: "3", label: t("founder.statContinents") },
           ]}
           ctaText={t("founder.cta")}
