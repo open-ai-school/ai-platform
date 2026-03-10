@@ -36,8 +36,9 @@ test.describe("Navigation & Pages", () => {
 
   test("navigation links work", async ({ page }) => {
     await page.goto("/en");
-    // Click programs link in nav
-    await page.click('a[href*="/programs"]');
+    // Open the Programs dropdown in the navbar, then click the "All Programs" link
+    await page.locator("nav").getByRole("button", { name: /programs/i }).click();
+    await page.locator('nav a[href$="/programs"]').click();
     await expect(page).toHaveURL(/programs/);
   });
 });
