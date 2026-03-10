@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -9,7 +9,8 @@ import { useStreak } from "@/hooks/useStreak";
 import { useSession } from "next-auth/react";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
 import { Certificate } from "@/components/dashboard/Certificate";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useInView } from "@/hooks/useInView";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { AnimatedProgressBar } from "@/components/ui/MotionWrappers";
 import { locales } from "@/i18n/request";
 import { Flame, ArrowRight, Trophy } from "lucide-react";
@@ -138,17 +139,6 @@ const PROGRAMS = [
   },
 ];
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
-const fadeUpVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const scaleInVariants = {
-  hidden: { opacity: 0, scale: 0.92 },
-  visible: { opacity: 1, scale: 1 },
-};
 
 function MotionReveal({
   children,
@@ -161,26 +151,19 @@ function MotionReveal({
   delay?: number;
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
-  const prefersReducedMotion = useReducedMotion();
+  const [ref, isInView] = useInView<HTMLDivElement>({ once: true, margin: "-60px" });
+  const reduced = useReducedMotion();
 
-  if (prefersReducedMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
-  const variants = animation === "scale-in" ? scaleInVariants : fadeUpVariants;
+  const animClass = animation === "scale-in" ? "motion-scale-in" : "motion-fade-up";
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      className={className}
-      initial={variants.hidden}
-      animate={isInView ? variants.visible : variants.hidden}
-      transition={{ duration: 0.6, delay: delay / 1000, ease }}
+      className={`${animClass} ${isInView || reduced ? "motion-visible" : ""} ${className ?? ""}`}
+      style={delay > 0 ? { transitionDelay: `${delay / 1000}s` } : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
