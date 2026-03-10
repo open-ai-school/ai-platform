@@ -5,6 +5,7 @@ import { getLessons } from "@/lib/lessons";
 import { getTracks } from "@/lib/tracks";
 import ProgramsShowcase from "@/components/programs/ProgramsShowcase";
 import type { TrackData, ProgramData } from "@/components/programs/ProgramsShowcase";
+import { CourseListJsonLd } from "@/components/seo/JsonLd";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -84,7 +85,18 @@ export default async function ProgramsPage({
     "5": t("levelLabels.5"),
   };
 
+  const allCourses = Object.values(programsByTrack)
+    .flat()
+    .map((p) => ({
+      name: p.title,
+      description: p.description,
+      slug: p.slug,
+      level: p.level,
+    }));
+
   return (
+    <>
+    <CourseListJsonLd courses={allCourses} locale={locale} />
     <ProgramsShowcase
       tracks={trackData}
       programsByTrack={programsByTrack}
@@ -109,5 +121,6 @@ export default async function ProgramsPage({
         allTracks: t("allTracks"),
       }}
     />
+    </>
   );
 }

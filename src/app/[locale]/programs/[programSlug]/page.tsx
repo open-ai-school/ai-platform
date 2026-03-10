@@ -77,6 +77,7 @@ export default async function ProgramPage({
         description={tP(`${programSlug}.description`)}
         slug={programSlug}
         level={program.level}
+        estimatedHours={program.estimatedHours}
       />
       <BreadcrumbJsonLd
         items={[

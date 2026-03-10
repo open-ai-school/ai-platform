@@ -8,7 +8,7 @@ import { LessonRenderer } from "@/components/lessons/LessonRenderer";
 import { LessonComplete } from "@/components/lessons/LessonComplete";
 import { LessonFeedback } from "@/components/lessons/LessonFeedback";
 import { ListenButton } from "@/components/ui/ListenButton";
-import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { BreadcrumbJsonLd, LearningResourceJsonLd } from "@/components/seo/JsonLd";
 import { routing } from "@/i18n/routing";
 
 const BASE_URL = "https://aieducademy.org";
@@ -110,6 +110,14 @@ export default async function ProgramLessonPage({
           { name: tP(`${programSlug}.title`), url: `${BASE_URL}${programPath}` },
           { name: tLT(slug), url: `${BASE_URL}${programPath}/lessons/${slug}` },
         ]}
+      />
+      <LearningResourceJsonLd
+        name={tLT(slug)}
+        description={lesson.description}
+        educationalLevel={lesson.difficulty}
+        duration={lesson.duration}
+        locale={locale}
+        courseName={tP(`${programSlug}.title`)}
       />
       {/* Breadcrumb */}
       <div className="mb-8 text-sm text-[var(--color-text-muted)]">
