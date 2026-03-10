@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface NavDropdownProps {
   trigger: React.ReactNode;
@@ -9,21 +8,6 @@ interface NavDropdownProps {
   isActive?: boolean;
   align?: "left" | "center" | "right";
 }
-
-const dropdownVariants = {
-  hidden: {
-    opacity: 0,
-    y: -8,
-    scale: 0.98,
-    transition: { duration: 0.15, ease: [0.4, 0, 1, 1] as const },
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.2, ease: [0, 0, 0.2, 1] as const },
-  },
-} as const;
 
 export function NavDropdown({
   trigger,
@@ -110,33 +94,30 @@ export function NavDropdown({
         </svg>
       </button>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            className={`absolute top-full pt-2 ${alignClass}`}
-            style={{ zIndex: 60 }}
-            variants={dropdownVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-          >
-            <div
-              className="rounded-xl border border-[var(--color-border)] shadow-lg overflow-hidden"
-              style={{
-                background: "var(--color-glass)",
-                backdropFilter: "blur(24px)",
-                WebkitBackdropFilter: "blur(24px)",
-                boxShadow: "var(--shadow-lg)",
-              }}
-              role="menu"
-              onFocus={handleOpen}
-              onBlur={handleClose}
-            >
-              {children}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Dropdown panel — CSS transition (always rendered, hidden via opacity/transform) */}
+      <div
+        className={`absolute top-full pt-2 ${alignClass} transition-all duration-200 ${
+          open
+            ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+            : "opacity-0 -translate-y-2 scale-[0.98] pointer-events-none"
+        }`}
+        style={{ zIndex: 60 }}
+      >
+        <div
+          className="rounded-xl border border-[var(--color-border)] shadow-lg overflow-hidden"
+          style={{
+            background: "var(--color-glass)",
+            backdropFilter: "blur(24px)",
+            WebkitBackdropFilter: "blur(24px)",
+            boxShadow: "var(--shadow-lg)",
+          }}
+          role="menu"
+          onFocus={handleOpen}
+          onBlur={handleClose}
+        >
+          {children}
+        </div>
+      </div>
     </div>
   );
 }

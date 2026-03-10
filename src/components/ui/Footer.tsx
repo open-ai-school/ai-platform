@@ -5,14 +5,12 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { motion, useInView, useReducedMotion, AnimatePresence } from "framer-motion";
+
 import { ArrowUp } from "lucide-react";
 import { locales } from "@/i18n/request";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
 import { BrandMark } from "./BrandMark";
 import { PageViewCounter } from "./PageViewCounter";
-
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 function FooterLink({
   href,
@@ -52,7 +50,15 @@ export function Footer() {
   const { data: session } = useSession();
   const { profile } = useGuestProfile();
   const isSignedIn = !!session?.user || !!profile;
-  const prefersReducedMotion = useReducedMotion();
+
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
 
   const segments = pathname.split("/").filter(Boolean);
   const locale = (locales as readonly string[]).includes(segments[0])
@@ -61,7 +67,22 @@ export function Footer() {
   const basePath = locale === "en" ? "" : `/${locale}`;
 
   const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const [isInView, setIsInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-40px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const [showBackToTop, setShowBackToTop] = useState(false);
   useEffect(() => {
@@ -69,25 +90,6 @@ export function Footer() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const containerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: prefersReducedMotion ? 0 : 0.1,
-        delayChildren: 0.05,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 16 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease },
-    },
-  };
 
   return (
     <footer
@@ -98,14 +100,13 @@ export function Footer() {
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
-        <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-10"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+        <div
+          className={`grid grid-cols-2 md:grid-cols-4 gap-10 ${
+            isInView && !prefersReducedMotion ? "footer-revealed" : ""
+          }`}
         >
           {/* Brand */}
-          <motion.div variants={itemVariants} className="col-span-2 md:col-span-1">
+          <div className="col-span-2 md:col-span-1 footer-item" style={prefersReducedMotion ? undefined : { transitionDelay: "50ms" }}>
             <Link
               href={`${basePath}/`}
               className="inline-flex items-center mb-3 hover:opacity-90 transition-opacity"
@@ -118,10 +119,10 @@ export function Footer() {
             <div className="mt-3">
               <PageViewCounter />
             </div>
-          </motion.div>
+          </div>
 
           {/* Learn */}
-          <motion.div variants={itemVariants}>
+          <div className="footer-item" style={prefersReducedMotion ? undefined : { transitionDelay: "150ms" }}>
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)] mb-4">
               {t("learnHeader")}
             </h3>
@@ -147,10 +148,10 @@ export function Footer() {
                 </li>
               )}
             </ul>
-          </motion.div>
+          </div>
 
           {/* Community */}
-          <motion.div variants={itemVariants}>
+          <div className="footer-item" style={prefersReducedMotion ? undefined : { transitionDelay: "250ms" }}>
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)] mb-4">
               {t("communityHeader")}
             </h3>
@@ -182,10 +183,10 @@ export function Footer() {
                 </FooterLink>
               </li>
             </ul>
-          </motion.div>
+          </div>
 
           {/* Support */}
-          <motion.div variants={itemVariants}>
+          <div className="footer-item" style={prefersReducedMotion ? undefined : { transitionDelay: "350ms" }}>
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)] mb-4">
               {t("supportHeader")}
             </h3>
@@ -205,37 +206,29 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
       </div>
 
       {/* Floating back-to-top button - fixed to viewport */}
-      <AnimatePresence>
-        {showBackToTop && (
-          <motion.button
-            onClick={() =>
-              window.scrollTo({
-                top: 0,
-                behavior: prefersReducedMotion ? "auto" : "smooth",
-              })
-            }
-            className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full
-              bg-[var(--color-primary)] text-white
-              dark:bg-white dark:text-[var(--color-primary)]
-              shadow-lg shadow-[var(--color-primary)]/30 dark:shadow-black/20
-              hover:scale-110 active:scale-95 transition-transform cursor-pointer"
-            aria-label={t("scrollToTop")}
-            initial={{ opacity: 0, y: 24, scale: 0.6 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.6 }}
-            transition={{ type: "spring", stiffness: 400, damping: 22 }}
-            whileHover={prefersReducedMotion ? undefined : { y: -3 }}
-          >
-            <ArrowUp className="w-7 h-7 stroke-[2.5]" />
-          </motion.button>
-        )}
-      </AnimatePresence>
+      <button
+        onClick={() =>
+          window.scrollTo({
+            top: 0,
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+          })
+        }
+        className={`fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full
+          bg-[var(--color-primary)] text-white
+          dark:bg-white dark:text-[var(--color-primary)]
+          shadow-lg shadow-[var(--color-primary)]/30 dark:shadow-black/20
+          hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer
+          ${showBackToTop ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-6 scale-60 pointer-events-none"}`}
+        aria-label={t("scrollToTop")}
+      >
+        <ArrowUp className="w-7 h-7 stroke-[2.5]" />
+      </button>
     </footer>
   );
 }

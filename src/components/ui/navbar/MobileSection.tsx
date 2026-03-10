@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
-/* ─── Mobile expandable section ─── */
+/* ─── Mobile expandable section (CSS transitions, no framer-motion) ─── */
 
 export function MobileSection({
   title,
@@ -29,7 +28,7 @@ export function MobileSection({
           <span className="text-base">{icon}</span>
           {title}
         </span>
-        <motion.svg
+        <svg
           width="14"
           height="14"
           viewBox="0 0 14 14"
@@ -37,26 +36,20 @@ export function MobileSection({
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
-          animate={{ rotate: expanded ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
-          className="text-[var(--color-text-muted)]"
+          className={`text-[var(--color-text-muted)] transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
         >
           <path d="M3.5 5.25L7 8.75L10.5 5.25" />
-        </motion.svg>
+        </svg>
       </button>
-      <AnimatePresence initial={false}>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="overflow-hidden"
-          >
-            <div className="px-4 pb-3">{children}</div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div
+        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+          expanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-4 pb-3">{children}</div>
+        </div>
+      </div>
     </div>
   );
 }

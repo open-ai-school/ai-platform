@@ -293,6 +293,18 @@ h1, h2, h3, h4, h5, h6 {
   animation: slide-in-right 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* ─── Navbar animations (CSS-only, no framer-motion) ─── */
+@keyframes navbar-drawer-slide {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.animate-navbar-backdrop {
+  animation: fade-in 0.2s ease-out;
+}
+.animate-navbar-drawer {
+  animation: navbar-drawer-slide 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* Staggered children */
 .stagger-children > *:nth-child(1) { animation-delay: 0ms; }
 .stagger-children > *:nth-child(2) { animation-delay: 80ms; }
@@ -981,5 +993,87 @@ h1, h2, h3, h4, h5, h6 {
   }
   .noise-texture {
     display: none;
+  }
+  .animate-navbar-backdrop {
+    animation: none;
+  }
+  .animate-navbar-drawer {
+    animation: none;
+  }
+}
+
+/* ─── Footer reveal animation (CSS-only, no framer-motion) ─── */
+.footer-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.footer-revealed .footer-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ─── AnimatedSection CSS-only animations (replaces framer-motion) ─── */
+.motion-section {
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.motion-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.motion-fade-up.motion-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.motion-fade-in {
+  opacity: 0;
+}
+.motion-fade-in.motion-visible {
+  opacity: 1;
+}
+
+.motion-scale-in {
+  opacity: 0;
+  transform: scale(0.92);
+}
+.motion-scale-in.motion-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.motion-slide-left {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.motion-slide-left.motion-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.motion-slide-right {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.motion-slide-right.motion-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-section {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

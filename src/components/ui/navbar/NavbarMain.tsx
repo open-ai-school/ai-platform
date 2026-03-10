@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
-import { motion, AnimatePresence } from "framer-motion";
+
 import { locales } from "@/i18n/request";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { ThemeToggle } from "../ThemeToggle";
@@ -164,7 +164,7 @@ export function Navbar() {
               {isSignedIn ? (
                 <UserMenu />
               ) : (
-                <motion.div whileHover={{ scale: 1.04, filter: "brightness(1.1)" }} whileTap={{ scale: 0.97 }}>
+                <div className="hover:scale-[1.04] hover:brightness-110 active:scale-[0.97] transition-transform">
                   <Link
                     href={`${basePath}/signin`}
                     className="inline-flex items-center px-4 py-1.5 text-sm font-semibold rounded-full text-white transition-colors"
@@ -175,7 +175,7 @@ export function Navbar() {
                   >
                     {t("getStarted")}
                   </Link>
-                </motion.div>
+                </div>
               )}
             </div>
 
@@ -196,144 +196,134 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* ─── Mobile Drawer Overlay + Panel ─── */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              className="fixed inset-0 z-40 bg-black/40 md:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={closeMobile}
-              aria-hidden
-            />
-            {/* Drawer */}
-            <motion.div
-              className="fixed top-0 right-0 bottom-0 z-50 w-[85vw] max-w-sm md:hidden overflow-y-auto"
-              style={{
-                background: "var(--color-bg)",
-                borderLeft: "1px solid var(--color-border)",
-                boxShadow: "var(--shadow-lg)",
-              }}
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            >
-              {/* Drawer header */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-border)]">
-                <BrandMark size="sm" />
-                <button
-                  onClick={closeMobile}
-                  className="p-1.5 rounded-full text-[var(--color-text-muted)] hover:bg-[var(--color-text)]/[0.06] transition-colors"
-                  aria-label={t("toggleMenu")}
-                >
-                  <HamburgerIcon open={true} />
-                </button>
-              </div>
+      {/* ─── Mobile Drawer Overlay + Panel (CSS animations, no framer-motion) ─── */}
+      {mobileOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-40 bg-black/40 md:hidden animate-navbar-backdrop"
+            onClick={closeMobile}
+            aria-hidden
+          />
+          {/* Drawer */}
+          <div
+            className="fixed top-0 right-0 bottom-0 z-50 w-[85vw] max-w-sm md:hidden overflow-y-auto animate-navbar-drawer"
+            style={{
+              background: "var(--color-bg)",
+              borderLeft: "1px solid var(--color-border)",
+              boxShadow: "var(--shadow-lg)",
+            }}
+          >
+            {/* Drawer header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-border)]">
+              <BrandMark size="sm" />
+              <button
+                onClick={closeMobile}
+                className="p-1.5 rounded-full text-[var(--color-text-muted)] hover:bg-[var(--color-text)]/[0.06] transition-colors"
+                aria-label={t("toggleMenu")}
+              >
+                <HamburgerIcon open={true} />
+              </button>
+            </div>
 
-              {/* Drawer sections */}
-              <div className="py-2">
-                {/* Programs */}
-                <MobileSection title={t("programs")} icon="📚">
-                  <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("aiLearningPath")} programs={AI_PATH} trackSlug="ai-learning" />
-                  <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("craftEngineeringPath")} programs={CRAFT_PATH} trackSlug="craft-engineering" />
-                </MobileSection>
+            {/* Drawer sections */}
+            <div className="py-2">
+              {/* Programs */}
+              <MobileSection title={t("programs")} icon="📚">
+                <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("aiLearningPath")} programs={AI_PATH} trackSlug="ai-learning" />
+                <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("craftEngineeringPath")} programs={CRAFT_PATH} trackSlug="craft-engineering" />
+              </MobileSection>
 
-                {/* Lab */}
-                <MobileSection title={t("lab")} icon="🧪">
-                  {LAB_EXPERIMENTS.map((exp) => (
-                    <Link
-                      key={exp.slug}
-                      href={`${basePath}/lab`}
-                      onClick={closeMobile}
-                      className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
-                    >
-                      <span>{exp.icon}</span>
-                      <span className="font-medium">{labTitles[exp.slug]}</span>
-                    </Link>
-                  ))}
-                </MobileSection>
+              {/* Lab */}
+              <MobileSection title={t("lab")} icon="🧪">
+                {LAB_EXPERIMENTS.map((exp) => (
+                  <Link
+                    key={exp.slug}
+                    href={`${basePath}/lab`}
+                    onClick={closeMobile}
+                    className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
+                  >
+                    <span>{exp.icon}</span>
+                    <span className="font-medium">{labTitles[exp.slug]}</span>
+                  </Link>
+                ))}
+              </MobileSection>
 
-                {/* Blog - simple link */}
+              {/* Blog - simple link */}
+              <Link
+                href={`${basePath}/blog`}
+                onClick={closeMobile}
+                className="flex items-center gap-2.5 py-3.5 px-4 text-sm font-semibold text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.03] border-b border-[var(--color-border)]/50 transition-colors"
+              >
+                <span className="text-base">📝</span>
+                {t("blog")}
+              </Link>
+
+              {/* About */}
+              <MobileSection title={t("about")} icon="💡">
                 <Link
-                  href={`${basePath}/blog`}
+                  href={`${basePath}/about`}
+                  onClick={closeMobile}
+                  className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
+                >
+                  <span>🎯</span>
+                  <span className="font-medium">{t("mission")}</span>
+                </Link>
+                <Link
+                  href={`${basePath}/about`}
+                  onClick={closeMobile}
+                  className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
+                >
+                  <span>💜</span>
+                  <span className="font-medium">{t("values")}</span>
+                </Link>
+                <a
+                  href="https://github.com/ai-educademy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
+                >
+                  <span>⭐</span>
+                  <span className="font-medium">{t("viewOnGithub")}</span>
+                </a>
+              </MobileSection>
+
+              {/* Dashboard (if signed in) */}
+              {isSignedIn && (
+                <Link
+                  href={`${basePath}/dashboard`}
                   onClick={closeMobile}
                   className="flex items-center gap-2.5 py-3.5 px-4 text-sm font-semibold text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.03] border-b border-[var(--color-border)]/50 transition-colors"
                 >
-                  <span className="text-base">📝</span>
-                  {t("blog")}
+                  <span className="text-base">📊</span>
+                  {t("dashboard")}
                 </Link>
+              )}
+            </div>
 
-                {/* About */}
-                <MobileSection title={t("about")} icon="💡">
-                  <Link
-                    href={`${basePath}/about`}
-                    onClick={closeMobile}
-                    className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
-                  >
-                    <span>🎯</span>
-                    <span className="font-medium">{t("mission")}</span>
-                  </Link>
-                  <Link
-                    href={`${basePath}/about`}
-                    onClick={closeMobile}
-                    className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
-                  >
-                    <span>💜</span>
-                    <span className="font-medium">{t("values")}</span>
-                  </Link>
-                  <a
-                    href="https://github.com/ai-educademy"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
-                  >
-                    <span>⭐</span>
-                    <span className="font-medium">{t("viewOnGithub")}</span>
-                  </a>
-                </MobileSection>
-
-                {/* Dashboard (if signed in) */}
-                {isSignedIn && (
-                  <Link
-                    href={`${basePath}/dashboard`}
-                    onClick={closeMobile}
-                    className="flex items-center gap-2.5 py-3.5 px-4 text-sm font-semibold text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.03] border-b border-[var(--color-border)]/50 transition-colors"
-                  >
-                    <span className="text-base">📊</span>
-                    {t("dashboard")}
-                  </Link>
-                )}
+            {/* Drawer footer */}
+            <div className="px-5 py-4 mt-auto border-t border-[var(--color-border)]">
+              <div className="flex items-center justify-between mb-4">
+                <LanguageSwitcher />
+                {isSignedIn && <UserMenu />}
               </div>
-
-              {/* Drawer footer */}
-              <div className="px-5 py-4 mt-auto border-t border-[var(--color-border)]">
-                <div className="flex items-center justify-between mb-4">
-                  <LanguageSwitcher />
-                  {isSignedIn && <UserMenu />}
-                </div>
-                {!isSignedIn && (
-                  <Link
-                    href={`${basePath}/signin`}
-                    onClick={closeMobile}
-                    className="flex items-center justify-center w-full px-4 py-2.5 text-sm font-semibold rounded-xl text-white transition-all"
-                    style={{
-                      background: "linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))",
-                      boxShadow: "0 2px 8px var(--color-primary-glow)",
-                    }}
-                  >
-                    {t("getStarted")}
-                  </Link>
-                )}
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+              {!isSignedIn && (
+                <Link
+                  href={`${basePath}/signin`}
+                  onClick={closeMobile}
+                  className="flex items-center justify-center w-full px-4 py-2.5 text-sm font-semibold rounded-xl text-white transition-all"
+                  style={{
+                    background: "linear-gradient(135deg, var(--color-primary-dark), var(--color-primary))",
+                    boxShadow: "0 2px 8px var(--color-primary-glow)",
+                  }}
+                >
+                  {t("getStarted")}
+                </Link>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

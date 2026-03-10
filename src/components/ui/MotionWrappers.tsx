@@ -1,7 +1,6 @@
 "use client";
 
-import { type ReactNode, useRef } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { type ReactNode, useRef, useState, useEffect } from "react";
 
 /* ─── AnimatedSection ─── */
 type Animation = "fade-up" | "fade-in" | "scale-in" | "slide-left" | "slide-right";
@@ -14,28 +13,6 @@ interface AnimatedSectionProps {
   once?: boolean;
 }
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
-const animationVariants: Record<
-  Animation,
-  { hidden: Record<string, number>; visible: Record<string, number> }
-> = {
-  "fade-up": { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } },
-  "fade-in": { hidden: { opacity: 0 }, visible: { opacity: 1 } },
-  "scale-in": {
-    hidden: { opacity: 0, scale: 0.92 },
-    visible: { opacity: 1, scale: 1 },
-  },
-  "slide-left": {
-    hidden: { opacity: 0, x: -30 },
-    visible: { opacity: 1, x: 0 },
-  },
-  "slide-right": {
-    hidden: { opacity: 0, x: 30 },
-    visible: { opacity: 1, x: 0 },
-  },
-};
-
 export function AnimatedSection({
   children,
   animation = "fade-up",
@@ -44,25 +21,47 @@ export function AnimatedSection({
   once = true,
 }: AnimatedSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once, margin: "-60px" });
-  const prefersReducedMotion = useReducedMotion();
+  const [isInView, setIsInView] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          if (once) observer.disconnect();
+        } else if (!once) {
+          setIsInView(false);
+        }
+      },
+      { rootMargin: "-60px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [once]);
 
   if (prefersReducedMotion) {
     return <div className={className}>{children}</div>;
   }
 
-  const variant = animationVariants[animation];
-
   return (
-    <motion.div
+    <div
       ref={ref}
-      className={className}
-      initial={variant.hidden}
-      animate={isInView ? variant.visible : variant.hidden}
-      transition={{ duration: 0.6, delay: delay / 1000, ease }}
+      className={`motion-section motion-${animation} ${isInView ? "motion-visible" : ""} ${className ?? ""}`}
+      style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -81,16 +80,38 @@ export function AnimatedProgressBar({
   delay = 0,
 }: AnimatedProgressBarProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
-  const prefersReducedMotion = useReducedMotion();
+  const [isInView, setIsInView] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mql.matches);
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-40px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div ref={ref} className={className}>
-      <motion.div
+      <div
         className={barClassName}
-        initial={{ width: prefersReducedMotion ? `${percentage}%` : "0%" }}
-        animate={isInView ? { width: `${percentage}%` } : {}}
-        transition={{ duration: 1.2, delay: delay / 1000, ease }}
+        style={{
+          width: prefersReducedMotion || isInView ? `${percentage}%` : "0%",
+          transition: prefersReducedMotion ? "none" : `width 1.2s cubic-bezier(0.22, 1, 0.36, 1) ${delay}ms`,
+        }}
       />
     </div>
   );
