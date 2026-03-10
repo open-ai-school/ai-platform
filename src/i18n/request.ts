@@ -13,6 +13,7 @@ export const localeNames: Record<Locale, string> = {
   es: "Español",
   pt: "Português",
   de: "Deutsch",
+  zh: "中文",
 };
 
 export const localeFlags: Record<Locale, string> = {
@@ -24,6 +25,7 @@ export const localeFlags: Record<Locale, string> = {
   es: "🇪🇸",
   pt: "🇧🇷",
   de: "🇩🇪",
+  zh: "🇨🇳",
 };
 
 export default getRequestConfig(async ({ requestLocale }) => {
