@@ -647,7 +647,15 @@
     "union-find-and-disjoint-sets": "Union-Find",
     "voice-ai-and-speech": "IA de Voz y Reconocimiento del Habla",
     "what-is-ai": "¿Qué es la IA? Una Introducción Amigable",
-    "your-first-ai-experiment": "Tu Primer Experimento con IA"
+    "your-first-ai-experiment": "Tu Primer Experimento con IA",
+    "ai-in-science-and-research": "Cómo la IA está transformando la ciencia y la investigación",
+    "ai-and-creativity": "IA y creatividad humana: socios, no rivales",
+    "future-of-work-and-ai": "La IA y el futuro del trabajo: qué empleos cambiarán",
+    "overfitting-and-underfitting": "Sobreajuste y subajuste: por qué fallan los modelos de ML",
+    "feature-engineering": "Ingeniería de características: enseñar a las máquinas qué importa",
+    "supervised-vs-unsupervised": "Aprendizaje supervisado vs no supervisado: diferencias clave explicadas",
+    "transformers-explained": "Transformers explicados: la arquitectura detrás de ChatGPT",
+    "reinforcement-learning-intro": "Aprendizaje por refuerzo: enseñar a la IA mediante ensayo y error"
   },
   "pwa": {
     "install": "Instalar App",

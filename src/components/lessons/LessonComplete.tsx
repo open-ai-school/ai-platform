@@ -1,10 +1,10 @@
 "use client";
 
 import { useProgress } from "@/hooks/useProgress";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import programsData from "@data/programs.json";
 
 interface LessonCompleteProps {
@@ -114,52 +114,42 @@ function ConfettiOverlay({ onDone }: { onDone: () => void }) {
 function CelebrationModal({ trackName, onClose }: { trackName: string; onClose: () => void }) {
   const t = useTranslations("lessons");
   return (
-    <motion.div
+    <div
       className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+      style={{ animation: "fade-in 0.3s ease both" }}
       onClick={onClose}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
     >
-      <motion.div
+      <div
         className="relative mx-4 max-w-md w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-8 text-center shadow-2xl"
+        style={{ animation: "scale-in 0.4s cubic-bezier(0.22,1,0.36,1) both" }}
         onClick={(e) => e.stopPropagation()}
-        initial={{ scale: 0.7, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 300, damping: 22 }}
       >
-        <motion.div
+        <div
           className="text-6xl mb-4"
-          initial={{ scale: 0, rotate: -20 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ type: "spring", stiffness: 400, damping: 12, delay: 0.15 }}
+          style={{ animation: "scale-in 0.4s cubic-bezier(0.22,1,0.36,1) 150ms both" }}
         >
           🎉
-        </motion.div>
-        <motion.h2
+        </div>
+        <h2
           className="text-2xl font-bold bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] bg-clip-text text-transparent mb-2"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
+          style={{ animation: "fade-up 0.4s cubic-bezier(0.22,1,0.36,1) 250ms both" }}
         >
           {t("trackComplete")}
-        </motion.h2>
+        </h2>
         <p className="text-[var(--color-text-muted)] mb-1">
           {t("trackCompleteDesc")}
         </p>
         <p className="text-lg font-semibold text-[var(--color-primary)] mb-6">
           {trackName}
         </p>
-        <motion.button
+        <button
           onClick={onClose}
-          className="px-6 py-2.5 rounded-xl bg-[var(--color-primary)] text-white font-medium hover:brightness-110 active:scale-[0.97] transition-all min-h-[44px]"
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.96 }}
+          className="px-6 py-2.5 rounded-xl bg-[var(--color-primary)] text-white font-medium hover:brightness-110 hover:scale-[1.04] active:scale-[0.96] transition-transform min-h-[44px]"
         >
           {t("trackCompleteDismiss")}
-        </motion.button>
-      </motion.div>
-    </motion.div>
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -182,14 +172,14 @@ export function LessonComplete({
   const { isCompleted, markComplete, getProgram, allData } = useProgress(programSlug);
   const tL = useTranslations("lessons");
   const tP = useTranslations("programs");
-  const prefersReduced = useReducedMotion();
-  const noMotion = !!prefersReduced;
+  const noMotion = useReducedMotion();
   const [justCompleted, setJustCompleted] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const confettiTriggered = useRef(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const endRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
   const completed = isCompleted(slug);
 
   const progData = getProgram(programSlug);
@@ -261,6 +251,24 @@ export function LessonComplete({
     return () => observer.disconnect();
   }, [completed, handleAutoComplete]);
 
+  // IntersectionObserver for fade-up animation on the main section
+  useEffect(() => {
+    const el = endRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-40px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   // Determine next program when at last lesson
   const nextProgram = (() => {
     if (nextSlug) return null;
@@ -271,18 +279,32 @@ export function LessonComplete({
     return seq[idx + 1];
   })();
 
+  const sectionStyle: React.CSSProperties = noMotion
+    ? {}
+    : {
+        opacity: inView ? 1 : 0,
+        transform: inView ? "translateY(0)" : "translateY(20px)",
+        transition: "opacity 0.5s ease, transform 0.5s ease",
+      };
+
+  const progressWidth = `${(progCompleted / totalLessons) * 100}%`;
+  const progressStyle: React.CSSProperties = noMotion
+    ? { width: progressWidth }
+    : {
+        width: inView ? progressWidth : "0%",
+        transition: "width 0.8s cubic-bezier(0.25,0.46,0.45,0.94) 0.2s",
+      };
+
   return (
     <>
       {/* Confetti celebration for track completion */}
-      <AnimatePresence>
-        {showConfetti && <ConfettiOverlay onDone={() => setShowConfetti(false)} />}
-        {showCelebration && (
-          <CelebrationModal
-            trackName={programTrack === "ai-learning" ? tL("trackAI") : tL("trackCraft")}
-            onClose={() => setShowCelebration(false)}
-          />
-        )}
-      </AnimatePresence>
+      {showConfetti && <ConfettiOverlay onDone={() => setShowConfetti(false)} />}
+      {showCelebration && (
+        <CelebrationModal
+          trackName={programTrack === "ai-learning" ? tL("trackAI") : tL("trackCraft")}
+          onClose={() => setShowCelebration(false)}
+        />
+      )}
 
       {/* Scroll progress bar (fixed at top) */}
       <div
@@ -290,13 +312,10 @@ export function LessonComplete({
         style={{ width: `${scrollProgress}%` }}
       />
 
-      <motion.div
+      <div
         className="mt-12 space-y-6"
         ref={endRef}
-        initial={noMotion ? undefined : { opacity: 0, y: 20 }}
-        whileInView={noMotion ? undefined : { opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.5 }}
+        style={sectionStyle}
       >
         {/* Progress indicator */}
         <div className="flex items-center justify-between text-sm text-[var(--color-text-muted)]">
@@ -308,11 +327,9 @@ export function LessonComplete({
           </span>
         </div>
         <div className="progress-bar">
-          <motion.div
+          <div
             className="progress-bar-fill"
-            initial={{ width: 0 }}
-            animate={{ width: `${(progCompleted / totalLessons) * 100}%` }}
-            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
+            style={progressStyle}
           />
         </div>
 
@@ -336,7 +353,7 @@ export function LessonComplete({
             </Link>
           )}
           {nextSlug ? (
-            <motion.div whileHover={noMotion ? undefined : { scale: 1.03 }} whileTap={noMotion ? undefined : { scale: 0.97 }}>
+            <div className="hover:scale-[1.03] active:scale-[0.97] transition-transform">
               <Link
                 href={`${basePath}/${nextSlug}`}
                 className="group flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 bg-[var(--color-primary)] text-white rounded-xl hover:brightness-110 active:brightness-90 transition-all min-w-0 min-h-[44px] shadow-lg shadow-[var(--color-primary)]/20"
@@ -344,9 +361,9 @@ export function LessonComplete({
                 <span className="line-clamp-1">{nextTitle}</span>
                 <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
               </Link>
-            </motion.div>
+            </div>
           ) : nextProgram ? (
-            <motion.div whileHover={noMotion ? undefined : { scale: 1.03 }} whileTap={noMotion ? undefined : { scale: 0.97 }}>
+            <div className="hover:scale-[1.03] active:scale-[0.97] transition-transform">
               <Link
                 href={programPath.replace(/\/[^/]+$/, `/${nextProgram.slug}`)}
                 className="group flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl hover:shadow-lg active:brightness-90 transition-all min-h-[44px] shadow-lg shadow-indigo-600/20"
@@ -354,9 +371,9 @@ export function LessonComplete({
                 <span>{nextProgram.icon} {tP(`${nextProgram.slug}.title`)}</span>
                 <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
               </Link>
-            </motion.div>
+            </div>
           ) : (
-            <motion.div whileHover={noMotion ? undefined : { scale: 1.03 }} whileTap={noMotion ? undefined : { scale: 0.97 }}>
+            <div className="hover:scale-[1.03] active:scale-[0.97] transition-transform">
               <Link
                 href={programPath.replace(/\/[^/]+$/, "")}
                 className="group flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl hover:shadow-lg active:brightness-90 transition-all min-h-[44px] shadow-lg shadow-indigo-600/20"
@@ -364,10 +381,10 @@ export function LessonComplete({
                 <span>{tL("allPrograms")}</span>
                 <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
               </Link>
-            </motion.div>
+            </div>
           )}
         </div>
-      </motion.div>
+      </div>
     </>
   );
 }

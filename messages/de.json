@@ -647,7 +647,15 @@
     "union-find-and-disjoint-sets": "Union-Find",
     "voice-ai-and-speech": "Sprach-KI und Spracherkennung",
     "what-is-ai": "Was ist KI? Eine freundliche Einführung",
-    "your-first-ai-experiment": "Dein erstes KI-Experiment"
+    "your-first-ai-experiment": "Dein erstes KI-Experiment",
+    "ai-in-science-and-research": "Wie KI Wissenschaft und Forschung verändert",
+    "ai-and-creativity": "KI und menschliche Kreativität: Partner, keine Rivalen",
+    "future-of-work-and-ai": "KI und die Zukunft der Arbeit: Welche Jobs werden sich verändern",
+    "overfitting-and-underfitting": "Overfitting und Underfitting: Warum ML-Modelle versagen",
+    "feature-engineering": "Feature Engineering: Maschinen beibringen, was wichtig ist",
+    "supervised-vs-unsupervised": "Überwachtes vs unüberwachtes Lernen: Hauptunterschiede erklärt",
+    "transformers-explained": "Transformers erklärt: Die Architektur hinter ChatGPT",
+    "reinforcement-learning-intro": "Reinforcement Learning: KI durch Versuch und Irrtum trainieren"
   },
   "pwa": {
     "install": "App installieren",

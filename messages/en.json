@@ -118,9 +118,9 @@
     "mission": "Our Mission",
     "missionText": "AI education for every student, regardless of language, background, or experience.",
     "story": "The Mind Behind the Idea",
-    "storyText1": "I'm Ramesh Reddy Adutla, an engineering leader with 15 years across fintech, media, and retail, building large-scale systems at global giants like JP Morgan, Sky, and Marks & Spencer across Asia and Europe. Currently based in London, helping one of the UK's biggest retailers digitalise their technology estate.",
+    "storyText1": "I'm Ramesh Reddy Adutla — the founder, designer, and sole engineer behind AI Educademy. With 15 years building large-scale distributed systems at JP Morgan, Sky, and Marks & Spencer across Asia and Europe, I've spent my career at the intersection of technology and real-world impact.",
     "storyText2": "AI will reshape every industry. Yet the best AI education remains locked behind expensive institutions in a handful of countries. That gap isn't just unfair, it's a massive waste of potential.",
-    "storyText3": "A conversation about millions of students being left behind sparked this. AI Educademy started as a side project, it grew into something real.",
+    "storyText3": "I conceived AI Educademy and built it entirely from scratch — the architecture, curriculum, multilingual infrastructure, open-source tooling, every line of code. What started as evenings and weekends became a fully-fledged free platform serving learners in 11 languages across 6 continents.",
     "storyText4": "Working across multiple countries where English isn't the first language made one thing clear: language should never be a barrier to learning. I speak English, French, and Telugu, so building a multilingual platform felt like the obvious move.",
     "values": "Our Values",
     "value1": {
@@ -146,7 +146,7 @@
     "devto": "Dev.to",
     "twitter": "X (Twitter)",
     "sponsor": "☕ Buy Me a Coffee",
-    "subtitle": "Founder · Engineering Leader · Open Source Advocate",
+    "subtitle": "Founder & Creator · Engineering Leader · Open Source Contributor",
     "timeline2011": "Started career in software engineering in India 🇮🇳",
     "timeline2014": "Moved to Belgium, built fintech systems, learned French 🇧🇪",
     "timeline2017": "JP Morgan, trading platforms and high-performance systems ��",
@@ -647,7 +647,15 @@
     "union-find-and-disjoint-sets": "Union-Find",
     "voice-ai-and-speech": "Voice AI and Speech Recognition",
     "what-is-ai": "What is AI? A Friendly Introduction",
-    "your-first-ai-experiment": "Your First AI Experiment"
+    "your-first-ai-experiment": "Your First AI Experiment",
+    "ai-in-science-and-research": "How AI is Transforming Science and Research",
+    "ai-and-creativity": "AI and Human Creativity: Partners, Not Rivals",
+    "future-of-work-and-ai": "AI and the Future of Work: What Jobs Will Change",
+    "overfitting-and-underfitting": "Overfitting and Underfitting: Why ML Models Fail",
+    "feature-engineering": "Feature Engineering: Teaching Machines What Matters",
+    "supervised-vs-unsupervised": "Supervised vs Unsupervised Learning: Key Differences Explained",
+    "transformers-explained": "Transformers Explained: The Architecture Behind ChatGPT",
+    "reinforcement-learning-intro": "Reinforcement Learning: Teaching AI Through Trial and Error"
   },
   "pwa": {
     "install": "Install App",

@@ -647,7 +647,15 @@
     "union-find-and-disjoint-sets": "Union-Find",
     "voice-ai-and-speech": "వాయిస్ AI మరియు స్పీచ్ రికగ్నిషన్",
     "what-is-ai": "AI అంటే ఏమిటి? ఒక స్నేహపూర్వక పరిచయం",
-    "your-first-ai-experiment": "మీ మొదటి AI ప్రయోగం"
+    "your-first-ai-experiment": "మీ మొదటి AI ప్రయోగం",
+    "ai-in-science-and-research": "AI సైన్స్ మరియు పరిశోధనను ఎలా మారుస్తుందో",
+    "ai-and-creativity": "AI మరియు మానవ సృజనాత్మకత: భాగస్వాములు, పోటీదారులు కాదు",
+    "future-of-work-and-ai": "AI మరియు పనియొక్క భవిష్యత్తు: ఏ ఉద్యోగాలు మారతాయి",
+    "overfitting-and-underfitting": "Overfitting మరియు Underfitting: ML మోడళ్లు ఎందుకు విఫలమవుతాయి",
+    "feature-engineering": "Feature Engineering: మెషీన్లకు ముఖ్యమైన విషయాలు నేర్పించడం",
+    "supervised-vs-unsupervised": "Supervised vs Unsupervised Learning: ముఖ్య తేడాలు వివరించబడ్డాయి",
+    "transformers-explained": "Transformers వివరించబడ్డాయి: ChatGPT వెనుక ఉన్న Architecture",
+    "reinforcement-learning-intro": "Reinforcement Learning: ప్రయోగం మరియు తప్పిదం ద్వారా AI కి నేర్పించడం"
   },
   "pwa": {
     "install": "యాప్ ఇన్‌స్టాల్ చేయండి",

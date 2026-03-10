@@ -647,7 +647,15 @@
     "union-find-and-disjoint-sets": "Union-Find",
     "voice-ai-and-speech": "वॉइस AI और स्पीच रिकग्निशन",
     "what-is-ai": "AI क्या है? एक आसान परिचय",
-    "your-first-ai-experiment": "आपका पहला AI प्रयोग"
+    "your-first-ai-experiment": "आपका पहला AI प्रयोग",
+    "ai-in-science-and-research": "AI कैसे विज्ञान और अनुसंधान को बदल रहा है",
+    "ai-and-creativity": "AI और मानवीय रचनात्मकता: साझेदार, प्रतिद्वंद्वी नहीं",
+    "future-of-work-and-ai": "AI और काम का भविष्य: कौन सी नौकरियाँ बदलेंगी",
+    "overfitting-and-underfitting": "Overfitting और Underfitting: ML मॉडल क्यों विफल होते हैं",
+    "feature-engineering": "Feature Engineering: मशीनों को महत्वपूर्ण बातें सिखाना",
+    "supervised-vs-unsupervised": "Supervised बनाम Unsupervised Learning: मुख्य अंतर समझाए गए",
+    "transformers-explained": "Transformers समझाए गए: ChatGPT के पीछे की आर्किटेक्चर",
+    "reinforcement-learning-intro": "Reinforcement Learning: परीक्षण और त्रुटि से AI को सिखाना"
   },
   "pwa": {
     "install": "ऐप इंस्टॉल करें",

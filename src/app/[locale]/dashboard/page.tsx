@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -9,7 +9,6 @@ import { useStreak } from "@/hooks/useStreak";
 import { useSession } from "next-auth/react";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
 import { Certificate } from "@/components/dashboard/Certificate";
-import { useInView } from "@/hooks/useInView";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { AnimatedProgressBar } from "@/components/ui/MotionWrappers";
 import { locales } from "@/i18n/request";
@@ -151,16 +150,42 @@ function MotionReveal({
   delay?: number;
   className?: string;
 }) {
-  const [ref, isInView] = useInView<HTMLDivElement>({ once: true, margin: "-60px" });
-  const reduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
+  const noMotion = useReducedMotion();
 
-  const animClass = animation === "scale-in" ? "motion-scale-in" : "motion-fade-up";
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setIsInView(true);
+          obs.disconnect();
+        }
+      },
+      { rootMargin: "-60px" },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  if (noMotion) return <div className={className}>{children}</div>;
+
+  const variants: Record<string, string> = {
+    "fade-up": "translateY(24px)",
+    "scale-in": "scale(0.92)",
+  };
 
   return (
     <div
       ref={ref}
-      className={`${animClass} ${isInView || reduced ? "motion-visible" : ""} ${className ?? ""}`}
-      style={delay > 0 ? { transitionDelay: `${delay / 1000}s` } : undefined}
+      className={className}
+      style={{
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : variants[animation],
+        transition: `opacity 0.6s cubic-bezier(0.22,1,0.36,1) ${delay}ms, transform 0.6s cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+      }}
     >
       {children}
     </div>
