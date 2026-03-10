@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Lottie from "lottie-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface LottieAnimationProps {
   src: string;
@@ -15,15 +15,6 @@ interface LottieAnimationProps {
   speed?: number;
 }
 
-/**
- * Scroll-triggered Lottie animation with lazy loading.
- * Only loads the animation JSON when visible in viewport.
- *
- * Usage in MDX:
- *   <Animation src="/animations/neural-network.json" caption="How neurons connect" />
- *   <Animation src="/animations/data-flow.json" loop={false} />
- *   <Animation src="https://assets.lottiefiles.com/..." height={300} />
- */
 export function LottieAnimation({
   src,
   alt,
@@ -34,28 +25,28 @@ export function LottieAnimation({
   speed = 1,
 }: LottieAnimationProps) {
   const t = useTranslations("lessons");
-  const prefersReduced = useReducedMotion();
+  const noMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const lottieRef = useRef<{ play: () => void; pause: () => void; setSpeed: (s: number) => void } | null>(null);
   const [animationData, setAnimationData] = useState<object | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [inView, setInView] = useState(false);
   const [error, setError] = useState(false);
 
   // Intersection observer - load when visible
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          setInView(true);
           observer.disconnect();
         }
       },
       { rootMargin: "200px" }
     );
-
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
@@ -63,7 +54,6 @@ export function LottieAnimation({
   // Fetch animation data when visible
   useEffect(() => {
     if (!isVisible) return;
-
     fetch(src)
       .then((res) => {
         if (!res.ok) throw new Error(`Failed to load animation: ${res.status}`);
@@ -73,16 +63,15 @@ export function LottieAnimation({
       .catch(() => setError(true));
   }, [isVisible, src]);
 
-  const noMotion = !!prefersReduced;
-
   return (
-    <motion.figure
+    <figure
       className="my-8"
       ref={containerRef}
-      initial={noMotion ? undefined : { opacity: 0, scale: 0.95 }}
-      whileInView={noMotion ? undefined : { opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      style={noMotion ? undefined : {
+        opacity: inView ? 1 : 0,
+        transform: inView ? "none" : "scale(0.95)",
+        transition: "opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)",
+      }}
     >
       <div
         className="rounded-2xl border border-[var(--color-border)] overflow-hidden bg-[var(--color-bg-card)] flex items-center justify-center"
@@ -92,7 +81,7 @@ export function LottieAnimation({
       >
         {error ? (
           <div className="text-[var(--color-text-muted)] text-sm flex flex-col items-center gap-2 p-8">
-            <span className="text-3xl">🎭</span>
+            <span className="text-3xl">\ud83c\udfad</span>
             <span>{t("animationError")}</span>
           </div>
         ) : animationData ? (
@@ -119,6 +108,6 @@ export function LottieAnimation({
           {caption || alt}
         </figcaption>
       )}
-    </motion.figure>
+    </figure>
   );
 }

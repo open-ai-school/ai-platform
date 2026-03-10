@@ -1,8 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export type GameDifficulty = "easy" | "medium" | "hard";
 export type GameCategory = "knowledge" | "quick" | "ethics" | "creative";
@@ -43,9 +43,7 @@ function getPersonalBest(gameId: string): number | null {
   try {
     const val = localStorage.getItem(`playground_best_${gameId}`);
     return val ? Number(val) : null;
-  } catch { /* localStorage unavailable */
-    return null;
-  }
+  } catch { return null; }
 }
 
 export function savePersonalBest(gameId: string, score: number): boolean {
@@ -57,10 +55,10 @@ export function savePersonalBest(gameId: string, score: number): boolean {
       return true;
     }
     return false;
-  } catch { /* localStorage unavailable */
-    return false;
-  }
+  } catch { return false; }
 }
+
+const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 export default function GameCard({
   game,
@@ -73,46 +71,51 @@ export default function GameCard({
 }) {
   const t = useTranslations("lab.hub");
   const tp = useTranslations("lab.playground");
-  const prefersReduced = useReducedMotion();
-  const noMotion = !!prefersReduced;
+  const noMotion = useReducedMotion();
   const [bestScore, setBestScore] = useState<number | null>(null);
+  const [inView, setInView] = useState(false);
+  const ref = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setBestScore(getPersonalBest(game.id));
   }, [game.id]);
 
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } },
+      { rootMargin: "-30px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   const diff = DIFFICULTY_CONFIG[game.difficulty];
 
   return (
-    <motion.button
+    <button
+      ref={ref}
       onClick={() => onPlay(game)}
-      className={`group relative flex flex-col text-left p-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition-colors duration-300 active:scale-[0.98] ${BORDER_COLORS[game.category]}`}
-      initial={noMotion ? undefined : { opacity: 0, scale: 0.92, y: 16 }}
-      whileInView={noMotion ? undefined : { opacity: 1, scale: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
-      transition={noMotion ? undefined : { delay: index * 0.08, type: "spring", stiffness: 200, damping: 20 }}
-      whileHover={noMotion ? undefined : { y: -4, transition: { type: "spring", stiffness: 400, damping: 20 } }}
-      whileTap={noMotion ? undefined : { scale: 0.97 }}
+      className={`group relative flex flex-col text-left p-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] transition-all duration-300 active:scale-[0.98] hover:-translate-y-1 ${BORDER_COLORS[game.category]}`}
+      style={noMotion ? undefined : {
+        opacity: inView ? 1 : 0,
+        transform: inView ? "none" : "scale(0.92) translateY(16px)",
+        transition: `opacity 0.5s ${EASE} ${index * 80}ms, transform 0.5s ${EASE} ${index * 80}ms`,
+      }}
     >
-      {/* Gradient overlay */}
       <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${CATEGORY_GRADIENTS[game.category]} opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 pointer-events-none`} />
 
       <div className="relative z-10 flex flex-col h-full">
-        {/* Icon + difficulty */}
         <div className="flex items-start justify-between mb-3">
-          <motion.div
-            className="text-4xl"
-            whileHover={noMotion ? undefined : { scale: 1.15, rotate: 5 }}
-            transition={{ type: "spring", stiffness: 400, damping: 15 }}
-          >
+          <div className="text-4xl transition-transform duration-300 group-hover:scale-115 group-hover:rotate-[5deg]">
             {game.icon}
-          </motion.div>
+          </div>
           <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${diff.color}`}>
             {t(diff.label)}
           </span>
         </div>
 
-        {/* Title + description */}
         <h3 className="font-bold text-sm mb-1 group-hover:text-[var(--color-primary)] group-active:text-[var(--color-primary)] transition-colors">
           {tp(game.name as Parameters<typeof tp>[0])}
         </h3>
@@ -120,7 +123,6 @@ export default function GameCard({
           {tp(game.desc as Parameters<typeof tp>[0])}
         </p>
 
-        {/* Footer: time + score */}
         <div className="flex items-center justify-between text-[10px] text-[var(--color-text-muted)] pt-2 border-t border-[var(--color-border)]">
           <span className="flex items-center gap-1">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -130,11 +132,11 @@ export default function GameCard({
           </span>
           {bestScore !== null && (
             <span className="flex items-center gap-1 text-amber-400 font-semibold">
-              ⭐ {t("personalBest", { score: bestScore })}
+              \u2b50 {t("personalBest", { score: bestScore })}
             </span>
           )}
         </div>
       </div>
-    </motion.button>
+    </button>
   );
 }

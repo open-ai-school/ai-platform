@@ -3,18 +3,15 @@
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { WifiOff } from "lucide-react";
-import { motion } from "framer-motion";
 
 export default function OfflinePage() {
   const t = useTranslations("pwa");
   const locale = useLocale();
 
   return (
-    <motion.div
-      className="flex flex-col items-center justify-center min-h-[60vh] px-4 text-center bg-[var(--color-bg)]"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    <div
+      className="flex flex-col items-center justify-center min-h-[60vh] px-4 text-center bg-[var(--color-bg)] motion-section motion-fade-up motion-visible"
+      style={{ animation: "fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both" }}
     >
       <div className="rounded-full bg-[var(--color-bg-card)] p-6 mb-6">
         <WifiOff className="h-12 w-12 text-[var(--color-text-muted)]" />
@@ -31,6 +28,6 @@ export default function OfflinePage() {
       >
         {t("goHome")}
       </Link>
-    </motion.div>
+    </div>
   );
 }

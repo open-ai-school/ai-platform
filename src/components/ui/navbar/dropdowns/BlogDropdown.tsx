@@ -14,7 +14,7 @@ export function BlogDropdownContent({ basePath, t }: { basePath: string; t: (key
         <Link
           href={`${basePath}/blog`}
           className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary)] hover:underline"
-          role="menuitem"
+         
         >
           {t("readBlog")}
           <span aria-hidden>→</span>

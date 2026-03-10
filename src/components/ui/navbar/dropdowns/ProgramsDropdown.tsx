@@ -43,7 +43,7 @@ export function ProgramsDropdownContent({ basePath, t }: { basePath: string; t: 
         <Link
           href={`${basePath}/programs`}
           className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary)] hover:underline"
-          role="menuitem"
+         
         >
           {t("viewAllPrograms")}
           <span aria-hidden>→</span>

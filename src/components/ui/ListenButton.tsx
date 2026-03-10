@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, Pause, Square } from "lucide-react";
 
 /* Voice preference order per locale */
@@ -14,14 +13,12 @@ const LOCALE_LANGS: Record<string, string[]> = {
   te: ["te-IN", "te"],
 };
 
-/* Keywords that indicate premium / natural voices (ranked) */
 const PREMIUM_KEYWORDS = [
   "premium", "enhanced", "natural", "neural", "google",
   "samantha", "karen", "daniel", "moira", "fiona",
   "thomas", "amelie", "audrey",
 ];
 
-/** Score a voice - higher = better quality */
 function voiceScore(v: SpeechSynthesisVoice): number {
   const name = v.name.toLowerCase();
   let score = 0;
@@ -32,7 +29,6 @@ function voiceScore(v: SpeechSynthesisVoice): number {
   return score;
 }
 
-/** Strip symbols that TTS reads literally but humans skip when reading aloud */
 function cleanForSpeech(text: string): string {
   // eslint-disable-next-line no-misleading-character-class
   const emojiRe = /[\p{Emoji_Presentation}\p{Extended_Pictographic}\u200d\uFE0F]/gu;
@@ -49,7 +45,6 @@ function cleanForSpeech(text: string): string {
   );
 }
 
-/** Split text into speakable chunks - paragraphs, then sentences if too long */
 function chunkText(text: string, maxLen = 400): string[] {
   const cleaned = cleanForSpeech(text);
   const paragraphs = cleaned
@@ -95,31 +90,23 @@ export function ListenButton({
   const currentChunkRef = useRef(0);
   const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
 
-  // Auto-pick the best premium voice for the locale
   useEffect(() => {
     if (typeof window === "undefined" || !window.speechSynthesis) return;
     setSupported(true);
-
     const pickBestVoice = () => {
       const all = speechSynthesis.getVoices();
       const langPrefixes = LOCALE_LANGS[locale] || [locale];
       const langFamily = locale.slice(0, 2);
       const matching = all
-        .filter(
-          (v) =>
-            langPrefixes.some((l) => v.lang.startsWith(l)) ||
-            v.lang.startsWith(langFamily),
-        )
+        .filter((v) => langPrefixes.some((l) => v.lang.startsWith(l)) || v.lang.startsWith(langFamily))
         .sort((a, b) => voiceScore(b) - voiceScore(a));
       voiceRef.current = matching[0] || null;
     };
-
     pickBestVoice();
     speechSynthesis.addEventListener("voiceschanged", pickBestVoice);
     return () => speechSynthesis.removeEventListener("voiceschanged", pickBestVoice);
   }, [locale]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => { speechSynthesis.cancel(); };
   }, []);
@@ -133,16 +120,13 @@ export function ListenButton({
         currentChunkRef.current = 0;
         return;
       }
-
       currentChunkRef.current = index;
       setProgress(Math.round(((index + 1) / chunks.length) * 100));
-
       const utt = new SpeechSynthesisUtterance(chunks[index]);
       if (voiceRef.current) utt.voice = voiceRef.current;
       utt.lang = LOCALE_LANGS[locale]?.[0] || locale;
       utt.rate = 0.95;
       utt.pitch = 1;
-
       utt.onend = () => speakChunk(index + 1);
       utt.onerror = (e) => {
         if (e.error !== "interrupted" && e.error !== "canceled") {
@@ -150,34 +134,20 @@ export function ListenButton({
           setProgress(0);
         }
       };
-
       speechSynthesis.speak(utt);
     },
     [locale],
   );
 
   const handlePlay = useCallback(() => {
-    if (state === "playing") {
-      speechSynthesis.pause();
-      setState("paused");
-      return;
-    }
-
-    if (state === "paused") {
-      speechSynthesis.resume();
-      setState("playing");
-      return;
-    }
-
+    if (state === "playing") { speechSynthesis.pause(); setState("paused"); return; }
+    if (state === "paused") { speechSynthesis.resume(); setState("playing"); return; }
     const el = document.querySelector(contentSelector);
     if (!el) return;
-
     const text = el.textContent || "";
     if (!text.trim()) return;
-
     const chunks = chunkText(text);
     if (chunks.length === 0) return;
-
     chunksRef.current = chunks;
     currentChunkRef.current = 0;
     speechSynthesis.cancel();
@@ -198,57 +168,50 @@ export function ListenButton({
 
   return (
     <div className="flex items-center gap-2">
-      <motion.button
+      <button
         onClick={handlePlay}
         className={`
           inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium
-          transition-colors cursor-pointer min-h-[40px]
+          transition-all cursor-pointer min-h-[40px] hover:scale-[1.03] active:scale-[0.97]
           ${
             isActive
               ? "bg-[var(--color-primary)] text-white shadow-md shadow-[var(--color-primary)]/20"
               : "border border-[var(--color-border)] bg-[var(--color-bg-card)] text-[var(--color-text-muted)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
           }
         `}
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
         aria-label={
           state === "playing" ? t("pause") : state === "paused" ? t("resume") : t("listen")
         }
       >
-        {state === "playing" ? (
-          <Pause className="w-4 h-4" />
-        ) : (
-          <Volume2 className="w-4 h-4" />
-        )}
+        {state === "playing" ? <Pause className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
         <span>
           {state === "playing" ? t("pause") : state === "paused" ? t("resume") : t("listen")}
         </span>
-      </motion.button>
+      </button>
 
-      <AnimatePresence>
+      <div
+        className="flex items-center gap-2 overflow-hidden"
+        style={{
+          opacity: isActive ? 1 : 0,
+          width: isActive ? "auto" : 0,
+          transition: "opacity 0.2s, width 0.2s",
+        }}
+      >
         {isActive && (
-          <motion.div
-            className="flex items-center gap-2"
-            initial={{ opacity: 0, width: 0 }}
-            animate={{ opacity: 1, width: "auto" }}
-            exit={{ opacity: 0, width: 0 }}
-            transition={{ duration: 0.2 }}
-          >
+          <>
             <span className="text-xs text-[var(--color-text-muted)] tabular-nums whitespace-nowrap">
               {progress}%
             </span>
-            <motion.button
+            <button
               onClick={handleStop}
-              className="flex items-center justify-center w-8 h-8 rounded-full border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-red-500 hover:border-red-400 transition-colors cursor-pointer"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              className="flex items-center justify-center w-8 h-8 rounded-full border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-red-500 hover:border-red-400 hover:scale-110 active:scale-90 transition-all cursor-pointer"
               aria-label={t("stop")}
             >
               <Square className="w-3.5 h-3.5" />
-            </motion.button>
-          </motion.div>
+            </button>
+          </>
         )}
-      </AnimatePresence>
+      </div>
     </div>
   );
 }

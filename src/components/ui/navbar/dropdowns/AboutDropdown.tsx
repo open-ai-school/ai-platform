@@ -7,7 +7,7 @@ export function AboutDropdownContent({ basePath, t }: { basePath: string; t: (ke
         <Link
           href={`${basePath}/about`}
           className="flex items-start gap-3 py-2 px-3 rounded-lg hover:bg-[var(--color-text)]/[0.04] transition-colors group/item"
-          role="menuitem"
+         
         >
           <span className="text-base mt-0.5">🎯</span>
           <div>
@@ -20,7 +20,7 @@ export function AboutDropdownContent({ basePath, t }: { basePath: string; t: (ke
         <Link
           href={`${basePath}/about`}
           className="flex items-start gap-3 py-2 px-3 rounded-lg hover:bg-[var(--color-text)]/[0.04] transition-colors group/item"
-          role="menuitem"
+         
         >
           <span className="text-base mt-0.5">💜</span>
           <div>
@@ -35,7 +35,7 @@ export function AboutDropdownContent({ basePath, t }: { basePath: string; t: (ke
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-start gap-3 py-2 px-3 rounded-lg hover:bg-[var(--color-text)]/[0.04] transition-colors group/item"
-          role="menuitem"
+         
         >
           <span className="text-base mt-0.5">⭐</span>
           <div>
@@ -50,7 +50,7 @@ export function AboutDropdownContent({ basePath, t }: { basePath: string; t: (ke
         <Link
           href={`${basePath}/about`}
           className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary)] hover:underline"
-          role="menuitem"
+         
         >
           {t("meetCreator")}
           <span aria-hidden>→</span>
@@ -60,7 +60,7 @@ export function AboutDropdownContent({ basePath, t }: { basePath: string; t: (ke
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:underline"
-          role="menuitem"
+         
         >
           {t("viewOnGithub")}
           <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 16 16">

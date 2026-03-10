@@ -10,6 +10,9 @@ export const localeNames: Record<Locale, string> = {
   nl: "Nederlands",
   hi: "हिन्दी",
   te: "తెలుగు",
+  es: "Español",
+  pt: "Português",
+  de: "Deutsch",
 };
 
 export const localeFlags: Record<Locale, string> = {
@@ -18,6 +21,9 @@ export const localeFlags: Record<Locale, string> = {
   nl: "🇳🇱",
   hi: "🇮🇳",
   te: "🇮🇳",
+  es: "🇪🇸",
+  pt: "🇧🇷",
+  de: "🇩🇪",
 };
 
 export default getRequestConfig(async ({ requestLocale }) => {

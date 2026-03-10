@@ -111,7 +111,7 @@ export function NavDropdown({
             WebkitBackdropFilter: "blur(24px)",
             boxShadow: "var(--shadow-lg)",
           }}
-          role="menu"
+          role="navigation"
           onFocus={handleOpen}
           onBlur={handleClose}
         >

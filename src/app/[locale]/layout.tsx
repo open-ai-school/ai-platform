@@ -57,6 +57,11 @@ export async function generateMetadata({
       "AI for beginners",
       "AI school",
       "ai educademy",
+      "educación IA",
+      "aprender inteligencia artificial",
+      "KI Lernen",
+      "AI Bildung",
+      "educação em IA",
     ],
     authors: [{ name: "Ramesh Reddy Adutla" }],
     creator: "Ramesh Reddy Adutla",
@@ -114,7 +119,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} dir="ltr" suppressHydrationWarning className={inter.variable}>
+    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} suppressHydrationWarning className={inter.variable}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

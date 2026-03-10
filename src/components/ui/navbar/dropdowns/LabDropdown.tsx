@@ -31,7 +31,7 @@ export function LabDropdownContent({ basePath, t }: { basePath: string; t: (key:
             key={exp.slug}
             href={`${basePath}/lab`}
             className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-[var(--color-text)]/[0.04] transition-colors group/item"
-            role="menuitem"
+           
           >
             <span className="text-base shrink-0">{exp.icon}</span>
             <span className="text-sm font-medium text-[var(--color-text)] group-hover/item:text-[var(--color-primary)] transition-colors">
@@ -44,7 +44,7 @@ export function LabDropdownContent({ basePath, t }: { basePath: string; t: (key:
         <Link
           href={`${basePath}/lab`}
           className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary)] hover:underline"
-          role="menuitem"
+         
         >
           {t("enterLab")}
           <span aria-hidden>→</span>

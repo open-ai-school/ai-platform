@@ -1,157 +1,198 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion, type Variants, type HTMLMotionProps } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
-type MotionH = Omit<HTMLMotionProps<"h1">, "ref">;
-type MotionP = Omit<HTMLMotionProps<"p">, "ref">;
-type MotionUL = Omit<HTMLMotionProps<"ul">, "ref">;
-type MotionOL = Omit<HTMLMotionProps<"ol">, "ref">;
-type MotionBQ = Omit<HTMLMotionProps<"blockquote">, "ref">;
-type MotionPre = Omit<HTMLMotionProps<"pre">, "ref">;
+const EASE = "cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+const SPRING = "cubic-bezier(0.22, 1, 0.36, 1)";
 
-/* ── Shared animation config ── */
-const VIEWPORT = { once: true, margin: "-60px" as const };
+function useElementInView(margin = "-60px") {
+  const ref = useRef<HTMLElement>(null);
+  const [isInView, setIsInView] = useState(false);
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] } },
-};
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setIsInView(true); obs.disconnect(); } },
+      { rootMargin: margin }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [margin]);
 
-const slideLeft: Variants = {
-  hidden: { opacity: 0, x: -24 },
-  visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 200, damping: 24 } },
-};
-
-const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.95 },
-  visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 200, damping: 20 } },
-};
-
-const fadeIn: Variants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.4 } },
-};
-
-/* ── Hook helper ── */
-function useAnimProps(variants: Variants) {
-  const prefersReduced = useReducedMotion();
-  if (prefersReduced) return {};
-  return {
-    variants,
-    initial: "hidden" as const,
-    whileInView: "visible" as const,
-    viewport: VIEWPORT,
-  };
+  return { ref, isInView };
 }
 
-/* ── Animated MDX elements ── */
+/* \u2500\u2500 Animated MDX elements \u2500\u2500 */
 
-export function AnimatedH1(props: MotionH) {
-  const anim = useAnimProps(slideLeft);
+export function AnimatedH1(props: React.HTMLAttributes<HTMLHeadingElement>) {
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.h1
+    <h1
+      ref={ref as React.RefObject<HTMLHeadingElement>}
       className="text-3xl font-bold mt-8 mb-4 text-[var(--color-primary)]"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateX(-24px)",
+        transition: `opacity 0.5s ${SPRING}, transform 0.5s ${SPRING}`,
+      }}
       {...props}
     />
   );
 }
 
-export function AnimatedH2(props: MotionH) {
-  const anim = useAnimProps(slideLeft);
+export function AnimatedH2(props: React.HTMLAttributes<HTMLHeadingElement>) {
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.h2
+    <h2
+      ref={ref as React.RefObject<HTMLHeadingElement>}
       className="text-2xl font-bold mt-8 mb-3"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateX(-24px)",
+        transition: `opacity 0.5s ${SPRING}, transform 0.5s ${SPRING}`,
+      }}
       {...props}
     />
   );
 }
 
-export function AnimatedH3(props: MotionH) {
-  const anim = useAnimProps(slideLeft);
+export function AnimatedH3(props: React.HTMLAttributes<HTMLHeadingElement>) {
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.h3
+    <h3
+      ref={ref as React.RefObject<HTMLHeadingElement>}
       className="text-xl font-semibold mt-6 mb-2"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateX(-24px)",
+        transition: `opacity 0.5s ${SPRING}, transform 0.5s ${SPRING}`,
+      }}
       {...props}
     />
   );
 }
 
-export function AnimatedP(props: MotionP) {
-  const anim = useAnimProps(fadeIn);
+export function AnimatedP(props: React.HTMLAttributes<HTMLParagraphElement>) {
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.p
+    <p
+      ref={ref as React.RefObject<HTMLParagraphElement>}
       className="text-lg leading-relaxed mb-4 text-[var(--color-text-muted)]"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transition: `opacity 0.4s ${EASE}`,
+      }}
       {...props}
     />
   );
 }
 
-export function AnimatedUL(props: MotionUL) {
-  const anim = useAnimProps(fadeUp);
+export function AnimatedUL(props: React.HTMLAttributes<HTMLUListElement>) {
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.ul
+    <ul
+      ref={ref as React.RefObject<HTMLUListElement>}
       className="list-disc list-inside space-y-2 mb-4 text-lg text-[var(--color-text-muted)]"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateY(20px)",
+        transition: `opacity 0.5s ${EASE}, transform 0.5s ${EASE}`,
+      }}
       {...props}
     />
   );
 }
 
-export function AnimatedOL(props: MotionOL) {
-  const anim = useAnimProps(fadeUp);
+export function AnimatedOL(props: React.HTMLAttributes<HTMLOListElement>) {
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.ol
+    <ol
+      ref={ref as React.RefObject<HTMLOListElement>}
       className="list-decimal list-inside space-y-2 mb-4 text-lg text-[var(--color-text-muted)]"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateY(20px)",
+        transition: `opacity 0.5s ${EASE}, transform 0.5s ${EASE}`,
+      }}
       {...props}
     />
   );
 }
 
-export function AnimatedBlockquote(props: MotionBQ) {
-  const anim = useAnimProps(fadeUp);
+export function AnimatedBlockquote(props: React.HTMLAttributes<HTMLQuoteElement>) {
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.blockquote
+    <blockquote
+      ref={ref as React.RefObject<HTMLQuoteElement>}
       className="border-l-4 border-[var(--color-primary)] pl-4 py-2 my-4 bg-[var(--color-primary)]/5 rounded-r-lg italic text-lg"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateY(20px)",
+        transition: `opacity 0.5s ${EASE}, transform 0.5s ${EASE}`,
+      }}
       {...props}
     />
   );
 }
 
-export function AnimatedPre(props: MotionPre) {
-  const anim = useAnimProps(scaleIn);
+export function AnimatedPre(props: React.HTMLAttributes<HTMLPreElement>) {
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.pre
+    <pre
+      ref={ref as React.RefObject<HTMLPreElement>}
       className="bg-[#1e293b] text-[#e2e8f0] p-4 sm:p-6 rounded-xl overflow-x-auto my-6 text-sm shadow-lg shadow-black/20"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "scale(0.95)",
+        transition: `opacity 0.5s ${SPRING}, transform 0.5s ${SPRING}`,
+      }}
       {...props}
     />
   );
 }
 
 export function AnimatedTable(props: React.HTMLAttributes<HTMLTableElement>) {
-  const anim = useAnimProps(fadeUp);
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.div
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
       className="overflow-x-auto my-6 rounded-xl border border-[var(--color-border)]"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateY(20px)",
+        transition: `opacity 0.5s ${EASE}, transform 0.5s ${EASE}`,
+      }}
     >
       <table className="w-full text-sm" {...props} />
-    </motion.div>
+    </div>
   );
 }
 
 export function AnimatedImg(props: React.ImgHTMLAttributes<HTMLImageElement>) {
-  const anim = useAnimProps(scaleIn);
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.span className="block my-8" {...anim}>
+    <span
+      ref={ref as React.RefObject<HTMLSpanElement>}
+      className="block my-8"
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "scale(0.95)",
+        transition: `opacity 0.5s ${SPRING}, transform 0.5s ${SPRING}`,
+      }}
+    >
       <span className="block rounded-2xl border border-[var(--color-border)] overflow-hidden bg-white">
         <Image
           src={String(props.src || "")}
@@ -167,7 +208,7 @@ export function AnimatedImg(props: React.ImgHTMLAttributes<HTMLImageElement>) {
           {props.alt}
         </span>
       )}
-    </motion.span>
+    </span>
   );
 }
 
@@ -180,9 +221,18 @@ export function AnimatedIllustration({
   alt: string;
   caption?: string;
 }) {
-  const anim = useAnimProps(scaleIn);
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.figure className="my-8" {...anim}>
+    <figure
+      ref={ref as React.RefObject<HTMLElement>}
+      className="my-8"
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "scale(0.95)",
+        transition: `opacity 0.5s ${SPRING}, transform 0.5s ${SPRING}`,
+      }}
+    >
       <div className="rounded-2xl border border-[var(--color-border)] overflow-hidden bg-white shadow-sm">
         <Image
           src={src}
@@ -198,7 +248,7 @@ export function AnimatedIllustration({
           {caption || alt}
         </figcaption>
       )}
-    </motion.figure>
+    </figure>
   );
 }
 
@@ -209,52 +259,73 @@ export function AnimatedCallout({
   type?: "info" | "tip" | "warning";
   children: React.ReactNode;
 }) {
-  const anim = useAnimProps(fadeUp);
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   const styles = {
     info: "border-[var(--color-primary)] bg-[var(--color-primary)]/8",
     tip: "border-[var(--color-accent)] bg-[var(--color-accent)]/8",
     warning: "border-[var(--color-secondary)] bg-[var(--color-secondary)]/8",
   };
-  const icons = { info: "💡", tip: "✅", warning: "⚠️" };
+  const icons = { info: "\ud83d\udca1", tip: "\u2705", warning: "\u26a0\ufe0f" };
   return (
-    <motion.div className={`border-l-4 p-5 my-6 rounded-r-xl ${styles[type]}`} {...anim}>
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={`border-l-4 p-5 my-6 rounded-r-xl ${styles[type]}`}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateY(20px)",
+        transition: `opacity 0.5s ${EASE}, transform 0.5s ${EASE}`,
+      }}
+    >
       <div className="flex items-start gap-3">
         <span className="text-xl shrink-0">{icons[type]}</span>
         <div className="text-[var(--color-text)] text-base leading-relaxed">{children}</div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export function AnimatedFunFact({ children }: { children: React.ReactNode }) {
-  const anim = useAnimProps(fadeUp);
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.div
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
       className="bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/20 rounded-2xl p-6 my-6"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateY(20px)",
+        transition: `opacity 0.5s ${EASE}, transform 0.5s ${EASE}`,
+      }}
     >
       <div className="flex items-start gap-3">
-        <span className="text-2xl shrink-0">🤯</span>
+        <span className="text-2xl shrink-0">\ud83e\udd2f</span>
         <div className="text-[var(--color-text)]">{children}</div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export function AnimatedThinkAboutIt({ children }: { children: React.ReactNode }) {
-  const anim = useAnimProps(fadeUp);
+  const noMotion = useReducedMotion();
+  const { ref, isInView } = useElementInView();
   return (
-    <motion.div
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
       className="bg-[var(--color-secondary)]/8 border border-[var(--color-secondary)]/20 rounded-2xl p-6 my-6"
-      {...anim}
+      style={noMotion ? undefined : {
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? "none" : "translateY(20px)",
+        transition: `opacity 0.5s ${EASE}, transform 0.5s ${EASE}`,
+      }}
     >
       <div className="flex items-start gap-3">
-        <span className="text-2xl shrink-0">🤔</span>
+        <span className="text-2xl shrink-0">\ud83e\udd14</span>
         <div className="text-[var(--color-text)]">
           <strong className="block mb-1 text-[var(--color-secondary)]">Think about it:</strong>
           {children}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

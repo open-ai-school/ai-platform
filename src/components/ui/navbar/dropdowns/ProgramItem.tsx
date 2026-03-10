@@ -29,7 +29,7 @@ export function ProgramItem({
   );
 
   return (
-    <Link href={`${basePath}/programs/${slug}`} role="menuitem">
+    <Link href={`${basePath}/programs/${slug}`}>
       {content}
     </Link>
   );
