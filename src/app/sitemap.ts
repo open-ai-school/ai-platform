@@ -3,7 +3,7 @@ import { getPrograms } from "@/lib/programs";
 import { getAllBlogSlugs } from "@/lib/blog";
 
 const BASE_URL = "https://aieducademy.org";
-const locales = ["en", "fr", "nl", "hi", "te", "es", "pt", "de", "zh", "ja"];
+const locales = ["en", "fr", "nl", "hi", "te", "es", "pt", "de", "zh", "ja", "ar"];
 
 function localizedEntries(
   path: string,

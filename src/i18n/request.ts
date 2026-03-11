@@ -15,6 +15,7 @@ export const localeNames: Record<Locale, string> = {
   de: "Deutsch",
   zh: "中文",
   ja: "日本語",
+  ar: "العربية",
 };
 
 export const localeFlags: Record<Locale, string> = {
@@ -28,6 +29,7 @@ export const localeFlags: Record<Locale, string> = {
   de: "🇩🇪",
   zh: "🇨🇳",
   ja: "🇯🇵",
+  ar: "🇸🇦",
 };
 
 export default getRequestConfig(async ({ requestLocale }) => {
