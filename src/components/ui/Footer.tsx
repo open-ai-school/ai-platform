@@ -182,6 +182,11 @@ export function Footer() {
                   {t("about")}
                 </FooterLink>
               </li>
+              <li>
+                <FooterLink href={`${basePath}/faq`}>
+                  {t("faq")}
+                </FooterLink>
+              </li>
             </ul>
           </div>
 

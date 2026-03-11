@@ -113,7 +113,8 @@
     "dashboard": "Dashboard",
     "lab": "Lab",
     "pageViews": "page views",
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Scroll to top",
+    "faq": "FAQ"
   },
   "about": {
     "title": "About AI Educademy",
