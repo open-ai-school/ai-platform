@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendWelcomeEmail } from "@/lib/email";
+import { rateLimit, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    const rl = rateLimit(`newsletter:${ip}`, RATE_LIMITS.newsletter);
+    if (!rl.success) {
+      return NextResponse.json(
+        { success: false, message: "Too many attempts. Please try again later." },
+        { status: 429, headers: rateLimitHeaders(rl) }
+      );
+    }
+
     const body = await req.json();
     const { email, locale } = body;
 

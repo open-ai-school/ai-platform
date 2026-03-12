@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { readJsonFile, writeJsonFile } from "@/lib/fileStore";
+import { rateLimit, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit";
 
 const FILE = "lesson-feedback.json";
 
@@ -10,6 +11,15 @@ interface FeedbackEntry {
   comment?: string;
   locale: string;
   timestamp: string;
+}
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 async function notifyFeedback(entry: FeedbackEntry): Promise<void> {
@@ -28,15 +38,15 @@ async function notifyFeedback(entry: FeedbackEntry): Promise<void> {
     await resend.emails.send({
       from: fromAddress,
       to: adminEmail,
-      subject: `${emoji} Feedback: ${entry.programSlug}/${entry.lessonSlug}`,
+      subject: `${emoji} Feedback: ${escapeHtml(entry.programSlug)}/${escapeHtml(entry.lessonSlug)}`,
       html: `
         <h2>${emoji} Lesson Feedback</h2>
-        <p><strong>Program:</strong> ${entry.programSlug}</p>
-        <p><strong>Lesson:</strong> ${entry.lessonSlug}</p>
-        <p><strong>Rating:</strong> ${entry.rating}</p>
-        ${entry.comment ? `<p><strong>Comment:</strong> ${entry.comment}</p>` : ""}
-        <p><strong>Locale:</strong> ${entry.locale}</p>
-        <p><strong>Time:</strong> ${entry.timestamp}</p>
+        <p><strong>Program:</strong> ${escapeHtml(entry.programSlug)}</p>
+        <p><strong>Lesson:</strong> ${escapeHtml(entry.lessonSlug)}</p>
+        <p><strong>Rating:</strong> ${escapeHtml(entry.rating)}</p>
+        ${entry.comment ? `<p><strong>Comment:</strong> ${escapeHtml(entry.comment)}</p>` : ""}
+        <p><strong>Locale:</strong> ${escapeHtml(entry.locale)}</p>
+        <p><strong>Time:</strong> ${escapeHtml(entry.timestamp)}</p>
       `,
     });
   } catch (err) {
@@ -46,6 +56,15 @@ async function notifyFeedback(entry: FeedbackEntry): Promise<void> {
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    const rl = rateLimit(`feedback:${ip}`, RATE_LIMITS.form);
+    if (!rl.success) {
+      return NextResponse.json(
+        { success: false, message: "Too many requests. Please try again later." },
+        { status: 429, headers: rateLimitHeaders(rl) }
+      );
+    }
+
     const body = await req.json();
     const { lessonSlug, programSlug, rating, comment, locale } = body;
 

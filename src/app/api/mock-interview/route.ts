@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
+import { rateLimit, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit";
 
 type InterviewType = "behavioral" | "technical" | "system-design";
 type InterviewStage = "question" | "feedback";
@@ -57,6 +58,15 @@ function getSystemPrompt(type: InterviewType, stage: InterviewStage): string {
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    const rl = rateLimit(`interview:${ip}`, RATE_LIMITS.ai);
+    if (!rl.success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please wait a minute before continuing." },
+        { status: 429, headers: rateLimitHeaders(rl) }
+      );
+    }
+
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(

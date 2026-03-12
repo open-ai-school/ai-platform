@@ -10,10 +10,8 @@ function generateReferralCode(name: string | null | undefined): string {
     .slice(0, 3)
     .toUpperCase();
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-  let suffix = "";
-  for (let i = 0; i < 6; i++) {
-    suffix += chars[Math.floor(Math.random() * chars.length)];
-  }
+  const bytes = crypto.getRandomValues(new Uint8Array(6));
+  const suffix = Array.from(bytes, (b) => chars[b % chars.length]).join("");
   return `${prefix}_${suffix}`;
 }
 

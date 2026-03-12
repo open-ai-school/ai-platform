@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
+import { rateLimit, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit";
 
 const SYSTEM_PROMPT = `You are Edu, the helpful AI assistant for AI Educademy (aieducademy.org) — a free, open-source platform for learning Artificial Intelligence.
 
@@ -35,6 +36,15 @@ Keep responses concise (2-4 sentences for most questions). Use emojis sparingly 
 
 export async function POST(req: NextRequest) {
   try {
+    const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    const rl = rateLimit(`chat:${ip}`, RATE_LIMITS.ai);
+    if (!rl.success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please wait a minute before chatting again." },
+        { status: 429, headers: rateLimitHeaders(rl) }
+      );
+    }
+
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
@@ -50,6 +60,16 @@ export async function POST(req: NextRequest) {
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    }
+
+    // Input bounds: limit message count and individual message length
+    if (messages.length > 50) {
+      return NextResponse.json({ error: "Too many messages in history" }, { status: 400 });
+    }
+    for (const m of messages) {
+      if (typeof m.content !== "string" || m.content.length > 4000) {
+        return NextResponse.json({ error: "Message too long (max 4000 chars)" }, { status: 400 });
+      }
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
