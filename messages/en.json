@@ -1215,5 +1215,47 @@
     "a24": "Four things set us apart: it's completely free with no premium tiers, it's fully open source and transparent, it's available in 9 languages with genuine multilingual content, and it's designed from the ground up for true beginners — no jargon, no intimidating prerequisites, no gatekeeping.",
     "q25": "How do I get started?",
     "a25": "Just click 'Start Learning for Free' below (or the 'Get Started' button in the navigation) and choose a program. We recommend starting with AI Seeds if you're new to AI. No registration required — you can begin learning right now, in your language."
+  },
+  "pricing": {
+    "pageTitle": "Pricing",
+    "pageDescription": "Choose the plan that fits your learning journey. Start free, upgrade when you are ready.",
+    "badge": "Simple Pricing",
+    "heading": "Learn AI at your own pace",
+    "subheading": "Start for free with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
+    "faqTeaser": "Have questions about our plans?",
+    "faqLink": "Check our FAQ",
+    "free": {
+      "title": "Free",
+      "f1": "Beginner programs (AI Seeds & AI Sprouts)",
+      "f2": "First lesson of every program",
+      "f3": "All blog posts & articles",
+      "f4": "Lab playground experiments",
+      "f5": "Edu AI chatbot assistant",
+      "cta": "Current Plan"
+    },
+    "monthly": {
+      "title": "Pro Monthly",
+      "period": "month",
+      "cta": "Start Pro Monthly"
+    },
+    "annual": {
+      "title": "Pro Annual",
+      "period": "year",
+      "cta": "Start Pro Annual",
+      "save": "Save 27% vs monthly"
+    },
+    "lifetime": {
+      "title": "Lifetime",
+      "cta": "Get Lifetime Access",
+      "forever": "One payment, yours forever"
+    },
+    "pro": {
+      "f1": "Everything in Free",
+      "f2": "All programs & learning tracks",
+      "f3": "Career Ready interview prep track",
+      "f4": "AI Mock Interview lab",
+      "f5": "Completion certificates",
+      "f6": "Server-side progress sync across devices"
+    }
   }
 }

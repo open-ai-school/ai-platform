@@ -1337,5 +1337,47 @@
     "a24": "ابدأ بـ AI Seeds — المسار المصمم للمبتدئين التاميين. أول درس 'ما هو الذكاء الاصطناعي؟' يأخذك في عشر دقائق من لا شيء إلى فهم واضح.",
     "q25": "كيف أتواصل مع المنشئ؟",
     "a25": "يمكنك التواصل على LinkedIn وX (تويتر) وGitHub. نرحب بالتعليقات وفرص التعاون والأسئلة."
+  },
+  "pricing": {
+    "pageTitle": "Pricing",
+    "pageDescription": "Choose the plan that fits your learning journey. Start free, upgrade when you are ready.",
+    "badge": "Simple Pricing",
+    "heading": "Learn AI at your own pace",
+    "subheading": "Start for free with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
+    "faqTeaser": "Have questions about our plans?",
+    "faqLink": "Check our FAQ",
+    "free": {
+      "title": "Free",
+      "f1": "Beginner programs (AI Seeds & AI Sprouts)",
+      "f2": "First lesson of every program",
+      "f3": "All blog posts & articles",
+      "f4": "Lab playground experiments",
+      "f5": "Edu AI chatbot assistant",
+      "cta": "Current Plan"
+    },
+    "monthly": {
+      "title": "Pro Monthly",
+      "period": "month",
+      "cta": "Start Pro Monthly"
+    },
+    "annual": {
+      "title": "Pro Annual",
+      "period": "year",
+      "cta": "Start Pro Annual",
+      "save": "Save 27% vs monthly"
+    },
+    "lifetime": {
+      "title": "Lifetime",
+      "cta": "Get Lifetime Access",
+      "forever": "One payment, yours forever"
+    },
+    "pro": {
+      "f1": "Everything in Free",
+      "f2": "All programs & learning tracks",
+      "f3": "Career Ready interview prep track",
+      "f4": "AI Mock Interview lab",
+      "f5": "Completion certificates",
+      "f6": "Server-side progress sync across devices"
+    }
   }
 }
