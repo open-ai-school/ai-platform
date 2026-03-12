@@ -238,6 +238,10 @@
         "desc": "Haal je droombaan, werkplaats-geïnspireerde meesterschap",
         "tagline": "Schets → Beitel → Ambacht → Polijst → Meesterwerk",
         "brand": "Leer de algoritmen die AI aandrijven, ontwerp systemen die AI schalen, en haal de sollicitaties die je banen in het AI-tijdperk opleveren."
+      },
+      "career-ready": {
+        "title": "Klaar voor je carrière",
+        "description": "Van blanco-pagina-zenuwen tot een getekend aanbod — je complete voorbereiding op sollicitatiegesprekken"
       }
     },
     "statsTracksLabel": "Trajecten",
@@ -442,6 +446,41 @@
       ],
       "tileLabel": "Architectuur",
       "homeDesc": "Beheers AI"
+    },
+    "ai-launchpad": {
+      "title": "Interview Startplatform",
+      "subtitle": "Je interview-reis begint",
+      "description": "Beheers de basisprincipes van technische interviewvoorbereiding. Leer hoe je bedrijven onderzoekt, vacatureteksten ontcijfert, je voorbereidingsplanning opbouwt en de mindset ontwikkelt die zenuwen omzet in zelfvertrouwen.",
+      "audience": "Iedereen die begint met de voorbereiding op technische interviews",
+      "prerequisites": "Geen — dit is je startpunt"
+    },
+    "ai-behavioral": {
+      "title": "Gedragsinterview Meesterschap",
+      "subtitle": "Verhalen die aanbiedingen opleveren",
+      "description": "Beheers gedragsinterviews met het STAR-framework, leiderschapsverhalen en gestructureerd storytelling. Leer je ervaring om te zetten in overtuigende antwoorden die je waarde bewijzen.",
+      "audience": "Engineers op elk niveau die zich voorbereiden op gedragsrondes",
+      "prerequisites": "Echte projectervaring om uit te putten"
+    },
+    "ai-technical": {
+      "title": "Technische Interviews",
+      "subtitle": "Coderen onder druk",
+      "description": "Verover programmeerinterviews, systeemontwerp-rondes en technische verdiepingen. Van datastructuren tot gedistribueerde systemen — bouw de vaardigheden en het zelfvertrouwen om onder druk te presteren.",
+      "audience": "Software-engineers die zich voorbereiden op technische interviewrondes",
+      "prerequisites": "Stevige programmeervaardigheden in minstens één taal"
+    },
+    "ai-ml-interview": {
+      "title": "AI- & ML-interviews",
+      "subtitle": "Het Machine Learning-interview",
+      "description": "Gespecialiseerde voorbereiding voor AI- en machine learning-rollen. Behandelt ML-systeemontwerp, modelevaluatie, MLOps en de unieke interviewformaten van AI-gerichte bedrijven.",
+      "audience": "Engineers die AI/ML-rollen bij techbedrijven nastreven",
+      "prerequisites": "Basiskennis van ML (supervised/unsupervised learning)"
+    },
+    "ai-offer": {
+      "title": "Aanbod & verder",
+      "subtitle": "Van aanbod naar carrièregroei",
+      "description": "Navigeer de laatste etappe — salarisonderhandeling, aanbodbeoordeling en carrièregroeistrategieën. Leer compensatie te benchmarken, effectief te onderhandelen en je carrièrepad op lange termijn te plannen.",
+      "audience": "Engineers die een jobaanbod hebben ontvangen of verwachten",
+      "prerequisites": "Actief sollicitatieproces of recent aanbod"
     }
   },
   "programDetail": {

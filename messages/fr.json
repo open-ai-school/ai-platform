@@ -238,6 +238,10 @@
         "desc": "Réussissez l'entretien de vos rêves, une maîtrise façon atelier",
         "tagline": "Esquisse → Ciseau → Artisanat → Finition → Chef-d'œuvre",
         "brand": "Apprenez les algorithmes qui alimentent l'IA, concevez les systèmes qui la font passer à l'échelle, et décrochez les entretiens pour les métiers de demain."
+      },
+      "career-ready": {
+        "title": "Prêt pour la carrière",
+        "description": "Du trac de la page blanche à l'offre signée — votre parcours complet de préparation aux entretiens"
       }
     },
     "statsTracksLabel": "Parcours",
@@ -442,6 +446,41 @@
       ],
       "tileLabel": "Architecture",
       "homeDesc": "Maîtrisez l'IA"
+    },
+    "ai-launchpad": {
+      "title": "Rampe de lancement entretien",
+      "subtitle": "Votre parcours d'entretien commence",
+      "description": "Maîtrisez les fondamentaux de la préparation aux entretiens techniques. Apprenez à rechercher les entreprises, décoder les offres d'emploi, construire votre planning de préparation et développer l'état d'esprit qui transforme le stress en confiance.",
+      "audience": "Toute personne débutant sa préparation aux entretiens techniques",
+      "prerequisites": "Aucun — c'est votre point de départ"
+    },
+    "ai-behavioral": {
+      "title": "Maîtrise comportementale",
+      "subtitle": "Des histoires qui décrochent des offres",
+      "description": "Maîtrisez les entretiens comportementaux avec la méthode STAR, les récits de leadership et le storytelling structuré. Apprenez à transformer votre expérience en réponses convaincantes qui prouvent votre valeur.",
+      "audience": "Ingénieurs de tout niveau se préparant aux entretiens comportementaux",
+      "prerequisites": "Une expérience projet réelle sur laquelle s'appuyer"
+    },
+    "ai-technical": {
+      "title": "Entretiens techniques",
+      "subtitle": "Coder sous pression",
+      "description": "Réussissez les entretiens de programmation, les épreuves de conception système et les approfondissements techniques. Des structures de données aux systèmes distribués, développez les compétences et la confiance pour exceller sous pression.",
+      "audience": "Ingénieurs logiciels se préparant aux entretiens techniques",
+      "prerequisites": "De solides bases en programmation dans au moins un langage"
+    },
+    "ai-ml-interview": {
+      "title": "Entretiens IA et ML",
+      "subtitle": "L'entretien Machine Learning",
+      "description": "Préparation spécialisée pour les postes en IA et apprentissage automatique. Couvre la conception de systèmes ML, l'évaluation de modèles, le MLOps et les formats d'entretien propres aux entreprises spécialisées en IA.",
+      "audience": "Ingénieurs visant des postes IA/ML dans les entreprises tech",
+      "prerequisites": "Connaissances de base en ML (apprentissage supervisé/non supervisé)"
+    },
+    "ai-offer": {
+      "title": "Offre et au-delà",
+      "subtitle": "De l'offre à l'évolution de carrière",
+      "description": "Naviguez la dernière ligne droite — négociation salariale, évaluation des offres et stratégies d'évolution de carrière. Apprenez à comparer les rémunérations, négocier efficacement et planifier votre trajectoire professionnelle à long terme.",
+      "audience": "Ingénieurs ayant reçu ou attendant des offres d'emploi",
+      "prerequisites": "Processus d'entretien en cours ou offre récente"
     }
   },
   "programDetail": {

@@ -238,6 +238,10 @@
         "desc": "Bestehe dein Trauminterview, werkstattinspirierte Meisterschaft",
         "tagline": "Skizze → Meißel → Handwerk → Feinschliff → Meisterwerk",
         "brand": "Lerne die Algorithmen, die KI antreiben, entwirf die Systeme, die KI skalieren, und bestehe die Interviews, die dir Jobs im KI-Zeitalter sichern."
+      },
+      "career-ready": {
+        "title": "Karriere-Start",
+        "description": "Von der Nervosität vor dem leeren Blatt bis zum unterschriebenen Angebot — deine komplette Interviewvorbereitung"
       }
     },
     "statsTracksLabel": "Lernpfade",
@@ -442,6 +446,41 @@
       ],
       "tileLabel": "Architektur",
       "homeDesc": "KI meistern"
+    },
+    "ai-launchpad": {
+      "title": "Interview-Startrampe",
+      "subtitle": "Deine Interview-Reise beginnt",
+      "description": "Meistere die Grundlagen der technischen Interviewvorbereitung. Lerne, wie du Unternehmen recherchierst, Stellenbeschreibungen entschlüsselst, deinen Vorbereitungszeitplan erstellst und die Denkweise entwickelst, die Nervosität in Selbstvertrauen verwandelt.",
+      "audience": "Alle, die ihre technische Interviewvorbereitung beginnen",
+      "prerequisites": "Keine — hier ist dein Startpunkt"
+    },
+    "ai-behavioral": {
+      "title": "Verhaltensinterview-Meisterschaft",
+      "subtitle": "Geschichten, die Angebote bringen",
+      "description": "Meistere Verhaltensinterviews mit der STAR-Methode, Führungsnarrativen und strukturiertem Storytelling. Lerne, deine Erfahrungen in überzeugende Antworten zu verwandeln, die deinen Wert beweisen.",
+      "audience": "Ingenieure auf allen Ebenen, die sich auf Verhaltensrunden vorbereiten",
+      "prerequisites": "Echte Projekterfahrung als Grundlage"
+    },
+    "ai-technical": {
+      "title": "Technische Interviews",
+      "subtitle": "Programmieren unter Druck",
+      "description": "Bestehe Coding-Interviews, System-Design-Runden und technische Vertiefungen. Von Datenstrukturen bis zu verteilten Systemen — baue die Fähigkeiten und das Selbstvertrauen auf, um unter Druck zu glänzen.",
+      "audience": "Softwareingenieure, die sich auf technische Interviewrunden vorbereiten",
+      "prerequisites": "Solide Programmierkenntnisse in mindestens einer Sprache"
+    },
+    "ai-ml-interview": {
+      "title": "AI- & ML-Interviews",
+      "subtitle": "Das Machine-Learning-Interview",
+      "description": "Spezialisierte Vorbereitung für KI- und Machine-Learning-Rollen. Behandle ML-Systemdesign, Modellbewertung, MLOps und die einzigartigen Interviewformate von KI-fokussierten Unternehmen.",
+      "audience": "Ingenieure, die KI/ML-Rollen bei Tech-Unternehmen anstreben",
+      "prerequisites": "Grundlegende ML-Kenntnisse (überwachtes/unüberwachtes Lernen)"
+    },
+    "ai-offer": {
+      "title": "Angebot & Karriere",
+      "subtitle": "Vom Angebot zum Karrierewachstum",
+      "description": "Navigiere die Zielgerade — Gehaltsverhandlung, Angebotsbewertung und Karrierewachstumsstrategien. Lerne, Vergütungen zu vergleichen, effektiv zu verhandeln und deine langfristige Karriere zu planen.",
+      "audience": "Ingenieure, die Jobangebote erhalten haben oder erwarten",
+      "prerequisites": "Aktiver Bewerbungsprozess oder kürzliches Angebot"
     }
   },
   "programDetail": {

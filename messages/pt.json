@@ -238,6 +238,10 @@
         "desc": "Arrase na entrevista dos sonhos, domínio inspirado em oficina",
         "tagline": "Esboço → Cinzel → Ofício → Polimento → Obra-Prima",
         "brand": "Aprenda os algoritmos que impulsionam a IA, projete os sistemas que a escalam e arrase nas entrevistas que conquistam vagas na era da IA."
+      },
+      "career-ready": {
+        "title": "Pronto para a Carreira",
+        "description": "Do nervosismo da página em branco à oferta assinada — sua jornada completa de preparação para entrevistas"
       }
     },
     "statsTracksLabel": "Trilhas",
@@ -442,6 +446,41 @@
       ],
       "tileLabel": "Arquitetura",
       "homeDesc": "Domine a IA"
+    },
+    "ai-launchpad": {
+      "title": "Plataforma de Lançamento de Entrevistas",
+      "subtitle": "Sua jornada de entrevistas começa",
+      "description": "Domine os fundamentos da preparação para entrevistas técnicas. Aprenda a pesquisar empresas, decifrar descrições de vagas, montar seu cronograma de preparação e desenvolver a mentalidade que transforma nervosismo em confiança.",
+      "audience": "Qualquer pessoa iniciando sua preparação para entrevistas técnicas",
+      "prerequisites": "Nenhum — este é o seu ponto de partida"
+    },
+    "ai-behavioral": {
+      "title": "Domínio Comportamental",
+      "subtitle": "Histórias que conquistam ofertas",
+      "description": "Domine entrevistas comportamentais com o framework STAR, narrativas de liderança e storytelling estruturado. Aprenda a transformar sua experiência em respostas convincentes que comprovam seu valor.",
+      "audience": "Engenheiros de qualquer nível se preparando para rodadas comportamentais",
+      "prerequisites": "Experiência real em projetos para usar como base"
+    },
+    "ai-technical": {
+      "title": "Entrevistas Técnicas",
+      "subtitle": "Programar sob pressão",
+      "description": "Conquiste entrevistas de programação, rodadas de design de sistemas e aprofundamentos técnicos. De estruturas de dados a sistemas distribuídos, construa as habilidades e a confiança para se destacar sob pressão.",
+      "audience": "Engenheiros de software se preparando para rodadas de entrevistas técnicas",
+      "prerequisites": "Fundamentos sólidos de programação em pelo menos uma linguagem"
+    },
+    "ai-ml-interview": {
+      "title": "Entrevistas de IA e ML",
+      "subtitle": "A entrevista de Machine Learning",
+      "description": "Preparação especializada para vagas de IA e aprendizado de máquina. Abrange design de sistemas ML, avaliação de modelos, MLOps e os formatos de entrevista exclusivos usados por empresas focadas em IA.",
+      "audience": "Engenheiros buscando vagas de IA/ML em empresas de tecnologia",
+      "prerequisites": "Conhecimento básico de ML (aprendizado supervisionado/não supervisionado)"
+    },
+    "ai-offer": {
+      "title": "Oferta e Além",
+      "subtitle": "Da oferta ao crescimento profissional",
+      "description": "Navegue a reta final — negociação salarial, avaliação de ofertas e estratégias de crescimento profissional. Aprenda a comparar remunerações, negociar com eficácia e planejar sua trajetória profissional a longo prazo.",
+      "audience": "Engenheiros que receberam ou esperam ofertas de emprego",
+      "prerequisites": "Processo seletivo ativo ou oferta recente"
     }
   },
   "programDetail": {

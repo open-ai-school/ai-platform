@@ -46,6 +46,37 @@ const nextConfig = {
         destination: "https://aieducademy.org/:path*",
         permanent: true,
       },
+      // Lessons moved from ai-polish → career-ready programs
+      {
+        source: "/:locale/programs/ai-polish/lessons/star-framework",
+        destination: "/:locale/programs/ai-behavioral/lessons/star-framework",
+        permanent: true,
+      },
+      {
+        source: "/:locale/programs/ai-polish/lessons/behavioural-interview-mastery",
+        destination: "/:locale/programs/ai-behavioral/lessons/behavioural-interview-mastery",
+        permanent: true,
+      },
+      {
+        source: "/:locale/programs/ai-polish/lessons/career-transitions-to-ai",
+        destination: "/:locale/programs/ai-launchpad/lessons/career-transitions-to-ai",
+        permanent: true,
+      },
+      {
+        source: "/:locale/programs/ai-polish/lessons/negotiating-your-offer",
+        destination: "/:locale/programs/ai-offer/lessons/negotiating-your-offer",
+        permanent: true,
+      },
+      {
+        source: "/:locale/programs/ai-polish/lessons/salary-benchmarking",
+        destination: "/:locale/programs/ai-offer/lessons/salary-benchmarking",
+        permanent: true,
+      },
+      {
+        source: "/:locale/programs/ai-polish/lessons/building-personal-brand",
+        destination: "/:locale/programs/ai-offer/lessons/building-personal-brand",
+        permanent: true,
+      },
     ];
   },
   images: {

@@ -238,6 +238,10 @@
         "desc": "拿下心仪的面试，工坊式精通",
         "tagline": "草图 → 雕刻 → 打磨 → 抛光 → 杰作",
         "brand": "学习驱动AI的算法，设计支撑AI的系统，赢下AI时代的面试。"
+      },
+      "career-ready": {
+        "title": "职业准备",
+        "description": "从面对白纸的紧张到签下录用通知——你的完整面试准备之旅"
       }
     },
     "statsTracksLabel": "路径",
@@ -442,6 +446,41 @@
       ],
       "tileLabel": "架构",
       "homeDesc": "精通AI"
+    },
+    "ai-launchpad": {
+      "title": "面试发射台",
+      "subtitle": "你的面试之旅从这里开始",
+      "description": "掌握技术面试准备的基本功。学习如何调研公司、解读职位描述、制定准备计划，培养将紧张转化为自信的心态。",
+      "audience": "任何开始准备技术面试的人",
+      "prerequisites": "无——这就是你的起点"
+    },
+    "ai-behavioral": {
+      "title": "行为面试精通",
+      "subtitle": "赢得Offer的故事",
+      "description": "通过STAR框架、领导力叙事和结构化讲故事来精通行为面试。学会将你的经验转化为有说服力的回答，证明你的价值。",
+      "audience": "准备行为面试轮次的各级工程师",
+      "prerequisites": "可以借鉴的真实项目经验"
+    },
+    "ai-technical": {
+      "title": "技术面试",
+      "subtitle": "压力下编程",
+      "description": "征服编程面试、系统设计轮次和技术深度探讨。从数据结构到分布式系统，培养在压力下脱颖而出的技能和信心。",
+      "audience": "准备技术面试轮次的软件工程师",
+      "prerequisites": "至少掌握一门编程语言的扎实基础"
+    },
+    "ai-ml-interview": {
+      "title": "AI与ML面试",
+      "subtitle": "机器学习面试",
+      "description": "针对AI和机器学习岗位的专项准备。涵盖ML系统设计、模型评估、MLOps以及AI公司特有的面试形式。",
+      "audience": "目标为科技公司AI/ML岗位的工程师",
+      "prerequisites": "基础ML知识（监督学习/无监督学习）"
+    },
+    "ai-offer": {
+      "title": "Offer与未来",
+      "subtitle": "从Offer到职业成长",
+      "description": "驾驭最后冲刺——薪资谈判、Offer评估和职业成长策略。学会对标薪酬、有效谈判，规划你的长期职业发展路径。",
+      "audience": "已收到或即将收到工作Offer的工程师",
+      "prerequisites": "正在进行的面试流程或近期收到的Offer"
     }
   },
   "programDetail": {
