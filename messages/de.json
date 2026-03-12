@@ -248,6 +248,9 @@
       },
       "career-ready": {
         "title": "Karriere-Start",
+        "desc": "Von Nervosität zum unterschriebenen Angebot",
+        "tagline": "Start → Verhalten → Technik → ML-Interview → Angebot",
+        "brand": "Meistern Sie jede Phase des technischen Vorstellungsgesprächs — von der Vorbereitung über Verhaltens­fragen bis zu System Design und Gehaltsverhandlung.",
         "description": "Von der Nervosität vor dem leeren Blatt bis zum unterschriebenen Angebot — deine komplette Interviewvorbereitung"
       }
     },
@@ -459,35 +462,105 @@
       "subtitle": "Deine Interview-Reise beginnt",
       "description": "Meistere die Grundlagen der technischen Interviewvorbereitung. Lerne, wie du Unternehmen recherchierst, Stellenbeschreibungen entschlüsselst, deinen Vorbereitungszeitplan erstellst und die Denkweise entwickelst, die Nervosität in Selbstvertrauen verwandelt.",
       "audience": "Alle, die ihre technische Interviewvorbereitung beginnen",
-      "prerequisites": "Keine — hier ist dein Startpunkt"
+      "prerequisites": "Keine — hier ist dein Startpunkt",
+      "topics": [
+        "Techniken zur Unternehmensrecherche",
+        "Analyse von Stellenbeschreibungen",
+        "Zeitplan für die Interviewvorbereitung",
+        "Aufbau von Denkweise und Selbstvertrauen"
+      ],
+      "outcomes": [
+        "Einen strukturierten Vorbereitungsplan erstellen",
+        "Jede Stellenbeschreibung effektiv entschlüsseln",
+        "Unternehmen wie ein Profi recherchieren",
+        "Selbstvertrauen für Interviews entwickeln"
+      ],
+      "tileLabel": "Vorbereitung",
+      "homeDesc": "Starte deine Reise"
     },
     "ai-behavioral": {
       "title": "Verhaltensinterview-Meisterschaft",
       "subtitle": "Geschichten, die Angebote bringen",
       "description": "Meistere Verhaltensinterviews mit der STAR-Methode, Führungsnarrativen und strukturiertem Storytelling. Lerne, deine Erfahrungen in überzeugende Antworten zu verwandeln, die deinen Wert beweisen.",
       "audience": "Ingenieure auf allen Ebenen, die sich auf Verhaltensrunden vorbereiten",
-      "prerequisites": "Echte Projekterfahrung als Grundlage"
+      "prerequisites": "Echte Projekterfahrung als Grundlage",
+      "topics": [
+        "Beherrschung der STAR-Methode",
+        "Führungs- und Teamgeschichten",
+        "Narrative zur Konfliktlösung",
+        "Bewertung der kulturellen Passung"
+      ],
+      "outcomes": [
+        "Das STAR-Antwortrahmenwerk beherrschen",
+        "Überzeugende Karriere-Narrative gestalten",
+        "Jede Verhaltensfrage souverän meistern",
+        "Führungsqualität und Teamfähigkeit demonstrieren"
+      ],
+      "tileLabel": "Verhalten",
+      "homeDesc": "Soft Skills meistern"
     },
     "ai-technical": {
       "title": "Technische Interviews",
       "subtitle": "Programmieren unter Druck",
       "description": "Bestehe Coding-Interviews, System-Design-Runden und technische Vertiefungen. Von Datenstrukturen bis zu verteilten Systemen — baue die Fähigkeiten und das Selbstvertrauen auf, um unter Druck zu glänzen.",
       "audience": "Softwareingenieure, die sich auf technische Interviewrunden vorbereiten",
-      "prerequisites": "Solide Programmierkenntnisse in mindestens einer Sprache"
+      "prerequisites": "Solide Programmierkenntnisse in mindestens einer Sprache",
+      "topics": [
+        "Datenstrukturen und Algorithmen",
+        "Grundlagen des Systemdesigns",
+        "Muster für Coding-Interviews",
+        "Strategien zur Problemlösung"
+      ],
+      "outcomes": [
+        "Gängige Coding-Interview-Muster lösen",
+        "Skalierbare Systeme am Whiteboard entwerfen",
+        "Technische Entscheidungen klar kommunizieren",
+        "Problemlösung unter Zeitdruck meistern"
+      ],
+      "tileLabel": "Technik",
+      "homeDesc": "Die Coding-Runde bestehen"
     },
     "ai-ml-interview": {
       "title": "AI- & ML-Interviews",
       "subtitle": "Das Machine-Learning-Interview",
       "description": "Spezialisierte Vorbereitung für KI- und Machine-Learning-Rollen. Behandle ML-Systemdesign, Modellbewertung, MLOps und die einzigartigen Interviewformate von KI-fokussierten Unternehmen.",
       "audience": "Ingenieure, die KI/ML-Rollen bei Tech-Unternehmen anstreben",
-      "prerequisites": "Grundlegende ML-Kenntnisse (überwachtes/unüberwachtes Lernen)"
+      "prerequisites": "Grundlegende ML-Kenntnisse (überwachtes/unüberwachtes Lernen)",
+      "topics": [
+        "ML-Systemdesign",
+        "Statistische Grundlagen",
+        "Modellauswahl und -bewertung",
+        "ML-Fallstudien"
+      ],
+      "outcomes": [
+        "End-to-End-ML-Systeme entwerfen",
+        "Modell-Kompromisse klar erklären",
+        "ML-spezifische Fallstudien meistern",
+        "Praktisches ML-Wissen demonstrieren"
+      ],
+      "tileLabel": "ML",
+      "homeDesc": "ML-Interview meistern"
     },
     "ai-offer": {
       "title": "Angebot & Karriere",
       "subtitle": "Vom Angebot zum Karrierewachstum",
       "description": "Navigiere die Zielgerade — Gehaltsverhandlung, Angebotsbewertung und Karrierewachstumsstrategien. Lerne, Vergütungen zu vergleichen, effektiv zu verhandeln und deine langfristige Karriere zu planen.",
       "audience": "Ingenieure, die Jobangebote erhalten haben oder erwarten",
-      "prerequisites": "Aktiver Bewerbungsprozess oder kürzliches Angebot"
+      "prerequisites": "Aktiver Bewerbungsprozess oder kürzliches Angebot",
+      "topics": [
+        "Taktiken zur Gehaltsverhandlung",
+        "Rahmenwerk zum Angebotsvergleich",
+        "Analyse von Zusatzleistungen und Aktienoptionen",
+        "Karriereentscheidungen treffen"
+      ],
+      "outcomes": [
+        "Vergütung selbstbewusst verhandeln",
+        "Mehrere Angebote objektiv vergleichen",
+        "Aktien- und Leistungspakete verstehen",
+        "Strategische Karriereentscheidungen treffen"
+      ],
+      "tileLabel": "Angebot",
+      "homeDesc": "Das beste Angebot sichern"
     }
   },
   "programDetail": {

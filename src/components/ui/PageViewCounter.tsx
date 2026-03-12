@@ -39,7 +39,8 @@ export function PageViewCounter() {
 
   const fetchViews = useCallback(async () => {
     try {
-      const res = await fetch("/api/page-views");
+      // POST increments (deduplicated per session), returns count
+      const res = await fetch("/api/page-views", { method: "POST" });
       const data = await res.json();
       if (data.views !== null) {
         setViews(data.views);

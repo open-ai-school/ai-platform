@@ -248,6 +248,9 @@
       },
       "career-ready": {
         "title": "Pronto para a Carreira",
+        "desc": "Do nervosismo à oferta assinada",
+        "tagline": "Lançamento → Comportamental → Técnica → Entrevista ML → Oferta",
+        "brand": "Domine cada etapa do processo de entrevista técnica — da preparação e perguntas comportamentais ao design de sistemas e negociação de ofertas.",
         "description": "Do nervosismo da página em branco à oferta assinada — sua jornada completa de preparação para entrevistas"
       }
     },
@@ -459,35 +462,105 @@
       "subtitle": "Sua jornada de entrevistas começa",
       "description": "Domine os fundamentos da preparação para entrevistas técnicas. Aprenda a pesquisar empresas, decifrar descrições de vagas, montar seu cronograma de preparação e desenvolver a mentalidade que transforma nervosismo em confiança.",
       "audience": "Qualquer pessoa iniciando sua preparação para entrevistas técnicas",
-      "prerequisites": "Nenhum — este é o seu ponto de partida"
+      "prerequisites": "Nenhum — este é o seu ponto de partida",
+      "topics": [
+        "Técnicas de Pesquisa de Empresas",
+        "Análise de Descrições de Vagas",
+        "Cronograma de Preparação para Entrevistas",
+        "Mentalidade & Construção de Confiança"
+      ],
+      "outcomes": [
+        "Montar um plano estruturado de preparação para entrevistas",
+        "Decifrar qualquer descrição de vaga com eficácia",
+        "Pesquisar empresas como um profissional",
+        "Desenvolver confiança para entrevistas"
+      ],
+      "tileLabel": "Preparação",
+      "homeDesc": "Comece sua jornada"
     },
     "ai-behavioral": {
       "title": "Domínio Comportamental",
       "subtitle": "Histórias que conquistam ofertas",
       "description": "Domine entrevistas comportamentais com o framework STAR, narrativas de liderança e storytelling estruturado. Aprenda a transformar sua experiência em respostas convincentes que comprovam seu valor.",
       "audience": "Engenheiros de qualquer nível se preparando para rodadas comportamentais",
-      "prerequisites": "Experiência real em projetos para usar como base"
+      "prerequisites": "Experiência real em projetos para usar como base",
+      "topics": [
+        "Domínio do Método STAR",
+        "Histórias de Liderança & Trabalho em Equipe",
+        "Narrativas de Resolução de Conflitos",
+        "Avaliação de Fit Cultural"
+      ],
+      "outcomes": [
+        "Dominar o framework de resposta STAR",
+        "Criar narrativas de carreira convincentes",
+        "Responder qualquer pergunta comportamental com confiança",
+        "Demonstrar liderança e colaboração"
+      ],
+      "tileLabel": "Comportamental",
+      "homeDesc": "Domine habilidades interpessoais"
     },
     "ai-technical": {
       "title": "Entrevistas Técnicas",
       "subtitle": "Programar sob pressão",
       "description": "Conquiste entrevistas de programação, rodadas de design de sistemas e aprofundamentos técnicos. De estruturas de dados a sistemas distribuídos, construa as habilidades e a confiança para se destacar sob pressão.",
       "audience": "Engenheiros de software se preparando para rodadas de entrevistas técnicas",
-      "prerequisites": "Fundamentos sólidos de programação em pelo menos uma linguagem"
+      "prerequisites": "Fundamentos sólidos de programação em pelo menos uma linguagem",
+      "topics": [
+        "Estruturas de Dados & Algoritmos",
+        "Fundamentos de Design de Sistemas",
+        "Padrões de Entrevistas de Programação",
+        "Estratégias de Resolução de Problemas"
+      ],
+      "outcomes": [
+        "Resolver padrões comuns de entrevistas de programação",
+        "Projetar sistemas escaláveis no quadro branco",
+        "Comunicar decisões técnicas com clareza",
+        "Lidar com resolução de problemas sob pressão"
+      ],
+      "tileLabel": "Técnico",
+      "homeDesc": "Passe na rodada de programação"
     },
     "ai-ml-interview": {
       "title": "Entrevistas de IA e ML",
       "subtitle": "A entrevista de Machine Learning",
       "description": "Preparação especializada para vagas de IA e aprendizado de máquina. Abrange design de sistemas ML, avaliação de modelos, MLOps e os formatos de entrevista exclusivos usados por empresas focadas em IA.",
       "audience": "Engenheiros buscando vagas de IA/ML em empresas de tecnologia",
-      "prerequisites": "Conhecimento básico de ML (aprendizado supervisionado/não supervisionado)"
+      "prerequisites": "Conhecimento básico de ML (aprendizado supervisionado/não supervisionado)",
+      "topics": [
+        "Design de Sistemas ML",
+        "Fundamentos Estatísticos",
+        "Seleção & Avaliação de Modelos",
+        "Estudos de Caso de ML"
+      ],
+      "outcomes": [
+        "Projetar sistemas ML de ponta a ponta",
+        "Explicar trade-offs de modelos com clareza",
+        "Lidar com estudos de caso específicos de ML",
+        "Demonstrar conhecimento prático de ML"
+      ],
+      "tileLabel": "ML",
+      "homeDesc": "Domínio em entrevistas de ML"
     },
     "ai-offer": {
       "title": "Oferta e Além",
       "subtitle": "Da oferta ao crescimento profissional",
       "description": "Navegue a reta final — negociação salarial, avaliação de ofertas e estratégias de crescimento profissional. Aprenda a comparar remunerações, negociar com eficácia e planejar sua trajetória profissional a longo prazo.",
       "audience": "Engenheiros que receberam ou esperam ofertas de emprego",
-      "prerequisites": "Processo seletivo ativo ou oferta recente"
+      "prerequisites": "Processo seletivo ativo ou oferta recente",
+      "topics": [
+        "Táticas de Negociação Salarial",
+        "Framework de Comparação de Ofertas",
+        "Análise de Benefícios & Ações",
+        "Tomada de Decisão de Carreira"
+      ],
+      "outcomes": [
+        "Negociar remuneração com confiança",
+        "Comparar múltiplas ofertas objetivamente",
+        "Entender pacotes de ações e benefícios",
+        "Tomar decisões estratégicas de carreira"
+      ],
+      "tileLabel": "Oferta",
+      "homeDesc": "Conquiste a melhor oferta"
     }
   },
   "programDetail": {

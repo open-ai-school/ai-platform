@@ -210,6 +210,16 @@ export function Footer() {
                   <span className="absolute -bottom-px left-0 h-px w-0 bg-[var(--color-primary)] transition-all duration-300 ease-out group-hover:w-full" />
                 </a>
               </li>
+              <li>
+                <FooterLink href={`${basePath}/terms`}>
+                  {t("terms")}
+                </FooterLink>
+              </li>
+              <li>
+                <FooterLink href={`${basePath}/privacy`}>
+                  {t("privacy")}
+                </FooterLink>
+              </li>
             </ul>
           </div>
         </div>

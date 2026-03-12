@@ -248,6 +248,9 @@
       },
       "career-ready": {
         "title": "Preparación Profesional",
+        "desc": "De los nervios a la oferta firmada",
+        "tagline": "Despegue → Conductual → Técnica → Entrevista ML → Oferta",
+        "brand": "Domina cada etapa del proceso de entrevista técnica — desde la preparación y las preguntas conductuales hasta el diseño de sistemas y la negociación de ofertas.",
         "description": "De los nervios de la página en blanco a la oferta firmada — tu preparación completa para entrevistas"
       }
     },
@@ -459,35 +462,105 @@
       "subtitle": "Tu camino hacia las entrevistas comienza",
       "description": "Domina los fundamentos de la preparación para entrevistas técnicas. Aprende a investigar empresas, descifrar descripciones de puestos, crear tu cronograma de preparación y desarrollar la mentalidad que transforma los nervios en confianza.",
       "audience": "Cualquier persona que inicia su preparación para entrevistas técnicas",
-      "prerequisites": "Ninguno — este es tu punto de partida"
+      "prerequisites": "Ninguno — este es tu punto de partida",
+      "topics": [
+        "Técnicas de investigación de empresas",
+        "Análisis de descripciones de puestos",
+        "Cronograma de preparación para entrevistas",
+        "Desarrollo de mentalidad y confianza"
+      ],
+      "outcomes": [
+        "Construir un plan estructurado de preparación para entrevistas",
+        "Descifrar cualquier descripción de puesto eficazmente",
+        "Investigar empresas como un profesional",
+        "Desarrollar confianza para las entrevistas"
+      ],
+      "tileLabel": "Preparación",
+      "homeDesc": "Comienza tu camino"
     },
     "ai-behavioral": {
       "title": "Dominio Conductual",
       "subtitle": "Historias que consiguen ofertas",
       "description": "Domina las entrevistas conductuales con el marco STAR, narrativas de liderazgo y storytelling estructurado. Aprende a transformar tu experiencia en respuestas convincentes que demuestren tu valor.",
       "audience": "Ingenieros de cualquier nivel preparándose para rondas conductuales",
-      "prerequisites": "Experiencia real en proyectos de la cual extraer ejemplos"
+      "prerequisites": "Experiencia real en proyectos de la cual extraer ejemplos",
+      "topics": [
+        "Dominio del método STAR",
+        "Historias de liderazgo y trabajo en equipo",
+        "Narrativas de resolución de conflictos",
+        "Evaluación de encaje cultural"
+      ],
+      "outcomes": [
+        "Dominar el marco de respuesta STAR",
+        "Crear narrativas profesionales convincentes",
+        "Manejar cualquier pregunta conductual con confianza",
+        "Demostrar liderazgo y colaboración"
+      ],
+      "tileLabel": "Conductual",
+      "homeDesc": "Domina las habilidades blandas"
     },
     "ai-technical": {
       "title": "Entrevistas Técnicas",
       "subtitle": "Programar bajo presión",
       "description": "Conquista entrevistas de programación, rondas de diseño de sistemas y profundizaciones técnicas. Desde estructuras de datos hasta sistemas distribuidos, desarrolla las habilidades y confianza para brillar bajo presión.",
       "audience": "Ingenieros de software preparándose para rondas de entrevistas técnicas",
-      "prerequisites": "Fundamentos sólidos de programación en al menos un lenguaje"
+      "prerequisites": "Fundamentos sólidos de programación en al menos un lenguaje",
+      "topics": [
+        "Estructuras de datos y algoritmos",
+        "Fundamentos de diseño de sistemas",
+        "Patrones de entrevistas de programación",
+        "Estrategias de resolución de problemas"
+      ],
+      "outcomes": [
+        "Resolver patrones comunes de entrevistas de programación",
+        "Diseñar sistemas escalables en la pizarra",
+        "Comunicar decisiones técnicas con claridad",
+        "Manejar la resolución de problemas bajo presión de tiempo"
+      ],
+      "tileLabel": "Técnica",
+      "homeDesc": "Supera la ronda de código"
     },
     "ai-ml-interview": {
       "title": "Entrevistas de IA y ML",
       "subtitle": "La entrevista de Machine Learning",
       "description": "Preparación especializada para roles de IA y aprendizaje automático. Cubre diseño de sistemas ML, evaluación de modelos, MLOps y los formatos de entrevista únicos de empresas enfocadas en IA.",
       "audience": "Ingenieros que buscan roles de IA/ML en empresas tecnológicas",
-      "prerequisites": "Conocimientos básicos de ML (aprendizaje supervisado/no supervisado)"
+      "prerequisites": "Conocimientos básicos de ML (aprendizaje supervisado/no supervisado)",
+      "topics": [
+        "Diseño de sistemas de ML",
+        "Fundamentos estadísticos",
+        "Selección y evaluación de modelos",
+        "Estudios de caso de ML"
+      ],
+      "outcomes": [
+        "Diseñar sistemas de ML de extremo a extremo",
+        "Explicar las compensaciones de modelos con claridad",
+        "Manejar estudios de caso específicos de ML",
+        "Demostrar conocimiento práctico de ML"
+      ],
+      "tileLabel": "ML",
+      "homeDesc": "Dominio en entrevistas de ML"
     },
     "ai-offer": {
       "title": "Oferta y Más Allá",
       "subtitle": "De la oferta al crecimiento profesional",
       "description": "Navega la recta final — negociación salarial, evaluación de ofertas y estrategias de crecimiento profesional. Aprende a comparar compensaciones, negociar eficazmente y planificar tu trayectoria profesional a largo plazo.",
       "audience": "Ingenieros que han recibido o esperan ofertas de trabajo",
-      "prerequisites": "Proceso de entrevistas activo u oferta reciente"
+      "prerequisites": "Proceso de entrevistas activo u oferta reciente",
+      "topics": [
+        "Tácticas de negociación salarial",
+        "Marco de comparación de ofertas",
+        "Análisis de beneficios y acciones",
+        "Toma de decisiones profesionales"
+      ],
+      "outcomes": [
+        "Negociar compensación con confianza",
+        "Comparar múltiples ofertas objetivamente",
+        "Comprender paquetes de acciones y beneficios",
+        "Tomar decisiones profesionales estratégicas"
+      ],
+      "tileLabel": "Oferta",
+      "homeDesc": "Consigue la mejor oferta"
     }
   },
   "programDetail": {

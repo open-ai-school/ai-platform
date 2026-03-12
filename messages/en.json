@@ -118,7 +118,9 @@
     "lab": "Lab",
     "pageViews": "page views",
     "scrollToTop": "Scroll to top",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
   },
   "about": {
     "title": "About AI Educademy",
@@ -248,6 +250,9 @@
       },
       "career-ready": {
         "title": "Career Ready",
+        "desc": "From blank-page nerves to signed offer letter",
+        "tagline": "Launchpad → Behavioral → Technical → ML Interview → Offer",
+        "brand": "Master every stage of the tech interview process — from preparation and behaviorals to system design and offer negotiation.",
         "description": "From blank-page nerves to signed offer — your complete interview preparation journey"
       }
     },
@@ -459,35 +464,105 @@
       "subtitle": "Your Interview Journey Begins",
       "description": "Master the fundamentals of technical interview preparation. Learn how to research companies, decode job descriptions, build your preparation timeline, and develop the mindset that turns nervousness into confidence.",
       "audience": "Anyone starting their tech interview preparation journey",
-      "prerequisites": "None — this is your starting point"
+      "prerequisites": "None — this is your starting point",
+      "topics": [
+        "Company Research Techniques",
+        "Job Description Analysis",
+        "Interview Preparation Timeline",
+        "Mindset & Confidence Building"
+      ],
+      "outcomes": [
+        "Build a structured interview preparation plan",
+        "Decode any job description effectively",
+        "Research companies like a pro",
+        "Develop interview confidence"
+      ],
+      "tileLabel": "Prep",
+      "homeDesc": "Start your journey"
     },
     "ai-behavioral": {
       "title": "Behavioral Mastery",
       "subtitle": "Stories That Land Offers",
       "description": "Master behavioral interviews with the STAR framework, leadership narratives, and structured storytelling. Learn to transform your experience into compelling answers that prove your value.",
       "audience": "Engineers at any level preparing for behavioral rounds",
-      "prerequisites": "Real project experience to draw from"
+      "prerequisites": "Real project experience to draw from",
+      "topics": [
+        "STAR Method Mastery",
+        "Leadership & Teamwork Stories",
+        "Conflict Resolution Narratives",
+        "Cultural Fit Assessment"
+      ],
+      "outcomes": [
+        "Master the STAR response framework",
+        "Craft compelling career narratives",
+        "Handle any behavioral question confidently",
+        "Demonstrate leadership and collaboration"
+      ],
+      "tileLabel": "Behavioral",
+      "homeDesc": "Master soft skills"
     },
     "ai-technical": {
       "title": "Technical Interviews",
       "subtitle": "Code Under Pressure",
       "description": "Conquer coding interviews, system design rounds, and technical deep dives. From data structures to distributed systems, build the skills and confidence to excel under pressure.",
       "audience": "Software engineers preparing for technical interview rounds",
-      "prerequisites": "Solid programming fundamentals in at least one language"
+      "prerequisites": "Solid programming fundamentals in at least one language",
+      "topics": [
+        "Data Structures & Algorithms",
+        "System Design Fundamentals",
+        "Coding Interview Patterns",
+        "Problem-Solving Strategies"
+      ],
+      "outcomes": [
+        "Solve common coding interview patterns",
+        "Design scalable systems on a whiteboard",
+        "Communicate technical decisions clearly",
+        "Handle time-pressured problem solving"
+      ],
+      "tileLabel": "Technical",
+      "homeDesc": "Ace the coding round"
     },
     "ai-ml-interview": {
       "title": "AI & ML Interviews",
       "subtitle": "The Machine Learning Interview",
       "description": "Specialised preparation for AI and machine learning roles. Cover ML system design, model evaluation, MLOps, and the unique interview formats used by AI-focused companies.",
       "audience": "Engineers targeting AI/ML roles at tech companies",
-      "prerequisites": "Basic ML knowledge (supervised/unsupervised learning)"
+      "prerequisites": "Basic ML knowledge (supervised/unsupervised learning)",
+      "topics": [
+        "ML System Design",
+        "Statistical Foundations",
+        "Model Selection & Evaluation",
+        "ML Case Studies"
+      ],
+      "outcomes": [
+        "Design end-to-end ML systems",
+        "Explain model tradeoffs clearly",
+        "Handle ML-specific case studies",
+        "Demonstrate practical ML knowledge"
+      ],
+      "tileLabel": "ML",
+      "homeDesc": "ML interview mastery"
     },
     "ai-offer": {
       "title": "Offer & Beyond",
       "subtitle": "From Offer to Career Growth",
       "description": "Navigate the final stretch — salary negotiation, offer evaluation, and career growth strategies. Learn to benchmark compensation, negotiate effectively, and plan your long-term career trajectory.",
       "audience": "Engineers who have received or expect job offers",
-      "prerequisites": "Active interview process or recent offer"
+      "prerequisites": "Active interview process or recent offer",
+      "topics": [
+        "Salary Negotiation Tactics",
+        "Offer Comparison Framework",
+        "Benefits & Equity Analysis",
+        "Career Decision Making"
+      ],
+      "outcomes": [
+        "Negotiate compensation confidently",
+        "Compare multiple offers objectively",
+        "Understand equity and benefits packages",
+        "Make strategic career decisions"
+      ],
+      "tileLabel": "Offer",
+      "homeDesc": "Land the best offer"
     }
   },
   "programDetail": {
@@ -1364,5 +1439,103 @@
     "progress": "Complete {remaining} more lessons to earn your certificate",
     "completed": "You've earned your certificate!",
     "notSignedIn": "Sign in to track progress and earn certificates"
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "subtitle": "Last updated: March 2025",
+    "intro": "Welcome to AI Educademy. By accessing or using our platform, you agree to be bound by these terms.",
+    "sections": {
+      "use": {
+        "title": "1. Use of Service",
+        "content": "AI Educademy provides AI education content including courses, interactive labs, and learning resources. You may use our service for personal, non-commercial educational purposes. You must be at least 13 years old to use this service."
+      },
+      "accounts": {
+        "title": "2. User Accounts",
+        "content": "You may sign in using Google or GitHub OAuth. You are responsible for maintaining the security of your account. You must provide accurate information during registration. We reserve the right to suspend accounts that violate these terms."
+      },
+      "subscriptions": {
+        "title": "3. Subscriptions & Payments",
+        "content": "AI Educademy offers free and paid tiers. Paid subscriptions are processed securely through Stripe. Monthly and annual subscriptions renew automatically unless cancelled. You may cancel at any time through your account dashboard. Refunds are handled on a case-by-case basis within 14 days of purchase, in accordance with UK consumer rights."
+      },
+      "content": {
+        "title": "4. Content & Intellectual Property",
+        "content": "All course content, including text, code examples, diagrams, and interactive exercises, is the intellectual property of AI Educademy. Free-tier content is available under the MIT licence where indicated. Premium content may not be redistributed, copied, or shared without permission."
+      },
+      "conduct": {
+        "title": "5. Acceptable Use",
+        "content": "You agree not to: share your account credentials, attempt to access premium content without a valid subscription, use automated tools to scrape content, upload malicious content, or harass other users. Violation may result in account termination."
+      },
+      "disclaimer": {
+        "title": "6. Disclaimer",
+        "content": "AI Educademy provides educational content on an \"as is\" basis. While we strive for accuracy, we do not guarantee that all content is error-free or up-to-date. AI Educademy is not responsible for career outcomes or interview results."
+      },
+      "liability": {
+        "title": "7. Limitation of Liability",
+        "content": "To the maximum extent permitted by law, AI Educademy shall not be liable for any indirect, incidental, or consequential damages arising from your use of the service. Our total liability shall not exceed the amount you have paid us in the 12 months prior to the claim."
+      },
+      "changes": {
+        "title": "8. Changes to Terms",
+        "content": "We may update these terms from time to time. Continued use of the service after changes constitutes acceptance. We will notify registered users of significant changes via email."
+      },
+      "governing": {
+        "title": "9. Governing Law",
+        "content": "These terms are governed by the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales."
+      },
+      "contact": {
+        "title": "10. Contact",
+        "content": "For questions about these terms, contact us at support@aieducademy.org."
+      }
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "Last updated: March 2025",
+    "intro": "AI Educademy is committed to protecting your privacy. This policy explains how we collect, use, and safeguard your personal information.",
+    "sections": {
+      "collect": {
+        "title": "1. Information We Collect",
+        "content": "We collect: your name, email address, and profile image from your OAuth provider (Google or GitHub); your learning progress and course completions; subscription and payment information processed by Stripe; usage data including pages visited and features used; device and browser information for analytics."
+      },
+      "use": {
+        "title": "2. How We Use Your Information",
+        "content": "We use your information to: provide and personalise the learning experience; track your course progress; process payments and manage subscriptions; send important account and service notifications; improve our platform through analytics; send optional educational newsletters (you can opt out at any time)."
+      },
+      "sharing": {
+        "title": "3. Information Sharing",
+        "content": "We do not sell your personal information. We share data only with: Stripe (payment processing), Resend (email delivery), Neon (database hosting), Vercel (hosting), and GitHub/Google (authentication). All third-party providers are GDPR-compliant."
+      },
+      "cookies": {
+        "title": "4. Cookies & Tracking",
+        "content": "We use essential cookies for authentication and session management. We use analytics to understand how our platform is used. We do not use advertising cookies or sell data to advertisers."
+      },
+      "retention": {
+        "title": "5. Data Retention",
+        "content": "We retain your account data for as long as your account is active. If you delete your account, we will remove your personal data within 30 days. Anonymised analytics data may be retained indefinitely. Payment records are retained as required by UK tax law."
+      },
+      "rights": {
+        "title": "6. Your Rights (GDPR)",
+        "content": "Under UK GDPR, you have the right to: access your personal data; correct inaccurate data; request deletion of your data; export your data in a portable format; object to processing of your data; withdraw consent at any time. To exercise these rights, contact us at privacy@aieducademy.org."
+      },
+      "security": {
+        "title": "7. Security",
+        "content": "We implement industry-standard security measures including: encrypted data transmission (TLS/SSL), secure authentication via OAuth 2.0, PCI-compliant payment processing through Stripe, regular security reviews, and access controls on all systems."
+      },
+      "children": {
+        "title": "8. Children's Privacy",
+        "content": "AI Educademy is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal data, please contact us immediately."
+      },
+      "international": {
+        "title": "9. International Data Transfers",
+        "content": "Your data may be processed in the EU and US through our hosting providers. All transfers are protected by appropriate safeguards including Standard Contractual Clauses where applicable."
+      },
+      "changes": {
+        "title": "10. Changes to This Policy",
+        "content": "We may update this policy from time to time. We will notify you of significant changes via email. Continued use of the service after changes constitutes acceptance."
+      },
+      "contact": {
+        "title": "11. Contact Us",
+        "content": "For privacy-related inquiries: Email privacy@aieducademy.org. Data Protection queries can be directed to theglobalmind.ai@gmail.com."
+      }
+    }
   }
 }

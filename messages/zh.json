@@ -248,6 +248,9 @@
       },
       "career-ready": {
         "title": "职业准备",
+        "desc": "从紧张到签下录用通知",
+        "tagline": "准备 → 行为面试 → 技术面试 → ML面试 → Offer",
+        "brand": "掌握技术面试流程的每个阶段 — 从准备和行为面试到系统设计和薪资谈判。",
         "description": "从面对白纸的紧张到签下录用通知——你的完整面试准备之旅"
       }
     },
@@ -459,35 +462,105 @@
       "subtitle": "你的面试之旅从这里开始",
       "description": "掌握技术面试准备的基本功。学习如何调研公司、解读职位描述、制定准备计划，培养将紧张转化为自信的心态。",
       "audience": "任何开始准备技术面试的人",
-      "prerequisites": "无——这就是你的起点"
+      "prerequisites": "无——这就是你的起点",
+      "topics": [
+        "公司调研技巧",
+        "职位描述分析",
+        "面试准备时间线",
+        "心态与自信建设"
+      ],
+      "outcomes": [
+        "制定结构化的面试准备计划",
+        "高效解读任何职位描述",
+        "像专业人士一样调研公司",
+        "培养面试自信心"
+      ],
+      "tileLabel": "准备",
+      "homeDesc": "开启你的旅程"
     },
     "ai-behavioral": {
       "title": "行为面试精通",
       "subtitle": "赢得Offer的故事",
       "description": "通过STAR框架、领导力叙事和结构化讲故事来精通行为面试。学会将你的经验转化为有说服力的回答，证明你的价值。",
       "audience": "准备行为面试轮次的各级工程师",
-      "prerequisites": "可以借鉴的真实项目经验"
+      "prerequisites": "可以借鉴的真实项目经验",
+      "topics": [
+        "STAR方法精通",
+        "领导力与团队合作故事",
+        "冲突解决叙事",
+        "文化契合度评估"
+      ],
+      "outcomes": [
+        "精通STAR回答框架",
+        "打造有说服力的职业叙事",
+        "自信应对任何行为面试问题",
+        "展示领导力和协作能力"
+      ],
+      "tileLabel": "行为",
+      "homeDesc": "掌握软技能"
     },
     "ai-technical": {
       "title": "技术面试",
       "subtitle": "压力下编程",
       "description": "征服编程面试、系统设计轮次和技术深度探讨。从数据结构到分布式系统，培养在压力下脱颖而出的技能和信心。",
       "audience": "准备技术面试轮次的软件工程师",
-      "prerequisites": "至少掌握一门编程语言的扎实基础"
+      "prerequisites": "至少掌握一门编程语言的扎实基础",
+      "topics": [
+        "数据结构与算法",
+        "系统设计基础",
+        "编程面试模式",
+        "问题解决策略"
+      ],
+      "outcomes": [
+        "解决常见的编程面试模式",
+        "在白板上设计可扩展的系统",
+        "清晰传达技术决策",
+        "处理时间压力下的问题解决"
+      ],
+      "tileLabel": "技术",
+      "homeDesc": "通过编程轮次"
     },
     "ai-ml-interview": {
       "title": "AI与ML面试",
       "subtitle": "机器学习面试",
       "description": "针对AI和机器学习岗位的专项准备。涵盖ML系统设计、模型评估、MLOps以及AI公司特有的面试形式。",
       "audience": "目标为科技公司AI/ML岗位的工程师",
-      "prerequisites": "基础ML知识（监督学习/无监督学习）"
+      "prerequisites": "基础ML知识（监督学习/无监督学习）",
+      "topics": [
+        "ML系统设计",
+        "统计学基础",
+        "模型选择与评估",
+        "ML案例研究"
+      ],
+      "outcomes": [
+        "设计端到端ML系统",
+        "清晰解释模型权衡",
+        "处理ML特定案例研究",
+        "展示实用ML知识"
+      ],
+      "tileLabel": "ML",
+      "homeDesc": "ML面试精通"
     },
     "ai-offer": {
       "title": "Offer与未来",
       "subtitle": "从Offer到职业成长",
       "description": "驾驭最后冲刺——薪资谈判、Offer评估和职业成长策略。学会对标薪酬、有效谈判，规划你的长期职业发展路径。",
       "audience": "已收到或即将收到工作Offer的工程师",
-      "prerequisites": "正在进行的面试流程或近期收到的Offer"
+      "prerequisites": "正在进行的面试流程或近期收到的Offer",
+      "topics": [
+        "薪资谈判策略",
+        "Offer对比框架",
+        "福利与股权分析",
+        "职业决策制定"
+      ],
+      "outcomes": [
+        "自信地谈判薪资待遇",
+        "客观比较多个Offer",
+        "理解股权和福利方案",
+        "做出战略性职业决策"
+      ],
+      "tileLabel": "Offer",
+      "homeDesc": "拿下最好的Offer"
     }
   },
   "programDetail": {
