@@ -83,7 +83,7 @@ export async function GET(req: NextRequest) {
     programSlug,
   });
 
-  return new Response(pdfBytes, {
+  return new Response(Buffer.from(pdfBytes), {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": `inline; filename="certificate-${programSlug}.pdf"`,
