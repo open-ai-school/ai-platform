@@ -1,3 +1,7 @@
 [submodule "content"]
 	path = content
 	url = https://github.com/ai-educademy/ai-courses.git
+[submodule "content-pro"]
+	path = content-pro
+	url = https://github.com/ai-educademy/ai-courses-pro.git
+	branch = main

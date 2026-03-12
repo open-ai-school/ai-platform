@@ -4,6 +4,7 @@ import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/lib/db";
 import { users, accounts, sessions, verificationTokens } from "@/lib/db/schema";
+import { sendWelcomeEmail } from "@/lib/email";
 
 if (!process.env.AUTH_SECRET) {
   console.warn(
@@ -33,6 +34,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: "/signin",
     verifyRequest: "/signin?verify=1",
+  },
+  events: {
+    async createUser({ user }) {
+      if (user.email) {
+        sendWelcomeEmail(user.email).catch((err) =>
+          console.error("[Auth] Welcome email failed:", err)
+        );
+      }
+    },
   },
   callbacks: {
     async jwt({ token, user }) {
