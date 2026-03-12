@@ -2,20 +2,20 @@
 
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { AI_PATH, CRAFT_PATH } from "../navData";
+import { AI_PATH, CRAFT_PATH, CAREER_READY_PATH } from "../navData";
 import { ProgramItem } from "./ProgramItem";
 
 export function ProgramsDropdownContent({ basePath, t }: { basePath: string; t: (key: string) => string }) {
   const tP = useTranslations("programs");
   return (
-    <div className="w-[540px] p-4">
-      <div className="grid grid-cols-2 gap-4">
-        {/* AI Learning Path */}
+    <div className="w-[780px] p-4">
+      <div className="grid grid-cols-3 gap-4">
+        {/* AI Foundations */}
         <div>
           <div className="flex items-center gap-2 px-3 mb-2">
             <span className="text-sm">🌳</span>
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-              {t("aiLearningPath")}
+              {t("aiFoundationsPath")}
             </h3>
           </div>
           <div className="space-y-0.5">
@@ -24,16 +24,30 @@ export function ProgramsDropdownContent({ basePath, t }: { basePath: string; t: 
             ))}
           </div>
         </div>
-        {/* Craft Engineering Path */}
+        {/* AI Mastery */}
         <div>
           <div className="flex items-center gap-2 px-3 mb-2">
             <span className="text-sm">🔨</span>
             <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-              {t("craftEngineeringPath")}
+              {t("aiMasteryPath")}
             </h3>
           </div>
           <div className="space-y-0.5">
             {CRAFT_PATH.map((p) => (
+              <ProgramItem key={p.slug} slug={p.slug} icon={p.icon} basePath={basePath} t={(k: string) => tP(k)} />
+            ))}
+          </div>
+        </div>
+        {/* Career Ready */}
+        <div>
+          <div className="flex items-center gap-2 px-3 mb-2">
+            <span className="text-sm">🚀</span>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
+              {t("careerReadyPath")}
+            </h3>
+          </div>
+          <div className="space-y-0.5">
+            {CAREER_READY_PATH.map((p) => (
               <ProgramItem key={p.slug} slug={p.slug} icon={p.icon} basePath={basePath} t={(k: string) => tP(k)} />
             ))}
           </div>

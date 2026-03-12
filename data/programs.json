@@ -9,6 +9,11 @@
       "slug": "craft-engineering",
       "icon": "🔨",
       "programs": ["ai-sketch", "ai-chisel", "ai-craft", "ai-polish", "ai-masterpiece"]
+    },
+    {
+      "slug": "career-ready",
+      "icon": "🚀",
+      "programs": ["ai-launchpad", "ai-behavioral", "ai-technical", "ai-ml-interview", "ai-offer"]
     }
   ],
   "programs": {
@@ -21,6 +26,11 @@
     "ai-chisel": { "level": 2, "color": "#06B6D4", "icon": "🪨", "track": "craft-engineering", "estimatedHours": 6 },
     "ai-craft": { "level": 3, "color": "#8B5CF6", "icon": "⚒️", "track": "craft-engineering", "estimatedHours": 8 },
     "ai-polish": { "level": 4, "color": "#EC4899", "icon": "💎", "track": "craft-engineering", "estimatedHours": 4 },
-    "ai-masterpiece": { "level": 5, "color": "#EAB308", "icon": "🏆", "track": "craft-engineering", "estimatedHours": 10 }
+    "ai-masterpiece": { "level": 5, "color": "#EAB308", "icon": "🏆", "track": "craft-engineering", "estimatedHours": 10 },
+    "ai-launchpad": { "level": 1, "color": "#8B5CF6", "icon": "🚀", "track": "career-ready", "estimatedHours": 3 },
+    "ai-behavioral": { "level": 2, "color": "#F59E0B", "icon": "🌟", "track": "career-ready", "estimatedHours": 5 },
+    "ai-technical": { "level": 3, "color": "#3B82F6", "icon": "💻", "track": "career-ready", "estimatedHours": 8 },
+    "ai-ml-interview": { "level": 4, "color": "#10B981", "icon": "🤖", "track": "career-ready", "estimatedHours": 6 },
+    "ai-offer": { "level": 5, "color": "#EF4444", "icon": "🏆", "track": "career-ready", "estimatedHours": 4 }
   }
 }

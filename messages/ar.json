@@ -23,8 +23,6 @@
     "enterLab": "دخول المختبر",
     "readBlog": "اقرأ المدونة",
     "latestArticles": "أحدث المقالات في الذكاء الاصطناعي والتعليم والتكنولوجيا",
-    "aiLearningPath": "مسار تعلّم الذكاء الاصطناعي",
-    "craftEngineeringPath": "مسار هندسة البرمجيات",
     "experimentsLoaded": "تم تحميل 7 تجارب",
     "mission": "رسالتنا",
     "missionDesc": "جعل تعليم الذكاء الاصطناعي متاحاً للجميع في كل مكان",
@@ -36,13 +34,17 @@
     "viewOnGithub": "عرض على GitHub",
     "comingSoon": "قريباً",
     "faq": "الأسئلة الشائعة",
-    "mockInterview": "مقابلة تجريبية"
+    "mockInterview": "مقابلة تجريبية",
+    "aiFoundationsPath": "أسس الذكاء الاصطناعي",
+    "aiMasteryPath": "إتقان الذكاء الاصطناعي",
+    "careerReadyPath": "جاهز للمسيرة المهنية",
+    "title": "AI Educademy — تعلم الذكاء الاصطناعي بطريقتك"
   },
   "hero": {
-    "badge": "مجاني • مفتوح المصدر • متعدد اللغات",
+    "badge": "مفتوح المصدر • متعدد اللغات",
     "title": "تعلّم الذكاء الاصطناعي.",
     "titleHighlight": "ابنِ مستقبلك.",
-    "subtitle": "دروس تفاعلية مجانية تأخذك من المبتدئ إلى الباني الواثق. ابدأ من الصفر — واذهب بعيداً.",
+    "subtitle": "دروس تفاعلية تأخذك من المبتدئ إلى الباني الواثق. ابدأ من الصفر — واذهب بعيداً.",
     "cta": "ابدأ رحلتك مع الذكاء الاصطناعي",
     "ctaSecondary": "استكشف المختبر",
     "students": "طالب يتعلّم",
@@ -245,13 +247,13 @@
     "pageDescription": "استكشف مسارات تعلّم الذكاء الاصطناعي المجانية وبرامج هندسة البرمجيات. من المبتدئ التام إلى المتقدم، تعلّم بوتيرتك في 10 لغات.",
     "track": {
       "ai-learning": {
-        "title": "فهم الذكاء الاصطناعي",
+        "title": "أسس الذكاء الاصطناعي",
         "desc": "من الصفر إلى الخبير، تقدم مستوحى من الطبيعة",
         "tagline": "Seeds → Sprouts → Branches → Canopy → Forest",
         "brand": "Understand how machines think, learn, and create - from your first \"what is AI?\" to building production systems."
       },
       "craft-engineering": {
-        "title": "هندسة البرمجيات الحِرَفية",
+        "title": "إتقان الذكاء الاصطناعي",
         "desc": "المقابلات، التصميم، بناء المسيرة",
         "tagline": "Sketch → Chisel → Craft → Polish → Masterpiece",
         "brand": "Learn the algorithms that power AI, design the systems that scale AI, and ace the interviews that land you AI-era jobs."
@@ -1332,7 +1334,7 @@
     "q1": "ما هو AI Educademy؟",
     "a1": "AI Educademy منصة مجانية مفتوحة المصدر لتعلّم الذكاء الاصطناعي. نقدم برامج منظمة ودروساً تفاعلية وتجارب عملية تساعد أي شخص — بغض النظر عن خلفيته — على فهم وتطبيق مفاهيم الذكاء الاصطناعي.",
     "q2": "هل AI Educademy مجاني حقاً؟",
-    "a2": "نعم، مجاني 100%. لا اشتراكات، لا جدار دفع، لا بطاقة ائتمانية مطلوبة. كل درس وبرنامج وتجربة في المختبر متاحة بالكامل بدون تكلفة — وستظل كذلك.",
+    "a2": "نعم، مجاني . لا اشتراكات، لا جدار دفع، لا بطاقة ائتمانية مطلوبة. كل درس وبرنامج وتجربة في المختبر متاحة بالكامل بدون تكلفة — وستظل كذلك.",
     "q3": "من أنشأ AI Educademy؟",
     "a3": "بُني AI Educademy بهدف جعل تعليم الذكاء الاصطناعي متاحاً للجميع في كل مكان. المشروع مفتوح المصدر وقائم على المجتمع، ويرحب بالمساهمات من المطورين والمعلمين والمتعلمين حول العالم.",
     "q4": "ما البرامج المتاحة؟",
@@ -1382,14 +1384,14 @@
   },
   "pricing": {
     "pageTitle": "Pricing",
-    "pageDescription": "Choose the plan that fits your learning journey. Start free, upgrade when you are ready.",
+    "pageDescription": "Choose the plan that fits your learning journey. Start learning, upgrade when you are ready.",
     "badge": "Simple Pricing",
     "heading": "Learn AI at your own pace",
-    "subheading": "Start for free with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
+    "subheading": "Start with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
     "faqTeaser": "Have questions about our plans?",
     "faqLink": "Check our FAQ",
     "free": {
-      "title": "Free",
+      "title": "Explorer",
       "f1": "Beginner programs (AI Seeds & AI Sprouts)",
       "f2": "First lesson of every program",
       "f3": "All blog posts & articles",
@@ -1414,7 +1416,7 @@
       "forever": "One payment, yours forever"
     },
     "pro": {
-      "f1": "Everything in Free",
+      "f1": "Everything in Explorer",
       "f2": "All programs & learning tracks",
       "f3": "Career Ready interview prep track",
       "f4": "AI Mock Interview lab",

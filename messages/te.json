@@ -23,8 +23,6 @@
     "enterLab": "ల్యాబ్‌లోకి వెళ్ళండి",
     "readBlog": "బ్లాగ్ చదవండి",
     "latestArticles": "AI, విద్య మరియు టెక్నాలజీపై తాజా వ్యాసాలు",
-    "aiLearningPath": "AI లెర్నింగ్ పాత్",
-    "craftEngineeringPath": "క్రాఫ్ట్ ఇంజనీరింగ్ పాత్",
     "experimentsLoaded": "7 ప్రయోగాలు లోడ్ అయ్యాయి",
     "mission": "మిషన్",
     "missionDesc": "ప్రతి చోటా, ప్రతి ఒక్కరికీ AI విద్యను అందుబాటులోకి తీసుకురావడం",
@@ -35,13 +33,17 @@
     "meetCreator": "సృష్టికర్తను కలవండి",
     "viewOnGithub": "GitHub లో చూడండి",
     "comingSoon": "త్వరలో వస్తుంది",
-    "mockInterview": "మాక్ ఇంటర్వ్యూ"
+    "mockInterview": "మాక్ ఇంటర్వ్యూ",
+    "aiFoundationsPath": "AI పునాదులు",
+    "aiMasteryPath": "AI నైపుణ్యం",
+    "careerReadyPath": "కెరీర్ రెడీ",
+    "title": "AI Educademy — AI నేర్చుకోండి, మీ విధానంలో"
   },
   "hero": {
-    "badge": "ఉచితం • ఓపెన్ సోర్స్ • బహుభాషా",
+    "badge": "ఓపెన్ సోర్స్ • బహుభాషా",
     "title": "AI విద్య",
     "titleHighlight": "అందరికీ.",
-    "subtitle": "ఉచిత ఇంటరాక్టివ్ పాఠాలు మిమ్మల్ని ఆసక్తిగల ప్రారంభకుడి నుండి నమ్మకమైన నిర్మాతగా మారుస్తాయి. సున్నా నుండి ప్రారంభించండి - మీకు కావలసినంత దూరం వెళ్ళండి.",
+    "subtitle": "ఇంటరాక్టివ్ పాఠాలు మిమ్మల్ని ఆసక్తిగల ప్రారంభకుడి నుండి నమ్మకమైన నిర్మాతగా మారుస్తాయి. సున్నా నుండి ప్రారంభించండి - మీకు కావలసినంత దూరం వెళ్ళండి.",
     "cta": "మీ AI ప్రయాణం ప్రారంభించండి",
     "ctaSecondary": "ప్లేగ్రౌండ్ చూడండి",
     "students": "విద్యార్థులు నేర్చుకుంటున్నారు",
@@ -231,13 +233,13 @@
     "pageDescription": "మా ఉచిత AI లెర్నింగ్ ట్రాక్‌లు మరియు సాఫ్ట్‌వేర్ ఇంజనీరింగ్ ప్రోగ్రామ్‌లను అన్వేషించండి. బిగినర్ నుండి అడ్వాన్స్‌డ్ వరకు - 5 భాషల్లో మీ వేగంతో నేర్చుకోండి.",
     "track": {
       "ai-learning": {
-        "title": "AI అర్థం చేసుకోండి",
+        "title": "AI పునాదులు",
         "desc": "సున్నా నుండి AI నిపుణులు వరకు - ప్రకృతి ప్రేరిత పురోగతి",
         "tagline": "విత్తనాలు → మొలకలు → కొమ్మలు → పందిరి → అడవి",
         "brand": "యంత్రాలు ఎలా ఆలోచిస్తాయి, నేర్చుకుంటాయి మరియు సృష్టిస్తాయో అర్థం చేసుకోండి - మీ మొదటి 'AI అంటే ఏమిటి?' నుండి ప్రొడక్షన్ సిస్టమ్‌లు నిర్మించడం వరకు."
       },
       "craft-engineering": {
-        "title": "కోడ్ & అల్గారిథమ్‌లు",
+        "title": "AI నైపుణ్యం",
         "desc": "మీ కలల ఇంటర్వ్యూలో విజయం సాధించండి",
         "tagline": "స్కెచ్ → ఉలి → హస్తకళ → పాలిష్ → కళాఖండం",
         "brand": "AI ని శక్తివంతం చేసే అల్గారిథమ్‌లు నేర్చుకోండి, AI ని స్కేల్ చేసే వ్యవస్థలు డిజైన్ చేయండి."
@@ -1204,12 +1206,12 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "subtitle": "Everything you need to know about AI Educademy — from getting started to going deep.",
-    "cta": "Start Learning for Free",
+    "cta": "Start Learning Now",
     "ctaHref": "/programs",
     "q1": "What is AI Educademy?",
     "a1": "AI Educademy is a free, open-source platform for learning Artificial Intelligence. We offer structured programs, interactive lessons, and hands-on lab experiments to help anyone — regardless of background — understand and apply AI concepts.",
     "q2": "Is AI Educademy really free?",
-    "a2": "Yes, 100% free. No subscriptions, no paywalls, no credit card required. Every lesson, program, and lab experiment is fully accessible at no cost — and will stay that way.",
+    "a2": "Yes,  free. , , . Every lesson, program, and lab experiment is fully accessible at no cost — and will stay that way.",
     "q3": "Who created AI Educademy?",
     "a3": "AI Educademy was built with the mission of making AI education accessible to everyone, everywhere. The project is open-source and community-driven, welcoming contributions from developers, educators, and learners worldwide.",
     "q4": "What programs are available?",
@@ -1259,14 +1261,14 @@
   },
   "pricing": {
     "pageTitle": "Pricing",
-    "pageDescription": "Choose the plan that fits your learning journey. Start free, upgrade when you are ready.",
+    "pageDescription": "Choose the plan that fits your learning journey. Start learning, upgrade when you are ready.",
     "badge": "Simple Pricing",
     "heading": "Learn AI at your own pace",
-    "subheading": "Start for free with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
+    "subheading": "Start with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
     "faqTeaser": "Have questions about our plans?",
     "faqLink": "Check our FAQ",
     "free": {
-      "title": "Free",
+      "title": "Explorer",
       "f1": "Beginner programs (AI Seeds & AI Sprouts)",
       "f2": "First lesson of every program",
       "f3": "All blog posts & articles",
@@ -1291,7 +1293,7 @@
       "forever": "One payment, yours forever"
     },
     "pro": {
-      "f1": "Everything in Free",
+      "f1": "Everything in Explorer",
       "f2": "All programs & learning tracks",
       "f3": "Career Ready interview prep track",
       "f4": "AI Mock Interview lab",

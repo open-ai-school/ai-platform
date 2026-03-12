@@ -23,8 +23,6 @@
     "enterLab": "Labor betreten",
     "readBlog": "Blog lesen",
     "latestArticles": "Neueste Artikel über KI, Bildung und Technologie",
-    "aiLearningPath": "KI-Lernpfad",
-    "craftEngineeringPath": "Craft Engineering Pfad",
     "experimentsLoaded": "7 Experimente geladen",
     "mission": "Mission",
     "missionDesc": "KI-Bildung für alle zugänglich machen, überall",
@@ -35,13 +33,17 @@
     "meetCreator": "Lerne den Gründer kennen",
     "viewOnGithub": "Auf GitHub ansehen",
     "comingSoon": "Demnächst verfügbar",
-    "mockInterview": "Probeinterview"
+    "mockInterview": "Probeinterview",
+    "aiFoundationsPath": "KI-Grundlagen",
+    "aiMasteryPath": "KI-Meisterschaft",
+    "careerReadyPath": "Karrierebereit",
+    "title": "AI Educademy — Lerne KI auf deine Art"
   },
   "hero": {
-    "badge": "Kostenlos • Open Source • Mehrsprachig",
+    "badge": "Open Source • Mehrsprachig",
     "title": "Lerne KI.",
     "titleHighlight": "Gestalte die Zukunft.",
-    "subtitle": "Kostenlose interaktive Lektionen, die dich vom neugierigen Anfänger zum selbstbewussten Gestalter führen. Starte bei null – geh so weit du willst.",
+    "subtitle": "Interaktive Lektionen, die dich vom neugierigen Anfänger zum selbstbewussten Gestalter führen. Starte bei null – geh so weit du willst.",
     "cta": "Starte deine KI-Reise",
     "ctaSecondary": "Labor entdecken",
     "students": "Lernende",
@@ -157,10 +159,10 @@
     "timeline2020": "Umzug nach London 🇬🇧",
     "timeline2021": "Cloud-native Microservices und Datenpipelines im großen Maßstab 🛒",
     "timeline2024": "Open-Source-Beiträge, Apache Gravitino, GOV.UK, Spring Boot MCP 🌐",
-    "timeline2025": "Gründung von AI Educademy, kostenlose KI-Bildung für alle 🎓",
+    "timeline2025": "Gründung von AI Educademy — KI-Bildung für alle 🎓",
     "pageTitle": "Über AI Educademy",
-    "pageDescription": "AI Educademy ist eine kostenlose Open-Source-Plattform für KI-Bildung, die für alle entwickelt wurde. Erfahre mehr über unsere Mission, KI-Bildung weltweit zugänglich zu machen.",
-    "pageSubtitle": "Kostenlose, quelloffene KI-Bildung für jeden Lernenden.",
+    "pageDescription": "AI Educademy ist eine Open-Source-Plattform für KI-Bildung, die für alle entwickelt wurde. Erfahre mehr über unsere Mission, KI-Bildung weltweit zugänglich zu machen.",
+    "pageSubtitle": "Quelloffene KI-Bildung für jeden Lernenden.",
     "openSourceTitle": "Open Source",
     "openSourceDesc": "Jede Lektion, jede Zeile Code – kostenlos und Open Source. Forke es, übersetze es, mach es zu deinem.",
     "viewOnGithub": "Auf GitHub ansehen"
@@ -228,16 +230,16 @@
     },
     "viewAll": "Alle Programme anzeigen",
     "pageTitle": "KI & Engineering Programme",
-    "pageDescription": "Entdecke unsere kostenlosen KI-Lernpfade und Software-Engineering-Programme. Vom absoluten Anfänger bis Fortgeschritten, lerne in deinem Tempo in 5 Sprachen.",
+    "pageDescription": "Entdecke unsere KI-Lernpfade und Software-Engineering-Programme. Vom absoluten Anfänger bis Fortgeschritten, lerne in deinem Tempo in 5 Sprachen.",
     "track": {
       "ai-learning": {
-        "title": "KI verstehen",
+        "title": "KI-Grundlagen",
         "desc": "Von null zum KI-Experten, naturinspirierter Aufbau",
         "tagline": "Samen → Keimlinge → Äste → Baumkrone → Wald",
         "brand": "Verstehe, wie Maschinen denken, lernen und erschaffen – von deinem ersten ‚Was ist KI?' bis zum Aufbau produktionsreifer Systeme."
       },
       "craft-engineering": {
-        "title": "Code & Algorithmen",
+        "title": "KI-Meisterschaft",
         "desc": "Bestehe dein Trauminterview, werkstattinspirierte Meisterschaft",
         "tagline": "Skizze → Meißel → Handwerk → Feinschliff → Meisterwerk",
         "brand": "Lerne die Algorithmen, die KI antreiben, entwirf die Systeme, die KI skalieren, und bestehe die Interviews, die dir Jobs im KI-Zeitalter sichern."
@@ -1204,12 +1206,12 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "subtitle": "Everything you need to know about AI Educademy — from getting started to going deep.",
-    "cta": "Start Learning for Free",
+    "cta": "Start Learning Now",
     "ctaHref": "/programs",
     "q1": "What is AI Educademy?",
     "a1": "AI Educademy is a free, open-source platform for learning Artificial Intelligence. We offer structured programs, interactive lessons, and hands-on lab experiments to help anyone — regardless of background — understand and apply AI concepts.",
     "q2": "Is AI Educademy really free?",
-    "a2": "Yes, 100% free. No subscriptions, no paywalls, no credit card required. Every lesson, program, and lab experiment is fully accessible at no cost — and will stay that way.",
+    "a2": "Yes,  free. , , . Every lesson, program, and lab experiment is fully accessible at no cost — and will stay that way.",
     "q3": "Who created AI Educademy?",
     "a3": "AI Educademy was built with the mission of making AI education accessible to everyone, everywhere. The project is open-source and community-driven, welcoming contributions from developers, educators, and learners worldwide.",
     "q4": "What programs are available?",
@@ -1259,14 +1261,14 @@
   },
   "pricing": {
     "pageTitle": "Pricing",
-    "pageDescription": "Choose the plan that fits your learning journey. Start free, upgrade when you are ready.",
+    "pageDescription": "Choose the plan that fits your learning journey. Start learning, upgrade when you are ready.",
     "badge": "Simple Pricing",
     "heading": "Learn AI at your own pace",
-    "subheading": "Start for free with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
+    "subheading": "Start with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
     "faqTeaser": "Have questions about our plans?",
     "faqLink": "Check our FAQ",
     "free": {
-      "title": "Free",
+      "title": "Explorer",
       "f1": "Beginner programs (AI Seeds & AI Sprouts)",
       "f2": "First lesson of every program",
       "f3": "All blog posts & articles",
@@ -1291,7 +1293,7 @@
       "forever": "One payment, yours forever"
     },
     "pro": {
-      "f1": "Everything in Free",
+      "f1": "Everything in Explorer",
       "f2": "All programs & learning tracks",
       "f3": "Career Ready interview prep track",
       "f4": "AI Mock Interview lab",

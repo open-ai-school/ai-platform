@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "AI Educademy, Free AI Education for Everyone",
+    "title": "AI Educademy — Learn AI, Your Way",
     "description": "Learn Artificial Intelligence from scratch, in your language. No coding experience needed."
   },
   "nav": {
@@ -23,8 +23,6 @@
     "enterLab": "Enter the Lab",
     "readBlog": "Read the Blog",
     "latestArticles": "Latest articles on AI, education, and technology",
-    "aiLearningPath": "AI Learning Path",
-    "craftEngineeringPath": "Craft Engineering Path",
     "experimentsLoaded": "7 experiments loaded",
     "mission": "Mission",
     "missionDesc": "Making AI education accessible to everyone, everywhere",
@@ -36,13 +34,16 @@
     "viewOnGithub": "View on GitHub",
     "comingSoon": "Coming Soon",
     "faq": "FAQ",
-    "mockInterview": "Mock Interview"
+    "mockInterview": "Mock Interview",
+    "aiFoundationsPath": "AI Foundations",
+    "aiMasteryPath": "AI Mastery",
+    "careerReadyPath": "Career Ready"
   },
   "hero": {
-    "badge": "Free • Open Source • Multilingual",
+    "badge": "Open Source • Multilingual",
     "title": "Learn AI.",
     "titleHighlight": "Build the Future.",
-    "subtitle": "Free interactive lessons that take you from curious beginner to confident builder. Start from zero - go as far as you want.",
+    "subtitle": "Interactive lessons that take you from curious beginner to confident builder. Start from zero - go as far as you want.",
     "cta": "Start Your AI Journey",
     "ctaSecondary": "Explore Lab",
     "students": "Students learning",
@@ -124,7 +125,7 @@
     "story": "The Mind Behind the Idea",
     "storyText1": "I'm Ramesh Reddy Adutla — the founder, designer, and sole engineer behind AI Educademy. With 15 years building large-scale distributed systems at JP Morgan, Sky, and Marks & Spencer across Asia and Europe, I've spent my career at the intersection of technology and real-world impact.",
     "storyText2": "AI will reshape every industry. Yet the best AI education remains locked behind expensive institutions in a handful of countries. That gap isn't just unfair, it's a massive waste of potential.",
-    "storyText3": "I conceived AI Educademy and built it entirely from scratch — the architecture, curriculum, multilingual infrastructure, open-source tooling, every line of code. What started as evenings and weekends became a fully-fledged free platform serving learners in 11 languages across 6 continents.",
+    "storyText3": "I conceived AI Educademy and built it entirely from scratch — the architecture, curriculum, multilingual infrastructure, open-source tooling, every line of code. What started as evenings and weekends became a fully-fledged platform serving learners in 11 languages across 6 continents.",
     "storyText4": "Working across multiple countries where English isn't the first language made one thing clear: language should never be a barrier to learning. I speak English, French, and Telugu, so building a multilingual platform felt like the obvious move.",
     "values": "Our Values",
     "value1": {
@@ -158,12 +159,12 @@
     "timeline2020": "Moved to London 🇬🇧",
     "timeline2021": "Cloud-native microservices and data pipelines at scale 🛒",
     "timeline2024": "Open-source contributions, Apache Gravitino, GOV.UK, Spring Boot MCP 🌐",
-    "timeline2025": "Founded AI Educademy, free AI education for everyone 🎓",
+    "timeline2025": "Founded AI Educademy — AI education for everyone 🎓",
     "pageTitle": "About AI Educademy",
-    "pageDescription": "AI Educademy is a free, open-source AI education platform built for everyone. Learn about our mission to make AI education accessible worldwide.",
-    "pageSubtitle": "Free, open-source AI education for every student.",
+    "pageDescription": "AI Educademy is an open-source AI education platform built for everyone. Learn about our mission to make AI education accessible worldwide.",
+    "pageSubtitle": "Open-source AI education for every student.",
     "openSourceTitle": "Open Source",
-    "openSourceDesc": "Every lesson, every line of code - free and open source. Fork it, translate it, make it yours.",
+    "openSourceDesc": "Every lesson, every line of code — open source. Fork it, translate it, make it yours.",
     "viewOnGithub": "View on GitHub"
   },
   "lessons": {
@@ -218,7 +219,7 @@
     "comingSoon": "Coming Soon",
     "startLearning": "Start Learning",
     "hours": "h",
-    "free": "Free",
+    "free": "Starter",
     "pro": "Pro",
     "levelLabels": {
       "1": "Beginner",
@@ -229,17 +230,17 @@
     },
     "viewAll": "View All Academics",
     "pageTitle": "AI & Engineering Academics",
-    "pageDescription": "Explore our free AI learning tracks and software engineering academics. From absolute beginner to advanced, learn at your own pace in 5 languages.",
+    "pageDescription": "Explore our AI learning tracks and software engineering academics. From absolute beginner to advanced, learn at your own pace in 5 languages.",
     "track": {
       "ai-learning": {
-        "title": "Understanding AI",
-        "desc": "Grow from zero to AI expert, nature-inspired progression",
+        "title": "AI Foundations",
+        "desc": "From curious beginner to confident AI practitioner",
         "tagline": "Seeds → Sprouts → Branches → Canopy → Forest",
         "brand": "Understand how machines think, learn, and create - from your first \"what is AI?\" to building production systems."
       },
       "craft-engineering": {
-        "title": "Code & Algorithms",
-        "desc": "Ace your dream interview, workshop-inspired mastery",
+        "title": "AI Mastery",
+        "desc": "Master data structures, system design, and engineering for the AI era",
         "tagline": "Sketch → Chisel → Craft → Polish → Masterpiece",
         "brand": "Learn the algorithms that power AI, design the systems that scale AI, and ace the interviews that land you AI-era jobs."
       },
@@ -747,9 +748,9 @@
     "updates": "Stay Updated",
     "openSource": "Open Source",
     "openSourceDesc": "Built openly, view code, contribute, or fork",
-    "shareText": "Free AI education for everyone",
+    "shareText": "AI education for everyone",
     "headline": "Join the Movement",
-    "subtitle": "Get the latest lessons, tips, and updates delivered to your inbox. Star us on GitHub to support free AI education for everyone.",
+    "subtitle": "Get the latest lessons, tips, and updates delivered to your inbox. Star us on GitHub to support AI education for everyone.",
     "shareTitle": "AI Educademy"
   },
   "lab": {
@@ -1205,12 +1206,12 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "subtitle": "Everything you need to know about AI Educademy — from getting started to going deep.",
-    "cta": "Start Learning for Free",
+    "cta": "Start Learning Now",
     "ctaHref": "/programs",
     "q1": "What is AI Educademy?",
-    "a1": "AI Educademy is a free, open-source platform for learning Artificial Intelligence. We offer structured programs, interactive lessons, and hands-on lab experiments to help anyone — regardless of background — understand and apply AI concepts.",
-    "q2": "Is AI Educademy really free?",
-    "a2": "Yes, 100% free. No subscriptions, no paywalls, no credit card required. Every lesson, program, and lab experiment is fully accessible at no cost — and will stay that way.",
+    "a1": "AI Educademy is an open-source platform for learning Artificial Intelligence. We offer structured programs, interactive lessons, and hands-on lab experiments to help anyone — regardless of background — understand and apply AI concepts.",
+    "q2": "How does AI Educademy pricing work?",
+    "a2": "AI Educademy offers a generous free tier — beginner programs, first lessons of every course, blog posts, and lab experiments are all free. When you're ready to go deeper, our Pro plan unlocks every program, track, certificate, and premium feature at an affordable price.",
     "q3": "Who created AI Educademy?",
     "a3": "AI Educademy was built with the mission of making AI education accessible to everyone, everywhere. The project is open-source and community-driven, welcoming contributions from developers, educators, and learners worldwide.",
     "q4": "What programs are available?",
@@ -1238,9 +1239,9 @@
     "q15": "What is the Lab section?",
     "a15": "The Lab is a collection of interactive AI experiments you can run live in your browser — no installation or setup required. Explore a neural network playground, test AI vs human text detection, experiment with prompts, generate images, analyse sentiment, chat with an AI, and explore ethics scenarios.",
     "q16": "Do I need an account to start learning?",
-    "a16": "No account needed. You can start any lesson or program immediately without signing up. Creating a free account (or signing in with Google) lets you track your progress across devices and pick up exactly where you left off.",
+    "a16": "No account needed to browse. You can start any beginner lesson or program immediately without signing up. Creating an account (or signing in with Google) lets you track your progress across devices and unlock premium content.",
     "q17": "Are there certificates or credentials?",
-    "a17": "Completion certificates are on our roadmap. Currently, the focus is on building genuine understanding and practical skills. When certificates launch, they'll be available free of charge for all completed programs.",
+    "a17": "Completion certificates are on our roadmap. Currently, the focus is on building genuine understanding and practical skills. When certificates launch, they'll be available for Pro subscribers who complete programs.",
     "q18": "How often is new content added?",
     "a18": "New lessons, programs, blog articles, and lab experiments are added regularly. The platform is actively maintained and evolves alongside advances in AI technology, so there's always something new to explore.",
     "q19": "What AI topics do the programs cover?",
@@ -1254,20 +1255,20 @@
     "q23": "How do I track my learning progress?",
     "a23": "Progress is tracked automatically as you complete lessons and programs. Sign in or create a guest profile to access your personalised progress dashboard, see your completion stats, and easily resume where you left off.",
     "q24": "What makes AI Educademy different from other platforms?",
-    "a24": "Four things set us apart: it's completely free with no premium tiers, it's fully open source and transparent, it's available in 9 languages with genuine multilingual content, and it's designed from the ground up for true beginners — no jargon, no intimidating prerequisites, no gatekeeping.",
+    "a24": "Four things set us apart: a generous free tier so anyone can start learning, it's fully open source and transparent, it's available in 11 languages with genuine multilingual content, and it's designed from the ground up for true beginners — no jargon, no intimidating prerequisites, no gatekeeping.",
     "q25": "How do I get started?",
-    "a25": "Just click 'Start Learning for Free' below (or the 'Get Started' button in the navigation) and choose a program. We recommend starting with AI Seeds if you're new to AI. No registration required — you can begin learning right now, in your language."
+    "a25": "Just click 'Start Learning' below (or the 'Get Started' button in the navigation) and choose a program. We recommend starting with AI Seeds if you're new to AI. No registration required to browse — you can begin learning right now, in your language."
   },
   "pricing": {
     "pageTitle": "Pricing",
-    "pageDescription": "Choose the plan that fits your learning journey. Start free, upgrade when you are ready.",
+    "pageDescription": "Choose the plan that fits your learning journey. Start learning, upgrade when you are ready.",
     "badge": "Simple Pricing",
     "heading": "Learn AI at your own pace",
-    "subheading": "Start for free with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
+    "subheading": "Start with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
     "faqTeaser": "Have questions about our plans?",
     "faqLink": "Check our FAQ",
     "free": {
-      "title": "Free",
+      "title": "Explorer",
       "f1": "Beginner programs (AI Seeds & AI Sprouts)",
       "f2": "First lesson of every program",
       "f3": "All blog posts & articles",
@@ -1292,7 +1293,7 @@
       "forever": "One payment, yours forever"
     },
     "pro": {
-      "f1": "Everything in Free",
+      "f1": "Everything in Explorer",
       "f2": "All programs & learning tracks",
       "f3": "Career Ready interview prep track",
       "f4": "AI Mock Interview lab",

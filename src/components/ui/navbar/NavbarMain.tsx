@@ -14,7 +14,7 @@ import { useGuestProfile } from "@/hooks/useGuestProfile";
 import { BrandMark } from "../BrandMark";
 import { NavSearch } from "../NavSearch";
 import { NavDropdown } from "../NavDropdown";
-import { AI_PATH, CRAFT_PATH, LAB_EXPERIMENTS } from "./navData";
+import { AI_PATH, CRAFT_PATH, CAREER_READY_PATH, LAB_EXPERIMENTS } from "./navData";
 import { HamburgerIcon } from "./HamburgerIcon";
 import { MobileSection } from "./MobileSection";
 import { MobilePrograms } from "./MobileMenu";
@@ -245,8 +245,9 @@ export function Navbar() {
             <div className="py-2">
               {/* Programs */}
               <MobileSection title={t("programs")} icon="📚">
-                <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("aiLearningPath")} programs={AI_PATH} trackSlug="ai-learning" />
-                <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("craftEngineeringPath")} programs={CRAFT_PATH} trackSlug="craft-engineering" />
+                <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("aiFoundationsPath")} programs={AI_PATH} trackSlug="ai-learning" />
+                <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("aiMasteryPath")} programs={CRAFT_PATH} trackSlug="craft-engineering" />
+                <MobilePrograms basePath={basePath} closeMobile={closeMobile} pathLabel={t("careerReadyPath")} programs={CAREER_READY_PATH} trackSlug="career-ready" />
               </MobileSection>
 
               {/* Lab */}

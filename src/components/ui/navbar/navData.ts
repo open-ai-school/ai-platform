@@ -9,6 +9,7 @@ export interface NavProgram {
 
 const AI_PATH_SLUGS = programsData.tracks.find((t) => t.slug === "ai-learning")?.programs ?? [];
 const CRAFT_PATH_SLUGS = programsData.tracks.find((t) => t.slug === "craft-engineering")?.programs ?? [];
+const CAREER_READY_SLUGS = programsData.tracks.find((t) => t.slug === "career-ready")?.programs ?? [];
 
 export function buildNavPrograms(slugs: string[]): NavProgram[] {
   return slugs.map((slug) => {
@@ -19,6 +20,7 @@ export function buildNavPrograms(slugs: string[]): NavProgram[] {
 
 export const AI_PATH = buildNavPrograms(AI_PATH_SLUGS);
 export const CRAFT_PATH = buildNavPrograms(CRAFT_PATH_SLUGS);
+export const CAREER_READY_PATH = buildNavPrograms(CAREER_READY_SLUGS);
 
 export const LAB_EXPERIMENTS = [
   { slug: "neural-playground", icon: "🧠" },

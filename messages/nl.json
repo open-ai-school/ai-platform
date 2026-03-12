@@ -23,8 +23,6 @@
     "enterLab": "Ga naar het lab",
     "readBlog": "Lees de blog",
     "latestArticles": "Laatste artikelen over AI, onderwijs en technologie",
-    "aiLearningPath": "AI-leerpad",
-    "craftEngineeringPath": "Ambachtelijk engineeringpad",
     "experimentsLoaded": "7 experimenten geladen",
     "mission": "Missie",
     "missionDesc": "AI-onderwijs toegankelijk maken voor iedereen, overal",
@@ -35,13 +33,17 @@
     "meetCreator": "Ontmoet de maker",
     "viewOnGithub": "Bekijk op GitHub",
     "comingSoon": "Binnenkort beschikbaar",
-    "mockInterview": "Proef-sollicitatie"
+    "mockInterview": "Proef-sollicitatie",
+    "aiFoundationsPath": "AI-Fundamenten",
+    "aiMasteryPath": "AI-Meesterschap",
+    "careerReadyPath": "Carrière Klaar",
+    "title": "AI Educademy — Leer AI op jouw manier"
   },
   "hero": {
-    "badge": "Gratis • Open source • Meertalig",
+    "badge": "Open source • Meertalig",
     "title": "Leer AI.",
     "titleHighlight": "Bouw de toekomst.",
-    "subtitle": "Gratis interactieve lessen die je van nieuwsgierige beginner naar zelfverzekerde bouwer brengen. Begin bij nul - ga zo ver als je wilt.",
+    "subtitle": "Interactieve lessen die je van nieuwsgierige beginner naar zelfverzekerde bouwer brengen. Begin bij nul - ga zo ver als je wilt.",
     "cta": "Begin jouw AI-reis",
     "ctaSecondary": "Ontdek het Lab",
     "students": "Studenten aan het leren",
@@ -231,13 +233,13 @@
     "pageDescription": "Ontdek onze gratis AI-leertrajecten en software-engineering opleidingen. Van absolute beginner tot gevorderd, leer in je eigen tempo in 5 talen.",
     "track": {
       "ai-learning": {
-        "title": "AI begrijpen",
+        "title": "AI-Fundamenten",
         "desc": "Groei van nul naar AI-expert, door de natuur geïnspireerde voortgang",
         "tagline": "Zaden → Spruiten → Takken → Kruin → Bos",
         "brand": "Begrijp hoe machines denken, leren en creëren - van je eerste \"wat is AI?\" tot het bouwen van productiesystemen."
       },
       "craft-engineering": {
-        "title": "Code & Algoritmen",
+        "title": "AI-Meesterschap",
         "desc": "Haal je droombaan, werkplaats-geïnspireerde meesterschap",
         "tagline": "Schets → Beitel → Ambacht → Polijst → Meesterwerk",
         "brand": "Leer de algoritmen die AI aandrijven, ontwerp systemen die AI schalen, en haal de sollicitaties die je banen in het AI-tijdperk opleveren."
@@ -1204,12 +1206,12 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "subtitle": "Everything you need to know about AI Educademy — from getting started to going deep.",
-    "cta": "Start Learning for Free",
+    "cta": "Start Learning Now",
     "ctaHref": "/programs",
     "q1": "What is AI Educademy?",
     "a1": "AI Educademy is a free, open-source platform for learning Artificial Intelligence. We offer structured programs, interactive lessons, and hands-on lab experiments to help anyone — regardless of background — understand and apply AI concepts.",
     "q2": "Is AI Educademy really free?",
-    "a2": "Yes, 100% free. No subscriptions, no paywalls, no credit card required. Every lesson, program, and lab experiment is fully accessible at no cost — and will stay that way.",
+    "a2": "Yes,  free. , , . Every lesson, program, and lab experiment is fully accessible at no cost — and will stay that way.",
     "q3": "Who created AI Educademy?",
     "a3": "AI Educademy was built with the mission of making AI education accessible to everyone, everywhere. The project is open-source and community-driven, welcoming contributions from developers, educators, and learners worldwide.",
     "q4": "What programs are available?",
@@ -1259,14 +1261,14 @@
   },
   "pricing": {
     "pageTitle": "Pricing",
-    "pageDescription": "Choose the plan that fits your learning journey. Start free, upgrade when you are ready.",
+    "pageDescription": "Choose the plan that fits your learning journey. Start learning, upgrade when you are ready.",
     "badge": "Simple Pricing",
     "heading": "Learn AI at your own pace",
-    "subheading": "Start for free with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
+    "subheading": "Start with our beginner programs. Upgrade to Pro to unlock every program, track, certificate, and premium feature.",
     "faqTeaser": "Have questions about our plans?",
     "faqLink": "Check our FAQ",
     "free": {
-      "title": "Free",
+      "title": "Explorer",
       "f1": "Beginner programs (AI Seeds & AI Sprouts)",
       "f2": "First lesson of every program",
       "f3": "All blog posts & articles",
@@ -1291,7 +1293,7 @@
       "forever": "One payment, yours forever"
     },
     "pro": {
-      "f1": "Everything in Free",
+      "f1": "Everything in Explorer",
       "f2": "All programs & learning tracks",
       "f3": "Career Ready interview prep track",
       "f4": "AI Mock Interview lab",

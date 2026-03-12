@@ -16,7 +16,7 @@
 
 <br />
 
-A **free, open-source AI education platform** with 10 structured programs across 3 learning tracks, available in 11 languages. From absolute beginners to advanced practitioners — learn AI interactively with MDX lessons, an interactive lab, AI chatbot, mock interviews, progress tracking, and certificates.
+An **open-source AI education platform** with 15 structured programs across 3 learning tracks, available in 11 languages. From absolute beginners to advanced practitioners — learn AI interactively with MDX lessons, an interactive lab, AI chatbot, mock interviews, progress tracking, and Pro subscriptions for premium content.
 
 <br />
 
@@ -39,7 +39,7 @@ A **free, open-source AI education platform** with 10 structured programs across
 | | Feature | Description |
 |---|---------|-------------|
 | 🌍 | **11 Languages** | EN, FR, NL, HI, TE, ES, PT, DE, ZH, JA, AR — [add yours!](CONTRIBUTING.md) |
-| 📚 | **10 Programs, 3 Tracks** | AI Learning + Craft Engineering + Career Ready |
+| 📚 | **15 Programs, 3 Tracks** | AI Foundations + AI Mastery + Career Ready |
 | 🧪 | **Interactive Lab** | 7 experiments — Neural Network Playground, Prompt Lab, Sentiment Analyzer, and more |
 | 🤖 | **AI Chatbot (Edu)** | Ask questions about any program — powered by Gemini |
 | 🎯 | **Mock Interviews** | STAR-method behavioural, technical, and ML interview simulator with AI feedback |
@@ -145,7 +145,7 @@ graph TB
 
 AI Educademy offers **3 learning tracks** with a nature growth metaphor — a seed grows into a forest:
 
-### 🧠 Track 1: AI Learning
+### 🧠 Track 1: AI Foundations
 
 | Level | Program | Description | Status |
 |-------|---------|-------------|--------|
@@ -155,15 +155,25 @@ AI Educademy offers **3 learning tracks** with a nature growth metaphor — a se
 | 4 | [🏕️ AI Canopy](https://github.com/ai-educademy/ai-canopy) | Production AI — MLOps, RAG, governance | ✅ Live |
 | 5 | [🌲 AI Forest](https://github.com/ai-educademy/ai-forest) | Mastery — research, leadership, frontier AI | ✅ Live |
 
-### 🛠️ Track 2: Craft Engineering
+### 🛠️ Track 2: AI Mastery
 
 | Level | Program | Description | Status |
 |-------|---------|-------------|--------|
-| 1 | ✏️ AI Sketch | Getting started with AI tools | ✅ Live |
-| 2 | 🪨 AI Chisel | Shaping your AI skills | ✅ Live |
-| 3 | ⚒️ AI Craft | Building with AI | ✅ Live |
-| 4 | 💎 AI Polish | Refining AI solutions | ✅ Live |
-| 5 | 🏆 AI Masterpiece | Creating production-grade AI | ✅ Live |
+| 1 | ✏️ AI Sketch | DSA fundamentals — getting started | ✅ Live |
+| 2 | 🪨 AI Chisel | Intermediate patterns — carving precision | ✅ Live |
+| 3 | ⚒️ AI Craft | System design — building at scale | ✅ Live |
+| 4 | 💎 AI Polish | Behavioural mastery — refining excellence | ✅ Live |
+| 5 | 🏆 AI Masterpiece | End-to-end case studies — portfolio ready | ✅ Live |
+
+### 🚀 Track 3: Career Ready
+
+| Level | Program | Description | Status |
+|-------|---------|-------------|--------|
+| 1 | 🚀 Interview Launchpad | Interview prep fundamentals | ✅ Live |
+| 2 | 🌟 Behavioural Mastery | STAR method, leadership questions | ✅ Live |
+| 3 | 💻 Technical Interviews | Live coding, system design rounds | ✅ Live |
+| 4 | 🤖 AI & ML Interviews | Specialised ML/AI interview prep | ✅ Live |
+| 5 | 🏆 Offer & Beyond | Negotiation, onboarding, career growth | ✅ Live |
 
 ### 🎯 Track 3: Career Ready
 
