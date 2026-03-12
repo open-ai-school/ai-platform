@@ -2,12 +2,16 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 interface CertificateButtonProps {
   programSlug: string;
   totalLessons: number;
   completedLessons: number;
   isSignedIn: boolean;
+  isPremiumUser?: boolean;
+  isFree?: boolean;
+  locale?: string;
 }
 
 export function CertificateButton({
@@ -15,9 +19,14 @@ export function CertificateButton({
   totalLessons,
   completedLessons,
   isSignedIn,
+  isPremiumUser = false,
+  isFree = false,
+  locale = "en",
 }: CertificateButtonProps) {
   const t = useTranslations("certificates");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const basePath = locale === "en" ? "" : `/${locale}`;
 
   if (!isSignedIn) {
     return (
@@ -31,8 +40,13 @@ export function CertificateButton({
 
   const isComplete = completedLessons >= totalLessons && totalLessons > 0;
   const remaining = totalLessons - completedLessons;
+  const canGetCertificate = isPremiumUser || isFree;
 
   async function handleDownload() {
+    if (!canGetCertificate) {
+      router.push(`${basePath}/pricing`);
+      return;
+    }
     setLoading(true);
     try {
       const res = await fetch(
@@ -61,24 +75,39 @@ export function CertificateButton({
   return (
     <div className="text-center p-6 rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)]">
       {isComplete ? (
-        <>
-          <p className="text-sm font-medium mb-3">🎉 {t("completed")}</p>
-          <button
-            onClick={handleDownload}
-            disabled={loading}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-white font-semibold transition-all duration-200 hover:scale-[1.03] hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
-            style={{ backgroundColor: "var(--color-primary)" }}
-          >
-            {loading ? (
-              <>
-                <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                {t("generating")}
-              </>
-            ) : (
-              <>📜 {t("download")}</>
-            )}
-          </button>
-        </>
+        canGetCertificate ? (
+          <>
+            <p className="text-sm font-medium mb-3">🎉 {t("completed")}</p>
+            <button
+              onClick={handleDownload}
+              disabled={loading}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-white font-semibold transition-all duration-200 hover:scale-[1.03] hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
+              style={{ backgroundColor: "var(--color-primary)" }}
+            >
+              {loading ? (
+                <>
+                  <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  {t("generating")}
+                </>
+              ) : (
+                <>📜 {t("download")}</>
+              )}
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="text-sm font-medium mb-3">🎉 {t("completed")}</p>
+            <button
+              onClick={() => router.push(`${basePath}/pricing`)}
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-white font-semibold transition-all duration-200 hover:scale-[1.03] hover:shadow-xl bg-gradient-to-r from-indigo-500 to-violet-600"
+            >
+              🏆 {t("upgradeToCertificate")}
+            </button>
+            <p className="text-xs text-[var(--color-text-muted)] mt-2">
+              {t("premiumOnly")}
+            </p>
+          </>
+        )
       ) : (
         <p className="text-sm text-[var(--color-text-muted)]">
           📚 {t("progress", { remaining })}

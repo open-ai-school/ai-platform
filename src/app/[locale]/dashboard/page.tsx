@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useProgress } from "@/hooks/useProgress";
 import { useStreak } from "@/hooks/useStreak";
@@ -15,6 +15,7 @@ import { AnimatedProgressBar } from "@/components/ui/MotionWrappers";
 import { locales } from "@/i18n/request";
 import { Flame, ArrowRight, Trophy } from "lucide-react";
 import type { DynamicTranslate } from "@/lib/i18n-utils";
+import { isFreeProgram } from "@/lib/content-access";
 
 const PROGRAMS = [
   {
@@ -205,7 +206,10 @@ export default function DashboardPage() {
   const { currentStreak, longestStreak } = useStreak();
   const { data: session } = useSession();
   const { profile, isSignedIn: isGuestSignedIn } = useGuestProfile();
+  const router = useRouter();
   const isSignedIn = !!session?.user || isGuestSignedIn;
+  const userRole = (session?.user as { role?: string })?.role ?? "free";
+  const isPremiumUser = userRole === "pro" || userRole === "admin";
   const [certProgram, setCertProgram] = useState<string | null>(null);
   const pathname = usePathname();
 
@@ -305,7 +309,7 @@ export default function DashboardPage() {
         <Certificate
           programName={tpd(`${certProgramData.slug}.title`)}
           programIcon={certProgramData.icon}
-          userName={profile?.name || t("defaultUser")}
+          userName={session?.user?.name || profile?.name || t("defaultUser")}
           completionDate={certCompletionDate}
           onClose={() => setCertProgram(null)}
         />
@@ -429,13 +433,23 @@ export default function DashboardPage() {
                     </span>
                   </div>
                   {progPct === 100 && (
-                    <button
-                      onClick={() => setCertProgram(program.slug)}
-                      className="mt-2 inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-yellow-400 to-amber-500 text-white shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer"
-                    >
-                      <Trophy size={14} />
-                      {t("viewCertificate")}
-                    </button>
+                    isPremiumUser || isFreeProgram(program.slug) ? (
+                      <button
+                        onClick={() => setCertProgram(program.slug)}
+                        className="mt-2 inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-yellow-400 to-amber-500 text-white shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer"
+                      >
+                        <Trophy size={14} />
+                        {t("viewCertificate")}
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => router.push(`${basePath}/pricing`)}
+                        className="mt-2 inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer"
+                      >
+                        <Trophy size={14} />
+                        {t("upgradeCertificate")}
+                      </button>
+                    )
                   )}
                 </div>
               </div>

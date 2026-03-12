@@ -13,6 +13,8 @@ import { db } from "@/lib/db";
 import { lessonProgress } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import { CertificateButton } from "@/components/certificates/CertificateButton";
+import { isFreeProgram } from "@/lib/content-access";
+import { users } from "@/lib/db/schema";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -76,21 +78,30 @@ export default async function ProgramPage({
   const lessons = getLessons(programSlug, locale);
   const basePath = locale === "en" ? "" : `/${locale}`;
 
-  // Fetch certificate progress
+  // Fetch certificate progress and user role
   const session = await auth();
   let completedLessons = 0;
+  let userRole = "free";
   if (session?.user?.id && db) {
-    const completed = await db
-      .select({ lessonSlug: lessonProgress.lessonSlug })
-      .from(lessonProgress)
-      .where(
-        and(
-          eq(lessonProgress.userId, session.user.id),
-          eq(lessonProgress.programSlug, programSlug)
-        )
-      );
+    const [completed, userRecord] = await Promise.all([
+      db
+        .select({ lessonSlug: lessonProgress.lessonSlug })
+        .from(lessonProgress)
+        .where(
+          and(
+            eq(lessonProgress.userId, session.user.id),
+            eq(lessonProgress.programSlug, programSlug)
+          )
+        ),
+      db
+        .select({ role: users.role })
+        .from(users)
+        .where(eq(users.id, session.user.id))
+        .then((rows) => rows[0]),
+    ]);
     const completedSlugs = new Set(completed.map((c) => c.lessonSlug));
     completedLessons = lessons.filter((l) => completedSlugs.has(l.slug)).length;
+    userRole = userRecord?.role ?? "free";
   }
 
   return (
@@ -237,6 +248,9 @@ export default async function ProgramPage({
               totalLessons={lessons.length}
               completedLessons={completedLessons}
               isSignedIn={!!session?.user}
+              isPremiumUser={userRole === "pro" || userRole === "admin"}
+              isFree={isFreeProgram(programSlug)}
+              locale={locale}
             />
           </div>
         </AnimatedSection>

@@ -1,10 +1,11 @@
 import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
-import { lessonProgress } from "@/lib/db/schema";
+import { lessonProgress, users } from "@/lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import { getProgram } from "@/lib/programs";
 import { getLessons } from "@/lib/lessons";
+import { isFreeProgram } from "@/lib/content-access";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import crypto from "crypto";
 
@@ -65,6 +66,22 @@ export async function GET(req: NextRequest) {
       }),
       { status: 403, headers: { "Content-Type": "application/json" } }
     );
+  }
+
+  // Premium gate: free users can only get certificates for free programs
+  if (!isFreeProgram(programSlug)) {
+    const userRecord = await db
+      .select({ role: users.role })
+      .from(users)
+      .where(eq(users.id, session.user.id))
+      .then((rows) => rows[0]);
+    const role = userRecord?.role ?? "free";
+    if (role !== "pro" && role !== "admin") {
+      return new Response(
+        JSON.stringify({ error: "Upgrade to Pro to download certificates for premium programs" }),
+        { status: 403, headers: { "Content-Type": "application/json" } }
+      );
+    }
   }
 
   // Generate certificate PDF

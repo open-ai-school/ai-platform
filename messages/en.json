@@ -615,6 +615,7 @@
     "longestStreak": "Longest Streak",
     "days": "days",
     "viewCertificate": "View Certificate",
+    "upgradeCertificate": "Upgrade to Get Certificate",
     "emptyLearn": "Learn",
     "emptyPractice": "Practice",
     "emptyEarn": "Earn",
@@ -1438,7 +1439,9 @@
     "generating": "Generating...",
     "progress": "Complete {remaining} more lessons to earn your certificate",
     "completed": "You've earned your certificate!",
-    "notSignedIn": "Sign in to track progress and earn certificates"
+    "notSignedIn": "Sign in to track progress and earn certificates",
+    "upgradeToCertificate": "Upgrade to Pro for Certificate",
+    "premiumOnly": "Certificates for premium programs are available with a Pro subscription"
   },
   "terms": {
     "title": "Terms of Service",
