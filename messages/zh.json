@@ -1213,7 +1213,9 @@
     "navImageGen": "图像生成器",
     "navSentiment": "情感分析器",
     "navChatbot": "聊天机器人构建器",
-    "navEthics": "伦理模拟器"
+    "navEthics": "伦理模拟器",
+    "mockInterviewTitle": "AI Mock Interview Lab",
+    "mockInterviewDesc": "Practice behavioral, technical & system design interviews with AI"
   },
   "ui": {
     "light": "浅色",

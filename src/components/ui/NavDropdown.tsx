@@ -82,24 +82,14 @@ export function NavDropdown({
         {isActive && (
           <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-[var(--color-primary)]" />
         )}
-        {/* Chevron */}
-        <svg
-          className={`inline-block ml-1 w-3 h-3 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-          fill="none"
-          viewBox="0 0 12 12"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M3 4.5l3 3 3-3" />
-        </svg>
       </button>
 
       {/* Dropdown panel — CSS transition (always rendered, hidden via opacity/transform) */}
       <div
-        className={`absolute top-full pt-2 ${alignClass} transition-all duration-200 ${
+        className={`absolute top-full pt-2 ${alignClass} transition-all duration-300 ease-out ${
           open
-            ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-            : "opacity-0 -translate-y-2 scale-[0.98] pointer-events-none"
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 -translate-y-1 pointer-events-none"
         }`}
         style={{ zIndex: 60 }}
       >

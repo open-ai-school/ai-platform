@@ -21,7 +21,6 @@ import { MobilePrograms } from "./MobileMenu";
 import {
   ProgramsDropdownContent,
   LabDropdownContent,
-  BlogDropdownContent,
   AboutDropdownContent,
 } from "./dropdowns";
 
@@ -121,13 +120,20 @@ export function Navbar() {
                 <LabDropdownContent basePath={basePath} t={t} />
               </NavDropdown>
 
-              <NavDropdown
-                trigger={t("blog")}
-                isActive={isActive("/blog")}
-                align="center"
+              {/* Blog – simple direct link */}
+              <Link
+                href={`${basePath}/blog`}
+                className={`relative px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                  isActive("/blog")
+                    ? "text-[var(--color-primary)] bg-[var(--color-primary)]/10 font-semibold"
+                    : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.06]"
+                }`}
               >
-                <BlogDropdownContent basePath={basePath} t={t} />
-              </NavDropdown>
+                {t("blog")}
+                {isActive("/blog") && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-[var(--color-primary)]" />
+                )}
+              </Link>
 
               {/* FAQ – simple direct link */}
               <Link
@@ -301,15 +307,7 @@ export function Navbar() {
                   className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
                 >
                   <span>🎯</span>
-                  <span className="font-medium">{t("mission")}</span>
-                </Link>
-                <Link
-                  href={`${basePath}/about`}
-                  onClick={closeMobile}
-                  className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
-                >
-                  <span>💜</span>
-                  <span className="font-medium">{t("values")}</span>
+                  <span className="font-medium">{t("about")}</span>
                 </Link>
                 <a
                   href="https://github.com/ai-educademy"
@@ -318,7 +316,7 @@ export function Navbar() {
                   className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
                 >
                   <span>⭐</span>
-                  <span className="font-medium">{t("viewOnGithub")}</span>
+                  <span className="font-medium">{t("openSource")}</span>
                 </a>
               </MobileSection>
 

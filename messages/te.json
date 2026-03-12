@@ -1213,7 +1213,9 @@
     "navImageGen": "ఇమేజ్ జనరేటర్",
     "navSentiment": "సెంటిమెంట్ ఎనలైజర్",
     "navChatbot": "చాట్‌బాట్ బిల్డర్",
-    "navEthics": "ఎథిక్స్ సిమ్యులేటర్"
+    "navEthics": "ఎథిక్స్ సిమ్యులేటర్",
+    "mockInterviewTitle": "AI Mock Interview Lab",
+    "mockInterviewDesc": "Practice behavioral, technical & system design interviews with AI"
   },
   "ui": {
     "light": "లైట్",

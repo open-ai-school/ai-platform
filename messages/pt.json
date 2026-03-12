@@ -1213,7 +1213,9 @@
     "navImageGen": "Gerador de Imagens",
     "navSentiment": "Analisador de Sentimento",
     "navChatbot": "Construtor de Chatbots",
-    "navEthics": "Simulador de Ética"
+    "navEthics": "Simulador de Ética",
+    "mockInterviewTitle": "AI Mock Interview Lab",
+    "mockInterviewDesc": "Practice behavioral, technical & system design interviews with AI"
   },
   "ui": {
     "light": "Claro",

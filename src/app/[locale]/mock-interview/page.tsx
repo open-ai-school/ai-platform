@@ -105,35 +105,6 @@ export default function MockInterviewPage() {
   const role = session?.user?.role ?? "free";
   const isPremium = role === "pro" || role === "admin";
 
-  // Premium gate
-  if (status === "loading") {
-    return (
-      <div className="min-h-[60vh] flex items-center justify-center">
-        <div className="w-8 h-8 border-3 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  if (!isPremium) {
-    return (
-      <div className="min-h-[60vh] flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <div className="text-5xl mb-4">🎯</div>
-          <h2 className="text-2xl font-bold mb-2">Premium Feature</h2>
-          <p className="text-[var(--color-text-muted)] mb-6">
-            AI Mock Interviews are available for premium members. Upgrade to practice with AI-powered interview simulations.
-          </p>
-          <button
-            onClick={() => router.push("/pricing")}
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold hover:scale-[1.03] active:scale-[0.98] transition-all duration-200 shadow-lg"
-          >
-            View Plans →
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   const [phase, setPhase] = useState<Phase>("setup");
   const [interviewType, setInterviewType] = useState<InterviewType>("behavioral");
   const [history, setHistory] = useState<Message[]>([]);
@@ -202,6 +173,10 @@ export default function MockInterviewPage() {
   );
 
   const startInterview = useCallback(async () => {
+    if (!isPremium) {
+      router.push("/pricing");
+      return;
+    }
     setLoading(true);
     setLoadingType("question");
     setError("");
@@ -224,7 +199,7 @@ export default function MockInterviewPage() {
     } finally {
       setLoading(false);
     }
-  }, [callAPI, interviewType]);
+  }, [callAPI, interviewType, isPremium, router]);
 
   const submitAnswer = useCallback(async () => {
     if (!userAnswer.trim()) return;
@@ -337,6 +312,15 @@ export default function MockInterviewPage() {
     }
   }, [rounds, interviewType]);
 
+  /* ─── Loading state ─── */
+  if (status === "loading") {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="w-8 h-8 border-3 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
   /* ─── Setup Phase ─── */
   if (phase === "setup") {
     return (
@@ -405,6 +389,11 @@ export default function MockInterviewPage() {
                 </>
               )}
             </button>
+            {!isPremium && (
+              <p className="mt-3 text-sm text-amber-400/80">
+                ✦ Premium — you&apos;ll be redirected to pricing
+              </p>
+            )}
           </div>
         </div>
       </div>

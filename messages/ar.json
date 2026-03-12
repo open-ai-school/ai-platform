@@ -1330,7 +1330,9 @@
     "navImageGen": "مولّد الصور",
     "navSentiment": "محلل المشاعر",
     "navChatbot": "باني روبوت الدردشة",
-    "navEthics": "محاكي الأخلاقيات"
+    "navEthics": "محاكي الأخلاقيات",
+    "mockInterviewTitle": "AI Mock Interview Lab",
+    "mockInterviewDesc": "Practice behavioral, technical & system design interviews with AI"
   },
   "ui": {
     "light": "فاتح",

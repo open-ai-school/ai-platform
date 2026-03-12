@@ -1,7 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
+import Link from "next/link";
 import { ALL_GAMES, NeuralNetworkPlayground } from "@/components/playground/MiniGames";
 import { type GameMeta, type GameCategory } from "@/components/playground/GameCard";
 import AIOrHumanGame from "@/components/playground/AIOrHumanGame";
@@ -182,6 +183,7 @@ const ALL_CATEGORIES: Array<{ key: GameCategory | "all"; labelKey: string; color
 export default function LabPage() {
   const t = useTranslations("lab");
   const td = t as unknown as DynamicTranslate;
+  const locale = useLocale();
   const [activeGame, setActiveGame] = useState<GameMeta | null>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const [closing, setClosing] = useState(false);
@@ -335,6 +337,28 @@ export default function LabPage() {
               </div>
             </div>
           </button>
+
+          {/* ── Mock Interview (Premium) ── */}
+          <Link
+            href={`${locale === "en" ? "" : "/" + locale}/mock-interview`}
+            className="group relative w-full mb-8 rounded-xl border border-[var(--color-border)] text-left cursor-pointer overflow-hidden bg-[var(--color-bg-card)] hover:border-[var(--color-primary)]/40 transition-all duration-300 hover:shadow-lg hover:shadow-[var(--color-primary)]/5"
+          >
+            <TerminalTitleBar title="mock_interview.exe" tag={{ label: "Premium", color: "#f59e0b" }} />
+            <div className="px-5 py-5 sm:px-6 sm:py-6 flex items-center gap-5">
+              <span className="text-4xl sm:text-5xl shrink-0" style={{ animation: "pg-float 3s ease-in-out infinite" }}>🎯</span>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-amber-500">AI Mock Interview</span>
+                  <span className="font-mono text-[9px] uppercase tracking-widest px-1.5 py-0.5 rounded border text-amber-500 border-amber-500/30">✦ Pro</span>
+                </div>
+                <h2 className="text-lg sm:text-xl font-mono font-bold text-[var(--color-text)] line-clamp-1">{t("mockInterviewTitle")}</h2>
+                <p className="text-sm text-[var(--color-text-muted)] mt-0.5 line-clamp-1 font-mono">{t("mockInterviewDesc")}</p>
+              </div>
+              <div className="shrink-0 hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-xs font-bold border border-amber-500/40 text-amber-500 bg-amber-500/5 transition-all group-hover:border-opacity-60">
+                {"> Start →"}
+              </div>
+            </div>
+          </Link>
 
           {/* ── Category Filter ── */}
           <div className="flex flex-wrap gap-2 mb-6">
