@@ -4,7 +4,7 @@ import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/lib/db";
 import { users, accounts, sessions, verificationTokens } from "@/lib/db/schema";
-import { sendWelcomeEmail } from "@/lib/email";
+import { sendWelcomeEmail, sendAdminNotification } from "@/lib/email";
 
 if (!process.env.AUTH_SECRET) {
   console.warn(
@@ -41,6 +41,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         sendWelcomeEmail(user.email).catch((err) =>
           console.error("[Auth] Welcome email failed:", err)
         );
+        sendAdminNotification(
+          "New user signed up! 🎉",
+          `<p><strong>Name:</strong> ${user.name || "—"}</p>
+           <p><strong>Email:</strong> ${user.email}</p>
+           <p><strong>Time:</strong> ${new Date().toUTCString()}</p>`
+        ).catch((err) => console.error("[Auth] Admin notification failed:", err));
       }
     },
   },

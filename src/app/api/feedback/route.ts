@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { readJsonFile, writeJsonFile } from "@/lib/fileStore";
 import { rateLimit, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit";
+import { sendAdminNotification } from "@/lib/email";
 import { z } from "zod";
 
 const FILE = "lesson-feedback.json";
@@ -32,35 +33,16 @@ function escapeHtml(str: string): string {
 }
 
 async function notifyFeedback(entry: FeedbackEntry): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const adminEmail = process.env.ADMIN_EMAIL || "ramesh.reddy01@gmail.com";
-  if (!apiKey) return;
-
-  try {
-    const { Resend } = await import("resend");
-    const resend = new Resend(apiKey);
-    const emoji = entry.rating === "up" ? "👍" : "👎";
-    const fromAddress =
-      process.env.RESEND_FROM_EMAIL ||
-      "AI Educademy <onboarding@resend.dev>";
-
-    await resend.emails.send({
-      from: fromAddress,
-      to: adminEmail,
-      subject: `${emoji} Feedback: ${escapeHtml(entry.programSlug)}/${escapeHtml(entry.lessonSlug)}`,
-      html: `
-        <h2>${emoji} Lesson Feedback</h2>
-        <p><strong>Program:</strong> ${escapeHtml(entry.programSlug)}</p>
-        <p><strong>Lesson:</strong> ${escapeHtml(entry.lessonSlug)}</p>
-        <p><strong>Rating:</strong> ${escapeHtml(entry.rating)}</p>
-        ${entry.comment ? `<p><strong>Comment:</strong> ${escapeHtml(entry.comment)}</p>` : ""}
-        <p><strong>Locale:</strong> ${escapeHtml(entry.locale)}</p>
-        <p><strong>Time:</strong> ${escapeHtml(entry.timestamp)}</p>
-      `,
-    });
-  } catch (err) {
-    console.error("[Email] Feedback notification failed:", err);
-  }
+  const emoji = entry.rating === "up" ? "👍" : "👎";
+  await sendAdminNotification(
+    `${emoji} Feedback: ${escapeHtml(entry.programSlug)}/${escapeHtml(entry.lessonSlug)}`,
+    `<p><strong>Program:</strong> ${escapeHtml(entry.programSlug)}</p>
+     <p><strong>Lesson:</strong> ${escapeHtml(entry.lessonSlug)}</p>
+     <p><strong>Rating:</strong> ${escapeHtml(entry.rating)}</p>
+     ${entry.comment ? `<p><strong>Comment:</strong> ${escapeHtml(entry.comment)}</p>` : ""}
+     <p><strong>Locale:</strong> ${escapeHtml(entry.locale)}</p>
+     <p><strong>Time:</strong> ${escapeHtml(entry.timestamp)}</p>`
+  );
 }
 
 export async function POST(req: NextRequest) {

@@ -3,6 +3,7 @@ import { getStripe } from "@/lib/stripe";
 import { db } from "@/lib/db";
 import { subscriptions, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
+import { sendSubscriptionEmail, sendAdminNotification } from "@/lib/email";
 import type Stripe from "stripe";
 
 export async function POST(req: NextRequest) {
@@ -37,8 +38,11 @@ export async function POST(req: NextRequest) {
 
       if (!userId || !plan) break;
 
+      // Look up user email for notifications
+      const [userRow] = await db.select({ email: users.email, name: users.name }).from(users).where(eq(users.id, userId)).limit(1);
+      const userEmail = userRow?.email;
+
       if (plan === "lifetime") {
-        // One-time payment — grant lifetime access
         await db.insert(subscriptions).values({
           userId,
           plan: "lifetime",
@@ -50,7 +54,6 @@ export async function POST(req: NextRequest) {
           .set({ role: "pro", updatedAt: new Date() })
           .where(eq(users.id, userId));
       } else if (session.subscription) {
-        // Subscription — fetch details from Stripe
         const sub = await getStripe().subscriptions.retrieve(
           session.subscription as string
         );
@@ -69,6 +72,24 @@ export async function POST(req: NextRequest) {
           .set({ role: "pro", updatedAt: new Date() })
           .where(eq(users.id, userId));
       }
+
+      // Send confirmation email to user
+      if (userEmail) {
+        sendSubscriptionEmail(userEmail, "activated", plan).catch((err) =>
+          console.error("[Webhook] Subscription email failed:", err)
+        );
+      }
+
+      // Notify admin
+      const amount = session.amount_total ? `£${(session.amount_total / 100).toFixed(2)}` : "N/A";
+      sendAdminNotification(
+        `New ${plan} subscription! 🎉`,
+        `<p><strong>User:</strong> ${userRow?.name || "Unknown"} (${userEmail || userId})</p>
+         <p><strong>Plan:</strong> ${plan}</p>
+         <p><strong>Amount:</strong> ${amount}</p>
+         <p><strong>Time:</strong> ${new Date().toUTCString()}</p>`
+      ).catch((err) => console.error("[Webhook] Admin notification failed:", err));
+
       break;
     }
 
@@ -97,12 +118,26 @@ export async function POST(req: NextRequest) {
           })
           .where(eq(subscriptions.stripeSubscriptionId, sub.id));
 
-        // Downgrade to free if cancelled
         if (status === "cancelled") {
           await db
             .update(users)
             .set({ role: "free", updatedAt: new Date() })
             .where(eq(users.id, existing[0].userId));
+
+          // Notify user about cancellation
+          const [userRow] = await db.select({ email: users.email }).from(users).where(eq(users.id, existing[0].userId)).limit(1);
+          if (userRow?.email) {
+            sendSubscriptionEmail(userRow.email, "cancelled", existing[0].plan).catch((err) =>
+              console.error("[Webhook] Cancellation email failed:", err)
+            );
+          }
+
+          sendAdminNotification(
+            "Subscription cancelled ❌",
+            `<p><strong>User:</strong> ${userRow?.email || existing[0].userId}</p>
+             <p><strong>Plan:</strong> ${existing[0].plan}</p>
+             <p><strong>Time:</strong> ${new Date().toUTCString()}</p>`
+          ).catch((err) => console.error("[Webhook] Admin notification failed:", err));
         }
       }
       break;
@@ -126,6 +161,20 @@ export async function POST(req: NextRequest) {
           .update(users)
           .set({ role: "free", updatedAt: new Date() })
           .where(eq(users.id, existing[0].userId));
+
+        const [userRow] = await db.select({ email: users.email }).from(users).where(eq(users.id, existing[0].userId)).limit(1);
+        if (userRow?.email) {
+          sendSubscriptionEmail(userRow.email, "cancelled", existing[0].plan).catch((err) =>
+            console.error("[Webhook] Cancellation email failed:", err)
+          );
+        }
+
+        sendAdminNotification(
+          "Subscription deleted ❌",
+          `<p><strong>User:</strong> ${userRow?.email || existing[0].userId}</p>
+           <p><strong>Plan:</strong> ${existing[0].plan}</p>
+           <p><strong>Time:</strong> ${new Date().toUTCString()}</p>`
+        ).catch((err) => console.error("[Webhook] Admin notification failed:", err));
       }
       break;
     }

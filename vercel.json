@@ -2,5 +2,11 @@
   "git": {
     "submodules": false
   },
-  "installCommand": "sh scripts/vercel-install.sh"
+  "installCommand": "sh scripts/vercel-install.sh",
+  "crons": [
+    {
+      "path": "/api/cron/daily-report",
+      "schedule": "0 21 * * *"
+    }
+  ]
 }

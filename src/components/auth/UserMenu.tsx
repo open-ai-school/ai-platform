@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useSession, signOut as nextAuthSignOut } from "next-auth/react";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
@@ -8,11 +8,27 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 
+const AVATAR_EMOJIS = ["🦊", "🐱", "🐼", "🦁", "🐨", "🐯", "🦄", "🐸", "🐙", "🦋", "🐳", "🦉", "🐧", "🐹", "🦜"];
+const AVATAR_COLORS = ["#6366f1", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981", "#06b6d4", "#f43f5e", "#84cc16", "#a855f7", "#14b8a6"];
+
+function getConsistentAvatar(identifier: string) {
+  let hash = 0;
+  for (let i = 0; i < identifier.length; i++) {
+    hash = ((hash << 5) - hash + identifier.charCodeAt(i)) | 0;
+  }
+  const idx = Math.abs(hash);
+  return {
+    emoji: AVATAR_EMOJIS[idx % AVATAR_EMOJIS.length],
+    color: AVATAR_COLORS[idx % AVATAR_COLORS.length],
+  };
+}
+
 export function UserMenu() {
   const { data: session } = useSession();
   const { profile, clearProfile, isSignedIn: isGuestSignedIn } = useGuestProfile();
   const t = useTranslations("auth");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const pathname = usePathname();
 
   const allLocales = ["en", "fr", "nl", "hi", "te"];
@@ -24,9 +40,12 @@ export function UserMenu() {
   const user = session?.user;
   const isSignedIn = !!user || isGuestSignedIn;
   const displayName = user?.name || profile?.name || t("learner");
-  const avatar = user?.image || null;
-  const displayAvatar = profile?.avatar || "👤";
+  const avatar = user?.image && !imgError ? user.image : null;
   const email = user?.email || null;
+  const generatedAvatar = useMemo(
+    () => getConsistentAvatar(email || displayName || "guest"),
+    [email, displayName]
+  );
 
   if (!isSignedIn) {
     return (
@@ -60,9 +79,9 @@ export function UserMenu() {
         aria-label={t("userMenuLabel")}
       >
         {avatar ? (
-          <Image src={avatar} alt={t("userAvatar")} width={28} height={28} className="w-7 h-7 rounded-full" unoptimized />
+          <Image src={avatar} alt={t("userAvatar")} width={28} height={28} className="w-7 h-7 rounded-full" unoptimized onError={() => setImgError(true)} />
         ) : (
-          <span className="text-xl">{displayAvatar}</span>
+          <span className="flex items-center justify-center w-7 h-7 rounded-full text-sm" style={{ background: generatedAvatar.color }}>{generatedAvatar.emoji}</span>
         )}
         <span className="hidden sm:inline text-sm font-medium max-w-[100px] truncate">
           {displayName}
@@ -79,9 +98,9 @@ export function UserMenu() {
             <div className="px-4 py-3 border-b border-[var(--color-border)]">
               <div className="flex items-center gap-3">
                 {avatar ? (
-                  <Image src={avatar} alt={t("userAvatar")} width={36} height={36} className="w-9 h-9 rounded-full" unoptimized />
+                  <Image src={avatar} alt={t("userAvatar")} width={36} height={36} className="w-9 h-9 rounded-full" unoptimized onError={() => setImgError(true)} />
                 ) : (
-                  <span className="text-2xl">{displayAvatar}</span>
+                  <span className="flex items-center justify-center w-9 h-9 rounded-full text-lg" style={{ background: generatedAvatar.color }}>{generatedAvatar.emoji}</span>
                 )}
                 <div className="min-w-0">
                   <p className="text-sm font-semibold truncate">{displayName}</p>

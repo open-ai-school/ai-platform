@@ -76,6 +76,203 @@ const emailStrings: Record<string, Record<string, string>> = {
   },
 };
 
+const subscriptionStrings: Record<string, Record<string, string>> = {
+  en: {
+    proTitle: "Welcome to Pro! 🚀",
+    proSubtitle: "Your upgrade is confirmed",
+    proGreeting: "You're now a Pro member",
+    proBody: "Thank you for upgrading to AI Educademy Pro! You now have full access to all premium programs, advanced lessons, and exclusive content.",
+    proFeatures: "What's unlocked for you:",
+    feature1: "All premium programs & lessons",
+    feature2: "Advanced AI projects & labs",
+    feature3: "Priority support",
+    proCta: "Start Learning",
+    proClosing: "We're thrilled to have you. Dive in and explore everything Pro has to offer!",
+    cancelTitle: "We're sorry to see you go 😢",
+    cancelSubtitle: "Your subscription has ended",
+    cancelGreeting: "Your Pro access has ended",
+    cancelBody: "Your AI Educademy Pro subscription has been cancelled. You'll continue to have access to all free programs and the first lesson of premium programs.",
+    cancelCta: "Resubscribe",
+    cancelClosing: "We hope to see you back! Our free content is always available, and you can resubscribe anytime.",
+    planLabel: "Plan",
+    monthly: "Pro Monthly (£3.99/mo)",
+    annual: "Pro Annual (£29.99/yr)",
+    lifetime: "Lifetime Access (£49.99)",
+  },
+  fr: {
+    proTitle: "Bienvenue chez Pro ! 🚀",
+    proSubtitle: "Votre mise a niveau est confirmee",
+    proGreeting: "Vous etes maintenant membre Pro",
+    proBody: "Merci d'avoir passe a AI Educademy Pro ! Vous avez maintenant acces a tous les programmes premium, aux lecons avancees et au contenu exclusif.",
+    proFeatures: "Ce qui est debloque pour vous :",
+    feature1: "Tous les programmes et lecons premium",
+    feature2: "Projets et labos IA avances",
+    feature3: "Support prioritaire",
+    proCta: "Commencer a apprendre",
+    proClosing: "Nous sommes ravis de vous compter parmi nous. Plongez et explorez tout ce que Pro a a offrir !",
+    cancelTitle: "Nous sommes desoles de vous voir partir 😢",
+    cancelSubtitle: "Votre abonnement a pris fin",
+    cancelGreeting: "Votre acces Pro a pris fin",
+    cancelBody: "Votre abonnement AI Educademy Pro a ete annule. Vous continuez a avoir acces a tous les programmes gratuits et a la premiere lecon des programmes premium.",
+    cancelCta: "Se reabonner",
+    cancelClosing: "Nous esperons vous revoir ! Notre contenu gratuit est toujours disponible, et vous pouvez vous reabonner a tout moment.",
+    planLabel: "Formule",
+    monthly: "Pro Mensuel (3,99 £/mois)",
+    annual: "Pro Annuel (29,99 £/an)",
+    lifetime: "Acces a vie (49,99 £)",
+  },
+  nl: {
+    proTitle: "Welkom bij Pro! 🚀",
+    proSubtitle: "Je upgrade is bevestigd",
+    proGreeting: "Je bent nu een Pro-lid",
+    proBody: "Bedankt voor de upgrade naar AI Educademy Pro! Je hebt nu volledige toegang tot alle premium programma's, geavanceerde lessen en exclusieve content.",
+    proFeatures: "Wat er voor je is ontgrendeld:",
+    feature1: "Alle premium programma's en lessen",
+    feature2: "Geavanceerde AI-projecten en labs",
+    feature3: "Prioriteitsondersteuning",
+    proCta: "Begin met leren",
+    proClosing: "We zijn blij dat je erbij bent. Duik erin en ontdek alles wat Pro te bieden heeft!",
+    cancelTitle: "We vinden het jammer dat je weggaat 😢",
+    cancelSubtitle: "Je abonnement is beeindigd",
+    cancelGreeting: "Je Pro-toegang is beeindigd",
+    cancelBody: "Je AI Educademy Pro-abonnement is geannuleerd. Je hebt nog steeds toegang tot alle gratis programma's en de eerste les van premium programma's.",
+    cancelCta: "Opnieuw abonneren",
+    cancelClosing: "We hopen je terug te zien! Onze gratis content is altijd beschikbaar en je kunt je altijd opnieuw abonneren.",
+    planLabel: "Plan",
+    monthly: "Pro Maandelijks (£3,99/maand)",
+    annual: "Pro Jaarlijks (£29,99/jaar)",
+    lifetime: "Levenslange toegang (£49,99)",
+  },
+  hi: {
+    proTitle: "Pro में आपका स्वागत है! 🚀",
+    proSubtitle: "आपका अपग्रेड कन्फर्म हो गया है",
+    proGreeting: "अब आप Pro सदस्य हैं",
+    proBody: "AI Educademy Pro में अपग्रेड करने के लिए धन्यवाद! अब आपके पास सभी प्रीमियम प्रोग्राम, एडवांस्ड लेसन और एक्सक्लूसिव कंटेंट की पूरी एक्सेस है।",
+    proFeatures: "आपके लिए क्या अनलॉक है:",
+    feature1: "सभी प्रीमियम प्रोग्राम और लेसन",
+    feature2: "एडवांस्ड AI प्रोजेक्ट्स और लैब्स",
+    feature3: "प्राथमिकता सहायता",
+    proCta: "सीखना शुरू करें",
+    proClosing: "हम खुश हैं कि आप यहां हैं। Pro की सभी सुविधाओं का अन्वेषण करें!",
+    cancelTitle: "आपको जाते देख दुख हुआ 😢",
+    cancelSubtitle: "आपकी सदस्यता समाप्त हो गई है",
+    cancelGreeting: "आपकी Pro एक्सेस समाप्त हो गई है",
+    cancelBody: "आपकी AI Educademy Pro सदस्यता रद्द कर दी गई है। आपके पास अभी भी सभी फ्री प्रोग्राम और प्रीमियम प्रोग्राम के पहले लेसन तक एक्सेस है।",
+    cancelCta: "फिर से सदस्यता लें",
+    cancelClosing: "हम आपको फिर से देखने की उम्मीद करते हैं! हमारा फ्री कंटेंट हमेशा उपलब्ध है।",
+    planLabel: "प्लान",
+    monthly: "Pro मासिक (£3.99/माह)",
+    annual: "Pro वार्षिक (£29.99/वर्ष)",
+    lifetime: "लाइफटाइम एक्सेस (£49.99)",
+  },
+  te: {
+    proTitle: "Pro కి స్వాగతం! 🚀",
+    proSubtitle: "మీ అప్‌గ్రేడ్ నిర్ధారించబడింది",
+    proGreeting: "మీరు ఇప్పుడు Pro సభ్యులు",
+    proBody: "AI Educademy Pro కి అప్‌గ్రేడ్ చేసినందుకు ధన్యవాదాలు! మీకు ఇప్పుడు అన్ని ప్రీమియం ప్రోగ్రామ్‌లు, అడ్వాన్స్‌డ్ లెసన్‌లు మరియు ఎక్స్‌క్లూజివ్ కంటెంట్‌కు పూర్తి యాక్సెస్ ఉంది.",
+    proFeatures: "మీ కోసం ఏమి అన్‌లాక్ చేయబడింది:",
+    feature1: "అన్ని ప్రీమియం ప్రోగ్రామ్‌లు & లెసన్‌లు",
+    feature2: "అడ్వాన్స్‌డ్ AI ప్రాజెక్ట్‌లు & ల్యాబ్‌లు",
+    feature3: "ప్రాధాన్యత మద్దతు",
+    proCta: "నేర్చుకోవడం ప్రారంభించండి",
+    proClosing: "మీరు ఇక్కడ ఉన్నందుకు మేము సంతోషిస్తున్నాము. Pro అందించే ప్రతిదాన్ని అన్వేషించండి!",
+    cancelTitle: "మీరు వెళ్ళడం చూసి బాధగా ఉంది 😢",
+    cancelSubtitle: "మీ సబ్‌స్క్రిప్షన్ ముగిసింది",
+    cancelGreeting: "మీ Pro యాక్సెస్ ముగిసింది",
+    cancelBody: "మీ AI Educademy Pro సబ్‌స్క్రిప్షన్ రద్దు చేయబడింది. మీకు ఇప్పటికీ అన్ని ఉచిత ప్రోగ్రామ్‌లు మరియు ప్రీమియం ప్రోగ్రామ్‌ల మొదటి లెసన్‌కు యాక్సెస్ ఉంది.",
+    cancelCta: "మళ్ళీ సబ్‌స్క్రైబ్ చేయండి",
+    cancelClosing: "మిమ్మల్ని మళ్ళీ చూడాలని ఆశిస్తున్నాము! మా ఉచిత కంటెంట్ ఎల్లప్పుడూ అందుబాటులో ఉంటుంది.",
+    planLabel: "ప్లాన్",
+    monthly: "Pro నెలవారీ (£3.99/నెల)",
+    annual: "Pro వార్షిక (£29.99/సం.)",
+    lifetime: "లైఫ్‌టైమ్ యాక్సెస్ (£49.99)",
+  },
+};
+
+export function subscriptionEmailHtml(
+  email: string,
+  type: "activated" | "cancelled",
+  plan: string = "monthly",
+  locale: string = "en"
+): string {
+  const s = subscriptionStrings[locale] || subscriptionStrings.en;
+  const isActivated = type === "activated";
+  const planLabel = s[plan as keyof typeof s] || plan;
+  const title = isActivated ? s.proTitle : s.cancelTitle;
+  const subtitle = isActivated ? s.proSubtitle : s.cancelSubtitle;
+  const greeting = isActivated ? s.proGreeting : s.cancelGreeting;
+  const body = isActivated ? s.proBody : s.cancelBody;
+  const cta = isActivated ? s.proCta : s.cancelCta;
+  const ctaUrl = isActivated ? "https://aieducademy.org/programs" : "https://aieducademy.org/pricing";
+  const closing = isActivated ? s.proClosing : s.cancelClosing;
+  const gradientFrom = isActivated ? "#10b981" : "#6366f1";
+  const gradientTo = isActivated ? "#059669" : "#4f46e5";
+  const ctaColor = isActivated ? "#10b981" : "#6366f1";
+  const emoji = isActivated ? "🚀" : "👋";
+
+  return `
+<!DOCTYPE html>
+<html lang="${locale}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${title}</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; line-height: 1.6; color: #333;">
+  <table cellpadding="0" cellspacing="0" style="width: 100%; background-color: #f9fafb;">
+    <tr>
+      <td style="padding: 40px 20px;">
+        <table cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+          <tr>
+            <td style="background: linear-gradient(135deg, ${gradientFrom} 0%, ${gradientTo} 100%); padding: 40px 20px; text-align: center; border-radius: 8px 8px 0 0;">
+              <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: 700;">🎓 AI Educademy</h1>
+              <p style="margin: 8px 0 0 0; color: rgba(255,255,255,0.85); font-size: 14px;">${subtitle}</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 40px 30px;">
+              <h2 style="margin: 0 0 16px 0; color: #1f2937; font-size: 24px;">${greeting} ${emoji}</h2>
+              <p style="margin: 0 0 16px 0; color: #4b5563; font-size: 16px; line-height: 1.6;">${body}</p>
+              <table cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 24px; background-color: #f3f4f6; border-radius: 8px;">
+                <tr>
+                  <td style="padding: 16px 20px;">
+                    <p style="margin: 0; color: #6b7280; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">${s.planLabel}</p>
+                    <p style="margin: 4px 0 0 0; color: #1f2937; font-size: 18px; font-weight: 700;">${planLabel}</p>
+                  </td>
+                </tr>
+              </table>${isActivated ? `
+              <p style="margin: 0 0 16px 0; color: #4b5563; font-size: 16px; font-weight: 600;">${s.proFeatures}</p>
+              <table cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 24px;">
+                <tr><td style="padding: 8px 0; color: #4b5563; font-size: 15px;">✅ ${s.feature1}</td></tr>
+                <tr><td style="padding: 8px 0; color: #4b5563; font-size: 15px;">✅ ${s.feature2}</td></tr>
+                <tr><td style="padding: 8px 0; color: #4b5563; font-size: 15px;">✅ ${s.feature3}</td></tr>
+              </table>` : ""}
+              <table cellpadding="0" cellspacing="0" style="margin: 24px auto;">
+                <tr>
+                  <td style="background-color: ${ctaColor}; border-radius: 8px; padding: 14px 32px; text-align: center;">
+                    <a href="${ctaUrl}" style="color: #ffffff; text-decoration: none; font-weight: 700; font-size: 16px;">${cta}</a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin: 24px 0 0 0; color: #4b5563; font-size: 16px; line-height: 1.6;">${closing}</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 20px 30px; border-top: 1px solid #e5e7eb; background-color: #f9fafb; border-radius: 0 0 8px 8px;">
+              <p style="margin: 0; color: #6b7280; font-size: 12px; line-height: 1.5; text-align: center;">
+                AI Educademy &bull; <a href="https://aieducademy.org" style="color: #667eea; text-decoration: none;">aieducademy.org</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `.trim();
+}
+
 export function welcomeEmailHtml(email: string, locale: string = "en"): string {
   const s = emailStrings[locale] || emailStrings.en;
   return `
