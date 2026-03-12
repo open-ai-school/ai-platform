@@ -40,11 +40,11 @@
     "careerReadyPath": "Career Ready"
   },
   "hero": {
-    "badge": "Open Source • 11 Languages • Free to Start",
-    "title": "Learn AI by Building",
-    "titleHighlight": "Real Things.",
-    "subtitle": "Hands-on lessons across foundations, coding, and career tracks. 15 programs, 500+ lessons, 11 languages — all free and open source.",
-    "cta": "Start Learning — Free",
+    "badge": "Open Source · 11 Languages · Community Driven",
+    "title": "Learn AI",
+    "titleHighlight": "by Doing.",
+    "subtitle": "Hands-on lessons across foundations, coding, and career tracks. 15 programs, 11 languages — open source and community-driven.",
+    "cta": "Start Learning",
     "ctaSecondary": "Explore AI Lab",
     "students": "Students learning",
     "languages": "Languages",
@@ -134,7 +134,8 @@
     "scrollToTop": "Scroll to top",
     "faq": "FAQ",
     "terms": "Terms of Service",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "contact": "Contact"
   },
   "about": {
     "title": "About AI Educademy",
@@ -1587,5 +1588,34 @@
         "content": "For privacy-related inquiries: Email privacy@aieducademy.org. Data Protection queries can be directed to theglobalmind.ai@gmail.com."
       }
     }
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Have a question, idea, or just want to say hello? We’d love to hear from you.",
+    "name": "Your Name",
+    "namePlaceholder": "John Doe",
+    "email": "Email Address",
+    "emailPlaceholder": "john@example.com",
+    "subject": "Subject",
+    "subjectGeneral": "General Inquiry",
+    "subjectBug": "Bug Report",
+    "subjectFeature": "Feature Request",
+    "subjectPartnership": "Partnership",
+    "subjectOther": "Other",
+    "message": "Message",
+    "messagePlaceholder": "Tell us what’s on your mind...",
+    "submit": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent! We’ll get back to you soon.",
+    "error": "Something went wrong. Please try again.",
+    "rateLimit": "Too many messages. Please wait a moment.",
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email",
+    "messageTooShort": "Message must be at least 10 characters",
+    "or": "Or reach us directly",
+    "emailUs": "Email us",
+    "emailAddress": "hello@aieducademy.org",
+    "socials": "Find us on",
+    "responseTime": "We typically respond within 24 hours"
   }
 }

@@ -92,6 +92,84 @@ function AnimatedStat({ text, inView }: { text: string; inView: boolean }) {
   );
 }
 
+/* ── Terminal-style AI Lab button ── */
+function LabButton({ href, label, noMotion }: { href: string; label: string; noMotion: boolean }) {
+  const [phase, setPhase] = useState<"idle" | "booting" | "ready">("idle");
+  const [typedText, setTypedText] = useState("");
+  const bootText = "Initializing AI Lab";
+
+  useEffect(() => {
+    if (phase !== "booting" || noMotion) return;
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      setTypedText(bootText.slice(0, i));
+      if (i >= bootText.length) {
+        clearInterval(interval);
+        setTimeout(() => setPhase("ready"), 400);
+      }
+    }, 45);
+    return () => clearInterval(interval);
+  }, [phase, noMotion]);
+
+  return (
+    <Link
+      href={href}
+      onMouseEnter={() => {
+        if (phase === "idle" && !noMotion) {
+          setPhase("booting");
+          setTypedText("");
+        }
+      }}
+      onMouseLeave={() => {
+        setPhase("idle");
+        setTypedText("");
+      }}
+      className="group relative inline-flex items-center gap-2.5 px-10 py-4 rounded-2xl text-lg font-bold border-2 border-[var(--color-border)] backdrop-blur-sm transition-all duration-300 hover:border-emerald-500 hover:shadow-lg hover:shadow-emerald-500/10 overflow-hidden"
+    >
+      {/* Scanline overlay on hover */}
+      <span
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        style={{
+          background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(16,185,129,0.03) 2px, rgba(16,185,129,0.03) 4px)",
+        }}
+      />
+
+      {/* Blinking cursor / status dot */}
+      <span className="relative flex h-2 w-2 shrink-0">
+        {phase === "booting" ? (
+          <>
+            <span className="absolute inset-0 rounded-full bg-amber-400 animate-ping opacity-75" />
+            <span className="relative rounded-full h-2 w-2 bg-amber-400" />
+          </>
+        ) : phase === "ready" ? (
+          <span className="relative rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_6px_rgba(16,185,129,0.6)]" />
+        ) : (
+          <span className="relative rounded-full h-2 w-2 bg-[var(--color-text-muted)] group-hover:bg-amber-400 transition-colors" />
+        )}
+      </span>
+
+      {/* Text */}
+      <span className="relative z-10">
+        {phase === "booting" ? (
+          <span className="font-mono text-amber-400 text-base">
+            {typedText}
+            <span className="animate-pulse">▌</span>
+          </span>
+        ) : phase === "ready" ? (
+          <span className="font-mono text-emerald-400 text-base">
+            Lab Ready ✓
+          </span>
+        ) : (
+          <span className="group-hover:text-emerald-400 transition-colors duration-300">
+            {label}
+          </span>
+        )}
+      </span>
+    </Link>
+  );
+}
+
 /* ── Main Component ── */
 export default function HomeHero({
   title,
@@ -140,7 +218,7 @@ export default function HomeHero({
 
       {/* Title - each word fades up with stagger */}
       <h1
-        className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-6"
+        className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-6"
         style={{
           opacity: noMotion || isInView ? 1 : 0,
           transition: noMotion ? "none" : `opacity 0.3s ${ease} 0.2s`,
@@ -186,12 +264,12 @@ export default function HomeHero({
             href={ctaHref}
             className="relative overflow-hidden inline-flex items-center gap-2 px-10 py-4 rounded-2xl text-lg font-bold bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xl shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:shadow-2xl transition-shadow duration-300"
           >
-            <span className="relative z-10">{ctaText} →</span>
+            <span className="relative z-10">{ctaText}</span>
             <span className="absolute inset-0 shimmer-sweep pointer-events-none" />
           </Link>
         </div>
 
-        {/* Secondary CTA - gradient border on hover */}
+        {/* Secondary CTA - terminal-style AI Lab button */}
         <div
           className={
             noMotion
@@ -199,12 +277,7 @@ export default function HomeHero({
               : "hover:scale-[1.04] active:scale-[0.97] transition-transform"
           }
         >
-          <Link
-            href={ctaSecondaryHref}
-            className="inline-flex items-center gap-2 px-10 py-4 rounded-2xl text-lg font-bold border-2 border-[var(--color-border)] hover:border-indigo-500 hover:text-indigo-500 backdrop-blur-sm hover:shadow-lg transition-all duration-300"
-          >
-            {ctaSecondaryText}
-          </Link>
+          <LabButton href={ctaSecondaryHref} label={ctaSecondaryText} noMotion={noMotion} />
         </div>
       </div>
 

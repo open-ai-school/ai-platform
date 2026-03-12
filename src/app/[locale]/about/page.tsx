@@ -3,6 +3,8 @@
 import { useRef, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
@@ -26,6 +28,11 @@ function useInViewLocal(margin = "-60px") {
 export default function AboutPage() {
   const t = useTranslations("about");
   const noMotion = useReducedMotion();
+  const pathname = usePathname();
+
+  const segments = pathname.split("/").filter(Boolean);
+  const detectedLocale = segments[0] && ["en","fr","nl","hi","te","es","pt","de","ja","zh","ar"].includes(segments[0]) ? segments[0] : "en";
+  const basePath = detectedLocale === "en" ? "" : `/${detectedLocale}`;
 
   const hero = useInViewLocal();
   const values = useInViewLocal();
@@ -135,6 +142,19 @@ export default function AboutPage() {
           ☕ {t("buyCoffee")}
         </a>
       </section>
+
+      {/* Get in touch CTA */}
+      <div className="mt-16 text-center" style={fadeIn(connect.isInView, 500)}>
+        <p className="text-sm text-[var(--color-text-muted)]">
+          Have a question or idea?{" "}
+          <Link
+            href={`${basePath}/contact`}
+            className="text-[var(--color-primary)] font-medium hover:underline"
+          >
+            Get in touch →
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

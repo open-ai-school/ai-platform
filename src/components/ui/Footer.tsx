@@ -220,6 +220,11 @@ export function Footer() {
                   {t("privacy")}
                 </FooterLink>
               </li>
+              <li>
+                <FooterLink href={`${basePath}/contact`}>
+                  {t("contact")}
+                </FooterLink>
+              </li>
             </ul>
           </div>
         </div>
