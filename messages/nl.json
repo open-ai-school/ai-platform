@@ -1295,5 +1295,18 @@
       "f5": "Completion certificates",
       "f6": "Server-side progress sync across devices"
     }
+  },
+  "paywall": {
+    "title": "Premium Inhoud",
+    "isPartOf": "maakt deel uit van het premium-aanbod",
+    "description": "Upgrade naar Pro om alle programma's, alle leertrajecten, servergebaseerde voortgangssynchronisatie, voltooiingscertificaten en prioritaire toegang tot de AI-chatbot te ontgrendelen.",
+    "features": {
+      "allPrograms": "Alle programma's en leertrajecten",
+      "progressSync": "Voortgangssynchronisatie",
+      "certificates": "Certificaten"
+    },
+    "upgradeCta": "Upgraden naar Pro",
+    "signInCta": "Meld je eerst aan",
+    "guarantee": "7 dagen geld-terug-garantie. Op elk moment opzegbaar."
   }
 }

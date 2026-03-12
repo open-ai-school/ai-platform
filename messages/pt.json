@@ -1295,5 +1295,18 @@
       "f5": "Completion certificates",
       "f6": "Server-side progress sync across devices"
     }
+  },
+  "paywall": {
+    "title": "Conteúdo Premium",
+    "isPartOf": "faz parte do plano premium",
+    "description": "Atualize para o Pro para desbloquear todos os programas, todas as trilhas, sincronização de progresso no servidor, certificados de conclusão e acesso prioritário ao chatbot de IA.",
+    "features": {
+      "allPrograms": "Todos os programas e trilhas",
+      "progressSync": "Sincronização de progresso",
+      "certificates": "Certificados"
+    },
+    "upgradeCta": "Atualizar para Pro",
+    "signInCta": "Faça login primeiro",
+    "guarantee": "Garantia de reembolso de 7 dias. Cancele a qualquer momento."
   }
 }

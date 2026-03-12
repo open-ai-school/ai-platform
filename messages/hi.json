@@ -1295,5 +1295,18 @@
       "f5": "Completion certificates",
       "f6": "Server-side progress sync across devices"
     }
+  },
+  "paywall": {
+    "title": "प्रीमियम सामग्री",
+    "isPartOf": "प्रीमियम का हिस्सा है",
+    "description": "सभी प्रोग्राम, सभी ट्रैक, सर्वर-साइड प्रगति सिंक, पूर्णता प्रमाणपत्र और प्राथमिकता AI चैटबॉट एक्सेस अनलॉक करने के लिए Pro में अपग्रेड करें।",
+    "features": {
+      "allPrograms": "सभी प्रोग्राम और ट्रैक",
+      "progressSync": "प्रगति सिंक",
+      "certificates": "प्रमाणपत्र"
+    },
+    "upgradeCta": "Pro में अपग्रेड करें",
+    "signInCta": "पहले साइन इन करें",
+    "guarantee": "7 दिन की मनी-बैक गारंटी। कभी भी रद्द करें।"
   }
 }

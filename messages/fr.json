@@ -1295,5 +1295,18 @@
       "f5": "Completion certificates",
       "f6": "Server-side progress sync across devices"
     }
+  },
+  "paywall": {
+    "title": "Contenu Premium",
+    "isPartOf": "fait partie de l'offre premium",
+    "description": "Passez à Pro pour débloquer tous les programmes, tous les parcours, la synchronisation de la progression côté serveur, les certificats de réussite et l'accès prioritaire au chatbot IA.",
+    "features": {
+      "allPrograms": "Tous les programmes et parcours",
+      "progressSync": "Synchronisation de la progression",
+      "certificates": "Certificats"
+    },
+    "upgradeCta": "Passer à Pro",
+    "signInCta": "Connectez-vous d'abord",
+    "guarantee": "Garantie de remboursement de 7 jours. Annulation possible à tout moment."
   }
 }

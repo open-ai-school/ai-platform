@@ -1295,5 +1295,18 @@
       "f5": "Completion certificates",
       "f6": "Server-side progress sync across devices"
     }
+  },
+  "paywall": {
+    "title": "プレミアムコンテンツ",
+    "isPartOf": "プレミアムの一部です",
+    "description": "Proにアップグレードして、すべてのプログラム、すべてのトラック、サーバーサイドの進捗同期、修了証明書、優先AIチャットボットアクセスをアンロックしましょう。",
+    "features": {
+      "allPrograms": "すべてのプログラムとトラック",
+      "progressSync": "進捗同期",
+      "certificates": "修了証明書"
+    },
+    "upgradeCta": "Proにアップグレード",
+    "signInCta": "まずサインイン",
+    "guarantee": "7日間の返金保証。いつでもキャンセル可能。"
   }
 }

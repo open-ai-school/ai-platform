@@ -1295,5 +1295,18 @@
       "f5": "Completion certificates",
       "f6": "Server-side progress sync across devices"
     }
+  },
+  "paywall": {
+    "title": "Premium-Inhalte",
+    "isPartOf": "ist Teil des Premium-Angebots",
+    "description": "Upgrade auf Pro, um alle Programme, alle Lernpfade, serverseitige Fortschrittssynchronisierung, Abschlusszertifikate und bevorzugten Zugang zum KI-Chatbot freizuschalten.",
+    "features": {
+      "allPrograms": "Alle Programme & Lernpfade",
+      "progressSync": "Fortschrittssynchronisierung",
+      "certificates": "Zertifikate"
+    },
+    "upgradeCta": "Auf Pro upgraden",
+    "signInCta": "Zuerst anmelden",
+    "guarantee": "7-Tage-Geld-zurück-Garantie. Jederzeit kündbar."
   }
 }

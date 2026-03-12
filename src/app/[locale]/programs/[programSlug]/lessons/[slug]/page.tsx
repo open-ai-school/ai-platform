@@ -11,6 +11,10 @@ import { ListenButton } from "@/components/ui/ListenButton";
 import { BreadcrumbJsonLd, LearningResourceJsonLd } from "@/components/seo/JsonLd";
 import { routing } from "@/i18n/routing";
 import { buildAlternates } from "@/lib/seo";
+import { requiresPremium } from "@/lib/content-access";
+import { auth } from "@/auth";
+import { getUserPlan, canAccessPremium } from "@/lib/subscription";
+import { Paywall } from "@/components/lessons/Paywall";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -81,11 +85,23 @@ export default async function ProgramLessonPage({
 
   const t = await getTranslations("lessons");
   const tP = await getTranslations("programs");
-  const tLT = await getTranslations("lessonTitles");
+   const tLT = await getTranslations("lessonTitles");
   const lesson = getLesson(programSlug, locale, slug);
 
   if (!lesson) {
     notFound();
+  }
+
+  // Content gating: check if this lesson requires premium access
+  const isPremium = requiresPremium(programSlug, lesson.order);
+  let hasAccess = !isPremium;
+
+  if (isPremium) {
+    const session = await auth();
+    if (session?.user?.id) {
+      const plan = await getUserPlan(session.user.id);
+      hasAccess = canAccessPremium(plan);
+    }
   }
 
   const allLessons = getLessons(programSlug, locale);
@@ -160,31 +176,43 @@ export default async function ProgramLessonPage({
         </div>
       </div>
 
-      {/* Content */}
-      <div className="lesson-content">
-        <LessonRenderer content={lesson.content} />
-      </div>
+      {/* Content — gated for premium lessons */}
+      {hasAccess ? (
+        <>
+          <div className="lesson-content">
+            <LessonRenderer content={lesson.content} />
+          </div>
 
-      {/* Mark as Complete + Navigation */}
-      <LessonComplete
-        slug={`${programSlug}/${slug}`}
-        programSlug={programSlug}
-        totalLessons={allLessons.length}
-        currentIndex={currentIdx}
-        nextSlug={next?.slug}
-        nextTitle={next ? tLT(next.slug) : undefined}
-        prevSlug={prev?.slug}
-        prevTitle={prev ? tLT(prev.slug) : undefined}
-        basePath={`${programPath}/lessons`}
-        programPath={programPath}
-        programTitle={tP(`${programSlug}.title`)}
-        programTrack={program.track}
-        programLevel={program.level}
-        trackLessonCounts={trackLessonCounts}
-      />
+          {/* Mark as Complete + Navigation */}
+          <LessonComplete
+            slug={`${programSlug}/${slug}`}
+            programSlug={programSlug}
+            totalLessons={allLessons.length}
+            currentIndex={currentIdx}
+            nextSlug={next?.slug}
+            nextTitle={next ? tLT(next.slug) : undefined}
+            prevSlug={prev?.slug}
+            prevTitle={prev ? tLT(prev.slug) : undefined}
+            basePath={`${programPath}/lessons`}
+            programPath={programPath}
+            programTitle={tP(`${programSlug}.title`)}
+            programTrack={program.track}
+            programLevel={program.level}
+            trackLessonCounts={trackLessonCounts}
+          />
 
-      {/* Lesson Feedback */}
-      <LessonFeedback lessonSlug={slug} programSlug={programSlug} locale={locale} />
+          {/* Lesson Feedback */}
+          <LessonFeedback lessonSlug={slug} programSlug={programSlug} locale={locale} />
+        </>
+      ) : (
+        <Paywall
+          programSlug={programSlug}
+          programTitle={tP(`${programSlug}.title`)}
+          programColor={program.color}
+          lessonTitle={tLT(slug)}
+          locale={locale}
+        />
+      )}
     </div>
   );
 }

@@ -1296,5 +1296,18 @@
       "f5": "Completion certificates",
       "f6": "Server-side progress sync across devices"
     }
+  },
+  "paywall": {
+    "title": "Premium Content",
+    "isPartOf": "is part of the premium",
+    "description": "Upgrade to Pro to unlock all programs, all tracks, server-side progress sync, completion certificates, and priority AI chatbot access.",
+    "features": {
+      "allPrograms": "All programs & tracks",
+      "progressSync": "Progress sync",
+      "certificates": "Certificates"
+    },
+    "upgradeCta": "Upgrade to Pro",
+    "signInCta": "Sign in first",
+    "guarantee": "7-day money-back guarantee. Cancel anytime."
   }
 }

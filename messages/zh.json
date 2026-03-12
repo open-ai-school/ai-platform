@@ -1295,5 +1295,18 @@
       "f5": "Completion certificates",
       "f6": "Server-side progress sync across devices"
     }
+  },
+  "paywall": {
+    "title": "高级内容",
+    "isPartOf": "属于高级版内容",
+    "description": "升级到 Pro 以解锁所有课程、所有学习路径、服务端进度同步、结业证书和优先 AI 聊天机器人访问权限。",
+    "features": {
+      "allPrograms": "所有课程和学习路径",
+      "progressSync": "进度同步",
+      "certificates": "证书"
+    },
+    "upgradeCta": "升级到 Pro",
+    "signInCta": "请先登录",
+    "guarantee": "7 天退款保证。随时可取消。"
   }
 }

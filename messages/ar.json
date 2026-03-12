@@ -1418,5 +1418,18 @@
       "f5": "Completion certificates",
       "f6": "Server-side progress sync across devices"
     }
+  },
+  "paywall": {
+    "title": "محتوى مميز",
+    "isPartOf": "هو جزء من الباقة المميزة",
+    "description": "قم بالترقية إلى Pro لفتح جميع البرامج والمسارات ومزامنة التقدم عبر الأجهزة وشهادات الإتمام والوصول ذي الأولوية إلى روبوت الدردشة بالذكاء الاصطناعي.",
+    "features": {
+      "allPrograms": "جميع البرامج والمسارات",
+      "progressSync": "مزامنة التقدم",
+      "certificates": "الشهادات"
+    },
+    "upgradeCta": "الترقية إلى Pro",
+    "signInCta": "سجّل الدخول أولاً",
+    "guarantee": "ضمان استرداد الأموال خلال 7 أيام. يمكنك الإلغاء في أي وقت."
   }
 }
