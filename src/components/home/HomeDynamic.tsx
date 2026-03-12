@@ -7,12 +7,17 @@ export const HomeProgramCardsLazy = dynamic(
   { ssr: false },
 );
 
-export const HomeFounderLazy = dynamic(
-  () => import("@/components/home/HomeFounder"),
+export const HomeCommunitySectionLazy = dynamic(
+  () => import("@/components/home/HomeCommunitySection"),
   { ssr: false },
 );
 
-export const HomeCommunitySectionLazy = dynamic(
-  () => import("@/components/home/HomeCommunitySection"),
+export const HomeContinueLearningLazy = dynamic(
+  () => import("@/components/home/HomeContinueLearning"),
+  { ssr: false },
+);
+
+export const GitHubStatsWidgetLazy = dynamic(
+  () => import("@/components/home/GitHubStatsWidget"),
   { ssr: false },
 );

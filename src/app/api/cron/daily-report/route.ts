@@ -4,12 +4,7 @@ import { users, subscriptions } from "@/lib/db/schema";
 import { sql, gte, count, eq } from "drizzle-orm";
 import { readJsonFile } from "@/lib/fileStore";
 import { sendAdminNotification } from "@/lib/email";
-
-interface AnalyticsEvent {
-  event: string;
-  data: Record<string, unknown>;
-  timestamp: string;
-}
+import Redis from "ioredis";
 
 interface Subscriber {
   email: string;
@@ -23,6 +18,17 @@ interface FeedbackEntry {
   rating: "up" | "down";
   comment?: string;
   timestamp: string;
+}
+
+let redis: Redis | null = null;
+
+function getRedis() {
+  if (redis) return redis;
+  const url = process.env.REDIS_URL;
+  if (!url) return null;
+  redis = new Redis(url, { maxRetriesPerRequest: 1, connectTimeout: 5000 });
+  redis.on("error", () => {});
+  return redis;
 }
 
 export async function GET(req: NextRequest) {
@@ -88,40 +94,27 @@ export async function GET(req: NextRequest) {
       .orderBy(sql`${users.createdAt} DESC`)
       .limit(5);
 
-    // --- JSON file analytics ---
-    const [events, subscribers, feedback] = await Promise.all([
-      readJsonFile<AnalyticsEvent[]>("analytics-events.json", []),
+    // --- JSON file analytics + Redis page views ---
+    const [subscribers, feedback] = await Promise.all([
       readJsonFile<Subscriber[]>("newsletter-subscribers.json", []),
       readJsonFile<FeedbackEntry[]>("lesson-feedback.json", []),
     ]);
 
-    // Today's events
-    const todayEvents = events.filter(
-      (e) => new Date(e.timestamp) >= twentyFourHoursAgo
-    );
-    const pageViews = todayEvents.filter((e) => e.event === "page_view").length;
-
-    // Country breakdown from page views (if tracked)
-    const countryMap: Record<string, number> = {};
-    for (const e of todayEvents) {
-      const country = (e.data.country as string) || (e.data.locale as string) || "Unknown";
-      countryMap[country] = (countryMap[country] || 0) + 1;
-    }
-    const topCountries = Object.entries(countryMap)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 10);
-
-    // Popular pages today
-    const pageMap: Record<string, number> = {};
-    for (const e of todayEvents) {
-      if (e.event === "page_view" && e.data.path) {
-        const path = e.data.path as string;
-        pageMap[path] = (pageMap[path] || 0) + 1;
+    // Page views from Redis (the real source of truth)
+    let pageViews = 0;
+    const client = getRedis();
+    if (client) {
+      try {
+        const count = await client.get("page-views:total");
+        pageViews = count ? parseInt(count, 10) : 0;
+      } catch {
+        // Redis unavailable — fall back to 0
       }
     }
-    const topPages = Object.entries(pageMap)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 10);
+
+    // Country/locale breakdown is not available from Redis (kept as placeholder)
+    const topCountries: [string, number][] = [];
+    const topPages: [string, number][] = [];
 
     // Today's feedback
     const todayFeedback = feedback.filter(

@@ -3,9 +3,11 @@ import { getProgramsByTrack } from "@/lib/programs";
 import { getLessons } from "@/lib/lessons";
 import HeroBackground from "@/components/home/HeroBackgroundLazy";
 import HomeHero from "@/components/home/HomeHero";
+import HomeTrustBar from "@/components/home/HomeTrustBar";
 import {
   HomeProgramCardsLazy as HomeProgramCards,
   HomeCommunitySectionLazy as HomeCommunitySection,
+  HomeContinueLearningLazy as HomeContinueLearning,
 } from "@/components/home/HomeDynamic";
 
 export default async function HomePage({
@@ -19,6 +21,7 @@ export default async function HomePage({
   const tc = await getTranslations("community");
   const tf = await getTranslations("features");
   const tLT = await getTranslations("lessonTitles");
+  const tTB = await getTranslations("trustBar");
   const basePath = locale === "en" ? "" : `/${locale}`;
 
   const aiLearningPrograms = getProgramsByTrack("ai-learning").map((p) => ({
@@ -68,6 +71,21 @@ export default async function HomePage({
     programTitles[p.slug] = tP(`${p.slug}.title`);
   }
 
+  // Build lesson counts per program for continue learning
+  const lessonCounts: Record<string, number> = {};
+  for (const p of allHomePrograms) {
+    if (p.active) {
+      lessonCounts[p.slug] = getLessons(p.slug, locale).length;
+    }
+  }
+
+  const trustBarItems = [
+    { icon: "📚", value: "500+", label: tTB("lessons") },
+    { icon: "🎯", value: "15", label: tTB("programs") },
+    { icon: "🌍", value: "11", label: tTB("languages") },
+    { icon: "💎", value: "100%", label: tTB("openSource") },
+  ];
+
   return (
     <>
 
@@ -92,6 +110,16 @@ export default async function HomePage({
         </div>
       </section>
 
+      {/* Trust Bar */}
+      <HomeTrustBar items={trustBarItems} />
+
+      {/* Continue Learning (client-only, signed-in users) */}
+      <HomeContinueLearning
+        basePath={basePath}
+        programTitles={programTitles}
+        lessonCounts={lessonCounts}
+      />
+
       {/* Programs Section - Bento Grid */}
       <section className="py-12 sm:py-16">
         <HomeProgramCards
@@ -100,13 +128,13 @@ export default async function HomePage({
           highlights={[
             {
               icon: "📚",
-              value: "100+",
+              value: "500+",
               label: tf("lessonsTitle"),
               desc: tf("lessonsDesc"),
             },
             {
               icon: "🌍",
-              value: "5",
+              value: "11",
               label: tf("languagesTitle"),
               desc: tf("languagesDesc"),
             },

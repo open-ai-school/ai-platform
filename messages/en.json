@@ -40,20 +40,34 @@
     "careerReadyPath": "Career Ready"
   },
   "hero": {
-    "badge": "Open Source • Multilingual",
-    "title": "Learn AI.",
-    "titleHighlight": "Build the Future.",
-    "subtitle": "Interactive lessons that take you from curious beginner to confident builder. Start from zero - go as far as you want.",
-    "cta": "Start Your AI Journey",
-    "ctaSecondary": "Explore Lab",
+    "badge": "Open Source • 11 Languages • Free to Start",
+    "title": "Learn AI by Building",
+    "titleHighlight": "Real Things.",
+    "subtitle": "Hands-on lessons across foundations, coding, and career tracks. 15 programs, 500+ lessons, 11 languages — all free and open source.",
+    "cta": "Start Learning — Free",
+    "ctaSecondary": "Explore AI Lab",
     "students": "Students learning",
     "languages": "Languages",
     "lessons": "Interactive lessons",
     "cost": "Cost",
     "openSource": "Open Source",
-    "statPrograms": "10 Programs",
-    "statLessons": "100+ Lessons",
-    "statLanguages": "10 Languages"
+    "statPrograms": "15 Programs",
+    "statLessons": "500+ Lessons",
+    "statLanguages": "11 Languages"
+  },
+  "trustBar": {
+    "lessons": "Lessons",
+    "programs": "Programs",
+    "languages": "Languages",
+    "openSource": "Open Source"
+  },
+  "continueLearning": {
+    "title": "Continue Where You Left Off",
+    "startFirst": "Start Your First Lesson",
+    "startFirstDesc": "Pick a program and begin your AI journey",
+    "continueCta": "Continue",
+    "startCta": "Browse Programs",
+    "progress": "{completed} of {total} lessons"
   },
   "features": {
     "title": "Why AI Educademy?",
@@ -200,6 +214,7 @@
     "checkBackSoon": "Check back soon!",
     "backToProgram": "Back to program",
     "breadcrumbLessons": "Lessons",
+    "suggestEdit": "Suggest an edit to this lesson",
     "trackComplete": "Track Complete!",
     "trackCompleteDesc": "You have finished every lesson in",
     "trackCompleteDismiss": "Brilliant - carry on!",
