@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendWelcomeEmail } from "@/lib/email";
+import { sendWelcomeEmail, sendAdminNotification } from "@/lib/email";
 import { rateLimit, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit";
 import { z } from "zod";
 
@@ -28,7 +28,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    await sendWelcomeEmail(parsed.data.email.toLowerCase(), parsed.data.locale);
+    const email = parsed.data.email.toLowerCase();
+    await sendWelcomeEmail(email, parsed.data.locale);
+    sendAdminNotification(
+      "📬 New subscriber!",
+      `<p><strong>Email:</strong> ${email}</p><p><strong>Locale:</strong> ${parsed.data.locale}</p>`
+    ).catch(() => {});
 
     return NextResponse.json(
       { success: true, message: "Subscribed!" },
