@@ -286,6 +286,14 @@ export function Navbar() {
                   <span>🎯</span>
                   <span className="font-medium">{t("about")}</span>
                 </Link>
+                <Link
+                  href={`${basePath}/contact`}
+                  onClick={closeMobile}
+                  className="flex items-center gap-2.5 py-2 px-1 rounded-lg text-sm text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.04]"
+                >
+                  <span>✉️</span>
+                  <span className="font-medium">Contact</span>
+                </Link>
                 <a
                   href="https://github.com/ai-educademy"
                   target="_blank"
