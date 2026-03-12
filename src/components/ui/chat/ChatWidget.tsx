@@ -22,7 +22,7 @@ function TypingIndicator() {
       <div className="w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center flex-shrink-0">
         <Bot className="w-4 h-4 text-white" />
       </div>
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl rounded-bl-sm px-4 py-3">
+      <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl rounded-bl-sm px-4 py-3">
         <div className="flex gap-1 items-center h-4">
           <span className="w-2 h-2 rounded-full bg-violet-500 animate-bounce [animation-delay:0ms]" />
           <span className="w-2 h-2 rounded-full bg-violet-500 animate-bounce [animation-delay:150ms]" />
@@ -46,7 +46,7 @@ function MessageBubble({ message }: { message: Message }) {
         className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed whitespace-pre-wrap break-words ${
           isUser
             ? "bg-gradient-to-br from-violet-500 to-indigo-600 text-white rounded-br-sm"
-            : "bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] rounded-bl-sm"
+            : "bg-[var(--color-bg-card)] border border-[var(--color-border)] text-[var(--color-text)] rounded-bl-sm"
         }`}
       >
         {message.content}
@@ -166,7 +166,7 @@ export function ChatWidget() {
       {/* Chat panel */}
       {isOpen && (
         <div
-          className={`fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] bg-[var(--color-background)] border border-[var(--color-border)] rounded-2xl shadow-2xl shadow-black/20 flex flex-col overflow-hidden transition-all duration-200 ${
+          className={`fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-2xl shadow-2xl shadow-black/20 flex flex-col overflow-hidden transition-all duration-200 ${
             isMinimised ? "h-14" : "h-[480px]"
           }`}
           role="dialog"
@@ -216,7 +216,7 @@ export function ChatWidget() {
 
               {/* Input */}
               <div className="px-3 py-3 border-t border-[var(--color-border)] flex-shrink-0">
-                <div className="flex items-center gap-2 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl px-3 py-2 focus-within:border-violet-500 focus-within:ring-1 focus-within:ring-violet-500 transition-all">
+                <div className="flex items-center gap-2 bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-xl px-3 py-2 focus-within:border-violet-500 focus-within:ring-1 focus-within:ring-violet-500 transition-all">
                   <input
                     ref={inputRef}
                     type="text"
