@@ -71,8 +71,15 @@ export async function POST(req: NextRequest) {
     const text = result.response.text();
 
     return NextResponse.json({ content: text });
-  } catch (err) {
+  } catch (err: unknown) {
     console.error("[chat/route] error:", err);
+    const msg = err instanceof Error ? err.message : String(err);
+    if (msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.includes("quota")) {
+      return NextResponse.json(
+        { error: "I'm taking a short break due to high demand 🙏 Please try again in a minute." },
+        { status: 429 }
+      );
+    }
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },
       { status: 500 }
