@@ -6,6 +6,7 @@ import { getTracks } from "@/lib/tracks";
 import ProgramsShowcase from "@/components/programs/ProgramsShowcase";
 import type { TrackData, ProgramData } from "@/components/programs/ProgramsShowcase";
 import { CourseListJsonLd } from "@/components/seo/JsonLd";
+import { buildAlternates } from "@/lib/seo";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -21,6 +22,7 @@ export async function generateMetadata({
     description: t("pageDescription"),
     alternates: {
       canonical: `${BASE_URL}${locale === "en" ? "" : `/${locale}`}/programs`,
+      ...buildAlternates("/programs"),
     },
     openGraph: {
       title: `${t("pageTitle")} | AI Educademy`,

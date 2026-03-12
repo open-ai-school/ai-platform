@@ -10,6 +10,7 @@ import { LessonFeedback } from "@/components/lessons/LessonFeedback";
 import { ListenButton } from "@/components/ui/ListenButton";
 import { BreadcrumbJsonLd, LearningResourceJsonLd } from "@/components/seo/JsonLd";
 import { routing } from "@/i18n/routing";
+import { buildAlternates } from "@/lib/seo";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -52,6 +53,7 @@ export async function generateMetadata({
     description,
     alternates: {
       canonical: canonicalUrl,
+      ...buildAlternates(`/programs/${programSlug}/lessons/${slug}`),
     },
     openGraph: {
       title: `${title} | AI Educademy`,

@@ -75,7 +75,7 @@ export function Quiz({ question, options: rawOptions, answer: rawAnswer, explana
     >
       <div className="px-5 sm:px-6 py-4 bg-[var(--color-primary)]/8 border-b border-[var(--color-border)]">
         <div className="flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)]">
-          <span className="text-lg">\ud83e\udde0</span>
+          <span className="text-lg">🧠</span>
           {t("quickCheck")}
         </div>
       </div>
@@ -159,7 +159,7 @@ export function Quiz({ question, options: rawOptions, answer: rawAnswer, explana
               }`}
               style={noMotion ? undefined : { animation: `scale-in 0.4s ${EASE} both` }}
             >
-              <span className="text-xl">{isCorrect ? "\ud83c\udf89" : "\ud83d\udca1"}</span>
+              <span className="text-xl">{isCorrect ? "🎉" : "💡"}</span>
               {isCorrect ? t("quizCorrect") : t("quizIncorrect")}
             </div>
 

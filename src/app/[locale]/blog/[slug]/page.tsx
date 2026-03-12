@@ -10,6 +10,7 @@ import { ArticleJsonLd } from "@/components/seo/JsonLd";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { TableOfContents } from "@/components/blog/TableOfContents";
 import { slugify } from "@/lib/slugify";
+import { buildAlternates } from "@/lib/seo";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -64,6 +65,7 @@ export async function generateMetadata({
     description: post.description,
     alternates: {
       canonical: `${BASE_URL}${locale === "en" ? "" : `/${locale}`}/blog/${slug}`,
+      ...buildAlternates(`/blog/${slug}`),
     },
     openGraph: {
       title: `${post.title} | AI Educademy`,

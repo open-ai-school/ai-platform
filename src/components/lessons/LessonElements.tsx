@@ -25,7 +25,7 @@ function useElementInView(margin = "-60px") {
   return { ref, isInView };
 }
 
-/* \u2500\u2500 Animated MDX elements \u2500\u2500 */
+/* ── Animated MDX elements ── */
 
 export function AnimatedH1(props: React.HTMLAttributes<HTMLHeadingElement>) {
   const noMotion = useReducedMotion();
@@ -266,7 +266,7 @@ export function AnimatedCallout({
     tip: "border-[var(--color-accent)] bg-[var(--color-accent)]/8",
     warning: "border-[var(--color-secondary)] bg-[var(--color-secondary)]/8",
   };
-  const icons = { info: "\ud83d\udca1", tip: "\u2705", warning: "\u26a0\ufe0f" };
+  const icons = { info: "💡", tip: "✅", warning: "⚠️" };
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
@@ -299,7 +299,7 @@ export function AnimatedFunFact({ children }: { children: React.ReactNode }) {
       }}
     >
       <div className="flex items-start gap-3">
-        <span className="text-2xl shrink-0">\ud83e\udd2f</span>
+        <span className="text-2xl shrink-0">🤯</span>
         <div className="text-[var(--color-text)]">{children}</div>
       </div>
     </div>
@@ -320,7 +320,7 @@ export function AnimatedThinkAboutIt({ children }: { children: React.ReactNode }
       }}
     >
       <div className="flex items-start gap-3">
-        <span className="text-2xl shrink-0">\ud83e\udd14</span>
+        <span className="text-2xl shrink-0">🤔</span>
         <div className="text-[var(--color-text)]">
           <strong className="block mb-1 text-[var(--color-secondary)]">Think about it:</strong>
           {children}

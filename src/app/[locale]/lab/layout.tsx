@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { buildAlternates } from "@/lib/seo";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -15,6 +16,7 @@ export async function generateMetadata({
     description: t("pageDescription"),
     alternates: {
       canonical: `${BASE_URL}${locale === "en" ? "" : `/${locale}`}/lab`,
+      ...buildAlternates("/lab"),
     },
     openGraph: {
       title: `${t("pageTitle")} | AI Educademy`,

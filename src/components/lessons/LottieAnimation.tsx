@@ -81,7 +81,7 @@ export function LottieAnimation({
       >
         {error ? (
           <div className="text-[var(--color-text-muted)] text-sm flex flex-col items-center gap-2 p-8">
-            <span className="text-3xl">\ud83c\udfad</span>
+            <span className="text-3xl">🎭</span>
             <span>{t("animationError")}</span>
           </div>
         ) : animationData ? (

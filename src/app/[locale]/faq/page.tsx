@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { FAQJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { AnimatedSection } from "@/components/ui/MotionWrappers";
+import { buildAlternates } from "@/lib/seo";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -18,7 +19,10 @@ export async function generateMetadata({
   return {
     title: `${t("title")} | AI Educademy`,
     description: t("subtitle"),
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      ...buildAlternates("/faq"),
+    },
     openGraph: {
       title: `${t("title")} | AI Educademy`,
       description: t("subtitle"),

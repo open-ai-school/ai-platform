@@ -11,8 +11,10 @@ import { Providers } from "@/components/ui/Providers";
 
 import { OrganizationJsonLd } from "@/components/seo/JsonLd";
 
+import { routing } from "@/i18n/routing";
+import { buildAlternates } from "@/lib/seo";
+
 const BASE_URL = "https://aieducademy.org";
-const locales = ["en", "fr", "nl", "hi", "te"];
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,13 +30,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
-
-  const languages: Record<string, string> = {
-    "x-default": BASE_URL,
-    ...Object.fromEntries(
-      locales.map((l) => [l, l === "en" ? BASE_URL : `${BASE_URL}/${l}`])
-    ),
-  };
 
   const canonicalUrl = locale === "en" ? BASE_URL : `${BASE_URL}/${locale}`;
 
@@ -68,7 +63,7 @@ export async function generateMetadata({
     publisher: "AI Educademy",
     alternates: {
       canonical: canonicalUrl,
-      languages,
+      ...buildAlternates(""),
       types: {
         "application/rss+xml": `${BASE_URL}/feed.xml`,
       },

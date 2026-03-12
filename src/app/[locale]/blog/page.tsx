@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getBlogPosts } from "@/lib/blog";
 import { AnimatedSection } from "@/components/ui/MotionWrappers";
+import { buildAlternates } from "@/lib/seo";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -18,6 +19,7 @@ export async function generateMetadata({
     description: t("subtitle"),
     alternates: {
       canonical: `${BASE_URL}${locale === "en" ? "" : `/${locale}`}/blog`,
+      ...buildAlternates("/blog"),
     },
     openGraph: {
       title: `${t("title")} | AI Educademy`,
