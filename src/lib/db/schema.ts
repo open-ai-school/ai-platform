@@ -192,6 +192,40 @@ export const contactSubmissions = pgTable("contact_submissions", {
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });
 
+/* ─────────────── User Streaks ─────────────── */
+
+export const userStreaks = pgTable("user_streaks", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" })
+    .unique(),
+  currentStreak: integer("current_streak").notNull().default(0),
+  longestStreak: integer("longest_streak").notNull().default(0),
+  lastActivityDate: text("last_activity_date").notNull(), // ISO date YYYY-MM-DD
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+/* ─────────────── Playground Scores ─────────────── */
+
+export const playgroundScores = pgTable(
+  "playground_scores",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    gameId: text("game_id").notNull(),
+    bestScore: integer("best_score").notNull().default(0),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => [unique().on(table.userId, table.gameId)]
+);
+
 /* ─────────────── Lesson Bookmarks / Favorites ─────────────── */
 
 export const lessonBookmarks = pgTable(

@@ -70,7 +70,7 @@ export function NavDropdown({
         className={`relative px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]/50 ${
           isActive || open
             ? "text-[var(--color-primary)] bg-[var(--color-primary)]/10 font-semibold"
-            : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.06]"
+            : "text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-text)]/[0.06]"
         }`}
         aria-expanded={open}
         aria-haspopup="true"

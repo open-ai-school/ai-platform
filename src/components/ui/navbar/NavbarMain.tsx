@@ -87,7 +87,7 @@ export function Navbar() {
   return (
     <div className="sticky top-0 z-50 px-3 sm:px-4 pt-3 pb-1">
       <nav
-        className={`max-w-5xl mx-auto rounded-2xl border border-[var(--color-border)] glass transition-shadow duration-300 ${
+        className={`max-w-6xl mx-auto rounded-2xl border border-[var(--color-border)] glass transition-shadow duration-300 ${
           scrolled
             ? "shadow-lg shadow-black/[0.06] dark:shadow-black/30"
             : "shadow-sm shadow-black/[0.02] dark:shadow-black/10"
@@ -104,7 +104,7 @@ export function Navbar() {
             </Link>
 
             {/* ─── Desktop Nav with Mega Dropdowns ─── */}
-            <div className="hidden md:flex items-center gap-0.5">
+            <div className="hidden md:flex items-center gap-1">
               <NavDropdown
                 trigger={t("programs")}
                 isActive={isActive("/programs")}
@@ -127,7 +127,7 @@ export function Navbar() {
                 className={`relative px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
                   isActive("/journey")
                     ? "text-[var(--color-primary)] bg-[var(--color-primary)]/10 font-semibold"
-                    : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.06]"
+                    : "text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-text)]/[0.06]"
                 }`}
               >
                 {t("journey")}
@@ -142,7 +142,7 @@ export function Navbar() {
                 className={`relative px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
                   isActive("/blog")
                     ? "text-[var(--color-primary)] bg-[var(--color-primary)]/10 font-semibold"
-                    : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.06]"
+                    : "text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-text)]/[0.06]"
                 }`}
               >
                 {t("blog")}
@@ -167,7 +167,7 @@ export function Navbar() {
                     className={`relative px-2.5 py-1.5 rounded-full transition-all duration-200 ${
                       isActive("/bookmarks")
                         ? "text-[var(--color-primary)] bg-[var(--color-primary)]/10"
-                        : "text-[var(--color-text-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-text)]/[0.06]"
+                        : "text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-text)]/[0.06]"
                     }`}
                     aria-label={t("bookmarks") ?? "Bookmarks"}
                     title={t("bookmarks") ?? "Bookmarks"}
@@ -182,7 +182,7 @@ export function Navbar() {
                   className={`relative px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
                     isActive("/dashboard")
                       ? "text-[var(--color-primary)] bg-[var(--color-primary)]/10 font-semibold"
-                      : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-text)]/[0.06]"
+                      : "text-[var(--color-text)] hover:text-[var(--color-primary)] hover:bg-[var(--color-text)]/[0.06]"
                   }`}
                 >
                   {t("dashboard")}

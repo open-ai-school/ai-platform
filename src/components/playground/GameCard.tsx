@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useRef } from "react";
+import { useSession } from "next-auth/react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export type GameDifficulty = "easy" | "medium" | "hard";
@@ -46,13 +47,29 @@ function getPersonalBest(gameId: string): number | null {
   } catch { return null; }
 }
 
-export function savePersonalBest(gameId: string, score: number): boolean {
+/** Save to localStorage and optionally sync to DB (fire-and-forget). Returns true if new best. */
+export function savePersonalBest(gameId: string, score: number, syncToDb = false): boolean {
   if (typeof window === "undefined") return false;
   try {
     const current = getPersonalBest(gameId);
     if (current === null || score > current) {
       localStorage.setItem(`playground_best_${gameId}`, String(score));
+      if (syncToDb) {
+        fetch("/api/playground-scores", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ gameId, score }),
+        }).catch(() => {});
+      }
       return true;
+    }
+    // Even if not a new local best, sync to DB in case DB is behind
+    if (syncToDb && current !== null) {
+      fetch("/api/playground-scores", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ gameId, score }),
+      }).catch(() => {});
     }
     return false;
   } catch { return false; }
@@ -71,14 +88,41 @@ export default function GameCard({
 }) {
   const t = useTranslations("lab.hub");
   const tp = useTranslations("lab.playground");
+  const { status: sessionStatus } = useSession();
   const noMotion = useReducedMotion();
   const [bestScore, setBestScore] = useState<number | null>(null);
   const [inView, setInView] = useState(false);
   const ref = useRef<HTMLButtonElement>(null);
+  const isGuest = sessionStatus !== "authenticated";
 
+  // Load best score: localStorage first, then merge with DB for signed-in users
   useEffect(() => {
-    setBestScore(getPersonalBest(game.id));
-  }, [game.id]);
+    const localBest = getPersonalBest(game.id);
+    setBestScore(localBest);
+
+    // Don't fetch from DB while session is loading or for guests
+    if (sessionStatus !== "authenticated") return;
+
+    fetch(`/api/playground-scores?gameId=${encodeURIComponent(game.id)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: { score: { bestScore: number } | null } | null) => {
+        const dbBest = data?.score?.bestScore ?? null;
+
+        if (dbBest !== null && (localBest === null || dbBest > localBest)) {
+          // DB has higher score — update localStorage
+          localStorage.setItem(`playground_best_${game.id}`, String(dbBest));
+          setBestScore(dbBest);
+        } else if (dbBest === null && localBest !== null) {
+          // Migrate localStorage to DB (first sign-in)
+          fetch("/api/playground-scores", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ gameId: game.id, score: localBest }),
+          }).catch(() => {});
+        }
+      })
+      .catch(() => { /* API failed, localStorage is fine */ });
+  }, [game.id, sessionStatus]);
 
   useEffect(() => {
     const el = ref.current;

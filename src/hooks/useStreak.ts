@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 const STORAGE_KEY = "aieducademy-streak";
 
@@ -20,7 +21,7 @@ function getYesterday(): string {
   return d.toISOString().split("T")[0];
 }
 
-function loadStreak(): StreakData {
+function loadStreakFromStorage(): StreakData {
   if (typeof window === "undefined") {
     return { currentStreak: 0, longestStreak: 0, lastActiveDate: "" };
   }
@@ -28,7 +29,6 @@ function loadStreak(): StreakData {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const data = JSON.parse(stored) as StreakData;
-      // Reset streak if gap > 1 day
       const today = getToday();
       const yesterday = getYesterday();
       if (data.lastActiveDate !== today && data.lastActiveDate !== yesterday) {
@@ -40,19 +40,95 @@ function loadStreak(): StreakData {
   return { currentStreak: 0, longestStreak: 0, lastActiveDate: "" };
 }
 
-export function useStreak() {
-  const [streak, setStreak] = useState<StreakData>({ currentStreak: 0, longestStreak: 0, lastActiveDate: "" });
+function saveStreakToStorage(data: StreakData) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch { /* ignore */ }
+}
 
+/** Merge two streak sources, taking the better values */
+function mergeStreaks(a: StreakData, b: StreakData): StreakData {
+  const best = a.currentStreak >= b.currentStreak ? a : b;
+  return {
+    currentStreak: best.currentStreak,
+    longestStreak: Math.max(a.longestStreak, b.longestStreak),
+    lastActiveDate: best.lastActiveDate,
+  };
+}
+
+export function useStreak() {
+  const { data: session, status: sessionStatus } = useSession();
+  const [streak, setStreak] = useState<StreakData>({ currentStreak: 0, longestStreak: 0, lastActiveDate: "" });
+  const isGuest = sessionStatus !== "authenticated" || !session?.user?.id;
+
+  // Load streak on mount / session change
   useEffect(() => {
-    setStreak(loadStreak());
-  }, []);
+    if (sessionStatus === "loading") return;
+
+    const local = loadStreakFromStorage();
+
+    if (isGuest) {
+      setStreak(local);
+      return;
+    }
+
+    // Signed-in: fetch from DB, merge with localStorage
+    fetch("/api/streak")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((db: { currentStreak: number; longestStreak: number; lastActivityDate: string } | null) => {
+        if (!db || (!db.lastActivityDate && !local.lastActiveDate)) {
+          setStreak(local);
+          // Migrate localStorage data to DB if it exists
+          if (local.lastActiveDate) {
+            fetch("/api/streak", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                currentStreak: local.currentStreak,
+                longestStreak: local.longestStreak,
+                lastActivityDate: local.lastActiveDate,
+              }),
+            }).catch(() => {});
+          }
+          return;
+        }
+
+        if (!db.lastActivityDate) {
+          // DB empty, localStorage has data → migrate to DB
+          setStreak(local);
+          fetch("/api/streak", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              currentStreak: local.currentStreak,
+              longestStreak: local.longestStreak,
+              lastActivityDate: local.lastActiveDate,
+            }),
+          }).catch(() => {});
+          return;
+        }
+
+        // Both have data → merge (DB is source of truth, but take higher values)
+        const dbStreak: StreakData = {
+          currentStreak: db.currentStreak,
+          longestStreak: db.longestStreak,
+          lastActiveDate: db.lastActivityDate,
+        };
+        const merged = mergeStreaks(dbStreak, local);
+        setStreak(merged);
+        saveStreakToStorage(merged);
+      })
+      .catch(() => {
+        // API failed — fall back to localStorage
+        setStreak(local);
+      });
+  }, [sessionStatus, isGuest]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const recordStreak = useCallback(() => {
     setStreak((prev) => {
       const today = getToday();
       const yesterday = getYesterday();
 
-      // Already recorded today
       if (prev.lastActiveDate === today) return prev;
 
       let newCurrent: number;
@@ -68,10 +144,18 @@ export function useStreak() {
         longestStreak: newLongest,
         lastActiveDate: today,
       };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+
+      // Always update localStorage
+      saveStreakToStorage(next);
+
+      // Fire-and-forget sync to DB for signed-in users
+      if (!isGuest) {
+        fetch("/api/streak", { method: "POST" }).catch(() => {});
+      }
+
       return next;
     });
-  }, []);
+  }, [isGuest]);
 
   return {
     currentStreak: streak.currentStreak,

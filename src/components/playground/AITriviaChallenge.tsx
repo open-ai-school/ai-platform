@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { useSession } from "next-auth/react";
 import { savePersonalBest } from "./GameCard";
 import ConfettiCelebration from "./ConfettiCelebration";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -57,7 +58,9 @@ const anim = (noMotion: boolean, value: string) => noMotion ? "none" : value;
 
 export default function AITriviaChallenge() {
   const t = useTranslations("lab");
+  const { status: sessionStatus } = useSession();
   const noMotion = useReducedMotion();
+  const isGuest = sessionStatus !== "authenticated";
   const [gameState, setGameState] = useState<"intro" | "playing" | "result">("intro");
   const [questions, setQuestions] = useState<typeof TRIVIA_QUESTIONS>([]);
   const [current, setCurrent] = useState(0);
@@ -106,7 +109,7 @@ export default function AITriviaChallenge() {
     if (feedback === null) return;
     const timer = setTimeout(() => {
       if (current + 1 >= questions.length) {
-        const best = savePersonalBest("ai-trivia", score);
+        const best = savePersonalBest("ai-trivia", score, !isGuest);
         setIsNewBest(best);
         addToLeaderboard({
           score,
