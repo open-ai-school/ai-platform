@@ -41,8 +41,8 @@
   },
   "hero": {
     "badge": "开源 • 多语言",
-    "title": "学习 AI。",
-    "titleHighlight": "构建未来。",
+    "title": "AI学习，",
+    "titleHighlight": "化繁为简。",
     "subtitle": "互动课程，带你从好奇的初学者成长为自信的创造者。从零开始——想走多远就走多远。",
     "cta": "开启你的AI之旅",
     "ctaSecondary": "探索实验室",
@@ -1439,5 +1439,140 @@
     "progress": "再完成 {remaining} 节课程即可获得证书",
     "completed": "您已获得证书！",
     "notSignedIn": "登录以跟踪进度并获取证书"
+  },
+  "continueLearning": {
+    "title": "继续上次的学习",
+    "startFirst": "开始你的第一节课",
+    "startFirstDesc": "选择一个课程，开启你的AI之旅",
+    "continueCta": "继续学习",
+    "startCta": "浏览课程",
+    "progress": "已完成 {completed}/{total} 节课"
+  },
+  "contact": {
+    "title": "联系我们",
+    "subtitle": "有问题、想法，或只是想打个招呼？我们很乐意听取您的意见。",
+    "name": "您的姓名",
+    "namePlaceholder": "张三",
+    "email": "电子邮箱",
+    "emailPlaceholder": "zhangsan@example.com",
+    "subject": "主题",
+    "subjectGeneral": "一般咨询",
+    "subjectBug": "错误报告",
+    "subjectFeature": "功能请求",
+    "subjectPartnership": "合作洽谈",
+    "subjectOther": "其他",
+    "message": "留言内容",
+    "messagePlaceholder": "告诉我们您的想法……",
+    "submit": "发送消息",
+    "sending": "发送中……",
+    "success": "消息已发送！我们会尽快回复您。",
+    "error": "出了点问题，请重试。",
+    "rateLimit": "消息发送过于频繁，请稍后再试。",
+    "required": "此项为必填",
+    "invalidEmail": "请输入有效的电子邮箱",
+    "messageTooShort": "留言至少需要10个字符",
+    "or": "或直接联系我们",
+    "emailUs": "发送邮件",
+    "emailAddress": "hello@aieducademy.org",
+    "socials": "关注我们",
+    "responseTime": "我们通常会在24小时内回复"
+  },
+  "privacy": {
+    "title": "隐私政策",
+    "subtitle": "最后更新：2025年3月",
+    "intro": "AI Educademy 致力于保护您的隐私。本政策说明我们如何收集、使用和保护您的个人信息。",
+    "sections": {
+      "collect": {
+        "title": "1. 我们收集的信息",
+        "content": "我们收集以下信息：您通过 OAuth 提供商（Google 或 GitHub）提供的姓名、电子邮箱和头像；您的学习进度和课程完成情况；通过 Stripe 处理的订阅和支付信息；使用数据，包括访问的页面和使用的功能；用于分析的设备和浏览器信息。"
+      },
+      "use": {
+        "title": "2. 我们如何使用您的信息",
+        "content": "我们使用您的信息来：提供和个性化学习体验；跟踪您的课程进度；处理支付和管理订阅；发送重要的账户和服务通知；通过分析改进我们的平台；发送可选的教育简报（您可以随时退订）。"
+      },
+      "sharing": {
+        "title": "3. 信息共享",
+        "content": "我们不会出售您的个人信息。我们仅与以下方共享数据：Stripe（支付处理）、Resend（邮件发送）、Neon（数据库托管）、Vercel（网站托管）以及 GitHub/Google（身份验证）。所有第三方提供商均符合 GDPR 规定。"
+      },
+      "cookies": {
+        "title": "4. Cookie 与跟踪",
+        "content": "我们使用必要的 Cookie 进行身份验证和会话管理。我们使用分析工具来了解平台的使用情况。我们不使用广告 Cookie，也不会将数据出售给广告商。"
+      },
+      "retention": {
+        "title": "5. 数据保留",
+        "content": "在您的账户处于活跃状态期间，我们会保留您的账户数据。如果您删除账户，我们将在30天内删除您的个人数据。匿名化的分析数据可能会被无限期保留。支付记录将按照英国税法要求予以保留。"
+      },
+      "rights": {
+        "title": "6. 您的权利（GDPR）",
+        "content": "根据英国 GDPR，您有权：访问您的个人数据；更正不准确的数据；请求删除您的数据；以便携格式导出您的数据；反对数据处理；随时撤回同意。如需行使这些权利，请联系 privacy@aieducademy.org。"
+      },
+      "security": {
+        "title": "7. 安全措施",
+        "content": "我们采用行业标准的安全措施，包括：加密数据传输（TLS/SSL）、通过 OAuth 2.0 进行安全身份验证、通过 Stripe 进行符合 PCI 标准的支付处理、定期安全审查以及对所有系统的访问控制。"
+      },
+      "children": {
+        "title": "8. 儿童隐私",
+        "content": "AI Educademy 不面向13岁以下的儿童。我们不会故意收集13岁以下儿童的个人信息。如果您认为某位儿童向我们提供了个人数据，请立即联系我们。"
+      },
+      "international": {
+        "title": "9. 国际数据传输",
+        "content": "您的数据可能通过我们的托管提供商在欧盟和美国进行处理。所有传输均受到适当的保障措施保护，包括适用的标准合同条款。"
+      },
+      "changes": {
+        "title": "10. 政策变更",
+        "content": "我们可能会不时更新本政策。如有重大变更，我们将通过电子邮件通知您。变更后继续使用本服务即表示您接受更新后的政策。"
+      },
+      "contact": {
+        "title": "11. 联系我们",
+        "content": "如有隐私相关问题，请发送邮件至 privacy@aieducademy.org。数据保护查询可发送至 theglobalmind.ai@gmail.com。"
+      }
+    }
+  },
+  "terms": {
+    "title": "服务条款",
+    "subtitle": "最后更新：2025年3月",
+    "intro": "欢迎使用 AI Educademy。访问或使用我们的平台即表示您同意受这些条款的约束。",
+    "sections": {
+      "use": {
+        "title": "1. 服务使用",
+        "content": "AI Educademy 提供 AI 教育内容，包括课程、交互式实验室和学习资源。您可以将我们的服务用于个人、非商业性的教育目的。您必须年满13岁才能使用本服务。"
+      },
+      "accounts": {
+        "title": "2. 用户账户",
+        "content": "您可以使用 Google 或 GitHub OAuth 登录。您有责任维护账户的安全。注册时必须提供准确的信息。我们保留暂停违反这些条款的账户的权利。"
+      },
+      "subscriptions": {
+        "title": "3. 订阅与支付",
+        "content": "AI Educademy 提供免费和付费方案。付费订阅通过 Stripe 安全处理。月度和年度订阅将自动续订，除非取消。您可以随时通过账户仪表板取消订阅。退款将根据英国消费者权利法在购买后14天内逐案处理。"
+      },
+      "content": {
+        "title": "4. 内容与知识产权",
+        "content": "所有课程内容，包括文本、代码示例、图表和互动练习，均为 AI Educademy 的知识产权。免费版内容在标注处以 MIT 许可证提供。未经许可，不得转载、复制或分享付费内容。"
+      },
+      "conduct": {
+        "title": "5. 可接受的使用",
+        "content": "您同意不会：共享账户凭据、在没有有效订阅的情况下尝试访问付费内容、使用自动工具抓取内容、上传恶意内容或骚扰其他用户。违反规定可能导致账户被终止。"
+      },
+      "disclaimer": {
+        "title": "6. 免责声明",
+        "content": "AI Educademy 按“现状”提供教育内容。尽管我们力求准确，但不保证所有内容均无错误或为最新版本。AI Educademy 不对职业成果或面试结果负责。"
+      },
+      "liability": {
+        "title": "7. 责任限制",
+        "content": "在法律允许的最大范围内，AI Educademy 不对因您使用本服务而产生的任何间接、附带或后果性损害承担责任。我们的总赔偿责任不超过您在索赔前12个月内向我们支付的金额。"
+      },
+      "changes": {
+        "title": "8. 条款变更",
+        "content": "我们可能会不时更新这些条款。变更后继续使用本服务即表示您接受更新后的条款。如有重大变更，我们将通过电子邮件通知注册用户。"
+      },
+      "governing": {
+        "title": "9. 适用法律",
+        "content": "这些条款受英格兰和威尔士法律管辖。任何争议均应受英格兰和威尔士法院的专属管辖。"
+      },
+      "contact": {
+        "title": "10. 联系方式",
+        "content": "如对这些条款有疑问，请联系 support@aieducademy.org。"
+      }
+    }
   }
 }
