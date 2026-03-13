@@ -58,13 +58,14 @@ function AnimatedStat({ text, inView }: { text: string; inView: boolean }) {
   const numericValue = match ? parseInt(match[1], 10) : 0;
   const suffix = match ? `${match[2]}${match[3]}` : text;
   const isNumeric = !!match;
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(numericValue);
 
   const animate = useCallback(() => {
     if (!isNumeric || prefersReduced) {
       setCount(numericValue);
       return;
     }
+    setCount(0);
     const duration = 1200;
     const startTime = performance.now();
     function tick(now: number) {
