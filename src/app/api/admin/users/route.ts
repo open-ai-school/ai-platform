@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { users, subscriptions } from "@/lib/db/schema";
+import { users, subscriptions, newsletterSubscribers, lessonFeedback } from "@/lib/db/schema";
 import { eq, sql, count } from "drizzle-orm";
 import { requireAdmin } from "@/lib/admin-auth";
 
@@ -53,14 +53,35 @@ export async function GET() {
       .from(subscriptions)
       .where(eq(subscriptions.status, "cancelled"));
 
+    // Newsletter subscriber count
+    const [subscriberCount] = await db
+      .select({ total: count() })
+      .from(newsletterSubscribers);
+
+    // Recent feedback
+    const recentFeedback = await db
+      .select({
+        id: lessonFeedback.id,
+        lessonSlug: lessonFeedback.lessonSlug,
+        programSlug: lessonFeedback.programSlug,
+        rating: lessonFeedback.rating,
+        comment: lessonFeedback.comment,
+        createdAt: lessonFeedback.createdAt,
+      })
+      .from(lessonFeedback)
+      .orderBy(sql`${lessonFeedback.createdAt} DESC`)
+      .limit(10);
+
     return NextResponse.json({
       totalUsers: userCount.total,
       activeSubscriptions: activeSubs.total,
       cancelledSubscriptions: cancelledSubs.total,
+      totalSubscribers: subscriberCount.total,
       mrr: Math.round(mrr * 100) / 100,
       roleBreakdown: Object.fromEntries(roleBreakdown.map((r) => [r.role, r.total])),
       planBreakdown: Object.fromEntries(planBreakdown.map((p) => [p.plan, p.total])),
       recentUsers,
+      recentFeedback,
     });
   } catch (error) {
     console.error("Admin users summary error:", error);

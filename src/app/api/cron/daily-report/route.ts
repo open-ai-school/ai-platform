@@ -1,24 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { users, subscriptions } from "@/lib/db/schema";
+import { users, subscriptions, newsletterSubscribers, lessonFeedback } from "@/lib/db/schema";
 import { sql, gte, count, eq } from "drizzle-orm";
-import { readJsonFile } from "@/lib/fileStore";
 import { sendAdminNotification } from "@/lib/email";
 import Redis from "ioredis";
-
-interface Subscriber {
-  email: string;
-  subscribedAt: string;
-  locale?: string;
-}
-
-interface FeedbackEntry {
-  lessonSlug: string;
-  programSlug: string;
-  rating: "up" | "down";
-  comment?: string;
-  timestamp: string;
-}
 
 let redis: Redis | null = null;
 
@@ -94,11 +79,23 @@ export async function GET(req: NextRequest) {
       .orderBy(sql`${users.createdAt} DESC`)
       .limit(5);
 
-    // --- JSON file analytics + Redis page views ---
-    const [subscribers, feedback] = await Promise.all([
-      readJsonFile<Subscriber[]>("newsletter-subscribers.json", []),
-      readJsonFile<FeedbackEntry[]>("lesson-feedback.json", []),
-    ]);
+    // --- Newsletter subscribers & feedback from DB ---
+    const [totalSubscribersResult] = await db
+      .select({ count: count() })
+      .from(newsletterSubscribers);
+
+    const [todaySubscribersResult] = await db
+      .select({ count: count() })
+      .from(newsletterSubscribers)
+      .where(gte(newsletterSubscribers.subscribedAt, twentyFourHoursAgo));
+
+    const todayFeedbackRows = await db
+      .select({ rating: lessonFeedback.rating })
+      .from(lessonFeedback)
+      .where(gte(lessonFeedback.createdAt, twentyFourHoursAgo));
+
+    const feedbackUp = todayFeedbackRows.filter((f) => f.rating === "up").length;
+    const feedbackDown = todayFeedbackRows.filter((f) => f.rating === "down").length;
 
     // Page views from Redis (the real source of truth)
     let pageViews = 0;
@@ -115,18 +112,6 @@ export async function GET(req: NextRequest) {
     // Country/locale breakdown is not available from Redis (kept as placeholder)
     const topCountries: [string, number][] = [];
     const topPages: [string, number][] = [];
-
-    // Today's feedback
-    const todayFeedback = feedback.filter(
-      (f) => new Date(f.timestamp) >= twentyFourHoursAgo
-    );
-    const feedbackUp = todayFeedback.filter((f) => f.rating === "up").length;
-    const feedbackDown = todayFeedback.filter((f) => f.rating === "down").length;
-
-    // Today's newsletter signups
-    const todaySubscribers = subscribers.filter(
-      (s) => new Date(s.subscribedAt) >= twentyFourHoursAgo
-    );
 
     // --- Build the email ---
     const roleRows = roleBreakdown
@@ -197,7 +182,7 @@ export async function GET(req: NextRequest) {
         <td style="padding:12px 16px;background:#f9fafb;border-radius:8px;border:1px solid #e5e7eb;">
           <span style="font-size:14px;">📄 Page views today: <strong>${pageViews}</strong></span> &nbsp;|&nbsp;
           <span style="font-size:14px;">👍 Feedback: <strong>${feedbackUp}</strong> up / <strong>${feedbackDown}</strong> down</span> &nbsp;|&nbsp;
-          <span style="font-size:14px;">📧 Newsletter signups: <strong>${todaySubscribers.length}</strong></span>
+          <span style="font-size:14px;">📧 Newsletter signups: <strong>${todaySubscribersResult.count}</strong></span>
         </td>
       </tr>
     </table>
@@ -258,7 +243,7 @@ export async function GET(req: NextRequest) {
         pageViews,
         feedbackUp,
         feedbackDown,
-        newsletterSignups: todaySubscribers.length,
+        newsletterSignups: todaySubscribersResult.count,
       },
     });
   } catch (error) {

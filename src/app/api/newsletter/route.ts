@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendWelcomeEmail, sendAdminNotification } from "@/lib/email";
 import { rateLimit, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit";
+import { db } from "@/lib/db";
+import { newsletterSubscribers } from "@/lib/db/schema";
 import { z } from "zod";
 
 const NewsletterSchema = z.object({
@@ -29,6 +31,13 @@ export async function POST(req: NextRequest) {
     }
 
     const email = parsed.data.email.toLowerCase();
+
+    // Upsert subscriber — don't duplicate on email
+    await db
+      .insert(newsletterSubscribers)
+      .values({ email, locale: parsed.data.locale })
+      .onConflictDoNothing({ target: newsletterSubscribers.email });
+
     await sendWelcomeEmail(email, parsed.data.locale);
     sendAdminNotification(
       "📬 New subscriber!",

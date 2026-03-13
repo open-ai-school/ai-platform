@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit";
 import { sendAdminNotification } from "@/lib/email";
+import { db } from "@/lib/db";
+import { contactSubmissions } from "@/lib/db/schema";
 import { z } from "zod";
 
 const SUBJECTS = [
@@ -107,6 +109,14 @@ export async function POST(req: NextRequest) {
         { status: 400, headers: rateLimitHeaders(rl) },
       );
     }
+
+    // Persist to database
+    await db.insert(contactSubmissions).values({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      subject: parsed.data.subject,
+      message: parsed.data.message,
+    });
 
     // Send admin notification with rich HTML
     const adminHtml = buildContactEmailHtml(parsed.data);

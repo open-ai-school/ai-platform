@@ -1,6 +1,7 @@
 import {
   pgTable,
   text,
+  uuid,
   timestamp,
   integer,
   boolean,
@@ -138,4 +139,39 @@ export const referrals = pgTable("referrals", {
     .default("pending"),
   createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
   completedAt: timestamp("completed_at", { mode: "date" }),
+});
+
+/* ─────────────── Newsletter Subscribers ─────────────── */
+
+export const newsletterSubscribers = pgTable("newsletter_subscribers", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: text("email").notNull().unique(),
+  locale: text("locale").default("en"),
+  subscribedAt: timestamp("subscribed_at", { mode: "date" }).defaultNow(),
+  unsubscribedAt: timestamp("unsubscribed_at", { mode: "date" }),
+});
+
+/* ─────────────── Lesson Feedback ─────────────── */
+
+export const lessonFeedback = pgTable("lesson_feedback", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  lessonSlug: text("lesson_slug").notNull(),
+  programSlug: text("program_slug").notNull(),
+  rating: text("rating", { enum: ["up", "down"] }).notNull(),
+  comment: text("comment"),
+  locale: text("locale").default("en"),
+  userId: text("user_id").references(() => users.id, { onDelete: "set null" }),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+});
+
+/* ─────────────── Contact Submissions ─────────────── */
+
+export const contactSubmissions = pgTable("contact_submissions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  subject: text("subject").notNull(),
+  message: text("message").notNull(),
+  status: text("status", { enum: ["new", "read", "replied", "archived"] }).default("new"),
+  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });

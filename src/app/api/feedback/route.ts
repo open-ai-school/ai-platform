@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readJsonFile, writeJsonFile } from "@/lib/fileStore";
 import { rateLimit, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit";
 import { sendAdminNotification } from "@/lib/email";
+import { db } from "@/lib/db";
+import { lessonFeedback } from "@/lib/db/schema";
+import { eq, and, sql } from "drizzle-orm";
 import { z } from "zod";
-
-const FILE = "lesson-feedback.json";
 
 const FeedbackSchema = z.object({
   lessonSlug: z.string().min(1).max(100),
@@ -14,15 +14,6 @@ const FeedbackSchema = z.object({
   locale: z.string().max(10).default("en"),
 });
 
-interface FeedbackEntry {
-  lessonSlug: string;
-  programSlug: string;
-  rating: "up" | "down";
-  comment?: string;
-  locale: string;
-  timestamp: string;
-}
-
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -30,19 +21,6 @@ function escapeHtml(str: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
-}
-
-async function notifyFeedback(entry: FeedbackEntry): Promise<void> {
-  const emoji = entry.rating === "up" ? "👍" : "👎";
-  await sendAdminNotification(
-    `${emoji} Feedback: ${escapeHtml(entry.programSlug)}/${escapeHtml(entry.lessonSlug)}`,
-    `<p><strong>Program:</strong> ${escapeHtml(entry.programSlug)}</p>
-     <p><strong>Lesson:</strong> ${escapeHtml(entry.lessonSlug)}</p>
-     <p><strong>Rating:</strong> ${escapeHtml(entry.rating)}</p>
-     ${entry.comment ? `<p><strong>Comment:</strong> ${escapeHtml(entry.comment)}</p>` : ""}
-     <p><strong>Locale:</strong> ${escapeHtml(entry.locale)}</p>
-     <p><strong>Time:</strong> ${escapeHtml(entry.timestamp)}</p>`
-  );
 }
 
 export async function POST(req: NextRequest) {
@@ -67,20 +45,26 @@ export async function POST(req: NextRequest) {
 
     const { lessonSlug, programSlug, rating, comment, locale } = parsed.data;
 
-    const entry: FeedbackEntry = {
+    await db.insert(lessonFeedback).values({
       lessonSlug,
       programSlug,
       rating,
       comment: comment?.slice(0, 1000),
       locale,
-      timestamp: new Date().toISOString(),
-    };
+    });
 
-    const feedback = await readJsonFile<FeedbackEntry[]>(FILE, []);
-    feedback.push(entry);
-    await writeJsonFile(FILE, feedback);
-
-    notifyFeedback(entry).catch(() => {});
+    // Admin notification (fire-and-forget)
+    const now = new Date().toISOString();
+    const emoji = rating === "up" ? "👍" : "👎";
+    sendAdminNotification(
+      `${emoji} Feedback: ${escapeHtml(programSlug)}/${escapeHtml(lessonSlug)}`,
+      `<p><strong>Program:</strong> ${escapeHtml(programSlug)}</p>
+       <p><strong>Lesson:</strong> ${escapeHtml(lessonSlug)}</p>
+       <p><strong>Rating:</strong> ${escapeHtml(rating)}</p>
+       ${comment ? `<p><strong>Comment:</strong> ${escapeHtml(comment)}</p>` : ""}
+       <p><strong>Locale:</strong> ${escapeHtml(locale)}</p>
+       <p><strong>Time:</strong> ${escapeHtml(now)}</p>`
+    ).catch(() => {});
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (error) {
@@ -98,24 +82,35 @@ export async function GET(req: NextRequest) {
     const programSlug = searchParams.get("programSlug");
     const lessonSlug = searchParams.get("lessonSlug");
 
-    const feedback = await readJsonFile<FeedbackEntry[]>(FILE, []);
+    // Build WHERE conditions
+    const conditions = [];
+    if (programSlug) conditions.push(eq(lessonFeedback.programSlug, programSlug));
+    if (lessonSlug) conditions.push(eq(lessonFeedback.lessonSlug, lessonSlug));
 
-    let filtered = feedback;
-    if (programSlug) {
-      filtered = filtered.filter((f) => f.programSlug === programSlug);
-    }
-    if (lessonSlug) {
-      filtered = filtered.filter((f) => f.lessonSlug === lessonSlug);
-    }
+    const where = conditions.length > 0 ? and(...conditions) : undefined;
 
-    const up = filtered.filter((f) => f.rating === "up").length;
-    const down = filtered.filter((f) => f.rating === "down").length;
-    const comments = filtered
-      .filter((f) => f.comment)
-      .map((f) => ({ comment: f.comment, rating: f.rating, timestamp: f.timestamp }));
+    const rows = await db
+      .select({
+        rating: lessonFeedback.rating,
+        comment: lessonFeedback.comment,
+        createdAt: lessonFeedback.createdAt,
+      })
+      .from(lessonFeedback)
+      .where(where)
+      .orderBy(sql`${lessonFeedback.createdAt} DESC`);
+
+    const up = rows.filter((r) => r.rating === "up").length;
+    const down = rows.filter((r) => r.rating === "down").length;
+    const comments = rows
+      .filter((r) => r.comment)
+      .map((r) => ({
+        comment: r.comment,
+        rating: r.rating,
+        timestamp: r.createdAt?.toISOString() ?? null,
+      }));
 
     return NextResponse.json({
-      total: filtered.length,
+      total: rows.length,
       up,
       down,
       comments,
