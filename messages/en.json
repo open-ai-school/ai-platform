@@ -2001,5 +2001,15 @@
     "pageCount": "10-page PDF guide",
     "freeForever": "100% Free",
     "instantDownload": "Instant Download"
+  },
+  "launch": {
+    "countdownPrefix": "Launching on Product Hunt in",
+    "days": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds",
+    "liveMessage": "We're LIVE on Product Hunt! Check it out",
+    "dismiss": "Dismiss",
+    "badge": "Check us out on Product Hunt"
   }
 }
