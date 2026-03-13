@@ -15,6 +15,13 @@
       "when": 1773409807776,
       "tag": "0001_curly_mulholland_black",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773410555705,
+      "tag": "0002_flashy_zodiak",
+      "breakpoints": true
     }
   ]
 }

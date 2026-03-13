@@ -371,3 +371,93 @@ export function welcomeEmailHtml(email: string, locale: string = "en", name?: st
 </html>
   `.trim();
 }
+
+/* ─────────────── Verification Code Email ─────────────── */
+
+export function verificationCodeEmailHtml(code: string): string {
+  return `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#f3f4f6;font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f4f6;">
+    <tr>
+      <td align="center" style="padding:40px 20px;">
+        <table role="presentation" width="500" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+          <tr>
+            <td style="padding:30px 30px 0;text-align:center;">
+              <h1 style="margin:0 0 8px;color:#111827;font-size:24px;">Verify your email</h1>
+              <p style="margin:0 0 24px;color:#6b7280;font-size:16px;">Enter the code below to verify your AI Educademy account.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 30px;text-align:center;">
+              <div style="display:inline-block;padding:16px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:12px;margin:0 0 24px;">
+                <span style="font-size:36px;font-weight:bold;letter-spacing:8px;color:#ffffff;font-family:monospace;">${code}</span>
+              </div>
+              <p style="margin:0 0 24px;color:#6b7280;font-size:14px;">This code expires in 1 hour.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 30px 30px;">
+              <p style="margin:0;color:#9ca3af;font-size:12px;text-align:center;">If you didn't create an account, you can safely ignore this email.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:20px 30px;border-top:1px solid #e5e7eb;background-color:#f9fafb;border-radius:0 0 8px 8px;">
+              <p style="margin:0;color:#6b7280;font-size:12px;text-align:center;">AI Educademy · <a href="https://aieducademy.org" style="color:#667eea;text-decoration:none;">aieducademy.org</a></p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `.trim();
+}
+
+/* ─────────────── Password Reset Email ─────────────── */
+
+export function passwordResetEmailHtml(resetUrl: string): string {
+  return `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#f3f4f6;font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f4f6;">
+    <tr>
+      <td align="center" style="padding:40px 20px;">
+        <table role="presentation" width="500" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+          <tr>
+            <td style="padding:30px 30px 0;text-align:center;">
+              <h1 style="margin:0 0 8px;color:#111827;font-size:24px;">Reset your password</h1>
+              <p style="margin:0 0 24px;color:#6b7280;font-size:16px;">Click the button below to reset your AI Educademy password.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 30px;text-align:center;">
+              <a href="${resetUrl}" style="display:inline-block;padding:14px 32px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#ffffff;font-size:16px;font-weight:600;text-decoration:none;border-radius:8px;">Reset Password</a>
+              <p style="margin:16px 0 24px;color:#6b7280;font-size:14px;">This link expires in 1 hour.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 30px 30px;">
+              <p style="margin:0 0 8px;color:#9ca3af;font-size:12px;">If the button doesn't work, copy and paste this link:</p>
+              <p style="margin:0;color:#667eea;font-size:12px;word-break:break-all;">${resetUrl}</p>
+              <p style="margin:16px 0 0;color:#9ca3af;font-size:12px;">If you didn't request a password reset, you can safely ignore this email.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:20px 30px;border-top:1px solid #e5e7eb;background-color:#f9fafb;border-radius:0 0 8px 8px;">
+              <p style="margin:0;color:#6b7280;font-size:12px;text-align:center;">AI Educademy · <a href="https://aieducademy.org" style="color:#667eea;text-decoration:none;">aieducademy.org</a></p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `.trim();
+}

@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { BrandMark } from "@/components/ui/BrandMark";
+import Link from "next/link";
 
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
@@ -14,13 +15,43 @@ export default function SignInPage() {
   const params = useSearchParams();
   const callbackUrl = params.get("callbackUrl") || "/";
   const error = params.get("error");
+  const verified = params.get("verified");
+  const reset = params.get("reset");
   const noMotion = useReducedMotion();
 
   const [loading, setLoading] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [credError, setCredError] = useState("");
 
   const handleOAuth = (provider: string) => {
     setLoading(provider);
     signIn(provider, { callbackUrl });
+  };
+
+  const handleCredentials = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setCredError("");
+    setLoading("credentials");
+
+    try {
+      const result = await signIn("credentials", {
+        email: email.trim().toLowerCase(),
+        password,
+        redirect: false,
+        callbackUrl,
+      });
+
+      if (result?.error) {
+        setCredError(t("errorCredentials"));
+        setLoading(null);
+      } else if (result?.url) {
+        window.location.href = result.url;
+      }
+    } catch {
+      setCredError(t("errorGeneric"));
+      setLoading(null);
+    }
   };
 
   const anim = (delay: number) =>
@@ -42,7 +73,7 @@ export default function SignInPage() {
         style={noMotion ? undefined : { animation: `scale-in 0.6s ${EASE} both` }}
       >
         <div className="glass rounded-3xl p-8 border border-[var(--color-glass-border)] shadow-lg">
-          <div className="text-center mb-8">
+          <div className="text-center mb-6">
             <div className="flex justify-center mb-5" style={anim(200)}>
               <BrandMark size="lg" />
             </div>
@@ -60,16 +91,91 @@ export default function SignInPage() {
             </p>
           </div>
 
+          {verified && (
+            <div
+              className="mb-4 p-3 rounded-xl bg-green-500/10 border border-green-500/20 text-sm text-green-600 text-center"
+              style={{ animation: `fade-up 0.3s ${EASE} both` }}
+            >
+              {t("emailVerified")}
+            </div>
+          )}
+
+          {reset && (
+            <div
+              className="mb-4 p-3 rounded-xl bg-green-500/10 border border-green-500/20 text-sm text-green-600 text-center"
+              style={{ animation: `fade-up 0.3s ${EASE} both` }}
+            >
+              {t("passwordResetSuccess")}
+            </div>
+          )}
+
           {error && (
             <div
-              className="mb-5 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-500 text-center"
+              className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-500 text-center"
               style={{ animation: `fade-up 0.3s ${EASE} both` }}
             >
               {error === "OAuthAccountNotLinked"
                 ? t("errorOAuth")
-                : t("errorGeneric")}
+                : error === "CredentialsSignin"
+                  ? t("errorCredentials")
+                  : t("errorGeneric")}
             </div>
           )}
+
+          {credError && (
+            <div
+              className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-sm text-red-500 text-center"
+              style={{ animation: `fade-up 0.3s ${EASE} both` }}
+            >
+              {credError}
+            </div>
+          )}
+
+          {/* Email/Password form */}
+          <form onSubmit={handleCredentials} className="space-y-3 mb-5" style={anim(450)}>
+            <div>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={t("emailPlaceholder")}
+                required
+                className="w-full px-4 py-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 transition-all"
+              />
+            </div>
+            <div>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={t("password")}
+                required
+                className="w-full px-4 py-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 transition-all"
+              />
+            </div>
+            <div className="text-right">
+              <Link
+                href="/forgot-password"
+                className="text-xs text-[var(--color-primary)] hover:underline"
+              >
+                {t("forgotPassword")}
+              </Link>
+            </div>
+            <button
+              type="submit"
+              disabled={loading !== null}
+              className="w-full px-4 py-3.5 rounded-2xl bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] text-white font-medium text-sm disabled:opacity-50 cursor-pointer transition-all hover:shadow-md hover:shadow-[var(--color-primary)]/20 hover:scale-[1.02] hover:-translate-y-px active:scale-[0.98]"
+            >
+              {loading === "credentials" ? t("signingIn") : t("signIn")}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 mb-5" style={anim(480)}>
+            <div className="flex-1 h-px bg-[var(--color-border)]" />
+            <span className="text-xs text-[var(--color-text-muted)]">{t("orContinueWith")}</span>
+            <div className="flex-1 h-px bg-[var(--color-border)]" />
+          </div>
 
           <div className="space-y-3" style={anim(500)}>
             <button
@@ -99,10 +205,16 @@ export default function SignInPage() {
           </div>
 
           <p
-            className="text-center text-xs text-[var(--color-text-muted)] mt-6"
+            className="text-center text-sm text-[var(--color-text-muted)] mt-5"
             style={noMotion ? undefined : { animation: `fade-in 0.5s ease 700ms both` }}
           >
-            {t("progressSavedLocally")}
+            {t("noAccount")}{" "}
+            <Link
+              href="/signup"
+              className="text-[var(--color-primary)] hover:underline font-medium"
+            >
+              {t("signUp")}
+            </Link>
           </p>
         </div>
       </div>

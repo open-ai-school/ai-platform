@@ -1,4 +1,4 @@
-import { welcomeEmailHtml, subscriptionEmailHtml } from "./emailTemplates";
+import { welcomeEmailHtml, subscriptionEmailHtml, verificationCodeEmailHtml, passwordResetEmailHtml } from "./emailTemplates";
 
 const subjectByLocale: Record<string, string> = {
   en: "Welcome to AI Educademy! 🎓",
@@ -74,4 +74,16 @@ export async function sendAdminNotification(subject: string, body: string): Prom
   }
   const html = `<div style="font-family:system-ui,sans-serif;padding:20px;"><h2 style="color:#6366f1;">${subject}</h2><div style="color:#333;line-height:1.6;">${body}</div><hr style="border:none;border-top:1px solid #e5e7eb;margin:20px 0;"><p style="color:#999;font-size:12px;">AI Educademy Admin Notification</p></div>`;
   await sendEmail(adminEmail, `[AI Educademy] ${subject}`, html);
+}
+
+export async function sendVerificationEmail(email: string, code: string): Promise<void> {
+  const subject = "Your AI Educademy verification code";
+  const html = verificationCodeEmailHtml(code);
+  await sendEmail(email, subject, html);
+}
+
+export async function sendPasswordResetEmail(email: string, resetUrl: string): Promise<void> {
+  const subject = "Reset your AI Educademy password";
+  const html = passwordResetEmailHtml(resetUrl);
+  await sendEmail(email, subject, html);
 }

@@ -24,6 +24,7 @@ export const users = pgTable("users", {
     .notNull()
     .default("free"),
   stripeCustomerId: text("stripe_customer_id").unique(),
+  password: text("password"),
   referralCode: text("referral_code").unique(),
   createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),

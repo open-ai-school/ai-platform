@@ -1,6 +1,9 @@
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import Credentials from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+import { eq } from "drizzle-orm";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/lib/db";
 import { users, accounts, sessions, verificationTokens } from "@/lib/db/schema";
@@ -15,6 +18,43 @@ if (!process.env.AUTH_SECRET) {
 const providers = [];
 if (process.env.AUTH_GITHUB_ID) providers.push(GitHub);
 if (process.env.AUTH_GOOGLE_ID) providers.push(Google);
+
+providers.push(
+  Credentials({
+    name: "credentials",
+    credentials: {
+      email: { label: "Email", type: "email" },
+      password: { label: "Password", type: "password" },
+    },
+    async authorize(credentials) {
+      if (!credentials?.email || !credentials?.password) return null;
+
+      const email = (credentials.email as string).toLowerCase().trim();
+      const password = credentials.password as string;
+
+      const [user] = await db
+        .select()
+        .from(users)
+        .where(eq(users.email, email))
+        .limit(1);
+
+      if (!user || !user.password) return null;
+
+      const valid = await bcrypt.compare(password, user.password);
+      if (!valid) return null;
+
+      if (!user.emailVerified) return null;
+
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        image: user.image,
+      };
+    },
+  })
+);
 
 const adapter = process.env.DATABASE_URL
   ? DrizzleAdapter(db, {
