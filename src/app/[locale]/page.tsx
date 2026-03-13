@@ -8,6 +8,11 @@ import {
   HomeProgramCardsLazy as HomeProgramCards,
   HomeCommunitySectionLazy as HomeCommunitySection,
   HomeContinueLearningLazy as HomeContinueLearning,
+  HomeHowItWorksLazy as HomeHowItWorks,
+  HomeLabPreviewLazy as HomeLabPreview,
+  HomeProjectsLazy as HomeProjects,
+  HomeTestimonialsLazy as HomeTestimonials,
+  HomeFinalCTALazy as HomeFinalCTA,
 } from "@/components/home/HomeDynamic";
 
 export default async function HomePage({
@@ -22,6 +27,11 @@ export default async function HomePage({
   const tf = await getTranslations("features");
   const tLT = await getTranslations("lessonTitles");
   const tTB = await getTranslations("trustBar");
+  const tHIW = await getTranslations("howItWorks");
+  const tLP = await getTranslations("labPreview");
+  const tPR = await getTranslations("projects");
+  const tTS = await getTranslations("testimonials");
+  const tFC = await getTranslations("finalCta");
   const basePath = locale === "en" ? "" : `/${locale}`;
 
   const aiLearningPrograms = getProgramsByTrack("ai-learning").map((p) => ({
@@ -89,7 +99,7 @@ export default async function HomePage({
   return (
     <>
 
-      {/* Hero Section */}
+      {/* Section 1: Hero */}
       <section className="relative overflow-hidden min-h-[60vh] flex items-center">
         <HeroBackground />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative z-[2]">
@@ -110,17 +120,28 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* Trust Bar */}
+      {/* Section 2: Trust Bar */}
       <HomeTrustBar items={trustBarItems} />
 
-      {/* Continue Learning (client-only, signed-in users) */}
+      {/* Section 3: Continue Learning (client-only, signed-in users) */}
       <HomeContinueLearning
         basePath={basePath}
         programTitles={programTitles}
         lessonCounts={lessonCounts}
       />
 
-      {/* Programs Section - Bento Grid */}
+      {/* Section 4: How It Works */}
+      <HomeHowItWorks
+        title={tHIW("title")}
+        subtitle={tHIW("subtitle")}
+        steps={[
+          { title: tHIW("step1Title"), description: tHIW("step1Desc") },
+          { title: tHIW("step2Title"), description: tHIW("step2Desc") },
+          { title: tHIW("step3Title"), description: tHIW("step3Desc") },
+        ]}
+      />
+
+      {/* Section 5: Programs Bento Grid */}
       <section className="py-12 sm:py-16">
         <HomeProgramCards
           sectionTitle={t("programs.title")}
@@ -181,15 +202,90 @@ export default async function HomePage({
         />
       </section>
 
-      {/* Community CTA - Full-width gradient section */}
+      {/* Section 6: Interactive Lab Preview */}
+      <HomeLabPreview
+        title={tLP("title")}
+        subtitle={tLP("subtitle")}
+        ctaText={tLP("ctaText")}
+        ctaHref={`${basePath}/lab`}
+        experiments={[
+          { name: tLP("neuralPlayground"), description: tLP("neuralPlaygroundDesc") },
+          { name: tLP("aiOrHuman"), description: tLP("aiOrHumanDesc") },
+          { name: tLP("promptEngineering"), description: tLP("promptEngineeringDesc") },
+          { name: tLP("imageGeneration"), description: tLP("imageGenerationDesc") },
+          { name: tLP("sentimentAnalysis"), description: tLP("sentimentAnalysisDesc") },
+          { name: tLP("aiChat"), description: tLP("aiChatDesc") },
+          { name: tLP("ethicsScenarios"), description: tLP("ethicsScenariosDesc") },
+        ]}
+      />
+
+      {/* Section 7: What You'll Build */}
+      <HomeProjects
+        title={tPR("title")}
+        subtitle={tPR("subtitle")}
+        projects={[
+          {
+            title: tPR("chatbot"),
+            description: tPR("chatbotDesc"),
+            tags: tPR("chatbotTags").split(","),
+            difficulty: tPR("chatbotDifficulty"),
+          },
+          {
+            title: tPR("classifier"),
+            description: tPR("classifierDesc"),
+            tags: tPR("classifierTags").split(","),
+            difficulty: tPR("classifierDifficulty"),
+          },
+          {
+            title: tPR("recommender"),
+            description: tPR("recommenderDesc"),
+            tags: tPR("recommenderTags").split(","),
+            difficulty: tPR("recommenderDifficulty"),
+          },
+          {
+            title: tPR("agent"),
+            description: tPR("agentDesc"),
+            tags: tPR("agentTags").split(","),
+            difficulty: tPR("agentDifficulty"),
+          },
+        ]}
+      />
+
+      {/* Section 8: Platform Highlights / Testimonials */}
+      <HomeTestimonials
+        title={tTS("title")}
+        stats={{
+          programs: tTS("programs"),
+          programsSub: tTS("programsSub"),
+          languages: tTS("languages"),
+          languagesSub: tTS("languagesSub"),
+          openSource: tTS("openSource"),
+          openSourceSub: tTS("openSourceSub"),
+        }}
+        quote={tTS("quote")}
+      />
+
+      {/* Section 9: Newsletter & Community */}
       <section className="py-12 sm:py-16 relative overflow-hidden bg-gradient-mesh-cta">
         <div className="absolute inset-0 noise-texture pointer-events-none" />
         <HomeCommunitySection
           headline={tc("headline")}
           subtitle={tc("subtitle")}
           openSourceText={tc("openSource")}
+          newsletterTitle={tc("newsletterTitle")}
+          githubTitle={tc("githubTitle")}
         />
       </section>
+
+      {/* Section 10: Final CTA */}
+      <HomeFinalCTA
+        headline={tFC("headline")}
+        subtitle={tFC("subtitle")}
+        primaryText={tFC("primaryText")}
+        primaryHref={`${basePath}/programs`}
+        secondaryText={tFC("secondaryText")}
+        secondaryHref={`${basePath}/journey`}
+      />
     </>
   );
 }

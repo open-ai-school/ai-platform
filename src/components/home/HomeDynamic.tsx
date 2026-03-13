@@ -21,3 +21,28 @@ export const GitHubStatsWidgetLazy = dynamic(
   () => import("@/components/home/GitHubStatsWidget"),
   { ssr: false },
 );
+
+export const HomeHowItWorksLazy = dynamic(
+  () => import("@/components/home/HomeHowItWorks"),
+  { ssr: false },
+);
+
+export const HomeLabPreviewLazy = dynamic(
+  () => import("@/components/home/HomeLabPreview"),
+  { ssr: false },
+);
+
+export const HomeProjectsLazy = dynamic(
+  () => import("@/components/home/HomeProjects"),
+  { ssr: false },
+);
+
+export const HomeTestimonialsLazy = dynamic(
+  () => import("@/components/home/HomeTestimonials"),
+  { ssr: false },
+);
+
+export const HomeFinalCTALazy = dynamic(
+  () => import("@/components/home/HomeFinalCTA"),
+  { ssr: false },
+);

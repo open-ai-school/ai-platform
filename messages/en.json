@@ -876,7 +876,9 @@
     "shareText": "AI education for everyone",
     "headline": "Join the Movement",
     "subtitle": "Get the latest lessons, tips, and updates delivered to your inbox. Star us on GitHub to support AI education for everyone.",
-    "shareTitle": "AI Educademy"
+    "shareTitle": "AI Educademy",
+    "newsletterTitle": "Join 11 languages of learners",
+    "githubTitle": "Open Source & Transparent"
   },
   "lab": {
     "title": "AI Lab",
@@ -1708,5 +1710,70 @@
     "signInPrompt": "Sign in to track your progress and unlock your personalized learning journey.",
     "overallProgress": "Overall Progress",
     "startJourney": "Start Your Journey"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Three simple steps from curious beginner to confident AI builder",
+    "step1Title": "Choose Your Path",
+    "step1Desc": "Pick from 3 tracks — AI Learning, Craft Engineering, or Career Ready. Each track has curated programs that take you from zero to mastery.",
+    "step2Title": "Learn by Doing",
+    "step2Desc": "Interactive lessons, hands-on experiments, and real code. No passive video watching — you build understanding through practice.",
+    "step3Title": "Build Real Projects",
+    "step3Desc": "Apply your skills in our AI Lab with 7 experiments. Build chatbots, classifiers, and AI agents that solve real problems."
+  },
+  "labPreview": {
+    "title": "Interactive AI Lab",
+    "subtitle": "Experiment with real AI concepts in your browser. No setup required.",
+    "ctaText": "Explore the Lab",
+    "neuralPlayground": "Neural Playground",
+    "neuralPlaygroundDesc": "Train neural networks visually",
+    "aiOrHuman": "AI or Human?",
+    "aiOrHumanDesc": "Test your AI detection skills",
+    "promptEngineering": "Prompt Engineering",
+    "promptEngineeringDesc": "Master the art of AI prompts",
+    "imageGeneration": "Image Generation",
+    "imageGenerationDesc": "Create images with AI models",
+    "sentimentAnalysis": "Sentiment Analysis",
+    "sentimentAnalysisDesc": "Analyse text emotions in real-time",
+    "aiChat": "AI Chat",
+    "aiChatDesc": "Build conversational AI systems",
+    "ethicsScenarios": "Ethics Scenarios",
+    "ethicsScenariosDesc": "Navigate real-world AI dilemmas"
+  },
+  "projects": {
+    "title": "What You'll Build",
+    "subtitle": "Graduate from learning to building. These projects showcase what you'll be capable of.",
+    "chatbot": "AI Chatbot",
+    "chatbotDesc": "Build a conversational AI that understands context, handles multi-turn dialogue, and responds intelligently.",
+    "chatbotTags": "NLP,Transformers,Python",
+    "chatbotDifficulty": "Intermediate",
+    "classifier": "Image Classifier",
+    "classifierDesc": "Train a computer vision model that recognises and categorises images with high accuracy.",
+    "classifierTags": "CNN,TensorFlow,Computer Vision",
+    "classifierDifficulty": "Intermediate",
+    "recommender": "Recommendation Engine",
+    "recommenderDesc": "Design an ML system that predicts user preferences and delivers personalised suggestions.",
+    "recommenderTags": "Collaborative Filtering,ML,Data Science",
+    "recommenderDifficulty": "Advanced",
+    "agent": "AI Agent",
+    "agentDesc": "Create an autonomous AI that reasons, plans, and executes tasks using tools and APIs.",
+    "agentTags": "LLMs,Tool Use,Agents",
+    "agentDifficulty": "Advanced"
+  },
+  "testimonials": {
+    "title": "Platform Highlights",
+    "programs": "15 Programs",
+    "programsSub": "From beginner to production AI",
+    "languages": "11 Languages",
+    "languagesSub": "Learn in your native language",
+    "openSource": "Open Source",
+    "openSourceSub": "Every line of code, transparent",
+    "quote": "Built by an engineer with 15+ years at JP Morgan, Sky, and global tech companies — designed to make AI education truly accessible to everyone."
+  },
+  "finalCta": {
+    "headline": "Start Learning AI Today",
+    "subtitle": "Free, open source, in your language",
+    "primaryText": "Start Learning",
+    "secondaryText": "View Journey Map"
   }
 }
