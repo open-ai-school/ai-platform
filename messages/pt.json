@@ -37,7 +37,10 @@
     "aiFoundationsPath": "Fundamentos de IA",
     "aiMasteryPath": "Mestria em IA",
     "careerReadyPath": "Preparação para Carreira",
-    "title": "AI Educademy. Aprenda IA do seu jeito"
+    "title": "AI Educademy. Aprenda IA do seu jeito",
+    "bookmarks": "Favoritos",
+    "faq": "Perguntas Frequentes",
+    "journey": "Jornada"
   },
   "hero": {
     "badge": "Grátis • Open Source • Multilíngue",
@@ -118,7 +121,10 @@
     "lab": "Laboratório",
     "pageViews": "visualizações",
     "scrollToTop": "Voltar ao topo",
-    "faq": "Perguntas Frequentes"
+    "faq": "Perguntas Frequentes",
+    "contact": "Contato",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço"
   },
   "about": {
     "title": "Sobre a AI Educademy",
@@ -167,7 +173,8 @@
     "pageSubtitle": "Educação em IA gratuita e open source para cada estudante.",
     "openSourceTitle": "Open Source",
     "openSourceDesc": "Cada aula, cada linha de código. grátis e open source. Bifurque, traduza, faça do seu jeito.",
-    "viewOnGithub": "Ver no GitHub"
+    "viewOnGithub": "Ver no GitHub",
+    "buyCoffee": "Me pague um café"
   },
   "lessons": {
     "title": "Aulas",
@@ -211,7 +218,8 @@
     "tryAgain": "Tentar Novamente",
     "quickCheck": "Verificação Rápida",
     "animationError": "A animação não pôde ser carregada",
-    "progressPercent": "{percent}% concluído"
+    "progressPercent": "{percent}% concluído",
+    "suggestEdit": "Sugerir uma edição nesta lição"
   },
   "programs": {
     "badge": "",
@@ -573,7 +581,407 @@
     "comingSoon": "Aulas Em Breve",
     "comingSoonDesc": "Estamos preparando essas aulas com carinho. Volte em breve!",
     "startFirst": "Começar Primeira Aula",
-    "backToAll": "Voltar a Todos os Acadêmicos"
+    "backToAll": "Voltar a Todos os Acadêmicos",
+    "faqTitle": "Perguntas Frequentes",
+    "relatedArticles": "Artigos Relacionados",
+    "topicsCovered": "Tópicos Abordados",
+    "tryExperiments": "Experimente Nossos Experimentos Interativos",
+    "tryExperimentsDesc": "Coloque a teoria em prática com experimentos de IA práticos que você pode executar diretamente no seu navegador.",
+    "tryPromptLab": "Explore o Laboratório de Prompts",
+    "tryPromptLabDesc": "Pratique técnicas de engenharia de prompts com nosso Laboratório de Prompts interativo e veja os resultados em tempo real.",
+    "whoIsThisFor": "Para Quem É Isso?",
+    "faq": {
+      "ai-behavioral": [
+        {
+          "q": "O Behavioral Mastery é apenas para engenheiros?",
+          "a": "Embora os exemplos foquem em cenários de engenharia, o framework STAR e as técnicas de storytelling são úteis para qualquer profissional que esteja se preparando para entrevistas comportamentais em tecnologia."
+        },
+        {
+          "q": "Quanto tempo leva para concluir o Behavioral Mastery?",
+          "a": "Aproximadamente 4–5 horas. Recomendamos espaçar as lições ao longo de alguns dias para que você possa praticar criando suas próprias histórias entre as sessões."
+        },
+        {
+          "q": "O que é o método STAR?",
+          "a": "STAR significa Situation, Task, Action, Result (Situação, Tarefa, Ação, Resultado). É um framework comprovado para estruturar respostas em entrevistas. O Behavioral Mastery ensina você a usá-lo de forma natural e eficaz."
+        },
+        {
+          "q": "O Behavioral Mastery ajuda com perguntas de liderança?",
+          "a": "Com certeza! O programa cobre narrativas de liderança, resolução de conflitos, histórias de trabalho em equipe e avaliação de fit cultural — todos temas comuns em rodadas comportamentais."
+        },
+        {
+          "q": "O Behavioral Mastery é gratuito?",
+          "a": "Sim, completamente gratuito e sempre será."
+        },
+        {
+          "q": "Preciso de experiência real em projetos?",
+          "a": "Sim, você vai precisar de experiências reais para usar como base. O programa ensina como identificar, estruturar e apresentar suas experiências de forma convincente — mas a matéria-prima precisa vir da sua carreira."
+        }
+      ],
+      "ai-branches": [
+        {
+          "q": "O que diferencia o AI Branches dos programas anteriores?",
+          "a": "O AI Branches foca em aplicações do mundo real. Enquanto Seeds e Sprouts constroem conhecimentos fundamentais, Branches mostra a IA em ação na saúde, finanças, artes criativas e muito mais — e você começará a construir projetos simples."
+        },
+        {
+          "q": "Quanto tempo leva para concluir o AI Branches?",
+          "a": "Planeje cerca de 4–5 horas. Os projetos levam um pouco mais de tempo do que as lições apenas de leitura, mas são a parte mais gratificante do programa."
+        },
+        {
+          "q": "Preciso de experiência em programação para o AI Branches?",
+          "a": "Ter familiaridade básica com os conceitos ajuda, mas não é obrigatório. Os projetos usam ferramentas guiadas sem código para que você possa focar em entender as aplicações de IA em vez da sintaxe."
+        },
+        {
+          "q": "Vou construir projetos reais no AI Branches?",
+          "a": "Sim! Você vai construir um chatbot simples, explorar como o reconhecimento de imagens funciona e criar um mini projeto com IA. Essas experiências práticas são projetadas para consolidar seu entendimento."
+        },
+        {
+          "q": "O AI Branches é gratuito?",
+          "a": "Sim, o AI Branches é completamente gratuito. Todos os programas no AI Educademy são open-source e acessíveis sem custo."
+        },
+        {
+          "q": "Quais indústrias o AI Branches cobre?",
+          "a": "Você vai explorar aplicações de IA na saúde (diagnóstico, descoberta de medicamentos), artes criativas (geração de imagens, música), finanças (detecção de fraude) e ferramentas do dia a dia como chatbots e assistentes virtuais."
+        }
+      ],
+      "ai-canopy": [
+        {
+          "q": "O AI Canopy é adequado para iniciantes?",
+          "a": "O AI Canopy é um programa de nível intermediário. Recomendamos completar o AI Branches primeiro, pois o Canopy aprofunda em redes neurais, large language models e design de sistemas de IA."
+        },
+        {
+          "q": "Quanto tempo leva para concluir o AI Canopy?",
+          "a": "Espere dedicar de 5–6 horas ao AI Canopy. A profundidade técnica exige mais tempo de compreensão, mas cada conceito é explicado com recursos visuais claros e exemplos."
+        },
+        {
+          "q": "Vou aprender sobre ChatGPT e large language models?",
+          "a": "Sim! O AI Canopy cobre como os large language models funcionam, incluindo a arquitetura transformer que alimenta o ChatGPT, GPT-4 e modelos similares. Você também vai dominar técnicas de prompt engineering."
+        },
+        {
+          "q": "Preciso saber programação para o AI Canopy?",
+          "a": "Não é necessário programar, embora ter conhecimentos técnicos básicos ajude. Explicamos redes neurais e LLMs de forma conceitual com diagramas e visualizações interativas."
+        },
+        {
+          "q": "Vou receber um certificado ao concluir o AI Canopy?",
+          "a": "Sim! Um certificado personalizado estará disponível ao concluir todas as lições. Ele demonstra seu entendimento de conceitos avançados de IA."
+        },
+        {
+          "q": "O que é prompt engineering e por que o AI Canopy ensina isso?",
+          "a": "Prompt engineering é a habilidade de escrever instruções eficazes para modelos de IA como o ChatGPT. É uma das habilidades mais demandadas na era da IA, e o AI Canopy dedica múltiplas lições para dominá-la."
+        }
+      ],
+      "ai-chisel": [
+        {
+          "q": "Quais pré-requisitos o AI Chisel exige?",
+          "a": "Você deve ter concluído o AI Sketch ou ter conhecimentos equivalentes de estruturas de dados básicas (arrays, hash maps, strings). O AI Chisel se baseia nessas fundações com padrões de nível intermediário."
+        },
+        {
+          "q": "Quanto tempo leva o AI Chisel?",
+          "a": "Planeje cerca de 5–6 horas. Os padrões intermediários como two pointers, sliding window e travessia de grafos exigem mais tempo de prática do que os conceitos básicos."
+        },
+        {
+          "q": "Quais padrões o AI Chisel cobre?",
+          "a": "O AI Chisel cobre two pointers, sliding window, travessia de grafos com BFS/DFS, travessias de árvores, stacks, queues e padrões monotônicos — todos conectados a aplicações reais de IA e ML."
+        },
+        {
+          "q": "O AI Chisel é gratuito?",
+          "a": "Sim, completamente gratuito. Todos os programas no AI Educademy são open-source e disponíveis sem custo."
+        },
+        {
+          "q": "O AI Chisel vai me ajudar em entrevistas de programação?",
+          "a": "Com certeza. Os padrões cobertos no AI Chisel aparecem frequentemente em questões de dificuldade média em entrevistas de grandes empresas de tecnologia. Cada lição inclui problemas de prática no estilo de entrevistas."
+        },
+        {
+          "q": "Como o AI Chisel se relaciona com machine learning?",
+          "a": "Travessia de grafos alimenta knowledge graphs e análise de redes sociais. Estruturas de árvores sustentam decision trees e random forests. Two pointers otimiza o processamento de dados em pipelines de ML. Cada padrão se conecta a aplicações reais de IA."
+        }
+      ],
+      "ai-craft": [
+        {
+          "q": "Sobre o que é o AI Craft?",
+          "a": "O AI Craft ensina design de sistemas — como projetar a arquitetura de sistemas distribuídos em larga escala. Você vai projetar motores de recomendação, autocompletar de busca, limitadores de taxa e outros sistemas que impulsionam produtos modernos de IA."
+        },
+        {
+          "q": "Preciso de experiência em programação para o AI Craft?",
+          "a": "Sim, o AI Craft pressupõe que você está confortável com entrevistas de programação e conceitos básicos de sistemas distribuídos. Foi projetado para engenheiros de nível pleno a sênior se preparando para rodadas de design de sistemas."
+        },
+        {
+          "q": "Quanto tempo leva o AI Craft?",
+          "a": "O AI Craft leva aproximadamente 6–8 horas. O design de sistemas exige reflexão profunda e cada estudo de caso se baseia em conceitos anteriores."
+        },
+        {
+          "q": "O AI Craft ajuda com entrevistas em FAANG?",
+          "a": "Sim! As rodadas de design de sistemas são uma parte crítica das entrevistas de nível sênior em grandes empresas de tecnologia. O AI Craft ensina a estruturar respostas com clareza e projetar sistemas escaláveis."
+        },
+        {
+          "q": "O AI Craft é gratuito?",
+          "a": "Sim, o AI Craft é completamente gratuito. Nosso objetivo é democratizar o acesso a recursos de preparação para entrevistas de alta qualidade."
+        },
+        {
+          "q": "Quais sistemas vou aprender a projetar?",
+          "a": "Você vai projetar um encurtador de URLs, um limitador de taxa, um motor de recomendação e muito mais. Cada sistema é explicado com análise de trade-offs, considerações de escalabilidade e padrões de infraestrutura específicos de IA."
+        }
+      ],
+      "ai-forest": [
+        {
+          "q": "Para qual nível o AI Forest foi projetado?",
+          "a": "O AI Forest é nosso programa mais avançado no track de AI Foundations. Foi projetado para estudantes que concluíram o AI Canopy e querem ter a visão completa do ecossistema de IA."
+        },
+        {
+          "q": "Quanto tempo leva para concluir o AI Forest?",
+          "a": "O AI Forest leva aproximadamente 6–8 horas. Cobre tópicos avançados como leitura de artigos de pesquisa, contribuição para projetos de IA open-source e construção de sistemas de IA em produção."
+        },
+        {
+          "q": "Vou aprender a construir aplicações de IA no AI Forest?",
+          "a": "Sim! Um dos principais resultados é construir e fazer o deploy de uma aplicação com IA. Você também vai aprender a ler artigos de pesquisa de IA e contribuir para projetos de IA open-source."
+        },
+        {
+          "q": "Preciso de experiência em programação para o AI Forest?",
+          "a": "Ter familiaridade básica com programação é útil para alguns tópicos avançados, mas as lições são projetadas para serem acessíveis. Fornecemos exemplos guiados e explicamos o código passo a passo."
+        },
+        {
+          "q": "O AI Forest é gratuito?",
+          "a": "Sim, o AI Forest é gratuito como todos os programas do AI Educademy. Nossa missão é tornar a educação avançada em IA acessível para todos."
+        },
+        {
+          "q": "Para quais carreiras o AI Forest me prepara?",
+          "a": "O AI Forest prepara você para funções em gestão de produtos de IA, assistência em pesquisa de IA, engenharia de IA e contribuição para projetos de IA open-source. Ele oferece a visão abrangente que os empregadores valorizam."
+        }
+      ],
+      "ai-launchpad": [
+        {
+          "q": "O Interview Launchpad é adequado para iniciantes completos?",
+          "a": "Sim! O Interview Launchpad foi projetado como ponto de partida para qualquer pessoa que esteja começando sua jornada em entrevistas técnicas. Não é necessária experiência prévia em entrevistas."
+        },
+        {
+          "q": "Quanto tempo leva o Interview Launchpad?",
+          "a": "A maioria dos estudantes conclui em 3–4 horas. As lições cobrem técnicas de pesquisa, cronogramas de preparação e construção de confiança."
+        },
+        {
+          "q": "Preciso saber programação para o Interview Launchpad?",
+          "a": "Não é necessário nenhum conhecimento de programação. O Interview Launchpad foca em estratégia de preparação, pesquisa de empresas e mentalidade — habilidades que se aplicam independentemente do seu nível técnico."
+        },
+        {
+          "q": "Vou aprender a pesquisar empresas?",
+          "a": "Sim! Você vai aprender técnicas sistemáticas para pesquisar empresas, interpretar descrições de vagas e criar cronogramas de preparação personalizados para funções e empresas específicas."
+        },
+        {
+          "q": "O Interview Launchpad é gratuito?",
+          "a": "Sim, completamente gratuito. O track Career Ready do AI Educademy foi projetado para ajudar todos a acessar uma preparação de entrevistas de qualidade."
+        },
+        {
+          "q": "O que diferencia o Interview Launchpad de outras preparações para entrevistas?",
+          "a": "Diferente de programas que pulam direto para problemas de programação, o Interview Launchpad constrói primeiro a base estratégica: como pesquisar, planejar e desenvolver a confiança que transforma nervosismo em desempenho."
+        }
+      ],
+      "ai-masterpiece": [
+        {
+          "q": "O que é o AI Masterpiece?",
+          "a": "O AI Masterpiece é o projeto final do track AI Mastery. Combina DSA, design de sistemas e habilidades comportamentais em estudos de caso completos e projetos de portfólio."
+        },
+        {
+          "q": "Quais pré-requisitos o AI Masterpiece exige?",
+          "a": "Você deve ter concluído do AI Sketch até o AI Polish, ou ter conhecimentos equivalentes em DSA, design de sistemas e entrevistas comportamentais."
+        },
+        {
+          "q": "Quanto tempo leva o AI Masterpiece?",
+          "a": "Planeje cerca de 8–10 horas. Os projetos finais são abrangentes e projetados para serem peças dignas de um portfólio."
+        },
+        {
+          "q": "O AI Masterpiece vai me ajudar a conseguir cargos sênior?",
+          "a": "Sim! O programa é especificamente projetado para engenheiros que buscam cargos sênior ou superiores. Você vai construir peças de portfólio e praticar entrevistas simuladas completas."
+        },
+        {
+          "q": "O AI Masterpiece é gratuito?",
+          "a": "Sim, completamente gratuito. O AI Educademy é comprometido em tornar a preparação de entrevistas de nível mundial acessível para todos."
+        },
+        {
+          "q": "Que tipo de projetos vou construir?",
+          "a": "Você vai projetar o feed de IA do Twitter de ponta a ponta, completar entrevistas simuladas com feedback detalhado e construir um portfólio de engenharia que demonstre sua amplitude e profundidade técnica."
+        }
+      ],
+      "ai-ml-interview": [
+        {
+          "q": "Preciso de experiência em ML para o AI & ML Interviews?",
+          "a": "Você deve ter conhecimentos básicos de ML — entender aprendizado supervisionado vs não supervisionado, o que é um modelo e estatísticas básicas. O programa desenvolve habilidades de entrevista sobre essa base."
+        },
+        {
+          "q": "Quanto tempo leva o AI & ML Interviews?",
+          "a": "Aproximadamente 6–8 horas. O design de sistemas de ML e os estudos de caso exigem análise cuidadosa e prática."
+        },
+        {
+          "q": "O que torna as entrevistas de ML diferentes das entrevistas técnicas comuns?",
+          "a": "As entrevistas de ML incluem formatos únicos como design de sistemas de ML, discussões sobre avaliação de modelos e estudos de caso de ML. Este programa cobre todos esses formatos especializados que a preparação geral de entrevistas não aborda."
+        },
+        {
+          "q": "Vou aprender design de sistemas de ML?",
+          "a": "Sim! O design de sistemas de ML é um foco central. Você vai aprender a projetar sistemas de ML de ponta a ponta, incluindo pipelines de dados, treinamento de modelos, avaliação, deploy e monitoramento."
+        },
+        {
+          "q": "O AI & ML Interviews é gratuito?",
+          "a": "Sim, completamente gratuito. A preparação especializada para entrevistas de ML geralmente é cara — nós a tornamos acessível para todos."
+        },
+        {
+          "q": "Quais estilos de entrevista de empresas este programa cobre?",
+          "a": "O programa prepara você para formatos de entrevistas de ML usados em empresas como Google, Meta, Amazon, Apple e startups de IA. Cada uma tem ênfases únicas que detalhamos e praticamos."
+        }
+      ],
+      "ai-offer": [
+        {
+          "q": "Quando devo começar o Offer & Beyond?",
+          "a": "Idealmente quando você tiver uma oferta ativa ou estiver nas etapas finais de entrevistas. Os frameworks de negociação e avaliação são mais úteis quando você tem números reais para trabalhar."
+        },
+        {
+          "q": "Quanto tempo leva o Offer & Beyond?",
+          "a": "Aproximadamente 3–4 horas. As lições são práticas e projetadas para serem imediatamente aplicáveis à sua situação."
+        },
+        {
+          "q": "Vou aprender negociação salarial?",
+          "a": "Sim! Você vai aprender táticas de negociação baseadas em pesquisa, como comparar sua remuneração, lidar com contrapropostas e negociar com confiança sem arriscar a oferta."
+        },
+        {
+          "q": "O Offer & Beyond cobre ações e benefícios?",
+          "a": "Com certeza. Você vai aprender a avaliar stock options, RSUs, bônus de assinatura, pacotes de benefícios e remuneração total — não apenas o salário base."
+        },
+        {
+          "q": "O Offer & Beyond é gratuito?",
+          "a": "Sim, completamente gratuito. Acreditamos que todos deveriam ter acesso ao conhecimento de negociação que pode impactar significativamente seus ganhos profissionais."
+        },
+        {
+          "q": "O Offer & Beyond pode me ajudar a comparar múltiplas ofertas?",
+          "a": "Sim! O programa inclui um framework de comparação de ofertas que ajuda você a avaliar objetivamente múltiplas ofertas considerando remuneração, potencial de crescimento, equilíbrio entre vida pessoal e trabalho e trajetória profissional."
+        }
+      ],
+      "ai-polish": [
+        {
+          "q": "O que o AI Polish cobre?",
+          "a": "O AI Polish foca em dominar entrevistas comportamentais. Você vai aprender o framework STAR, storytelling estruturado, princípios de liderança e estratégias de comunicação para cenários técnicos e da era da IA."
+        },
+        {
+          "q": "Preciso de experiência técnica para o AI Polish?",
+          "a": "Você precisa de experiência real em projetos para extrair suas histórias. O AI Polish ensina como estruturar e apresentar essas experiências de forma eficaz, independentemente do seu nível de senioridade."
+        },
+        {
+          "q": "Quanto tempo leva o AI Polish?",
+          "a": "O AI Polish leva cerca de 4–5 horas. Recomendamos reservar um tempo para criar suas próprias histórias entre as lições para obter o máximo benefício."
+        },
+        {
+          "q": "O AI Polish é apenas para engenheiros sênior?",
+          "a": "De jeito nenhum! Engenheiros de qualquer nível se beneficiam de habilidades para entrevistas comportamentais. O AI Polish oferece frameworks que funcionam tanto se você está entrevistando para seu primeiro cargo quanto para uma posição de staff engineer."
+        },
+        {
+          "q": "Vou receber um certificado?",
+          "a": "Sim! Complete todas as lições para ganhar um certificado que demonstra seu domínio das técnicas de entrevistas comportamentais."
+        },
+        {
+          "q": "Por que entrevistas comportamentais são importantes para funções de IA?",
+          "a": "Funções de IA exigem cada vez mais fortes habilidades de comunicação — explicar decisões de modelos para stakeholders, navegar dilemas éticos e liderar equipes multifuncionais. O AI Polish prepara você para exatamente esses cenários."
+        }
+      ],
+      "ai-seeds": [
+        {
+          "q": "O AI Seeds é adequado para iniciantes completos?",
+          "a": "Com certeza! O AI Seeds foi projetado especificamente para pessoas sem nenhum conhecimento técnico. Usamos linguagem do dia a dia, analogias do mundo real e explicações visuais para que você possa entender conceitos de IA sem nenhum conhecimento prévio de programação ou matemática."
+        },
+        {
+          "q": "Quanto tempo leva para concluir o AI Seeds?",
+          "a": "A maioria dos estudantes conclui o AI Seeds em cerca de 2–3 horas num ritmo confortável. Você pode fazer as lições de uma só vez ou distribuí-las ao longo de alguns dias — não há prazos e seu progresso é salvo automaticamente."
+        },
+        {
+          "q": "Preciso saber programação para o AI Seeds?",
+          "a": "De forma alguma. O AI Seeds foca em construir uma compreensão conceitual da inteligência artificial. Você não vai escrever uma única linha de código. O objetivo é ajudá-lo a entender o que é IA, como funciona e por que é importante — tudo em linguagem simples."
+        },
+        {
+          "q": "Vou receber um certificado ao concluir o AI Seeds?",
+          "a": "Sim! Ao concluir todas as lições do AI Seeds, você poderá gerar um certificado personalizado de conclusão. É uma ótima forma de mostrar seu compromisso com o aprendizado sobre inteligência artificial."
+        },
+        {
+          "q": "O AI Seeds é realmente gratuito?",
+          "a": "Sim, o AI Seeds é completamente gratuito. O AI Educademy é um projeto open-source comprometido em tornar a educação em IA acessível para todos. Não há custos ocultos, muros de pagamento ou vendas premium neste programa."
+        },
+        {
+          "q": "Quais tópicos o AI Seeds cobre?",
+          "a": "O AI Seeds cobre os fundamentos: o que a inteligência artificial realmente é, como as máquinas aprendem com dados, a diferença entre IA e software tradicional, e você até vai treinar um modelo simples de IA diretamente no seu navegador. É o ponto de partida perfeito para sua jornada de aprendizado em IA."
+        }
+      ],
+      "ai-sketch": [
+        {
+          "q": "O AI Sketch é adequado para iniciantes completos?",
+          "a": "O AI Sketch requer conhecimentos básicos de programação em qualquer linguagem. Se você sabe escrever loops, funções e entende variáveis, está pronto. O programa foca nos fundamentos de estruturas de dados e algoritmos."
+        },
+        {
+          "q": "Quanto tempo leva para concluir o AI Sketch?",
+          "a": "A maioria dos estudantes conclui o AI Sketch em 4–5 horas. Recomendamos praticar cada padrão com os exercícios fornecidos antes de passar para a próxima lição."
+        },
+        {
+          "q": "Qual linguagem de programação o AI Sketch usa?",
+          "a": "O AI Sketch ensina conceitos de forma agnóstica à linguagem com pseudocódigo e diagramas visuais. Os exemplos são mostrados em Python pela legibilidade, mas os padrões se aplicam a qualquer linguagem de programação."
+        },
+        {
+          "q": "O AI Sketch é bom para preparação de entrevistas?",
+          "a": "Com certeza! O AI Sketch cobre os padrões fundamentais de estruturas de dados e algoritmos que aparecem em 70% das entrevistas de programação: arrays, hash maps, strings, ordenação e busca."
+        },
+        {
+          "q": "Vou receber um certificado pelo AI Sketch?",
+          "a": "Sim! Complete todas as lições para ganhar seu certificado. Ele demonstra seu domínio dos conceitos fundamentais de DSA."
+        },
+        {
+          "q": "Como o AI Sketch se conecta com a IA?",
+          "a": "Cada estrutura de dados e algoritmo é explicado com aplicações reais de IA. Você verá como hash maps alimentam motores de recomendação, como a ordenação possibilita pipelines de dados eficientes e como esses fundamentos sustentam todos os sistemas de IA."
+        }
+      ],
+      "ai-sprouts": [
+        {
+          "q": "O AI Sprouts é adequado para iniciantes?",
+          "a": "O AI Sprouts foi projetado para estudantes que têm noções básicas de IA — idealmente após concluir o AI Seeds. Se você já sabe em alto nível o que é IA, está pronto para explorar os componentes fundamentais como tipos de dados, algoritmos e ética."
+        },
+        {
+          "q": "Quanto tempo leva para concluir o AI Sprouts?",
+          "a": "O AI Sprouts normalmente leva de 3–4 horas para ser concluído. As lições se constroem uma sobre a outra, então recomendamos seguí-las em ordem, mas você pode fazer pausas a qualquer momento."
+        },
+        {
+          "q": "Preciso de habilidades de programação para o AI Sprouts?",
+          "a": "Não é necessário programar. O AI Sprouts usa recursos visuais interativos e exercícios práticos para desenvolver sua intuição sobre como a IA funciona, sem escrever código."
+        },
+        {
+          "q": "Vou receber um certificado ao concluir o AI Sprouts?",
+          "a": "Sim! Complete todas as lições e você ganhará um certificado personalizado de conclusão que pode compartilhar no LinkedIn ou com empregadores."
+        },
+        {
+          "q": "O AI Sprouts é gratuito?",
+          "a": "Sim, completamente gratuito. O AI Educademy acredita que educação de qualidade em IA deve ser acessível para todos, em todos os lugares."
+        },
+        {
+          "q": "O que vou aprender no AI Sprouts?",
+          "a": "Você vai aprender a distinguir entre aprendizado supervisionado, não supervisionado e por reforço. Vai entender dados de treinamento, explorar como a IA toma decisões e pensar criticamente sobre viés e equidade na IA."
+        }
+      ],
+      "ai-technical": [
+        {
+          "q": "Quais linguagens de programação o Technical Interviews cobre?",
+          "a": "Os conceitos são ensinados de forma agnóstica à linguagem, com exemplos em Python. Os padrões de resolução de problemas e os princípios de design de sistemas se aplicam independentemente da sua linguagem preferida."
+        },
+        {
+          "q": "Quanto tempo leva o Technical Interviews?",
+          "a": "Planeje de 6–8 horas. Os padrões de programação e os conceitos de design de sistemas exigem tempo de prática além de apenas ler as lições."
+        },
+        {
+          "q": "O Technical Interviews é adequado para desenvolvedores júnior?",
+          "a": "Você precisa de fundamentos sólidos de programação em pelo menos uma linguagem. Se você sabe escrever funções, loops e usar estruturas de dados básicas, está pronto."
+        },
+        {
+          "q": "Quais padrões de programação vou aprender?",
+          "a": "Você vai dominar os padrões mais comuns em entrevistas de programação: arrays, hash maps, two pointers, sliding window, árvores, grafos, programação dinâmica e mais — tudo com explicações claras e problemas de prática."
+        },
+        {
+          "q": "O Technical Interviews é gratuito?",
+          "a": "Sim, completamente gratuito. Acreditamos que todos merecem acesso a uma preparação de entrevistas de qualidade."
+        },
+        {
+          "q": "O Technical Interviews inclui design de sistemas?",
+          "a": "Sim! O programa cobre tanto entrevistas de programação quanto fundamentos de design de sistemas. Você vai aprender a projetar sistemas escaláveis e comunicar decisões técnicas com clareza em um quadro branco."
+        }
+      ]
+    }
   },
   "dashboard": {
     "title": "Meu Dashboard de Aprendizado",
@@ -630,7 +1038,8 @@
     "linkCopied": "Copied!",
     "shareModalTitle": "Share Achievement",
     "shareTweet": "I just completed {program} on AI Educademy! 🎓🤖 #AILearning #AIEducademy",
-    "shareDescription": "I completed the {program} program on AI Educademy"
+    "shareDescription": "I completed the {program} program on AI Educademy",
+    "upgradeCertificate": "Assine para obter o Certificado"
   },
   "auth": {
     "startLearning": "Começar a Aprender",
@@ -908,7 +1317,9 @@
     "shareText": "Educação em IA gratuita para todos",
     "headline": "Junte-se ao Movimento",
     "subtitle": "Receba as últimas aulas, dicas e novidades na sua caixa de entrada. Dê uma estrela no GitHub para apoiar educação em IA gratuita para todos.",
-    "shareTitle": "AI Educademy"
+    "shareTitle": "AI Educademy",
+    "githubTitle": "Código Aberto e Transparente",
+    "newsletterTitle": "Junte-se a alunos em 11 idiomas"
   },
   "lab": {
     "title": "Laboratório de IA",
@@ -1458,7 +1869,12 @@
       "f4": "AI Mock Interview lab",
       "f5": "Completion certificates",
       "f6": "Server-side progress sync across devices"
-    }
+    },
+    "promoCode": "Tem um código promocional?",
+    "promoCodeApplied": "Código aplicado!",
+    "promoCodeApply": "Aplicar",
+    "promoCodeInvalid": "Código inválido",
+    "promoCodePlaceholder": "Insira o código"
   },
   "paywall": {
     "title": "Conteúdo Premium",
@@ -1520,7 +1936,9 @@
     "generating": "Gerando...",
     "progress": "Complete mais {remaining} lições para ganhar seu certificado",
     "completed": "Você conquistou seu certificado!",
-    "notSignedIn": "Faça login para acompanhar seu progresso e ganhar certificados"
+    "notSignedIn": "Faça login para acompanhar seu progresso e ganhar certificados",
+    "premiumOnly": "Certificados para programas premium estão disponíveis com uma assinatura Pro",
+    "upgradeToCertificate": "Assine o Pro para obter o Certificado"
   },
   "continueLearning": {
     "title": "Continue de onde parou",
@@ -1668,5 +2086,223 @@
     "verifiedCompletion": "Verified Completion",
     "defaultTitle": "Achievement | AI Educademy",
     "defaultDescription": "An achievement earned on AI Educademy - Free AI education for everyone."
+  },
+  "bookmarks": {
+    "addedOn": "Salvo em",
+    "bookmark": "Salvar esta lição",
+    "bookmarked": "Salvo!",
+    "browsePrograms": "Explorar Programas",
+    "description": "Lições que você salvou para depois",
+    "empty": "Nenhum favorito ainda",
+    "emptyDescription": "Explore nossos programas para encontrar lições que você vai adorar!",
+    "removeBookmark": "Remover favorito",
+    "removed": "Favorito removido",
+    "title": "Meus Favoritos"
+  },
+  "emails": {
+    "abandonedCartPreview": "Sua jornada de aprendizado em IA está esperando",
+    "abandonedCartSubject": "Você deixou algo para trás!"
+  },
+  "finalCta": {
+    "headline": "Comece a Aprender IA Hoje",
+    "primaryText": "Começar a Aprender",
+    "secondaryText": "Ver Mapa da Jornada",
+    "subtitle": "Gratuito, código aberto, no seu idioma"
+  },
+  "howItWorks": {
+    "step1Desc": "Escolha entre 3 trilhas — Aprendizado de IA, Engenharia Prática ou Preparação Profissional. Cada trilha tem programas selecionados que levam você do zero à maestria.",
+    "step1Title": "Escolha Seu Caminho",
+    "step2Desc": "Lições interativas, experimentos práticos e código real. Nada de assistir vídeos passivamente — você constrói compreensão através da prática.",
+    "step2Title": "Aprenda Fazendo",
+    "step3Desc": "Aplique suas habilidades no nosso Laboratório de IA com 7 experimentos. Construa chatbots, classificadores e agentes de IA que resolvem problemas reais.",
+    "step3Title": "Construa Projetos Reais",
+    "subtitle": "Três passos simples de iniciante curioso a construtor de IA confiante",
+    "title": "Como Funciona"
+  },
+  "journey": {
+    "completed": "concluído",
+    "current": "Em Progresso",
+    "level": "Nível",
+    "locked": "Bloqueado",
+    "overallProgress": "Progresso Geral",
+    "signInPrompt": "Faça login para acompanhar seu progresso e desbloquear sua jornada de aprendizado personalizada.",
+    "startJourney": "Comece Sua Jornada",
+    "subtitle": "Navegue pelo seu caminho personalizado rumo ao domínio da IA — dos fundamentos à preparação profissional.",
+    "title": "Sua Jornada de Aprendizado em IA",
+    "trackAI": "Aprendizado de IA",
+    "trackCareer": "Preparação Profissional",
+    "trackCraft": "Engenharia Prática"
+  },
+  "labPreview": {
+    "aiChat": "Chat com IA",
+    "aiChatDesc": "Construa sistemas de IA conversacional",
+    "aiOrHuman": "IA ou Humano?",
+    "aiOrHumanDesc": "Teste suas habilidades de detecção de IA",
+    "ctaText": "Explorar o Laboratório",
+    "ethicsScenarios": "Cenários Éticos",
+    "ethicsScenariosDesc": "Navegue dilemas reais de IA",
+    "imageGeneration": "Geração de Imagens",
+    "imageGenerationDesc": "Crie imagens com modelos de IA",
+    "neuralPlayground": "Playground Neural",
+    "neuralPlaygroundDesc": "Treine redes neurais visualmente",
+    "promptEngineering": "Engenharia de Prompts",
+    "promptEngineeringDesc": "Domine a arte dos prompts de IA",
+    "sentimentAnalysis": "Análise de Sentimentos",
+    "sentimentAnalysisDesc": "Analise emoções em texto em tempo real",
+    "subtitle": "Experimente conceitos reais de IA no seu navegador. Sem configuração.",
+    "title": "Laboratório Interativo de IA"
+  },
+  "launch": {
+    "badge": "Confira no Product Hunt",
+    "countdownPrefix": "Lançamento no Product Hunt em",
+    "days": "dias",
+    "dismiss": "Fechar",
+    "hours": "horas",
+    "liveMessage": "Estamos AO VIVO no Product Hunt! Confira",
+    "minutes": "minutos",
+    "seconds": "segundos"
+  },
+  "leadMagnet": {
+    "description": "Junte-se a milhares de alunos que iniciaram sua carreira em IA com este recurso gratuito. Sem enrolação, apenas conhecimento prático.",
+    "emailPlaceholder": "Seu e-mail",
+    "errorGeneric": "Algo deu errado. Por favor, tente novamente.",
+    "errorInvalidEmail": "Por favor, insira um e-mail válido.",
+    "errorNameRequired": "Por favor, insira seu nome.",
+    "errorRateLimit": "Muitas tentativas. Por favor, tente novamente em alguns minutos.",
+    "freeForever": "100% Gratuito",
+    "instantDownload": "Download Instantâneo",
+    "metaDescription": "Baixe o Kit Inicial de IA 2026 gratuito — seu guia completo para aprender IA, carreiras, ferramentas e preparação para entrevistas. Baixe agora!",
+    "metaTitle": "Download Grátis: O Kit Inicial de IA 2026 | AI Educademy",
+    "namePlaceholder": "Seu nome",
+    "pageCount": "Guia em PDF de 10 páginas",
+    "privacyNote": "Respeitamos sua privacidade. Cancele quando quiser.",
+    "socialProof": "Junte-se a {count}+ alunos que baixaram este guia",
+    "submitButton": "Baixar PDF Grátis",
+    "submitting": "Enviando...",
+    "subtitle": "Tudo o que você precisa para começar sua jornada em IA — roteiro de aprendizado, carreiras, ferramentas essenciais e preparação para entrevistas — em um guia lindamente projetado.",
+    "successDownload": "Baixar Agora",
+    "successMessage": "Enviamos o Kit Inicial de IA para seu e-mail. Verifique sua caixa de entrada (e a pasta de spam) para o link de download.",
+    "successTitle": "Verifique sua caixa de entrada! 🎉",
+    "title": "Download Grátis: O Kit Inicial de IA 2026",
+    "whatInside": {
+      "careers": "Carreiras em IA e Guia Salarial para 2026",
+      "concepts": "Os 10 Principais Conceitos de IA explicados de forma simples",
+      "interview": "Preparação para Entrevistas de IA — folha de referência rápida",
+      "roadmap": "Roteiro de Aprendizado de IA — de iniciante a pronto para o mercado",
+      "tools": "Ferramentas e Recursos Essenciais de IA selecionados por especialistas"
+    },
+    "whatInsideTitle": "O Que Está Incluído"
+  },
+  "onboarding": {
+    "back": "Voltar",
+    "experience": {
+      "advanced": {
+        "description": "Tenho experiência e quero habilidades especializadas",
+        "title": "Avançado"
+      },
+      "beginner": {
+        "description": "Sou novo em IA e quero aprender do zero",
+        "title": "Iniciante"
+      },
+      "intermediate": {
+        "description": "Conheço o básico e quero aprofundar",
+        "title": "Intermediário"
+      },
+      "subtitle": "Isso nos ajuda a recomendar o ponto de partida ideal",
+      "title": "Qual é sua experiência com IA?"
+    },
+    "getStarted": "Vamos Lá!",
+    "goals": {
+      "build": {
+        "description": "Programação prática com projetos reais de IA",
+        "title": "Construir aplicações de IA"
+      },
+      "creative": {
+        "description": "Descubra aplicações criativas e artísticas da IA",
+        "title": "Explorar IA criativamente"
+      },
+      "interviews": {
+        "description": "Prepare-se para entrevistas técnicas de IA/ML",
+        "title": "Dominar entrevistas de IA"
+      },
+      "subtitle": "Selecione todas que se aplicam",
+      "title": "O que você quer alcançar?",
+      "understand": {
+        "description": "Aprenda os fundamentos e a teoria por trás da IA",
+        "title": "Entender conceitos de IA"
+      },
+      "work": {
+        "description": "Aplique ferramentas e técnicas de IA no seu trabalho",
+        "title": "Usar IA no trabalho"
+      }
+    },
+    "metaDescription": "Personalize sua experiência de aprendizado no AI Educademy",
+    "metaTitle": "Começar",
+    "next": "Próximo",
+    "recommendation": {
+      "cta": "Começar a Aprender →",
+      "exploreAll": "Ou explore todos os programas",
+      "programs": {
+        "ai-launchpad": {
+          "description": "Inicie sua preparação profissional em IA com fundamentos de entrevistas, padrões de perguntas comuns e exercícios para ganhar confiança.",
+          "name": "AI Launchpad"
+        },
+        "ai-seeds": {
+          "description": "Comece sua jornada em IA com lições para iniciantes cobrindo conceitos-chave, terminologia e como a IA está transformando o mundo.",
+          "name": "AI Seeds"
+        },
+        "ai-sketch": {
+          "description": "Comece a construir aplicações de IA com projetos práticos. Aprenda a usar APIs de IA, engenharia de prompts e padrões de programação práticos.",
+          "name": "AI Sketch"
+        }
+      },
+      "subtitle": "Com base nas suas escolhas, achamos que você vai adorar isto",
+      "title": "Seu Caminho Recomendado ✨"
+    },
+    "skip": "Pular",
+    "welcome": {
+      "defaultName": "amigo",
+      "subtitle": "Vamos personalizar sua experiência de aprendizado em poucos passos.",
+      "tagBuild": "Construir",
+      "tagGrow": "Crescer",
+      "tagLearn": "Aprender",
+      "title": "Bem-vindo ao AI Educademy, {name}! 🎉"
+    }
+  },
+  "projects": {
+    "agent": "Agente de IA",
+    "agentDesc": "Crie uma IA autônoma que raciocina, planeja e executa tarefas usando ferramentas e APIs.",
+    "agentDifficulty": "Avançado",
+    "agentTags": "LLMs,Uso de Ferramentas,Agentes",
+    "chatbot": "Chatbot de IA",
+    "chatbotDesc": "Construa uma IA conversacional que entende contexto, gerencia diálogos de múltiplos turnos e responde de forma inteligente.",
+    "chatbotDifficulty": "Intermediário",
+    "chatbotTags": "NLP,Transformers,Python",
+    "classifier": "Classificador de Imagens",
+    "classifierDesc": "Treine um modelo de visão computacional que reconhece e categoriza imagens com alta precisão.",
+    "classifierDifficulty": "Intermediário",
+    "classifierTags": "CNN,TensorFlow,Visão Computacional",
+    "recommender": "Motor de Recomendações",
+    "recommenderDesc": "Projete um sistema de ML que prevê as preferências do usuário e oferece sugestões personalizadas.",
+    "recommenderDifficulty": "Avançado",
+    "recommenderTags": "Filtragem Colaborativa,ML,Ciência de Dados",
+    "subtitle": "Passe do aprendizado à construção. Estes projetos mostram do que você será capaz.",
+    "title": "O Que Você Vai Construir"
+  },
+  "testimonials": {
+    "languages": "11 Idiomas",
+    "languagesSub": "Aprenda no seu idioma nativo",
+    "openSource": "Código Aberto",
+    "openSourceSub": "Cada linha de código, transparente",
+    "programs": "15 Programas",
+    "programsSub": "De iniciante a IA em produção",
+    "quote": "Criado por um engenheiro com mais de 15 anos no JP Morgan, Sky e empresas de tecnologia globais — projetado para tornar a educação em IA verdadeiramente acessível a todos.",
+    "title": "Destaques da Plataforma"
+  },
+  "trustBar": {
+    "languages": "Idiomas",
+    "lessons": "Lições",
+    "openSource": "Código Aberto",
+    "programs": "Programas"
   }
 }
