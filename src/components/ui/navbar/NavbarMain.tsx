@@ -12,7 +12,7 @@ import { ThemeToggle } from "../ThemeToggle";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
 import { BrandMark } from "../BrandMark";
-import { NavSearch } from "../NavSearch";
+import { CommandPalette } from "../CommandPalette";
 import { NavDropdown } from "../NavDropdown";
 import { AI_PATH, CRAFT_PATH, CAREER_READY_PATH, LAB_EXPERIMENTS } from "./navData";
 import { HamburgerIcon } from "./HamburgerIcon";
@@ -165,7 +165,7 @@ export function Navbar() {
 
             {/* ─── Desktop Actions ─── */}
             <div className="hidden md:flex items-center gap-2 shrink-0">
-              <NavSearch />
+              <CommandPalette />
               <LanguageSwitcher />
               <ThemeToggle />
               <div className="w-px h-5 bg-[var(--color-border)] mx-0.5" />
@@ -189,7 +189,7 @@ export function Navbar() {
 
             {/* ─── Mobile Actions ─── */}
             <div className="flex items-center gap-2 md:hidden">
-              <NavSearch />
+              <CommandPalette />
               <ThemeToggle compact />
               <button
                 className="p-1.5 rounded-full text-[var(--color-text-muted)] hover:bg-[var(--color-text)]/[0.06] transition-colors"
