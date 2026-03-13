@@ -41,8 +41,8 @@
   },
   "hero": {
     "badge": "Open Source • Mehrsprachig",
-    "title": "Lerne KI.",
-    "titleHighlight": "Gestalte die Zukunft.",
+    "title": "KI-Lernen,",
+    "titleHighlight": "Vereinfacht.",
     "subtitle": "Interaktive Lektionen, die dich vom neugierigen Anfänger zum selbstbewussten Gestalter führen. Starte bei null – geh so weit du willst.",
     "cta": "Starte deine KI-Reise",
     "ctaSecondary": "Labor entdecken",
@@ -1439,5 +1439,140 @@
     "progress": "Schließe noch {remaining} Lektionen ab, um dein Zertifikat zu erhalten",
     "completed": "Du hast dein Zertifikat verdient!",
     "notSignedIn": "Melde dich an, um deinen Fortschritt zu verfolgen und Zertifikate zu erhalten"
+  },
+  "continueLearning": {
+    "title": "Machen Sie dort weiter, wo Sie aufgehört haben",
+    "startFirst": "Starten Sie Ihre erste Lektion",
+    "startFirstDesc": "Wählen Sie ein Programm und beginnen Sie Ihre KI-Reise",
+    "continueCta": "Fortfahren",
+    "startCta": "Programme durchsuchen",
+    "progress": "{completed} von {total} Lektionen"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Haben Sie eine Frage, eine Idee oder möchten einfach Hallo sagen? Wir freuen uns von Ihnen zu hören.",
+    "name": "Ihr Name",
+    "namePlaceholder": "Max Mustermann",
+    "email": "E-Mail-Adresse",
+    "emailPlaceholder": "max@example.com",
+    "subject": "Betreff",
+    "subjectGeneral": "Allgemeine Anfrage",
+    "subjectBug": "Fehlerbericht",
+    "subjectFeature": "Funktionsanfrage",
+    "subjectPartnership": "Partnerschaft",
+    "subjectOther": "Sonstiges",
+    "message": "Nachricht",
+    "messagePlaceholder": "Sagen Sie uns, was Sie beschäftigt...",
+    "submit": "Nachricht senden",
+    "sending": "Wird gesendet...",
+    "success": "Nachricht gesendet! Wir melden uns bald bei Ihnen.",
+    "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+    "rateLimit": "Zu viele Nachrichten. Bitte warten Sie einen Moment.",
+    "required": "Dieses Feld ist erforderlich",
+    "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "messageTooShort": "Die Nachricht muss mindestens 10 Zeichen lang sein",
+    "or": "Oder kontaktieren Sie uns direkt",
+    "emailUs": "Schreiben Sie uns",
+    "emailAddress": "hello@aieducademy.org",
+    "socials": "Finden Sie uns auf",
+    "responseTime": "Wir antworten in der Regel innerhalb von 24 Stunden"
+  },
+  "privacy": {
+    "title": "Datenschutzrichtlinie",
+    "subtitle": "Zuletzt aktualisiert: März 2025",
+    "intro": "AI Educademy verpflichtet sich zum Schutz Ihrer Privatsphäre. Diese Richtlinie erklärt, wie wir Ihre personenbezogenen Daten erheben, verwenden und schützen.",
+    "sections": {
+      "collect": {
+        "title": "1. Informationen, die wir erheben",
+        "content": "Wir erheben: Ihren Namen, Ihre E-Mail-Adresse und Ihr Profilbild von Ihrem OAuth-Anbieter (Google oder GitHub); Ihren Lernfortschritt und Kursabschlüsse; Abonnement- und Zahlungsinformationen, die über Stripe verarbeitet werden; Nutzungsdaten einschließlich besuchter Seiten und genutzter Funktionen; Geräte- und Browserinformationen für Analysen."
+      },
+      "use": {
+        "title": "2. Wie wir Ihre Informationen verwenden",
+        "content": "Wir verwenden Ihre Informationen, um: das Lernerlebnis bereitzustellen und zu personalisieren; Ihren Kursfortschritt zu verfolgen; Zahlungen zu verarbeiten und Abonnements zu verwalten; wichtige Konto- und Servicebenachrichtigungen zu senden; unsere Plattform durch Analysen zu verbessern; optionale Bildungs-Newsletter zu senden (Sie können sich jederzeit abmelden)."
+      },
+      "sharing": {
+        "title": "3. Weitergabe von Informationen",
+        "content": "Wir verkaufen Ihre personenbezogenen Daten nicht. Wir teilen Daten nur mit: Stripe (Zahlungsabwicklung), Resend (E-Mail-Zustellung), Neon (Datenbank-Hosting), Vercel (Hosting) und GitHub/Google (Authentifizierung). Alle Drittanbieter sind DSGVO-konform."
+      },
+      "cookies": {
+        "title": "4. Cookies und Tracking",
+        "content": "Wir verwenden essenzielle Cookies für Authentifizierung und Sitzungsverwaltung. Wir nutzen Analysen, um zu verstehen, wie unsere Plattform genutzt wird. Wir verwenden keine Werbe-Cookies und verkaufen keine Daten an Werbetreibende."
+      },
+      "retention": {
+        "title": "5. Datenspeicherung",
+        "content": "Wir bewahren Ihre Kontodaten auf, solange Ihr Konto aktiv ist. Wenn Sie Ihr Konto löschen, entfernen wir Ihre personenbezogenen Daten innerhalb von 30 Tagen. Anonymisierte Analysedaten können unbegrenzt aufbewahrt werden. Zahlungsunterlagen werden gemäß britischem Steuerrecht aufbewahrt."
+      },
+      "rights": {
+        "title": "6. Ihre Rechte (DSGVO)",
+        "content": "Gemäß der britischen DSGVO haben Sie das Recht: auf Zugang zu Ihren personenbezogenen Daten; auf Berichtigung unrichtiger Daten; auf Löschung Ihrer Daten; auf Export Ihrer Daten in einem portablen Format; auf Widerspruch gegen die Verarbeitung Ihrer Daten; auf jederzeitigen Widerruf Ihrer Einwilligung. Um diese Rechte auszuüben, kontaktieren Sie uns unter privacy@aieducademy.org."
+      },
+      "security": {
+        "title": "7. Sicherheit",
+        "content": "Wir setzen branchenübliche Sicherheitsmaßnahmen um, darunter: verschlüsselte Datenübertragung (TLS/SSL), sichere Authentifizierung über OAuth 2.0, PCI-konforme Zahlungsabwicklung über Stripe, regelmäßige Sicherheitsüberprüfungen und Zugriffskontrollen auf allen Systemen."
+      },
+      "children": {
+        "title": "8. Datenschutz für Kinder",
+        "content": "AI Educademy ist nicht für Kinder unter 13 Jahren bestimmt. Wir erheben wissentlich keine personenbezogenen Daten von Kindern unter 13 Jahren. Wenn Sie glauben, dass ein Kind uns personenbezogene Daten übermittelt hat, kontaktieren Sie uns bitte umgehend."
+      },
+      "international": {
+        "title": "9. Internationale Datenübermittlungen",
+        "content": "Ihre Daten können in der EU und den USA durch unsere Hosting-Anbieter verarbeitet werden. Alle Übermittlungen werden durch geeignete Schutzmaßnahmen geschützt, einschließlich Standardvertragsklauseln, sofern zutreffend."
+      },
+      "changes": {
+        "title": "10. Änderungen dieser Richtlinie",
+        "content": "Wir können diese Richtlinie von Zeit zu Zeit aktualisieren. Wir werden Sie über wesentliche Änderungen per E-Mail informieren. Die fortgesetzte Nutzung des Dienstes nach Änderungen gilt als Zustimmung."
+      },
+      "contact": {
+        "title": "11. Kontakt",
+        "content": "Für datenschutzbezogene Anfragen: E-Mail an privacy@aieducademy.org. Datenschutzanfragen können an theglobalmind.ai@gmail.com gerichtet werden."
+      }
+    }
+  },
+  "terms": {
+    "title": "Nutzungsbedingungen",
+    "subtitle": "Zuletzt aktualisiert: März 2025",
+    "intro": "Willkommen bei AI Educademy. Durch den Zugriff auf unsere Plattform oder deren Nutzung erklären Sie sich mit diesen Bedingungen einverstanden.",
+    "sections": {
+      "use": {
+        "title": "1. Nutzung des Dienstes",
+        "content": "AI Educademy bietet KI-Bildungsinhalte, darunter Kurse, interaktive Labore und Lernressourcen. Sie dürfen unseren Dienst für persönliche, nicht-kommerzielle Bildungszwecke nutzen. Sie müssen mindestens 13 Jahre alt sein, um diesen Dienst zu nutzen."
+      },
+      "accounts": {
+        "title": "2. Benutzerkonten",
+        "content": "Sie können sich über Google oder GitHub OAuth anmelden. Sie sind für die Sicherheit Ihres Kontos verantwortlich. Sie müssen bei der Registrierung korrekte Angaben machen. Wir behalten uns das Recht vor, Konten zu sperren, die gegen diese Bedingungen verstoßen."
+      },
+      "subscriptions": {
+        "title": "3. Abonnements und Zahlungen",
+        "content": "AI Educademy bietet kostenlose und kostenpflichtige Tarife an. Kostenpflichtige Abonnements werden sicher über Stripe abgewickelt. Monats- und Jahresabonnements verlängern sich automatisch, sofern sie nicht gekündigt werden. Sie können jederzeit über Ihr Konto-Dashboard kündigen. Rückerstattungen werden innerhalb von 14 Tagen nach dem Kauf einzelfallbezogen bearbeitet, gemäß den britischen Verbraucherrechten."
+      },
+      "content": {
+        "title": "4. Inhalte und geistiges Eigentum",
+        "content": "Alle Kursinhalte, einschließlich Texte, Codebeispiele, Diagramme und interaktive Übungen, sind geistiges Eigentum von AI Educademy. Kostenlose Inhalte sind, wo angegeben, unter der MIT-Lizenz verfügbar. Premium-Inhalte dürfen ohne Genehmigung nicht weiterverbreitet, kopiert oder geteilt werden."
+      },
+      "conduct": {
+        "title": "5. Akzeptable Nutzung",
+        "content": "Sie verpflichten sich, Folgendes zu unterlassen: Weitergabe Ihrer Zugangsdaten, Versuch des Zugriffs auf Premium-Inhalte ohne gültiges Abonnement, Verwendung automatisierter Tools zum Extrahieren von Inhalten, Hochladen schädlicher Inhalte oder Belästigung anderer Nutzer. Verstöße können zur Kontokündigung führen."
+      },
+      "disclaimer": {
+        "title": "6. Haftungsausschluss",
+        "content": "AI Educademy stellt Bildungsinhalte „wie besehen“ bereit. Obwohl wir uns um Genauigkeit bemühen, garantieren wir nicht, dass alle Inhalte fehlerfrei oder aktuell sind. AI Educademy ist nicht verantwortlich für Karriereergebnisse oder Vorstellungsgespräche."
+      },
+      "liability": {
+        "title": "7. Haftungsbeschränkung",
+        "content": "Soweit gesetzlich zulässig, haftet AI Educademy nicht für indirekte, zufällige oder Folgeschäden, die aus Ihrer Nutzung des Dienstes entstehen. Unsere Gesamthaftung übersteigt nicht den Betrag, den Sie uns in den 12 Monaten vor dem Anspruch gezahlt haben."
+      },
+      "changes": {
+        "title": "8. Änderungen der Bedingungen",
+        "content": "Wir können diese Bedingungen von Zeit zu Zeit aktualisieren. Die fortgesetzte Nutzung des Dienstes nach Änderungen gilt als Zustimmung. Wir werden registrierte Nutzer über wesentliche Änderungen per E-Mail informieren."
+      },
+      "governing": {
+        "title": "9. Anwendbares Recht",
+        "content": "Diese Bedingungen unterliegen dem Recht von England und Wales. Alle Streitigkeiten unterliegen der ausschließlichen Zuständigkeit der Gerichte von England und Wales."
+      },
+      "contact": {
+        "title": "10. Kontakt",
+        "content": "Bei Fragen zu diesen Bedingungen kontaktieren Sie uns unter support@aieducademy.org."
+      }
+    }
   }
 }

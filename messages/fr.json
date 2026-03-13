@@ -41,8 +41,8 @@
   },
   "hero": {
     "badge": "Open Source • Multilingue",
-    "title": "Apprenez l'IA.",
-    "titleHighlight": "Construisez l'avenir.",
+    "title": "Apprentissage de l’IA,",
+    "titleHighlight": "Simplifié.",
     "subtitle": "Des leçons interactives et gratuites qui vous accompagnent de la curiosité à la maîtrise. Partez de zéro - allez aussi loin que vous le souhaitez.",
     "cta": "Commencez votre parcours IA",
     "ctaSecondary": "Explorer le Labo",
@@ -1439,5 +1439,140 @@
     "progress": "Complétez encore {remaining} leçons pour obtenir votre certificat",
     "completed": "Vous avez obtenu votre certificat !",
     "notSignedIn": "Connectez-vous pour suivre vos progrès et obtenir des certificats"
+  },
+  "continueLearning": {
+    "title": "Reprenez là où vous en étiez",
+    "startFirst": "Commencez votre première leçon",
+    "startFirstDesc": "Choisissez un programme et commencez votre parcours IA",
+    "continueCta": "Continuer",
+    "startCta": "Parcourir les programmes",
+    "progress": "{completed} sur {total} leçons"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Vous avez une question, une idée ou simplement envie de dire bonjour ? Nous serions ravis de vous entendre.",
+    "name": "Votre nom",
+    "namePlaceholder": "Jean Dupont",
+    "email": "Adresse e-mail",
+    "emailPlaceholder": "jean@example.com",
+    "subject": "Sujet",
+    "subjectGeneral": "Demande générale",
+    "subjectBug": "Rapport de bug",
+    "subjectFeature": "Demande de fonctionnalité",
+    "subjectPartnership": "Partenariat",
+    "subjectOther": "Autre",
+    "message": "Message",
+    "messagePlaceholder": "Dites-nous ce qui vous préoccupe...",
+    "submit": "Envoyer le message",
+    "sending": "Envoi en cours...",
+    "success": "Message envoyé ! Nous vous répondrons bientôt.",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "rateLimit": "Trop de messages. Veuillez patienter un instant.",
+    "required": "Ce champ est obligatoire",
+    "invalidEmail": "Veuillez entrer une adresse e-mail valide",
+    "messageTooShort": "Le message doit contenir au moins 10 caractères",
+    "or": "Ou contactez-nous directement",
+    "emailUs": "Écrivez-nous",
+    "emailAddress": "hello@aieducademy.org",
+    "socials": "Retrouvez-nous sur",
+    "responseTime": "Nous répondons généralement sous 24 heures"
+  },
+  "privacy": {
+    "title": "Politique de confidentialité",
+    "subtitle": "Dernière mise à jour : mars 2025",
+    "intro": "AI Educademy s’engage à protéger votre vie privée. Cette politique explique comment nous collectons, utilisons et protégeons vos informations personnelles.",
+    "sections": {
+      "collect": {
+        "title": "1. Informations que nous collectons",
+        "content": "Nous collectons : votre nom, adresse e-mail et photo de profil auprès de votre fournisseur OAuth (Google ou GitHub) ; votre progression d’apprentissage et vos certifications ; les informations d’abonnement et de paiement traitées par Stripe ; les données d’utilisation, y compris les pages visitées et les fonctionnalités utilisées ; les informations sur votre appareil et navigateur à des fins d’analyse."
+      },
+      "use": {
+        "title": "2. Comment nous utilisons vos informations",
+        "content": "Nous utilisons vos informations pour : fournir et personnaliser l’expérience d’apprentissage ; suivre votre progression dans les cours ; traiter les paiements et gérer les abonnements ; envoyer des notifications importantes concernant votre compte et le service ; améliorer notre plateforme grâce à l’analyse ; envoyer des newsletters éducatives optionnelles (vous pouvez vous désinscrire à tout moment)."
+      },
+      "sharing": {
+        "title": "3. Partage des informations",
+        "content": "Nous ne vendons pas vos informations personnelles. Nous partageons des données uniquement avec : Stripe (traitement des paiements), Resend (envoi d’e-mails), Neon (hébergement de base de données), Vercel (hébergement) et GitHub/Google (authentification). Tous les fournisseurs tiers sont conformes au RGPD."
+      },
+      "cookies": {
+        "title": "4. Cookies et suivi",
+        "content": "Nous utilisons des cookies essentiels pour l’authentification et la gestion des sessions. Nous utilisons des analyses pour comprendre comment notre plateforme est utilisée. Nous n’utilisons pas de cookies publicitaires et ne vendons pas de données aux annonceurs."
+      },
+      "retention": {
+        "title": "5. Conservation des données",
+        "content": "Nous conservons les données de votre compte tant que celui-ci est actif. Si vous supprimez votre compte, nous supprimerons vos données personnelles dans un délai de 30 jours. Les données d’analyse anonymisées peuvent être conservées indéfiniment. Les registres de paiement sont conservés conformément à la législation fiscale britannique."
+      },
+      "rights": {
+        "title": "6. Vos droits (RGPD)",
+        "content": "En vertu du RGPD britannique, vous avez le droit de : accéder à vos données personnelles ; corriger les données inexactes ; demander la suppression de vos données ; exporter vos données dans un format portable ; vous opposer au traitement de vos données ; retirer votre consentement à tout moment. Pour exercer ces droits, contactez-nous à privacy@aieducademy.org."
+      },
+      "security": {
+        "title": "7. Sécurité",
+        "content": "Nous mettons en œuvre des mesures de sécurité conformes aux normes du secteur, notamment : la transmission chiffrée des données (TLS/SSL), l’authentification sécurisée via OAuth 2.0, le traitement des paiements conforme PCI via Stripe, des audits de sécurité réguliers et des contrôles d’accès sur tous les systèmes."
+      },
+      "children": {
+        "title": "8. Vie privée des enfants",
+        "content": "AI Educademy n’est pas destiné aux enfants de moins de 13 ans. Nous ne collectons pas sciemment d’informations personnelles auprès d’enfants de moins de 13 ans. Si vous pensez qu’un enfant nous a fourni des données personnelles, veuillez nous contacter immédiatement."
+      },
+      "international": {
+        "title": "9. Transferts internationaux de données",
+        "content": "Vos données peuvent être traitées dans l’UE et aux États-Unis par nos fournisseurs d’hébergement. Tous les transferts sont protégés par des garanties appropriées, y compris les clauses contractuelles types le cas échéant."
+      },
+      "changes": {
+        "title": "10. Modifications de cette politique",
+        "content": "Nous pouvons mettre à jour cette politique de temps en temps. Nous vous informerons des modifications importantes par e-mail. L’utilisation continue du service après les modifications vaut acceptation."
+      },
+      "contact": {
+        "title": "11. Nous contacter",
+        "content": "Pour les demandes liées à la confidentialité : écrivez à privacy@aieducademy.org. Les questions relatives à la protection des données peuvent être adressées à theglobalmind.ai@gmail.com."
+      }
+    }
+  },
+  "terms": {
+    "title": "Conditions d’utilisation",
+    "subtitle": "Dernière mise à jour : mars 2025",
+    "intro": "Bienvenue sur AI Educademy. En accédant à notre plateforme ou en l’utilisant, vous acceptez d’être lié par ces conditions.",
+    "sections": {
+      "use": {
+        "title": "1. Utilisation du service",
+        "content": "AI Educademy fournit du contenu éducatif sur l’IA, notamment des cours, des laboratoires interactifs et des ressources d’apprentissage. Vous pouvez utiliser notre service à des fins éducatives personnelles et non commerciales. Vous devez avoir au moins 13 ans pour utiliser ce service."
+      },
+      "accounts": {
+        "title": "2. Comptes utilisateurs",
+        "content": "Vous pouvez vous connecter via Google ou GitHub OAuth. Vous êtes responsable de la sécurité de votre compte. Vous devez fournir des informations exactes lors de l’inscription. Nous nous réservons le droit de suspendre les comptes qui enfreignent ces conditions."
+      },
+      "subscriptions": {
+        "title": "3. Abonnements et paiements",
+        "content": "AI Educademy propose des offres gratuites et payantes. Les abonnements payants sont traités de manière sécurisée via Stripe. Les abonnements mensuels et annuels se renouvellent automatiquement sauf annulation. Vous pouvez annuler à tout moment depuis le tableau de bord de votre compte. Les remboursements sont traités au cas par cas dans les 14 jours suivant l’achat, conformément aux droits des consommateurs britanniques."
+      },
+      "content": {
+        "title": "4. Contenu et propriété intellectuelle",
+        "content": "Tout le contenu des cours, y compris les textes, exemples de code, diagrammes et exercices interactifs, est la propriété intellectuelle d’AI Educademy. Le contenu gratuit est disponible sous licence MIT lorsque cela est indiqué. Le contenu premium ne peut être redistribué, copié ou partagé sans autorisation."
+      },
+      "conduct": {
+        "title": "5. Utilisation acceptable",
+        "content": "Vous vous engagez à ne pas : partager vos identifiants de compte, tenter d’accéder au contenu premium sans abonnement valide, utiliser des outils automatisés pour extraire du contenu, télécharger du contenu malveillant ou harceler d’autres utilisateurs. Toute violation peut entraîner la résiliation du compte."
+      },
+      "disclaimer": {
+        "title": "6. Avertissement",
+        "content": "AI Educademy fournit du contenu éducatif « en l’état ». Bien que nous nous efforcions d’être précis, nous ne garantissons pas que tout le contenu est exempt d’erreurs ou à jour. AI Educademy n’est pas responsable des résultats de carrière ou d’entretien."
+      },
+      "liability": {
+        "title": "7. Limitation de responsabilité",
+        "content": "Dans toute la mesure permise par la loi, AI Educademy ne saurait être tenu responsable de tout dommage indirect, accessoire ou consécutif découlant de votre utilisation du service. Notre responsabilité totale ne dépassera pas le montant que vous nous avez versé au cours des 12 mois précédant la réclamation."
+      },
+      "changes": {
+        "title": "8. Modifications des conditions",
+        "content": "Nous pouvons mettre à jour ces conditions de temps en temps. L’utilisation continue du service après les modifications vaut acceptation. Nous informerons les utilisateurs inscrits des modifications importantes par e-mail."
+      },
+      "governing": {
+        "title": "9. Droit applicable",
+        "content": "Ces conditions sont régies par les lois d’Angleterre et du Pays de Galles. Tout litige relèvera de la compétence exclusive des tribunaux d’Angleterre et du Pays de Galles."
+      },
+      "contact": {
+        "title": "10. Contact",
+        "content": "Pour toute question concernant ces conditions, contactez-nous à support@aieducademy.org."
+      }
+    }
   }
 }

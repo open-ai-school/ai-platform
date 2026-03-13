@@ -41,8 +41,8 @@
   },
   "hero": {
     "badge": "Open source • Meertalig",
-    "title": "Leer AI.",
-    "titleHighlight": "Bouw de toekomst.",
+    "title": "AI Leren,",
+    "titleHighlight": "Vereenvoudigd.",
     "subtitle": "Interactieve lessen die je van nieuwsgierige beginner naar zelfverzekerde bouwer brengen. Begin bij nul - ga zo ver als je wilt.",
     "cta": "Begin jouw AI-reis",
     "ctaSecondary": "Ontdek het Lab",
@@ -1439,5 +1439,140 @@
     "progress": "Voltooi nog {remaining} lessen om je certificaat te verdienen",
     "completed": "Je hebt je certificaat verdiend!",
     "notSignedIn": "Log in om je voortgang bij te houden en certificaten te verdienen"
+  },
+  "continueLearning": {
+    "title": "Ga verder waar je gebleven was",
+    "startFirst": "Begin je eerste les",
+    "startFirstDesc": "Kies een programma en begin je AI-reis",
+    "continueCta": "Doorgaan",
+    "startCta": "Programma's bekijken",
+    "progress": "{completed} van {total} lessen"
+  },
+  "contact": {
+    "title": "Neem contact op",
+    "subtitle": "Heb je een vraag, een idee of wil je gewoon hallo zeggen? We horen graag van je.",
+    "name": "Je naam",
+    "namePlaceholder": "Jan Jansen",
+    "email": "E-mailadres",
+    "emailPlaceholder": "jan@example.com",
+    "subject": "Onderwerp",
+    "subjectGeneral": "Algemene vraag",
+    "subjectBug": "Foutmelding",
+    "subjectFeature": "Functieverzoek",
+    "subjectPartnership": "Samenwerking",
+    "subjectOther": "Anders",
+    "message": "Bericht",
+    "messagePlaceholder": "Vertel ons wat je bezighoudt...",
+    "submit": "Bericht verzenden",
+    "sending": "Verzenden...",
+    "success": "Bericht verzonden! We nemen snel contact met je op.",
+    "error": "Er is iets misgegaan. Probeer het opnieuw.",
+    "rateLimit": "Te veel berichten. Wacht even.",
+    "required": "Dit veld is verplicht",
+    "invalidEmail": "Voer een geldig e-mailadres in",
+    "messageTooShort": "Het bericht moet minimaal 10 tekens bevatten",
+    "or": "Of neem direct contact met ons op",
+    "emailUs": "Stuur ons een e-mail",
+    "emailAddress": "hello@aieducademy.org",
+    "socials": "Vind ons op",
+    "responseTime": "We reageren doorgaans binnen 24 uur"
+  },
+  "privacy": {
+    "title": "Privacybeleid",
+    "subtitle": "Laatst bijgewerkt: maart 2025",
+    "intro": "AI Educademy zet zich in voor de bescherming van je privacy. Dit beleid legt uit hoe we je persoonlijke gegevens verzamelen, gebruiken en beschermen.",
+    "sections": {
+      "collect": {
+        "title": "1. Informatie die we verzamelen",
+        "content": "We verzamelen: je naam, e-mailadres en profielfoto van je OAuth-provider (Google of GitHub); je leervoortgang en cursusafronding; abonnements- en betalingsgegevens verwerkt door Stripe; gebruiksgegevens waaronder bezochte pagina's en gebruikte functies; apparaat- en browserinformatie voor analyse."
+      },
+      "use": {
+        "title": "2. Hoe we je informatie gebruiken",
+        "content": "We gebruiken je informatie om: de leerervaring te bieden en te personaliseren; je cursusvoortgang te volgen; betalingen te verwerken en abonnementen te beheren; belangrijke account- en servicemeldingen te verzenden; ons platform te verbeteren door middel van analyse; optionele educatieve nieuwsbrieven te verzenden (je kunt je op elk moment afmelden)."
+      },
+      "sharing": {
+        "title": "3. Delen van informatie",
+        "content": "We verkopen je persoonlijke gegevens niet. We delen gegevens alleen met: Stripe (betalingsverwerking), Resend (e-mailbezorging), Neon (databasehosting), Vercel (hosting) en GitHub/Google (authenticatie). Alle externe providers voldoen aan de AVG."
+      },
+      "cookies": {
+        "title": "4. Cookies en tracking",
+        "content": "We gebruiken essentiële cookies voor authenticatie en sessiebeheer. We gebruiken analyses om te begrijpen hoe ons platform wordt gebruikt. We gebruiken geen advertentiecookies en verkopen geen gegevens aan adverteerders."
+      },
+      "retention": {
+        "title": "5. Gegevensbewaring",
+        "content": "We bewaren je accountgegevens zolang je account actief is. Als je je account verwijdert, verwijderen we je persoonlijke gegevens binnen 30 dagen. Geanonimiseerde analysegegevens kunnen voor onbepaalde tijd worden bewaard. Betalingsgegevens worden bewaard zoals vereist door de Britse belastingwetgeving."
+      },
+      "rights": {
+        "title": "6. Je rechten (AVG)",
+        "content": "Op grond van de Britse AVG heb je het recht om: toegang te krijgen tot je persoonlijke gegevens; onjuiste gegevens te corrigeren; verwijdering van je gegevens te verzoeken; je gegevens in een draagbaar formaat te exporteren; bezwaar te maken tegen de verwerking van je gegevens; je toestemming op elk moment in te trekken. Om deze rechten uit te oefenen, neem contact met ons op via privacy@aieducademy.org."
+      },
+      "security": {
+        "title": "7. Beveiliging",
+        "content": "We implementeren beveiligingsmaatregelen conform de industriestandaard, waaronder: versleutelde gegevensoverdracht (TLS/SSL), veilige authenticatie via OAuth 2.0, PCI-conforme betalingsverwerking via Stripe, regelmatige beveiligingsbeoordelingen en toegangscontroles op alle systemen."
+      },
+      "children": {
+        "title": "8. Privacy van kinderen",
+        "content": "AI Educademy is niet bedoeld voor kinderen jonger dan 13 jaar. We verzamelen niet bewust persoonlijke gegevens van kinderen jonger dan 13 jaar. Als je denkt dat een kind ons persoonlijke gegevens heeft verstrekt, neem dan onmiddellijk contact met ons op."
+      },
+      "international": {
+        "title": "9. Internationale gegevensoverdrachten",
+        "content": "Je gegevens kunnen worden verwerkt in de EU en de VS via onze hostingproviders. Alle overdrachten worden beschermd door passende waarborgen, waaronder standaardcontractbepalingen waar van toepassing."
+      },
+      "changes": {
+        "title": "10. Wijzigingen in dit beleid",
+        "content": "We kunnen dit beleid van tijd tot tijd bijwerken. We informeren je per e-mail over belangrijke wijzigingen. Voortgezet gebruik van de dienst na wijzigingen geldt als aanvaarding."
+      },
+      "contact": {
+        "title": "11. Contact",
+        "content": "Voor privacygerelateerde vragen: e-mail privacy@aieducademy.org. Vragen over gegevensbescherming kunnen worden gericht aan theglobalmind.ai@gmail.com."
+      }
+    }
+  },
+  "terms": {
+    "title": "Servicevoorwaarden",
+    "subtitle": "Laatst bijgewerkt: maart 2025",
+    "intro": "Welkom bij AI Educademy. Door toegang te krijgen tot of gebruik te maken van ons platform, ga je akkoord met deze voorwaarden.",
+    "sections": {
+      "use": {
+        "title": "1. Gebruik van de dienst",
+        "content": "AI Educademy biedt AI-educatieve inhoud, waaronder cursussen, interactieve labs en leermiddelen. Je mag onze dienst gebruiken voor persoonlijke, niet-commerciële educatieve doeleinden. Je moet minimaal 13 jaar oud zijn om deze dienst te gebruiken."
+      },
+      "accounts": {
+        "title": "2. Gebruikersaccounts",
+        "content": "Je kunt inloggen met Google of GitHub OAuth. Je bent verantwoordelijk voor de beveiliging van je account. Je moet nauwkeurige informatie verstrekken bij registratie. We behouden ons het recht voor om accounts die deze voorwaarden schenden op te schorten."
+      },
+      "subscriptions": {
+        "title": "3. Abonnementen en betalingen",
+        "content": "AI Educademy biedt gratis en betaalde abonnementen. Betaalde abonnementen worden veilig verwerkt via Stripe. Maand- en jaarabonnementen worden automatisch verlengd tenzij opgezegd. Je kunt op elk moment opzeggen via je accountdashboard. Terugbetalingen worden per geval afgehandeld binnen 14 dagen na aankoop, in overeenstemming met de Britse consumentenrechten."
+      },
+      "content": {
+        "title": "4. Inhoud en intellectueel eigendom",
+        "content": "Alle cursusinhoud, inclusief teksten, codevoorbeelden, diagrammen en interactieve oefeningen, is intellectueel eigendom van AI Educademy. Gratis inhoud is beschikbaar onder de MIT-licentie waar aangegeven. Premium-inhoud mag niet worden herverdeeld, gekopieerd of gedeeld zonder toestemming."
+      },
+      "conduct": {
+        "title": "5. Aanvaardbaar gebruik",
+        "content": "Je stemt ermee in om niet: je accountgegevens te delen, te proberen premium-inhoud te openen zonder geldig abonnement, geautomatiseerde tools te gebruiken om inhoud te scrapen, schadelijke inhoud te uploaden of andere gebruikers lastig te vallen. Overtredingen kunnen leiden tot beëindiging van het account."
+      },
+      "disclaimer": {
+        "title": "6. Disclaimer",
+        "content": "AI Educademy biedt educatieve inhoud op basis van \"zoals het is\". Hoewel we streven naar nauwkeurigheid, garanderen we niet dat alle inhoud foutloos of actueel is. AI Educademy is niet verantwoordelijk voor carrièreresultaten of sollicitatiegesprekken."
+      },
+      "liability": {
+        "title": "7. Beperking van aansprakelijkheid",
+        "content": "Voor zover wettelijk toegestaan, is AI Educademy niet aansprakelijk voor indirecte, incidentele of gevolgschade voortvloeiend uit je gebruik van de dienst. Onze totale aansprakelijkheid bedraagt niet meer dan het bedrag dat je ons hebt betaald in de 12 maanden voorafgaand aan de claim."
+      },
+      "changes": {
+        "title": "8. Wijzigingen in de voorwaarden",
+        "content": "We kunnen deze voorwaarden van tijd tot tijd bijwerken. Voortgezet gebruik van de dienst na wijzigingen geldt als aanvaarding. We informeren geregistreerde gebruikers per e-mail over belangrijke wijzigingen."
+      },
+      "governing": {
+        "title": "9. Toepasselijk recht",
+        "content": "Deze voorwaarden worden beheerst door het recht van Engeland en Wales. Geschillen vallen onder de exclusieve bevoegdheid van de rechtbanken van Engeland en Wales."
+      },
+      "contact": {
+        "title": "10. Contact",
+        "content": "Voor vragen over deze voorwaarden, neem contact met ons op via support@aieducademy.org."
+      }
+    }
   }
 }
