@@ -417,6 +417,68 @@ export function verificationCodeEmailHtml(code: string): string {
   `.trim();
 }
 
+/* ─────────────── Lead Magnet Email ─────────────── */
+
+export function leadMagnetEmailHtml(name: string, downloadUrl: string): string {
+  const safeName = name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background-color:#f3f4f6;font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f3f4f6;">
+    <tr>
+      <td align="center" style="padding:40px 20px;">
+        <table role="presentation" width="500" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.1);">
+          <tr>
+            <td style="padding:30px 30px 0;text-align:center;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:8px 8px 0 0;">
+              <h1 style="margin:0 0 8px;color:#ffffff;font-size:24px;">Your AI Starter Kit is Ready! 🚀</h1>
+              <p style="margin:0 0 24px;color:rgba(255,255,255,0.9);font-size:16px;">The 2026 AI Starter Kit — by AI Educademy</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:30px;">
+              <p style="margin:0 0 16px;color:#374151;font-size:16px;line-height:1.6;">Hi ${safeName},</p>
+              <p style="margin:0 0 16px;color:#374151;font-size:16px;line-height:1.6;">Thank you for downloading <strong>The 2026 AI Starter Kit</strong>! This guide is packed with everything you need to kickstart your AI journey.</p>
+              <p style="margin:0 0 8px;color:#374151;font-size:14px;font-weight:600;">Inside you'll find:</p>
+              <ul style="margin:0 0 24px;padding-left:20px;color:#6b7280;font-size:14px;line-height:1.8;">
+                <li>AI Learning Roadmap (beginner → expert)</li>
+                <li>Top 10 AI Concepts explained simply</li>
+                <li>Career Paths & Salary Guide</li>
+                <li>Essential AI Tools & Resources</li>
+                <li>Interview Prep Quick Reference</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 30px 30px;text-align:center;">
+              <a href="${downloadUrl}" style="display:inline-block;padding:16px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#ffffff;font-size:16px;font-weight:600;text-decoration:none;border-radius:8px;">Download Your PDF</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 30px 24px;">
+              <div style="background-color:#f8fafc;border-radius:8px;padding:20px;border:1px solid #e5e7eb;">
+                <p style="margin:0 0 8px;color:#374151;font-size:14px;font-weight:600;">Ready to go deeper?</p>
+                <p style="margin:0 0 12px;color:#6b7280;font-size:14px;line-height:1.6;">AI Educademy offers free interactive lessons across 15 programs in 11 languages.</p>
+                <a href="https://aieducademy.org/en/programs" style="color:#667eea;font-size:14px;font-weight:600;text-decoration:none;">Start Learning →</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:20px 30px;border-top:1px solid #e5e7eb;background-color:#f9fafb;border-radius:0 0 8px 8px;">
+              <p style="margin:0 0 4px;color:#6b7280;font-size:12px;text-align:center;">AI Educademy · <a href="https://aieducademy.org" style="color:#667eea;text-decoration:none;">aieducademy.org</a></p>
+              <p style="margin:0;color:#9ca3af;font-size:11px;text-align:center;">You received this email because you requested the AI Starter Kit. <a href="https://aieducademy.org" style="color:#9ca3af;">Unsubscribe</a></p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+  `.trim();
+}
+
 /* ─────────────── Password Reset Email ─────────────── */
 
 export function passwordResetEmailHtml(resetUrl: string): string {

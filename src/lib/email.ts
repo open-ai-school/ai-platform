@@ -1,4 +1,4 @@
-import { welcomeEmailHtml, subscriptionEmailHtml, verificationCodeEmailHtml, passwordResetEmailHtml } from "./emailTemplates";
+import { welcomeEmailHtml, subscriptionEmailHtml, verificationCodeEmailHtml, passwordResetEmailHtml, leadMagnetEmailHtml } from "./emailTemplates";
 
 const subjectByLocale: Record<string, string> = {
   en: "Welcome to AI Educademy! 🎓",
@@ -85,5 +85,11 @@ export async function sendVerificationEmail(email: string, code: string): Promis
 export async function sendPasswordResetEmail(email: string, resetUrl: string): Promise<void> {
   const subject = "Reset your AI Educademy password";
   const html = passwordResetEmailHtml(resetUrl);
+  await sendEmail(email, subject, html);
+}
+
+export async function sendLeadMagnetEmail(email: string, name: string, downloadUrl: string): Promise<void> {
+  const subject = "Your AI Starter Kit is Ready! 🚀";
+  const html = leadMagnetEmailHtml(name, downloadUrl);
   await sendEmail(email, subject, html);
 }

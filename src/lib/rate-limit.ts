@@ -91,4 +91,6 @@ export const RATE_LIMITS = {
   comment: { limit: 5, windowSeconds: 60 },
   /** Auth endpoints — strict to prevent brute force */
   auth: { limit: 5, windowSeconds: 300 },
+  /** Lead magnet download — strict to prevent abuse */
+  leadMagnet: { limit: 5, windowSeconds: 300 },
 } as const;

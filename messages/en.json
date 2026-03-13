@@ -1970,5 +1970,36 @@
     "verifiedCompletion": "Verified Completion",
     "defaultTitle": "Achievement | AI Educademy",
     "defaultDescription": "An achievement earned on AI Educademy - Free AI education for everyone."
+  },
+  "leadMagnet": {
+    "metaTitle": "Free Download: The 2026 AI Starter Kit | AI Educademy",
+    "metaDescription": "Get the free 2026 AI Starter Kit — your complete guide to learning AI, career paths, tools, and interview prep. Download now!",
+    "title": "Free Download: The 2026 AI Starter Kit",
+    "subtitle": "Everything you need to start your AI journey — learning roadmap, career paths, essential tools, and interview prep — in one beautifully designed guide.",
+    "description": "Join thousands of learners who kickstarted their AI career with this free resource. No fluff, just actionable knowledge.",
+    "whatInsideTitle": "What's Inside",
+    "whatInside": {
+      "roadmap": "AI Learning Roadmap — from beginner to job-ready",
+      "concepts": "Top 10 AI Concepts explained in plain English",
+      "careers": "AI Career Paths & Salary Guide for 2026",
+      "tools": "Essential AI Tools & Resources curated by experts",
+      "interview": "AI Interview Prep — quick reference cheat sheet"
+    },
+    "socialProof": "Join {count}+ learners who downloaded this guide",
+    "namePlaceholder": "Your first name",
+    "emailPlaceholder": "Your email address",
+    "submitButton": "Download Free PDF",
+    "submitting": "Sending...",
+    "successTitle": "Check your inbox! 🎉",
+    "successMessage": "We've sent the AI Starter Kit to your email. Check your inbox (and spam folder) for the download link.",
+    "successDownload": "Download Now",
+    "privacyNote": "We respect your privacy. Unsubscribe anytime.",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "errorRateLimit": "Too many attempts. Please try again in a few minutes.",
+    "errorInvalidEmail": "Please enter a valid email address.",
+    "errorNameRequired": "Please enter your name.",
+    "pageCount": "10-page PDF guide",
+    "freeForever": "100% Free",
+    "instantDownload": "Instant Download"
   }
 }
