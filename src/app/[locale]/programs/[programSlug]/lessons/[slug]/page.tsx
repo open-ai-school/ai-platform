@@ -6,6 +6,7 @@ import { getLesson, getLessons } from "@/lib/lessons";
 import { getProgram, getPrograms, getProgramsByTrack } from "@/lib/programs";
 import { LessonRenderer } from "@/components/lessons/LessonRenderer";
 import { LessonComplete } from "@/components/lessons/LessonComplete";
+import { QuizProvider } from "@/components/lessons/QuizContext";
 import { LessonFeedback } from "@/components/lessons/LessonFeedback";
 import { ListenButton } from "@/components/ui/ListenButton";
 import { BreadcrumbJsonLd, LearningResourceJsonLd } from "@/components/seo/JsonLd";
@@ -211,27 +212,29 @@ export default async function ProgramLessonPage({
       {/* Content — gated for premium lessons */}
       {hasAccess ? (
         <>
-          <div className="lesson-content">
-            <LessonRenderer content={lesson.content} />
-          </div>
+          <QuizProvider>
+            <div className="lesson-content">
+              <LessonRenderer content={lesson.content} />
+            </div>
 
-          {/* Mark as Complete + Navigation */}
-          <LessonComplete
-            slug={`${programSlug}/${slug}`}
-            programSlug={programSlug}
-            totalLessons={allLessons.length}
-            currentIndex={currentIdx}
-            nextSlug={next?.slug}
-            nextTitle={next ? tLT(next.slug) : undefined}
-            prevSlug={prev?.slug}
-            prevTitle={prev ? tLT(prev.slug) : undefined}
-            basePath={`${programPath}/lessons`}
-            programPath={programPath}
-            programTitle={tP(`${programSlug}.title`)}
-            programTrack={program.track}
-            programLevel={program.level}
-            trackLessonCounts={trackLessonCounts}
-          />
+            {/* Mark as Complete + Navigation */}
+            <LessonComplete
+              slug={`${programSlug}/${slug}`}
+              programSlug={programSlug}
+              totalLessons={allLessons.length}
+              currentIndex={currentIdx}
+              nextSlug={next?.slug}
+              nextTitle={next ? tLT(next.slug) : undefined}
+              prevSlug={prev?.slug}
+              prevTitle={prev ? tLT(prev.slug) : undefined}
+              basePath={`${programPath}/lessons`}
+              programPath={programPath}
+              programTitle={tP(`${programSlug}.title`)}
+              programTrack={program.track}
+              programLevel={program.level}
+              trackLessonCounts={trackLessonCounts}
+            />
+          </QuizProvider>
 
           {/* Lesson Feedback */}
           <LessonFeedback lessonSlug={slug} programSlug={programSlug} locale={locale} />

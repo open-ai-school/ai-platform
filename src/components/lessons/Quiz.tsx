@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useQuizContext } from "./QuizContext";
 
 interface QuizProps {
   question: string;
@@ -16,12 +17,27 @@ const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 export function Quiz({ question, options: rawOptions, answer: rawAnswer, explanation }: QuizProps) {
   const t = useTranslations("lessons");
   const noMotion = useReducedMotion();
+  const { registerQuiz, markQuizPassed } = useQuizContext();
   const options = Array.isArray(rawOptions)
     ? rawOptions
     : typeof rawOptions === "string"
       ? rawOptions.split("|")
       : [];
   const answer = typeof rawAnswer === "number" ? rawAnswer : parseInt(String(rawAnswer), 10) || 0;
+
+  // Stable quiz ID derived from question text
+  const quizId = useMemo(() => {
+    let hash = 0;
+    for (let i = 0; i < question.length; i++) {
+      hash = ((hash << 5) - hash + question.charCodeAt(i)) | 0;
+    }
+    return `quiz-${Math.abs(hash)}`;
+  }, [question]);
+
+  // Register this quiz with the context on mount
+  useEffect(() => {
+    if (options.length > 0) registerQuiz(quizId);
+  }, [quizId, registerQuiz, options.length]);
 
   if (!options.length) return null;
   const [selected, setSelected] = useState<number | null>(null);
@@ -49,11 +65,13 @@ export function Quiz({ question, options: rawOptions, answer: rawAnswer, explana
   const handleCheck = useCallback(() => {
     if (selected === null) return;
     setRevealed(true);
-    if (selected !== answer) {
+    if (selected === answer) {
+      markQuizPassed(quizId);
+    } else {
       setShakeWrong(true);
       setTimeout(() => setShakeWrong(false), 500);
     }
-  }, [selected, answer]);
+  }, [selected, answer, markQuizPassed, quizId]);
 
   const handleRetry = useCallback(() => {
     setSelected(null);

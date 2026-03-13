@@ -232,7 +232,12 @@
     "tryAgain": "Try Again",
     "quickCheck": "Quick Check",
     "animationError": "Animation could not load",
-    "progressPercent": "{percent}% complete"
+    "progressPercent": "{percent}% complete",
+    "completeLesson": "Complete Lesson",
+    "quizRequired": "Answer all quizzes correctly to complete this lesson",
+    "quizProgress": "{passed} of {total} quizzes passed",
+    "allQuizzesPassed": "All quizzes passed!",
+    "lessonCompleted": "Lesson Complete!"
   },
   "programs": {
     "badge": "",

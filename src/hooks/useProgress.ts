@@ -100,7 +100,7 @@ export function useProgress(programSlug?: string) {
     [data]
   );
 
-  const markComplete = useCallback((lessonKey: string) => {
+  const markComplete = useCallback((lessonKey: string, locale?: string) => {
     setData((prev) => {
       const parts = lessonKey.split("/");
       const pSlug = parts.length > 1 ? parts[0] : (programSlug || "ai-seeds");
@@ -118,6 +118,16 @@ export function useProgress(programSlug?: string) {
       };
       // Always persist to localStorage (guest and signed-in users)
       localStorage.setItem(storageKey, JSON.stringify(next));
+
+      // Fire-and-forget sync to server (for authenticated users)
+      if (!isGuest) {
+        fetch("/api/progress", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ lessonSlug: lSlug, programSlug: pSlug, locale: locale || "en" }),
+        }).catch(() => {/* server sync is best-effort */});
+      }
+
       return next;
     });
   }, [programSlug, storageKey, isGuest]);

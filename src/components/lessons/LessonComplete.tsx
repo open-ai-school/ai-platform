@@ -2,6 +2,7 @@
 
 import { useProgress } from "@/hooks/useProgress";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useQuizContext } from "./QuizContext";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
@@ -170,6 +171,7 @@ export function LessonComplete({
   trackLessonCounts,
 }: LessonCompleteProps) {
   const { isCompleted, markComplete, getProgram, allData } = useProgress(programSlug);
+  const { allQuizzesPassed, totalQuizzes, passedQuizzes } = useQuizContext();
   const tL = useTranslations("lessons");
   const tP = useTranslations("programs");
   const noMotion = useReducedMotion();
@@ -219,13 +221,12 @@ export function LessonComplete({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Auto-complete when user scrolls to the bottom (Intersection Observer)
-  const handleAutoComplete = useCallback(() => {
-    if (!completed && !justCompleted) {
-      markComplete(slug);
-      setJustCompleted(true);
-    }
-  }, [completed, justCompleted, markComplete, slug]);
+  // Explicit completion handler — gated by quiz state
+  const handleComplete = useCallback(() => {
+    if (!allQuizzesPassed || completed || justCompleted) return;
+    markComplete(slug);
+    setJustCompleted(true);
+  }, [allQuizzesPassed, completed, justCompleted, markComplete, slug]);
 
   // Check track completion whenever progress data changes
   useEffect(() => {
@@ -233,23 +234,6 @@ export function LessonComplete({
       checkTrackCompletion();
     }
   }, [justCompleted, allData, checkTrackCompletion]);
-
-  useEffect(() => {
-    const el = endRef.current;
-    if (!el || completed) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          handleAutoComplete();
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [completed, handleAutoComplete]);
 
   // IntersectionObserver for fade-up animation on the main section
   useEffect(() => {
@@ -333,6 +317,52 @@ export function LessonComplete({
           />
         </div>
 
+        {/* Completion gate */}
+        <div className="py-5 space-y-3">
+          {completed || justCompleted ? (
+            <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold">
+              <span className="text-xl">🎉</span>
+              {tL("lessonCompleted")}
+            </div>
+          ) : (
+            <>
+              {totalQuizzes > 0 && (
+                <div className="space-y-1">
+                  {allQuizzesPassed ? (
+                    <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-medium text-sm">
+                      <span>✅</span>
+                      {tL("allQuizzesPassed")}
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-2 text-[var(--color-text-muted)] text-sm">
+                        <span>📝</span>
+                        {tL("quizRequired")}
+                      </div>
+                      <div className="text-xs text-[var(--color-text-muted)]">
+                        {tL("quizProgress", { passed: passedQuizzes, total: totalQuizzes })}
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+              <button
+                onClick={handleComplete}
+                disabled={!allQuizzesPassed}
+                className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 min-h-[44px] ${
+                  allQuizzesPassed
+                    ? "bg-[var(--color-primary)] text-white shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 hover:scale-[1.03] active:scale-[0.97]"
+                    : "bg-[var(--color-border)] text-[var(--color-text-muted)] cursor-not-allowed opacity-60"
+                }`}
+              >
+                {allQuizzesPassed
+                  ? `${tL("completeLesson")} ✓`
+                  : tL("completeLesson")}
+              </button>
+            </>
+          )}
+        </div>
+
         {/* Navigation */}
         <div className="pt-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
           {prevSlug ? (
@@ -352,36 +382,40 @@ export function LessonComplete({
               <span>{tL("backToProgram")}</span>
             </Link>
           )}
-          {nextSlug ? (
-            <div className="hover:scale-[1.03] active:scale-[0.97] transition-transform">
-              <Link
-                href={`${basePath}/${nextSlug}`}
-                className="group flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 bg-[var(--color-primary)] text-white rounded-xl hover:brightness-110 active:brightness-90 transition-all min-w-0 min-h-[44px] shadow-lg shadow-[var(--color-primary)]/20"
-              >
-                <span className="line-clamp-1">{nextTitle}</span>
-                <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-            </div>
-          ) : nextProgram ? (
-            <div className="hover:scale-[1.03] active:scale-[0.97] transition-transform">
-              <Link
-                href={programPath.replace(/\/[^/]+$/, `/${nextProgram.slug}`)}
-                className="group flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl hover:shadow-lg active:brightness-90 transition-all min-h-[44px] shadow-lg shadow-indigo-600/20"
-              >
-                <span>{nextProgram.icon} {tP(`${nextProgram.slug}.title`)}</span>
-                <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-            </div>
-          ) : (
-            <div className="hover:scale-[1.03] active:scale-[0.97] transition-transform">
-              <Link
-                href={programPath.replace(/\/[^/]+$/, "")}
-                className="group flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl hover:shadow-lg active:brightness-90 transition-all min-h-[44px] shadow-lg shadow-indigo-600/20"
-              >
-                <span>{tL("allPrograms")}</span>
-                <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-            </div>
+          {(completed || justCompleted) && (
+            <>
+              {nextSlug ? (
+                <div className="hover:scale-[1.03] active:scale-[0.97] transition-transform">
+                  <Link
+                    href={`${basePath}/${nextSlug}`}
+                    className="group flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 bg-[var(--color-primary)] text-white rounded-xl hover:brightness-110 active:brightness-90 transition-all min-w-0 min-h-[44px] shadow-lg shadow-[var(--color-primary)]/20"
+                  >
+                    <span className="line-clamp-1">{nextTitle}</span>
+                    <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
+                </div>
+              ) : nextProgram ? (
+                <div className="hover:scale-[1.03] active:scale-[0.97] transition-transform">
+                  <Link
+                    href={programPath.replace(/\/[^/]+$/, `/${nextProgram.slug}`)}
+                    className="group flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl hover:shadow-lg active:brightness-90 transition-all min-h-[44px] shadow-lg shadow-indigo-600/20"
+                  >
+                    <span>{nextProgram.icon} {tP(`${nextProgram.slug}.title`)}</span>
+                    <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
+                </div>
+              ) : (
+                <div className="hover:scale-[1.03] active:scale-[0.97] transition-transform">
+                  <Link
+                    href={programPath.replace(/\/[^/]+$/, "")}
+                    className="group flex items-center justify-center gap-2 text-sm font-medium px-5 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-xl hover:shadow-lg active:brightness-90 transition-all min-h-[44px] shadow-lg shadow-indigo-600/20"
+                  >
+                    <span>{tL("allPrograms")}</span>
+                    <span className="shrink-0 group-hover:translate-x-1 transition-transform">→</span>
+                  </Link>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
