@@ -622,7 +622,15 @@
     "certCompleted": "が正式に修了しました",
     "certDate": "修了日",
     "certOrg": "AI Educademy",
-    "certShareText": "AI Educademyで{program}を修了しました！🎓"
+    "certShareText": "AI Educademyで{program}を修了しました！🎓",
+    "shareAchievement": "Share",
+    "shareOnTwitter": "Twitter/X",
+    "shareOnLinkedin": "LinkedIn",
+    "copyLink": "Copy Link",
+    "linkCopied": "Copied!",
+    "shareModalTitle": "Share Achievement",
+    "shareTweet": "I just completed {program} on AI Educademy! 🎓🤖 #AILearning #AIEducademy",
+    "shareDescription": "I completed the {program} program on AI Educademy"
   },
   "auth": {
     "startLearning": "学習を始める",
@@ -1603,5 +1611,17 @@
         "content": "本規約に関するご質問は support@aieducademy.org までご連絡ください。"
       }
     }
+  },
+  "achievement": {
+    "title": "{program} - Achievement | AI Educademy",
+    "description": "{user} completed the {program} program on AI Educademy!",
+    "heading": "Achievement Unlocked!",
+    "completedBy": "Completed by",
+    "badge": "🎓",
+    "cta": "Start Learning at AI Educademy",
+    "ctaSubtitle": "Free AI education for everyone",
+    "verifiedCompletion": "Verified Completion",
+    "defaultTitle": "Achievement | AI Educademy",
+    "defaultDescription": "An achievement earned on AI Educademy - Free AI education for everyone."
   }
 }

@@ -87,4 +87,6 @@ export const RATE_LIMITS = {
   newsletter: { limit: 5, windowSeconds: 300 },
   /** General API — relaxed */
   general: { limit: 60, windowSeconds: 60 },
+  /** Lesson comments — moderate spam prevention */
+  comment: { limit: 5, windowSeconds: 60 },
 } as const;

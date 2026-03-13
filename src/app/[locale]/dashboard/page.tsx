@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { useGuestProfile } from "@/hooks/useGuestProfile";
 import { Certificate } from "@/components/dashboard/Certificate";
 import { ReferralWidget } from "@/components/dashboard/ReferralWidget";
+import { ShareAchievement } from "@/components/dashboard/ShareAchievement";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { AnimatedProgressBar } from "@/components/ui/MotionWrappers";
 import { locales } from "@/i18n/request";
@@ -438,17 +439,24 @@ export default function DashboardPage() {
                     </span>
                   </div>
                   {progCompleted >= progTotal && (
-                    <button
-                      onClick={() => isPremiumUser ? setCertProgram(program.slug) : router.push(`${basePath}/pricing`)}
-                      className={`mt-2 inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold rounded-lg text-white shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer ${
-                        isPremiumUser
-                          ? "bg-gradient-to-r from-yellow-400 to-amber-500"
-                          : "bg-gradient-to-r from-indigo-500 to-violet-600"
-                      }`}
-                    >
-                      <Trophy size={14} />
-                      {isPremiumUser ? t("viewCertificate") : t("upgradeCertificate")}
-                    </button>
+                    <div className="flex items-center gap-2 mt-2 flex-wrap">
+                      <button
+                        onClick={() => isPremiumUser ? setCertProgram(program.slug) : router.push(`${basePath}/pricing`)}
+                        className={`inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold rounded-lg text-white shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer ${
+                          isPremiumUser
+                            ? "bg-gradient-to-r from-yellow-400 to-amber-500"
+                            : "bg-gradient-to-r from-indigo-500 to-violet-600"
+                        }`}
+                      >
+                        <Trophy size={14} />
+                        {isPremiumUser ? t("viewCertificate") : t("upgradeCertificate")}
+                      </button>
+                      <ShareAchievement
+                        programSlug={program.slug}
+                        programName={tpd(`${program.slug}.title`)}
+                        userName={session?.user?.name || profile?.name || t("defaultUser")}
+                      />
+                    </div>
                   )}
                 </div>
               </div>

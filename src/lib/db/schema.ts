@@ -164,6 +164,20 @@ export const lessonFeedback = pgTable("lesson_feedback", {
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
 });
 
+/* ─────────────── Lesson Comments / Discussion ─────────────── */
+
+export const lessonComments = pgTable("lesson_comments", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  lessonSlug: text("lesson_slug").notNull(),
+  programSlug: text("program_slug").notNull(),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { mode: "date" }).notNull().defaultNow(),
+});
+
 /* ─────────────── Contact Submissions ─────────────── */
 
 export const contactSubmissions = pgTable("contact_submissions", {

@@ -15,6 +15,7 @@ import { requiresPremium } from "@/lib/content-access";
 import { auth } from "@/auth";
 import { getUserPlan, canAccessPremium } from "@/lib/subscription";
 import { Paywall } from "@/components/lessons/Paywall";
+import { LessonComments } from "@/components/lessons/LessonComments";
 
 const BASE_URL = "https://aieducademy.org";
 
@@ -203,6 +204,9 @@ export default async function ProgramLessonPage({
 
           {/* Lesson Feedback */}
           <LessonFeedback lessonSlug={slug} programSlug={programSlug} locale={locale} />
+
+          {/* Discussion / Comments */}
+          <LessonComments lessonSlug={slug} programSlug={programSlug} />
 
           {/* Suggest an Edit */}
           <div className="mt-12 pt-8 border-t border-[var(--color-border)] text-center">

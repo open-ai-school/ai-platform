@@ -622,7 +622,15 @@
     "certCompleted": "ने सफलतापूर्वक पूरा किया",
     "certDate": "पूर्ण तिथि",
     "certOrg": "AI Educademy",
-    "certShareText": "मैंने AI Educademy पर {program} पूरा किया! 🎓"
+    "certShareText": "मैंने AI Educademy पर {program} पूरा किया! 🎓",
+    "shareAchievement": "Share",
+    "shareOnTwitter": "Twitter/X",
+    "shareOnLinkedin": "LinkedIn",
+    "copyLink": "Copy Link",
+    "linkCopied": "Copied!",
+    "shareModalTitle": "Share Achievement",
+    "shareTweet": "I just completed {program} on AI Educademy! 🎓🤖 #AILearning #AIEducademy",
+    "shareDescription": "I completed the {program} program on AI Educademy"
   },
   "auth": {
     "startLearning": "सीखना शुरू करें",
@@ -1603,5 +1611,17 @@
         "content": "इन शर्तों के बारे में प्रश्नों के लिए, support@aieducademy.org पर संपर्क करें।"
       }
     }
+  },
+  "achievement": {
+    "title": "{program} - Achievement | AI Educademy",
+    "description": "{user} completed the {program} program on AI Educademy!",
+    "heading": "Achievement Unlocked!",
+    "completedBy": "Completed by",
+    "badge": "🎓",
+    "cta": "Start Learning at AI Educademy",
+    "ctaSubtitle": "Free AI education for everyone",
+    "verifiedCompletion": "Verified Completion",
+    "defaultTitle": "Achievement | AI Educademy",
+    "defaultDescription": "An achievement earned on AI Educademy - Free AI education for everyone."
   }
 }

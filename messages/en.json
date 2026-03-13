@@ -643,7 +643,15 @@
     "certCompleted": "has successfully completed",
     "certDate": "Completed on",
     "certOrg": "AI Educademy",
-    "certShareText": "I completed {program} on AI Educademy! 🎓"
+    "certShareText": "I completed {program} on AI Educademy! 🎓",
+    "shareAchievement": "Share",
+    "shareOnTwitter": "Twitter/X",
+    "shareOnLinkedin": "LinkedIn",
+    "copyLink": "Copy Link",
+    "linkCopied": "Copied!",
+    "shareModalTitle": "Share Achievement",
+    "shareTweet": "I just completed {program} on AI Educademy! 🎓🤖 #AILearning #AIEducademy",
+    "shareDescription": "I completed the {program} program on AI Educademy"
   },
   "auth": {
     "startLearning": "Start Learning",
@@ -1775,5 +1783,17 @@
     "subtitle": "Free, open source, in your language",
     "primaryText": "Start Learning",
     "secondaryText": "View Journey Map"
+  },
+  "achievement": {
+    "title": "{program} - Achievement | AI Educademy",
+    "description": "{user} completed the {program} program on AI Educademy!",
+    "heading": "Achievement Unlocked!",
+    "completedBy": "Completed by",
+    "badge": "🎓",
+    "cta": "Start Learning at AI Educademy",
+    "ctaSubtitle": "Free AI education for everyone",
+    "verifiedCompletion": "Verified Completion",
+    "defaultTitle": "Achievement | AI Educademy",
+    "defaultDescription": "An achievement earned on AI Educademy - Free AI education for everyone."
   }
 }

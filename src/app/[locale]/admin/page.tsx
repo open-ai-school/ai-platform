@@ -22,6 +22,12 @@ import {
   Archive,
   LayoutDashboard,
 } from "lucide-react";
+import {
+  UserGrowthChart,
+  PlanBarChart,
+  SentimentDonut,
+  type GrowthPoint,
+} from "./charts";
 
 /* ═══════════════════════════ Types ═══════════════════════════ */
 
@@ -214,7 +220,19 @@ export default function AdminPage() {
   const [feedbackLoading, setFeedbackLoading] = useState(false);
   const [feedbackProgramFilter, setFeedbackProgramFilter] = useState<string>("all");
 
+  // Growth chart state
+  const [growthData, setGrowthData] = useState<GrowthPoint[]>([]);
+
   /* ─────── Data fetchers ─────── */
+
+  const fetchGrowth = useCallback(async () => {
+    try {
+      const res = await fetch("/api/admin/analytics/growth");
+      if (res.ok) setGrowthData(await res.json());
+    } catch (err) {
+      console.error("[Admin] Growth fetch error:", err);
+    }
+  }, []);
 
   const fetchSummary = useCallback(async () => {
     setSummaryLoading(true);
@@ -358,6 +376,10 @@ export default function AdminPage() {
   }, [isAdmin, fetchSummary]);
 
   useEffect(() => {
+    if (isAdmin) fetchGrowth();
+  }, [isAdmin, fetchGrowth]);
+
+  useEffect(() => {
     if (isAdmin && activeTab === "users") fetchUsers();
   }, [isAdmin, activeTab, fetchUsers]);
 
@@ -484,6 +506,26 @@ export default function AdminPage() {
                     <p className="text-xs text-[var(--color-text-muted)] mt-1">{card.label}</p>
                   </GlassCard>
                 ))}
+              </div>
+
+              {/* ── Charts ── */}
+              <div className="grid grid-cols-1 gap-4">
+                <UserGrowthChart data={growthData} />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <PlanBarChart
+                    data={{
+                      monthly: summaryData.planBreakdown.monthly ?? 0,
+                      annual: summaryData.planBreakdown.annual ?? 0,
+                      lifetime: summaryData.planBreakdown.lifetime ?? 0,
+                    }}
+                  />
+                  <SentimentDonut
+                    data={{
+                      up: summaryData.recentFeedback.filter((f) => f.rating === "up").length,
+                      down: summaryData.recentFeedback.filter((f) => f.rating === "down").length,
+                    }}
+                  />
+                </div>
               </div>
 
               {/* Role & plan breakdown */}

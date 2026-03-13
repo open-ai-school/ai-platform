@@ -622,7 +622,15 @@
     "certCompleted": "విజయవంతంగా పూర్తి చేసారు",
     "certDate": "పూర్తి తేదీ",
     "certOrg": "AI Educademy",
-    "certShareText": "నేను AI Educademy లో {program} పూర్తి చేశాను! 🎓"
+    "certShareText": "నేను AI Educademy లో {program} పూర్తి చేశాను! 🎓",
+    "shareAchievement": "Share",
+    "shareOnTwitter": "Twitter/X",
+    "shareOnLinkedin": "LinkedIn",
+    "copyLink": "Copy Link",
+    "linkCopied": "Copied!",
+    "shareModalTitle": "Share Achievement",
+    "shareTweet": "I just completed {program} on AI Educademy! 🎓🤖 #AILearning #AIEducademy",
+    "shareDescription": "I completed the {program} program on AI Educademy"
   },
   "auth": {
     "startLearning": "నేర్చుకోవడం ప్రారంభించండి",
@@ -1603,5 +1611,17 @@
         "content": "ఈ నిబంధనల గురించి ప్రశ్నల కోసం, support@aieducademy.org వద్ద మమ్మల్ని సంప్రదించండి."
       }
     }
+  },
+  "achievement": {
+    "title": "{program} - Achievement | AI Educademy",
+    "description": "{user} completed the {program} program on AI Educademy!",
+    "heading": "Achievement Unlocked!",
+    "completedBy": "Completed by",
+    "badge": "🎓",
+    "cta": "Start Learning at AI Educademy",
+    "ctaSubtitle": "Free AI education for everyone",
+    "verifiedCompletion": "Verified Completion",
+    "defaultTitle": "Achievement | AI Educademy",
+    "defaultDescription": "An achievement earned on AI Educademy - Free AI education for everyone."
   }
 }

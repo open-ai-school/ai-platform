@@ -622,7 +622,15 @@
     "certCompleted": "met succes heeft afgerond",
     "certDate": "Voltooid op",
     "certOrg": "AI Educademy",
-    "certShareText": "Ik heb {program} voltooid op AI Educademy! 🎓"
+    "certShareText": "Ik heb {program} voltooid op AI Educademy! 🎓",
+    "shareAchievement": "Share",
+    "shareOnTwitter": "Twitter/X",
+    "shareOnLinkedin": "LinkedIn",
+    "copyLink": "Copy Link",
+    "linkCopied": "Copied!",
+    "shareModalTitle": "Share Achievement",
+    "shareTweet": "I just completed {program} on AI Educademy! 🎓🤖 #AILearning #AIEducademy",
+    "shareDescription": "I completed the {program} program on AI Educademy"
   },
   "auth": {
     "startLearning": "Begin met leren",
@@ -1603,5 +1611,17 @@
         "content": "Voor vragen over deze voorwaarden, neem contact met ons op via support@aieducademy.org."
       }
     }
+  },
+  "achievement": {
+    "title": "{program} - Achievement | AI Educademy",
+    "description": "{user} completed the {program} program on AI Educademy!",
+    "heading": "Achievement Unlocked!",
+    "completedBy": "Completed by",
+    "badge": "🎓",
+    "cta": "Start Learning at AI Educademy",
+    "ctaSubtitle": "Free AI education for everyone",
+    "verifiedCompletion": "Verified Completion",
+    "defaultTitle": "Achievement | AI Educademy",
+    "defaultDescription": "An achievement earned on AI Educademy - Free AI education for everyone."
   }
 }

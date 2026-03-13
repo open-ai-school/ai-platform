@@ -8,6 +8,13 @@
       "when": 1773401244996,
       "tag": "0000_watery_diamondback",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1773409807776,
+      "tag": "0001_curly_mulholland_black",
+      "breakpoints": true
     }
   ]
 }
